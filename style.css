@@ -4,10 +4,10 @@
     --bg: #ffffff;
     --text-primary: #000000;
     --text-secondary: #555555;
-    --btn-bg: #353535;
+    --btn-bg: #1e1e1e;
     --btn-hover: #000000;
     --card-bg: #fafafa;
-    --border: #a3a3a3;
+    --border: #e2e2e2;
     --success-bg: #dcfce7;
     --success-text: #14532d;
     --error-bg: #fee2e2;
@@ -27,17 +27,17 @@ body {
     line-height: 1.6;
 }
 
-/* --- NAVIGATION --- */
+/* NAVBAR */
 nav {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    height: 17vh;
+    height: 15vh;
 }
 
 .logo {
-    font-size: 2rem;
-    font-weight: 600;
+    font-size: 1.8rem;
+    font-weight: 700;
 }
 
 .nav-links {
@@ -49,41 +49,41 @@ nav {
 .nav-links a {
     color: var(--text-primary);
     text-decoration: none;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 500;
-    transition: color 0.3s ease;
+    transition: all 0.2s ease;
 }
 
 .nav-links a:hover, .nav-links a.active {
     color: var(--text-secondary);
     text-decoration: underline;
-    text-underline-offset: 1rem;
-    text-decoration-color: var(--border);
+    text-underline-offset: 0.8rem;
 }
 
-/* --- MAIN CONTAINER --- */
+/* CONTAINER */
 .container {
-    max-width: 1000px;
+    max-width: 900px;
     margin: 0 auto;
-    padding: 0 2rem 4rem 2rem;
+    padding: 0 1.5rem 4rem 1.5rem;
 }
 
-/* --- PROFILE HERO SECTION --- */
+/* HERO SECTION */
 .hero {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 4rem;
-    min-height: 60vh;
+    gap: 3rem;
+    min-height: 50vh;
     margin-bottom: 3rem;
 }
 
 .profile-pic-container {
-    width: 350px;
-    height: 350px;
+    width: 280px;
+    height: 280px;
     border-radius: 50%;
     overflow: hidden;
     flex-shrink: 0;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
 }
 
 .profile-pic {
@@ -93,48 +93,49 @@ nav {
 }
 
 .hero-text {
-    text-align: center;
+    text-align: left;
 }
 
 .hero-text .subtitle {
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 600;
     color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .hero-text h1 {
-    font-size: 3rem;
+    font-size: 2.8rem;
     font-weight: 700;
-    margin: 0.5rem 0;
+    line-height: 1.2;
+    margin: 0.3rem 0;
 }
 
 .hero-text .role {
-    font-size: 1.5rem;
-    font-weight: 600;
+    font-size: 1.2rem;
     color: var(--text-secondary);
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.8rem;
 }
 
-/* --- BUTTONS --- */
+/* BOUTONS PILULE */
 .btn-container {
     display: flex;
-    justify-content: center;
     gap: 1rem;
 }
 
 .btn {
     font-weight: 600;
-    transition: all 0.3s ease;
-    padding: 1rem 1.5rem;
+    padding: 0.8rem 1.6rem;
     border-radius: 2rem;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     cursor: pointer;
     text-decoration: none;
     display: inline-block;
+    transition: all 0.2s ease;
 }
 
 .btn-outline {
-    border: var(--text-primary) 0.1rem solid;
+    border: var(--text-primary) 1.5px solid;
     color: var(--text-primary);
     background: transparent;
 }
@@ -148,40 +149,34 @@ nav {
 .btn-dark {
     background: var(--btn-bg);
     color: white;
-    border: var(--btn-bg) 0.1rem solid;
+    border: var(--btn-bg) 1.5px solid;
 }
 
 .btn-dark:hover {
     background: var(--btn-hover);
 }
 
-/* --- CARDS & CONTENT SECTIONS --- */
-section {
-    margin-bottom: 3rem;
-}
-
+/* CARTES & COURS */
 .section-title {
     text-align: center;
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 600;
     margin-bottom: 2rem;
 }
 
 .card {
     background: var(--card-bg);
-    border: 0.1rem solid var(--border);
-    border-radius: 1.5rem;
-    padding: 2rem;
+    border: 1px solid var(--border);
+    border-radius: 1.2rem;
+    padding: 1.8rem;
     margin-bottom: 1.5rem;
 }
 
 .card h3 {
-    font-size: 1.3rem;
+    font-size: 1.25rem;
     margin-bottom: 1rem;
-    color: var(--text-primary);
 }
 
-/* --- TABLES & LISTS --- */
 .table-responsive {
     overflow-x: auto;
 }
@@ -189,11 +184,11 @@ section {
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 1rem;
+    margin-top: 0.8rem;
 }
 
 th, td {
-    padding: 0.8rem 1rem;
+    padding: 0.75rem 1rem;
     text-align: left;
     border-bottom: 1px solid var(--border);
 }
@@ -216,33 +211,33 @@ li strong {
     color: var(--text-primary);
 }
 
-/* --- QCM STYLES --- */
+/* QCM */
 .question-title {
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     font-weight: 600;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.2rem;
 }
 
 .options-grid {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.8rem;
 }
 
 .option-card {
     background: white;
-    border: 0.1rem solid var(--border);
-    padding: 1rem 1.5rem;
-    border-radius: 1rem;
+    border: 1px solid var(--border);
+    padding: 0.9rem 1.2rem;
+    border-radius: 0.8rem;
     cursor: pointer;
     text-align: left;
-    font-size: 1rem;
+    font-size: 0.95rem;
     transition: all 0.2s ease;
 }
 
 .option-card:hover:not(:disabled) {
     border-color: var(--text-primary);
-    background: #f1f1f1;
+    background: #f4f4f4;
 }
 
 .option-card.correct {
@@ -259,10 +254,11 @@ li strong {
 }
 
 .feedback-card {
-    margin-top: 1.5rem;
-    padding: 1rem 1.5rem;
-    border-radius: 1rem;
+    margin-top: 1.2rem;
+    padding: 1rem 1.2rem;
+    border-radius: 0.8rem;
     display: none;
+    font-size: 0.95rem;
     font-weight: 500;
 }
 
@@ -270,31 +266,38 @@ li strong {
     display: block;
 }
 
-/* --- FOOTER --- */
 footer {
     text-align: center;
     padding: 2rem;
     color: var(--text-secondary);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
 }
 
-/* --- RESPONSIVE DESIGN --- */
-@media screen and (max-width: 800px) {
+/* MOBILE */
+@media screen and (max-width: 768px) {
     nav {
         flex-direction: column;
         height: auto;
-        padding: 1.5rem;
-        gap: 1rem;
+        padding: 1.2rem;
+        gap: 0.8rem;
     }
 
     .hero {
         flex-direction: column;
-        min-height: auto;
-        gap: 2rem;
+        text-align: center;
+        gap: 1.8rem;
+    }
+
+    .hero-text {
+        text-align: center;
     }
 
     .profile-pic-container {
-        width: 250px;
-        height: 250px;
+        width: 200px;
+        height: 200px;
+    }
+
+    .btn-container {
+        justify-content: center;
     }
 }
