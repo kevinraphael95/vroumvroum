@@ -1,89 +1,187 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
 :root {
-    --primary: #2563eb;
-    --primary-hover: #1d4ed8;
-    --bg: #f8fafc;
-    --card-bg: #ffffff;
-    --text: #0f172a;
-    --text-muted: #475569;
-    --border: #e2e8f0;
-    --success: #16a34a;
-    --error: #dc2626;
+    --bg: #ffffff;
+    --text-primary: #000000;
+    --text-secondary: #555555;
+    --btn-bg: #353535;
+    --btn-hover: #000000;
+    --card-bg: #fafafa;
+    --border: #a3a3a3;
+    --success-bg: #dcfce7;
+    --success-text: #14532d;
+    --error-bg: #fee2e2;
+    --error-text: #7f1d1d;
 }
 
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
     background-color: var(--bg);
-    color: var(--text);
+    color: var(--text-primary);
     line-height: 1.6;
-    padding: 20px;
 }
 
-.container {
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-header {
-    text-align: center;
-    padding: 30px 20px;
-    background: linear-gradient(135deg, #1e293b, #0f172a);
-    color: white;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-}
-
-header h1 {
-    font-size: 2.2rem;
-    margin-bottom: 8px;
-}
-
+/* --- NAVIGATION --- */
 nav {
     display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin-bottom: 24px;
+    justify-content: space-around;
+    align-items: center;
+    height: 17vh;
 }
 
-.nav-btn {
-    text-decoration: none;
-    background: var(--card-bg);
-    color: var(--primary);
-    border: 1px solid var(--primary);
-    padding: 10px 20px;
-    border-radius: 8px;
+.logo {
+    font-size: 2rem;
     font-weight: 600;
-    transition: all 0.2s;
 }
 
-.nav-btn:hover, .nav-btn.active {
-    background: var(--primary);
+.nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+}
+
+.nav-links a {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    color: var(--text-secondary);
+    text-decoration: underline;
+    text-underline-offset: 1rem;
+    text-decoration-color: var(--border);
+}
+
+/* --- MAIN CONTAINER --- */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 2rem 4rem 2rem;
+}
+
+/* --- PROFILE HERO SECTION --- */
+.hero {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4rem;
+    min-height: 60vh;
+    margin-bottom: 3rem;
+}
+
+.profile-pic-container {
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.profile-pic {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-text {
+    text-align: center;
+}
+
+.hero-text .subtitle {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.hero-text h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 0.5rem 0;
+}
+
+.hero-text .role {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+/* --- BUTTONS --- */
+.btn-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.btn {
+    font-weight: 600;
+    transition: all 0.3s ease;
+    padding: 1rem 1.5rem;
+    border-radius: 2rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-outline {
+    border: var(--text-primary) 0.1rem solid;
+    color: var(--text-primary);
+    background: transparent;
+}
+
+.btn-outline:hover {
+    background: var(--btn-bg);
     color: white;
+    border-color: var(--btn-bg);
 }
 
+.btn-dark {
+    background: var(--btn-bg);
+    color: white;
+    border: var(--btn-bg) 0.1rem solid;
+}
+
+.btn-dark:hover {
+    background: var(--btn-hover);
+}
+
+/* --- CARDS & CONTENT SECTIONS --- */
 section {
+    margin-bottom: 3rem;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+}
+
+.card {
     background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 24px;
-    margin-bottom: 24px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    border: 0.1rem solid var(--border);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
 }
 
-h2 {
-    color: var(--primary);
-    font-size: 1.4rem;
-    margin-bottom: 16px;
-    border-bottom: 2px solid var(--border);
-    padding-bottom: 8px;
+.card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
 }
 
+/* --- TABLES & LISTS --- */
 .table-responsive {
     overflow-x: auto;
 }
@@ -91,109 +189,112 @@ h2 {
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 12px;
+    margin-top: 1rem;
 }
 
 th, td {
-    padding: 12px;
+    padding: 0.8rem 1rem;
     text-align: left;
     border-bottom: 1px solid var(--border);
 }
 
 th {
-    background-color: #f1f5f9;
     font-weight: 600;
+    color: var(--text-secondary);
 }
 
 ul {
-    list-style-type: disc;
-    padding-left: 20px;
+    list-style-position: inside;
+    color: var(--text-secondary);
 }
 
 li {
-    margin-bottom: 8px;
+    margin-bottom: 0.5rem;
 }
 
-.alert-box {
-    background-color: #eff6ff;
-    border-left: 4px solid var(--primary);
-    padding: 12px 16px;
-    border-radius: 4px;
-    margin-top: 12px;
+li strong {
+    color: var(--text-primary);
 }
 
-/* Styles QCM */
-.question {
+/* --- QCM STYLES --- */
+.question-title {
+    font-size: 1.2rem;
     font-weight: 600;
-    margin-bottom: 16px;
-    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
 }
 
-.options {
+.options-grid {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 1rem;
 }
 
-.option-btn {
-    background: #f8fafc;
-    border: 1px solid var(--border);
-    padding: 12px 16px;
-    border-radius: 8px;
-    text-align: left;
+.option-card {
+    background: white;
+    border: 0.1rem solid var(--border);
+    padding: 1rem 1.5rem;
+    border-radius: 1rem;
     cursor: pointer;
-    transition: all 0.2s;
+    text-align: left;
     font-size: 1rem;
+    transition: all 0.2s ease;
 }
 
-.option-btn:hover:not(:disabled) {
-    background: #f1f5f9;
-    border-color: #cbd5e1;
+.option-card:hover:not(:disabled) {
+    border-color: var(--text-primary);
+    background: #f1f1f1;
 }
 
-.option-btn.correct {
-    background-color: #dcfce7;
-    border-color: var(--success);
-    color: #14532d;
-    font-weight: bold;
-}
-
-.option-btn.wrong {
-    background-color: #fee2e2;
-    border-color: var(--error);
-    color: #7f1d1d;
-}
-
-.feedback {
-    margin-top: 16px;
+.option-card.correct {
+    background-color: var(--success-bg);
+    border-color: var(--success-text);
+    color: var(--success-text);
     font-weight: 600;
-    padding: 12px;
-    border-radius: 6px;
-    display: none;
 }
 
-.feedback.show {
+.option-card.wrong {
+    background-color: var(--error-bg);
+    border-color: var(--error-text);
+    color: var(--error-text);
+}
+
+.feedback-card {
+    margin-top: 1.5rem;
+    padding: 1rem 1.5rem;
+    border-radius: 1rem;
+    display: none;
+    font-weight: 500;
+}
+
+.feedback-card.show {
     display: block;
 }
 
-.btn-action {
-    margin-top: 16px;
-    background: var(--primary);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 600;
-}
-
-.btn-action:hover {
-    background: var(--primary-hover);
-}
-
+/* --- FOOTER --- */
 footer {
     text-align: center;
-    padding: 20px;
-    color: var(--text-muted);
-    font-size: 0.85rem;
+    padding: 2rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* --- RESPONSIVE DESIGN --- */
+@media screen and (max-width: 800px) {
+    nav {
+        flex-direction: column;
+        height: auto;
+        padding: 1.5rem;
+        gap: 1rem;
+    }
+
+    .hero {
+        flex-direction: column;
+        min-height: auto;
+        gap: 2rem;
+    }
+
+    .profile-pic-container {
+        width: 250px;
+        height: 250px;
+    }
 }
