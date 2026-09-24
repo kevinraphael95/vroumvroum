@@ -1,10 +1,9 @@
-// Banque de questions complète
 const questionBank = [
     {
         question: "En cas de brouillard avec une visibilité inférieure à 50 m, quelle est la vitesse maximale autorisée sur autoroute ?",
         options: ["110 km/h", "90 km/h", "70 km/h", "50 km/h"],
         answer: "50 km/h",
-        explanation: "Dès que la visibilité descend sous 50 m, la vitesse est limitée à 50 km/h max sur TOUT le réseau."
+        explanation: "Dès que la visibilité descend sous 50 m, la vitesse est limitée à 50 km/h max sur tout le réseau."
     },
     {
         question: "Quelle est la profondeur minimale légale des rainures d'un pneumatique ?",
@@ -21,7 +20,7 @@ const questionBank = [
             "Allumer automatiquement les feux de détresse"
         ],
         answer: "Conserver le contrôle de la trajectoire",
-        explanation: "L'ABS empêche les roues de se bloquer, ce qui permet de continuer à diriger le véhicule avec le volant."
+        explanation: "L'ABS empêche les roues de se bloquer, ce qui permet de continuer à diriger le véhicule."
     },
     {
         question: "Quand doit être effectué le tout premier Contrôle Technique d'un véhicule neuf ?",
@@ -43,13 +42,13 @@ const questionBank = [
             "Les véhicules les plus lourds"
         ],
         answer: "Les véhicules déjà engagés dans l'anneau",
-        explanation: "Les usagers circulant déjà sur l'anneau sont prioritaires grâce au Céder-le-passage."
+        explanation: "Les usagers circulant déjà sur l'anneau sont prioritaires grâce au panneau Cédez-le-passage."
     },
     {
         question: "Quelle est la vitesse maximale sur route à 2x1 voie hors agglomération par temps sec ?",
         options: ["70 km/h", "80 km/h", "90 km/h", "110 km/h"],
         answer: "80 km/h",
-        explanation: "Sur les routes à double sens sans séparateur central, la limite est fixée à 80 km/h."
+        explanation: "Sur les routes hors agglomération à double sens sans séparateur central, la limite est à 80 km/h."
     }
 ];
 
@@ -57,7 +56,7 @@ let currentQuestions = [];
 let currentIndex = 0;
 let score = 0;
 
-// Fonction de mélange (Fisher-Yates)
+// Mélange Aléatoire (Algorithme de Fisher-Yates)
 function shuffle(array) {
     let arr = [...array];
     for (let i = arr.length - 1; i > 0; i--) {
@@ -68,10 +67,8 @@ function shuffle(array) {
 }
 
 function initQuiz() {
-    // 1. Mélange les questions et retient les 5 premières
+    // Sélectionne 5 questions aléatoires et mélange leurs options
     currentQuestions = shuffle(questionBank).slice(0, 5);
-    
-    // 2. Pour chaque question, mélange aussi ses options
     currentQuestions.forEach(q => {
         q.shuffledOptions = shuffle(q.options);
     });
@@ -91,14 +88,14 @@ function loadQuestion() {
     optionsContainer.innerHTML = '';
     
     const feedback = document.getElementById('feedback-text');
-    feedback.className = 'feedback';
+    feedback.className = 'feedback-card';
     feedback.innerText = '';
 
     document.getElementById('next-btn').style.display = 'none';
 
     q.shuffledOptions.forEach(opt => {
         const btn = document.createElement('button');
-        btn.className = 'option-btn';
+        btn.className = 'option-card';
         btn.innerText = opt;
         btn.onclick = () => selectOption(opt, q.answer, q.explanation);
         optionsContainer.appendChild(btn);
@@ -106,7 +103,7 @@ function loadQuestion() {
 }
 
 function selectOption(selectedOpt, correctOpt, explanation) {
-    const buttons = document.querySelectorAll('.option-btn');
+    const buttons = document.querySelectorAll('.option-card');
     const feedback = document.getElementById('feedback-text');
 
     buttons.forEach(btn => {
@@ -121,12 +118,12 @@ function selectOption(selectedOpt, correctOpt, explanation) {
     if (selectedOpt === correctOpt) {
         score++;
         feedback.innerText = "Exact ! " + explanation;
-        feedback.style.backgroundColor = "#dcfce7";
-        feedback.style.color = "#14532d";
+        feedback.style.backgroundColor = "var(--success-bg)";
+        feedback.style.color = "var(--success-text)";
     } else {
         feedback.innerText = "Incorrect. " + explanation;
-        feedback.style.backgroundColor = "#fee2e2";
-        feedback.style.color = "#7f1d1d";
+        feedback.style.backgroundColor = "var(--error-bg)";
+        feedback.style.color = "var(--error-text)";
     }
 
     feedback.classList.add('show');
@@ -146,12 +143,11 @@ function showResults() {
     document.getElementById('quiz-box').style.display = 'none';
     const resultBox = document.getElementById('result-box');
     resultBox.style.display = 'block';
-    document.getElementById('score-text').innerText = `Votre score : ${score} / ${currentQuestions.length}`;
+    document.getElementById('score-text').innerText = `Score final : ${score} / ${currentQuestions.length}`;
 }
 
 function restartQuiz() {
     initQuiz();
 }
 
-// Lancement au chargement de la page
 document.addEventListener('DOMContentLoaded', initQuiz);
