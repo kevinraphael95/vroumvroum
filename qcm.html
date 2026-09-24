@@ -8,36 +8,37 @@
 </head>
 <body>
 
-<div class="container">
-    <header>
-        <h1>🚗 PermisDrive</h1>
-        <p>Entraînement interactif au Code de la route</p>
-    </header>
-
     <nav>
-        <a href="index.html" class="nav-btn">📚 Fiches de Cours</a>
-        <a href="qcm.html" class="nav-btn active">📝 Entraînement QCM</a>
+        <div class="logo">PermisDrive.</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Fiches de Cours</a></li>
+            <li><a href="qcm.html" class="active">Entraînement QCM</a></li>
+        </ul>
     </nav>
 
-    <section>
-        <h2>📝 QCM d'Entraînement</h2>
-        <div id="quiz-box">
-            <div id="question-text" class="question">Chargement...</div>
-            <div id="options-container" class="options"></div>
-            <div id="feedback-text" class="feedback"></div>
-            <button id="next-btn" class="btn-action" style="display: none;" onclick="nextQuestion()">Question suivante</button>
+    <div class="container">
+        <h2 class="section-title">Session d'Entraînement</h2>
+
+        <div id="quiz-box" class="card">
+            <div id="question-text" class="question-title">Chargement de la question...</div>
+            <div id="options-container" class="options-grid"></div>
+            <div id="feedback-text" class="feedback-card"></div>
+            
+            <div style="text-align: right; margin-top: 1.5rem;">
+                <button id="next-btn" class="btn btn-dark" style="display: none;" onclick="nextQuestion()">Question suivante</button>
+            </div>
         </div>
-        <div id="result-box" style="display: none; text-align: center;">
-            <h3 id="score-text" style="margin-bottom: 16px;"></h3>
-            <button class="btn-action" onclick="restartQuiz()">Recommencer un nouveau test</button>
+
+        <div id="result-box" class="card" style="display: none; text-align: center;">
+            <h3 id="score-text" style="margin-bottom: 1.5rem; font-size: 1.8rem;"></h3>
+            <button class="btn btn-dark" onclick="restartQuiz()">Recommencer un nouveau test</button>
         </div>
-    </section>
+    </div>
 
     <footer>
-        <p>PermisDrive — Modèle Open-Source de révision</p>
+        <p>© 2026 PermisDrive — Réviser le Code de la Route simplement.</p>
     </footer>
-</div>
 
-<script src="app.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
