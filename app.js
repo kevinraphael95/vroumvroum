@@ -1,90 +1,54 @@
-const questionBank = [
-    {
-        question: "En cas de brouillard avec une visibilité inférieure à 50 m, quelle est la vitesse maximale autorisée sur autoroute ?",
-        options: ["110 km/h", "90 km/h", "70 km/h", "50 km/h"],
-        answer: "50 km/h",
-        explanation: "Dès que la visibilité descend sous 50 m, la vitesse est limitée à 50 km/h max sur l'ensemble du réseau."
-    },
-    {
-        question: "Quelle est la profondeur minimale légale des rainures d'un pneumatique ?",
-        options: ["1,0 mm", "1,6 mm", "2,0 mm", "3,0 mm"],
-        answer: "1,6 mm",
-        explanation: "Le témoin d'usure indique la limite légale fixée à 1,6 mm."
-    },
-    {
-        question: "Que permet principalement le système ABS lors d'un freinage d'urgence ?",
-        options: [
-            "Réduire de moitié la distance d'arrêt",
-            "Conserver le contrôle de la trajectoire",
-            "Stopper le véhicule automatiquement",
-            "Allumer automatiquement les feux de détresse"
-        ],
-        answer: "Conserver le contrôle de la trajectoire",
-        explanation: "L'ABS empêche les roues de se bloquer, ce qui permet de continuer à diriger le véhicule avec le volant."
-    },
-    {
-        question: "Quand doit être effectué le tout premier Contrôle Technique d'un véhicule neuf ?",
-        options: [
-            "Au bout de 2 ans",
-            "Dans les 4 mois précédant son 4ᵉ anniversaire",
-            "À la date exacte de ses 5 ans",
-            "Tous les ans dès la première année"
-        ],
-        answer: "Dans les 4 mois précédant son 4ᵉ anniversaire",
-        explanation: "Le premier CT a lieu dans les 4 mois qui précèdent le 4ᵉ anniversaire de la première immatriculation."
-    },
-    {
-        question: "Sur un carrefour à sens giratoire, qui a la priorité ?",
-        options: [
-            "Les véhicules qui s'engagent",
-            "Les véhicules déjà engagés dans l'anneau",
-            "Le véhicule qui vient de la droite",
-            "Les véhicules les plus lourds"
-        ],
-        answer: "Les véhicules déjà engagés dans l'anneau",
-        explanation: "Les usagers circulant déjà sur l'anneau sont prioritaires (signalé par un céder-le-passage)."
-    },
-    {
-        question: "Quelle est la vitesse maximale autorisée sur route à 2x1 voie hors agglomération par temps sec ?",
-        options: ["70 km/h", "80 km/h", "90 km/h", "110 km/h"],
-        answer: "80 km/h",
-        explanation: "Sur les routes hors agglomération à double sens sans séparateur central, la limite est fixée à 80 km/h."
-    }
-];
-
-let currentQuestions = [];
+let mode = null;          // "rapide" | "infini"
+let currentQuestions = []; // utilisé en mode rapide
 let currentIndex = 0;
 let score = 0;
+let streak = 0;           // utilisé en mode infini
+let lastCategory = null;
 
-function shuffle(array) {
-    let arr = [...array];
-    for (let i = arr.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-    return arr;
+const modeSelectBox = document.getElementById('mode-select-box');
+const quizBox = document.getElementById('quiz-box');
+const resultBox = document.getElementById('result-box');
+
+function showOnly(box) {
+    [modeSelectBox, quizBox, resultBox].forEach(b => b.style.display = (b === box) ? 'block' : 'none');
 }
 
-function initQuiz() {
-    currentQuestions = shuffle(questionBank).slice(0, 5);
-    currentQuestions.forEach(q => {
-        q.shuffledOptions = shuffle(q.options);
-    });
-
-    currentIndex = 0;
+function startMode(chosenMode) {
+    mode = chosenMode;
     score = 0;
-    document.getElementById('quiz-box').style.display = 'block';
-    document.getElementById('result-box').style.display = 'none';
+    streak = 0;
+    currentIndex = 0;
+    lastCategory = null;
+
+    if (mode === 'rapide') {
+        currentQuestions = generateQuestionSet(5);
+    } else {
+        currentQuestions = [generateOneQuestion()];
+    }
+
+    document.getElementById('mode-indicator').innerText =
+        mode === 'rapide' ? 'Mode rapide — 5 questions' : 'Mode infini — jusqu\'à la première erreur';
+    document.getElementById('streak-counter').style.display = (mode === 'infini') ? 'inline-block' : 'none';
+
+    showOnly(quizBox);
     loadQuestion();
 }
 
 function loadQuestion() {
     const q = currentQuestions[currentIndex];
-    document.getElementById('question-text').innerText = `${currentIndex + 1}/${currentQuestions.length}. ${q.question}`;
-    
+    lastCategory = q.category;
+
+    const progress = mode === 'rapide'
+        ? `${currentIndex + 1}/${currentQuestions.length}`
+        : `Question ${currentIndex + 1}`;
+
+    document.getElementById('question-category').innerText = q.category;
+    document.getElementById('question-text').innerText = `${progress} — ${q.question}`;
+    document.getElementById('streak-counter').innerText = `Série : ${streak}`;
+
     const optionsContainer = document.getElementById('options-container');
     optionsContainer.innerHTML = '';
-    
+
     const feedback = document.getElementById('feedback-text');
     feedback.className = 'feedback-card';
     feedback.innerText = '';
@@ -103,6 +67,7 @@ function loadQuestion() {
 function selectOption(selectedOpt, correctOpt, explanation) {
     const buttons = document.querySelectorAll('.option-card');
     const feedback = document.getElementById('feedback-text');
+    const isCorrect = selectedOpt === correctOpt;
 
     buttons.forEach(btn => {
         btn.disabled = true;
@@ -113,22 +78,42 @@ function selectOption(selectedOpt, correctOpt, explanation) {
         }
     });
 
-    if (selectedOpt === correctOpt) {
+    if (isCorrect) {
         score++;
+        streak++;
         feedback.innerText = "Exact ! " + explanation;
         feedback.style.backgroundColor = "var(--success-bg)";
         feedback.style.color = "var(--success-text)";
+        document.getElementById('next-btn').innerText =
+            (mode === 'rapide' && currentIndex === currentQuestions.length - 1) ? 'Voir le résultat' : 'Question suivante';
     } else {
         feedback.innerText = "Incorrect. " + explanation;
         feedback.style.backgroundColor = "var(--error-bg)";
         feedback.style.color = "var(--error-text)";
+        document.getElementById('next-btn').innerText =
+            (mode === 'infini') ? 'Voir mon score' : 'Voir le résultat';
     }
 
     feedback.classList.add('show');
     document.getElementById('next-btn').style.display = 'inline-block';
+    document.getElementById('next-btn').dataset.wasCorrect = isCorrect;
 }
 
 function nextQuestion() {
+    const wasCorrect = document.getElementById('next-btn').dataset.wasCorrect === 'true';
+
+    if (mode === 'infini') {
+        if (!wasCorrect) {
+            showResults();
+            return;
+        }
+        currentIndex++;
+        currentQuestions.push(generateOneQuestion(lastCategory));
+        loadQuestion();
+        return;
+    }
+
+    // mode rapide
     currentIndex++;
     if (currentIndex < currentQuestions.length) {
         loadQuestion();
@@ -138,14 +123,21 @@ function nextQuestion() {
 }
 
 function showResults() {
-    document.getElementById('quiz-box').style.display = 'none';
-    const resultBox = document.getElementById('result-box');
-    resultBox.style.display = 'block';
-    document.getElementById('score-text').innerText = `Score final : ${score} / ${currentQuestions.length}`;
+    showOnly(resultBox);
+    if (mode === 'rapide') {
+        document.getElementById('score-text').innerText = `Score final : ${score} / ${currentQuestions.length}`;
+        document.getElementById('score-detail').innerText = '';
+    } else {
+        document.getElementById('score-text').innerText = `Série terminée à ${streak} bonne(s) réponse(s)`;
+        document.getElementById('score-detail').innerText =
+            streak >= 10 ? "Solide, tu maîtrises bien le programme." :
+            streak >= 5 ? "Pas mal, continue à réviser les thèmes qui te bloquent." :
+            "Retourne voir les fiches de cours avant de retenter.";
+    }
 }
 
-function restartQuiz() {
-    initQuiz();
+function backToModeSelect() {
+    showOnly(modeSelectBox);
 }
 
-document.addEventListener('DOMContentLoaded', initQuiz);
+document.addEventListener('DOMContentLoaded', () => showOnly(modeSelectBox));

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VroumVroum</title>
+    <title>VroumVroum — Entraînement QCM</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -19,19 +19,39 @@
     <div class="container">
         <h2 class="section-title">Session d'Entraînement</h2>
 
-        <div id="quiz-box" class="card">
+        <!-- CHOIX DU MODE -->
+        <div id="mode-select-box" class="mode-grid">
+            <button class="mode-card" onclick="startMode('rapide')">
+                <h3>⚡ Mode Rapide</h3>
+                <p>5 questions, un score final. Idéal pour une révision courte.</p>
+            </button>
+            <button class="mode-card" onclick="startMode('infini')">
+                <h3>♾️ Mode Infini</h3>
+                <p>Enchaîne les questions jusqu'à ta première erreur. Vise le meilleur score.</p>
+            </button>
+        </div>
+
+        <!-- QUIZ -->
+        <div id="quiz-box" class="card" style="display:none;">
+            <div class="quiz-header">
+                <span id="mode-indicator" class="mode-indicator"></span>
+                <span id="streak-counter" class="streak-counter"></span>
+            </div>
+            <div id="question-category" class="question-category"></div>
             <div id="question-text" class="question-title">Chargement de la question...</div>
             <div id="options-container" class="options-grid"></div>
             <div id="feedback-text" class="feedback-card"></div>
-            
+
             <div style="text-align: right; margin-top: 1.5rem;">
                 <button id="next-btn" class="btn btn-dark" style="display: none;" onclick="nextQuestion()">Question suivante</button>
             </div>
         </div>
 
-        <div id="result-box" class="card" style="display: none; text-align: center;">
-            <h3 id="score-text" style="margin-bottom: 1.5rem; font-size: 1.8rem;"></h3>
-            <button class="btn btn-dark" onclick="restartQuiz()">Recommencer un nouveau test</button>
+        <!-- RÉSULTATS -->
+        <div id="result-box" class="card result-box" style="display: none;">
+            <h3 id="score-text" class="score-text"></h3>
+            <p id="score-detail" class="score-detail"></p>
+            <button class="btn btn-dark" onclick="backToModeSelect()">Choisir un autre mode</button>
         </div>
     </div>
 
@@ -39,6 +59,7 @@
         <p>© 2026 PermisDrive — Fiches de révision du Code de la route.</p>
     </footer>
 
+    <script src="questions-data.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

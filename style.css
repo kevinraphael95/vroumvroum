@@ -12,6 +12,8 @@
     --success-text: #14532d;
     --error-bg: #fee2e2;
     --error-text: #7f1d1d;
+    --accent-bg: #eef2ff;
+    --accent-text: #3730a3;
 }
 
 * {
@@ -132,6 +134,7 @@ nav {
     text-decoration: none;
     display: inline-block;
     transition: all 0.2s ease;
+    border: none;
 }
 
 .btn-outline {
@@ -211,6 +214,76 @@ li strong {
     color: var(--text-primary);
 }
 
+/* --- ÉCRAN DE CHOIX DE MODE (QCM) --- */
+.mode-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.mode-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 1.2rem;
+    padding: 1.8rem;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: var(--text-primary);
+}
+
+.mode-card:hover {
+    border-color: var(--text-primary);
+    transform: translateY(-2px);
+}
+
+.mode-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.6rem;
+}
+
+.mode-card p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+/* --- EN-TÊTE DU QUIZ --- */
+.quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+}
+
+.mode-indicator {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.streak-counter {
+    background: var(--accent-bg);
+    color: var(--accent-text);
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 1rem;
+}
+
+.question-category {
+    display: inline-block;
+    background: var(--border);
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.2rem 0.7rem;
+    border-radius: 0.6rem;
+    margin-bottom: 0.8rem;
+}
+
 /* QCM */
 .question-title {
     font-size: 1.15rem;
@@ -266,6 +339,21 @@ li strong {
     display: block;
 }
 
+/* --- RÉSULTATS --- */
+.result-box {
+    text-align: center;
+}
+
+.score-text {
+    font-size: 1.8rem;
+    margin-bottom: 0.8rem;
+}
+
+.score-detail {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
 footer {
     text-align: center;
     padding: 2rem;
@@ -299,5 +387,9 @@ footer {
 
     .btn-container {
         justify-content: center;
+    }
+
+    .mode-grid {
+        grid-template-columns: 1fr;
     }
 }
