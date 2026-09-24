@@ -3,7 +3,7 @@ const questionBank = [
         question: "En cas de brouillard avec une visibilité inférieure à 50 m, quelle est la vitesse maximale autorisée sur autoroute ?",
         options: ["110 km/h", "90 km/h", "70 km/h", "50 km/h"],
         answer: "50 km/h",
-        explanation: "Dès que la visibilité descend sous 50 m, la vitesse est limitée à 50 km/h max sur tout le réseau."
+        explanation: "Dès que la visibilité descend sous 50 m, la vitesse est limitée à 50 km/h max sur l'ensemble du réseau."
     },
     {
         question: "Quelle est la profondeur minimale légale des rainures d'un pneumatique ?",
@@ -16,11 +16,11 @@ const questionBank = [
         options: [
             "Réduire de moitié la distance d'arrêt",
             "Conserver le contrôle de la trajectoire",
-            "Stopper le véhicule automatiquement sans toucher à la pédale",
+            "Stopper le véhicule automatiquement",
             "Allumer automatiquement les feux de détresse"
         ],
         answer: "Conserver le contrôle de la trajectoire",
-        explanation: "L'ABS empêche les roues de se bloquer, ce qui permet de continuer à diriger le véhicule."
+        explanation: "L'ABS empêche les roues de se bloquer, ce qui permet de continuer à diriger le véhicule avec le volant."
     },
     {
         question: "Quand doit être effectué le tout premier Contrôle Technique d'un véhicule neuf ?",
@@ -31,7 +31,7 @@ const questionBank = [
             "Tous les ans dès la première année"
         ],
         answer: "Dans les 4 mois précédant son 4ᵉ anniversaire",
-        explanation: "Le premier CT a lieu dans les 4 mois qui précèdent le 4ᵉ anniversaire de la mise en circulation."
+        explanation: "Le premier CT a lieu dans les 4 mois qui précèdent le 4ᵉ anniversaire de la première immatriculation."
     },
     {
         question: "Sur un carrefour à sens giratoire, qui a la priorité ?",
@@ -42,13 +42,13 @@ const questionBank = [
             "Les véhicules les plus lourds"
         ],
         answer: "Les véhicules déjà engagés dans l'anneau",
-        explanation: "Les usagers circulant déjà sur l'anneau sont prioritaires grâce au panneau Cédez-le-passage."
+        explanation: "Les usagers circulant déjà sur l'anneau sont prioritaires (signalé par un céder-le-passage)."
     },
     {
-        question: "Quelle est la vitesse maximale sur route à 2x1 voie hors agglomération par temps sec ?",
+        question: "Quelle est la vitesse maximale autorisée sur route à 2x1 voie hors agglomération par temps sec ?",
         options: ["70 km/h", "80 km/h", "90 km/h", "110 km/h"],
         answer: "80 km/h",
-        explanation: "Sur les routes hors agglomération à double sens sans séparateur central, la limite est à 80 km/h."
+        explanation: "Sur les routes hors agglomération à double sens sans séparateur central, la limite est fixée à 80 km/h."
     }
 ];
 
@@ -56,7 +56,6 @@ let currentQuestions = [];
 let currentIndex = 0;
 let score = 0;
 
-// Mélange Aléatoire (Algorithme de Fisher-Yates)
 function shuffle(array) {
     let arr = [...array];
     for (let i = arr.length - 1; i > 0; i--) {
@@ -67,7 +66,6 @@ function shuffle(array) {
 }
 
 function initQuiz() {
-    // Sélectionne 5 questions aléatoires et mélange leurs options
     currentQuestions = shuffle(questionBank).slice(0, 5);
     currentQuestions.forEach(q => {
         q.shuffledOptions = shuffle(q.options);
