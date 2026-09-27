@@ -1186,3 +1186,10 @@ footer {
     padding: 0.8rem 0.8rem 0.3rem;
   }
 }
+
+.result-actions {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
