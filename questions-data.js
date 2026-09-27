@@ -1,7 +1,12 @@
 /* =========================================================
    BANQUE DE QUESTIONS.
    Templates paramétrables — génèrent des questions variées.
-   Alignés sur les 20 fiches de fiches-data.js.
+   Alignés sur les 24 fiches de fiches-data.js.
+
+   SOURCES :
+   - Service-Public.gouv.fr (documents, assurance, sanctions)
+   - Sécurité Routière (thèmes officiels ETG)
+   - Codes Rousseau / Ornikar / Permisécole (contenu pédagogique)
    ========================================================= */
 
 function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
@@ -52,11 +57,17 @@ const questionTemplates = [
   {
     category: "Vitesses",
     generate() {
+      const seuils = [
+        { seuil: 50, limite: "50 km/h" },
+        { seuil: 100, limite: "80 km/h" }
+      ];
+      const s = pick(seuils);
+      const wrongs = ["50 km/h", "70 km/h", "80 km/h", "90 km/h", "110 km/h"].filter(v => v !== s.limite);
       return buildQuestion("Vitesses",
-        "En cas de brouillard avec une visibilité inférieure à 50 m, quelle est la vitesse maximale autorisée ?",
-        "50 km/h",
-        ["70 km/h", "90 km/h", "110 km/h"],
-        "Dès que la visibilité descend sous 50 m, la vitesse est limitée à 50 km/h sur l'ensemble du réseau.");
+        `En cas de brouillard avec une visibilité inférieure à ${s.seuil} m, quelle est la vitesse maximale autorisée ?`,
+        s.limite,
+        shuffle(wrongs).slice(0, 3),
+        `Dès que la visibilité descend sous ${s.seuil} m, la vitesse est limitée à ${s.limite} sur l'ensemble du réseau.`);
     }
   },
   {
@@ -146,6 +157,23 @@ const questionTemplates = [
         l.r, shuffle(wrongs).slice(0, 3), l.exp);
     }
   },
+  {
+    category: "Marquage au sol",
+    generate() {
+      const cas = [
+        { q: "Que signifie une bande d'arrêt d'urgence ?",
+          r: "Elle est réservée aux arrêts d'urgence et véhicules de secours",
+          wrongs: ["Elle sert à dépasser", "Elle est réservée aux bus", "Elle est utilisable pour les pauses"],
+          exp: "La bande d'arrêt d'urgence est strictement réservée aux urgences et aux véhicules de secours." },
+        { q: "Que doit faire un conducteur à l'approche d'un passage piéton ?",
+          r: "Céder le passage à tout piéton engagé ou manifestant l'intention de traverser",
+          wrongs: ["Klaxonner pour prévenir le piéton", "Accélérer pour passer avant", "S'arrêter uniquement si un piéton est déjà engagé"],
+          exp: "On doit céder le passage à tout piéton engagé ou sur le point de s'engager." }
+      ];
+      const c = pick(cas);
+      return buildQuestion("Marquage au sol", c.q, c.r, c.wrongs, c.exp);
+    }
+  },
 
   /* ==================== DÉPASSEMENT ==================== */
   {
@@ -231,11 +259,32 @@ const questionTemplates = [
   {
     category: "Mécanique",
     generate() {
+      const mois = pick([4, 6, 12]);
+      const correct = `Dans les ${mois} mois précédant son 4ᵉ anniversaire`;
       return buildQuestion("Mécanique",
         "Quand doit être effectué le tout premier Contrôle Technique d'un véhicule neuf ?",
-        "Dans les 4 mois précédant son 4ᵉ anniversaire",
+        correct,
         ["Au bout de 2 ans", "À la date exacte de ses 5 ans", "Tous les ans dès la première année"],
-        "Le premier CT a lieu dans les 4 mois précédant le 4ᵉ anniversaire, puis tous les 2 ans.");
+        `Le premier CT a lieu dans les 4 mois précédant le 4ᵉ anniversaire, puis tous les 2 ans.`);
+    }
+  },
+  {
+    category: "Mécanique",
+    generate() {
+      const fluides = [
+        { f: "le liquide de frein", r: "Il doit être vérifié régulièrement, une baisse anormale signale une fuite",
+          exp: "Le niveau de liquide de frein doit être vérifié régulièrement ; une baisse anormale signale une fuite." },
+        { f: "le liquide de refroidissement", r: "Il se vérifie moteur froid, jamais à chaud",
+          exp: "Le liquide de refroidissement se vérifie moteur froid, sinon risque de brûlure." },
+        { f: "l'huile moteur", r: "Elle se vérifie moteur froid, véhicule à plat, avec la jauge",
+          exp: "L'huile moteur se vérifie moteur froid, véhicule à plat, à l'aide de la jauge." }
+      ];
+      const f = pick(fluides);
+      return buildQuestion("Mécanique",
+        `Comment vérifier ${f.f} ?`,
+        f.r,
+        ["Moteur chaud et en marche", "Uniquement en concession", "Jamais, c'est inutile"],
+        f.exp);
     }
   },
 
@@ -273,7 +322,11 @@ const questionTemplates = [
         { q: "Le voyant AdBlue s'allume. Que se passe-t-il si on ignore ?",
           r: "Le véhicule refusera de démarrer",
           wrongs: ["Rien, c'est purement indicatif", "Le moteur surchauffe", "Les freins ne fonctionnent plus"],
-          exp: "Si l'AdBlue n'est pas rechargé, le véhicule refusera de démarrer." }
+          exp: "Si l'AdBlue n'est pas rechargé, le véhicule refusera de démarrer." },
+        { q: "Un voyant rouge de température moteur s'allume. Que faire ?",
+          r: "S'arrêter immédiatement et laisser refroidir",
+          wrongs: ["Continuer à rouler doucement", "Ouvrir le bocal de refroidissement à chaud", "Accélérer pour refroidir le moteur"],
+          exp: "Une surchauffe moteur impose un arrêt immédiat. Ne jamais ouvrir le bocal à chaud (risque de brûlure)." }
       ];
       const c = pick(cas);
       return buildQuestion("Voyants", c.q, c.r, c.wrongs, c.exp);
@@ -339,7 +392,11 @@ const questionTemplates = [
           exp: "Le gilet doit être enfilé AVANT de sortir du véhicule, pour être visible dès la descente." },
         { q: "Quel est le seul élément NON obligatoire parmi ceux-ci ?",
           r: "L'éthylotest", wrongs: ["Le gilet haute visibilité", "Le triangle", "Les plaques d'immatriculation"],
-          exp: "L'éthylotest est recommandé, mais pas obligatoire à bord." }
+          exp: "L'éthylotest est recommandé, mais pas obligatoire à bord." },
+        { q: "Que doit-on vérifier sur ses pneumatiques ?",
+          r: "La profondeur des rainures et la pression",
+          wrongs: ["Uniquement la marque", "Uniquement la couleur", "Rien, tant qu'ils ne crèvent pas"],
+          exp: "La profondeur minimale est de 1,6 mm. La pression doit être vérifiée régulièrement (sous-gonflage = surconsommation et risque d'éclatement)." }
       ];
       const c = pick(cas);
       return buildQuestion("Équipements", c.q, c.r, c.wrongs, c.exp);
@@ -365,6 +422,27 @@ const questionTemplates = [
         `Le taux légal maximal est de ${p.taux} pour ${p.profil}.`);
     }
   },
+  {
+    category: "Alcool & stupéfiants",
+    generate() {
+      const cas = [
+        { q: "Que risque un conducteur qui refuse un dépistage d'alcoolémie ?",
+          r: "Jusqu'à 2 ans de prison et 4 500 € d'amende",
+          wrongs: ["Un simple avertissement", "Une amende de 35 € seulement", "Rien, c'est un droit"],
+          exp: "Le refus de dépistage est un délit puni de 2 ans d'emprisonnement et 4 500 € d'amende." },
+        { q: "Qu'est-ce que la polyconsommation ?",
+          r: "La prise combinée de plusieurs substances (alcool, drogues, médicaments) aux effets multipliés",
+          wrongs: ["Boire plusieurs verres d'alcool différents", "Consommer de l'alcool à plusieurs personnes", "Mélanger alcool et boissons énergisantes"],
+          exp: "La polyconsommation désigne la prise combinée de plusieurs substances incompatibles (alcool + drogues + médicaments) : les effets sont multipliés et le danger maximal." },
+        { q: "Boire un café fait-il baisser l'alcoolémie ?",
+          r: "Non, seul le temps compte",
+          wrongs: ["Oui, ça accélère l'élimination", "Oui, si on boit beaucoup d'eau", "Oui, si on mange en même temps"],
+          exp: "Boire un café, dormir ou manger ne fait pas baisser l'alcoolémie. Seul le temps compte (environ 0,10 à 0,15 g/l éliminé par heure)." }
+      ];
+      const c = pick(cas);
+      return buildQuestion("Alcool & stupéfiants", c.q, c.r, c.wrongs, c.exp);
+    }
+  },
 
   /* ==================== CONDUCTEUR ==================== */
   {
@@ -382,7 +460,15 @@ const questionTemplates = [
         { q: "L'usage du téléphone tenu en main au volant est :",
           r: "Interdit et sanctionné par une amende et un retrait de points",
           wrongs: ["Autorisé en agglomération", "Autorisé à l'arrêt à un feu", "Autorisé en mode haut-parleur"],
-          exp: "Tenir son téléphone au volant est interdit, même à l'arrêt dans un embouteillage. Amende 135 € et -3 points." }
+          exp: "Tenir son téléphone au volant est interdit, même à l'arrêt dans un embouteillage. Amende 135 € et -3 points." },
+        { q: "Combien de temps dure en moyenne le temps de réaction d'un conducteur ?",
+          r: "Environ 1 seconde",
+          wrongs: ["Environ 0,2 seconde", "Environ 2 secondes", "Environ 3 secondes"],
+          exp: "Le temps de réaction moyen est d'environ 1 seconde. Il augmente avec la fatigue, l'alcool et la vitesse." },
+        { q: "De quoi est composée la distance d'arrêt ?",
+          r: "Distance de réaction + distance de freinage",
+          wrongs: ["Distance de freinage uniquement", "Distance de réaction uniquement", "Distance parcourue en 2 secondes"],
+          exp: "La distance d'arrêt = distance de réaction (1 s) + distance de freinage. Elle augmente avec la vitesse et par temps de pluie." }
       ];
       const c = pick(cas);
       return buildQuestion("Conducteur", c.q, c.r, c.wrongs, c.exp);
@@ -403,7 +489,11 @@ const questionTemplates = [
         { q: "Que signifie une infraction de 5ᵉ classe ?",
           r: "Une infraction grave, avec retrait de 6 points et possible suspension",
           wrongs: ["Une simple contravention sans conséquence", "Une infraction uniquement passible d'une amende", "Une infraction réservée aux poids lourds"],
-          exp: "Les infractions de 5ᵉ classe entraînent 6 points de retrait, avec possibilité de suspension ou d'annulation du permis." }
+          exp: "Les infractions de 5ᵉ classe entraînent 6 points de retrait, avec possibilité de suspension ou d'annulation du permis." },
+        { q: "Qu'est-ce qu'un délit au Code de la route ?",
+          r: "Une infraction grave, punie de prison et d'une amende élevée",
+          wrongs: ["Une simple contravention de 1ʳᵉ classe", "Une infraction sans conséquence", "Une infraction uniquement administrative"],
+          exp: "Le délit est le 2ᵉ niveau de gravité après la contravention. Exemples : alcoolémie ≥ 0,8 g/l, refus d'obtempérer, délit de fuite." }
       ];
       const c = pick(cas);
       return buildQuestion("Infractions", c.q, c.r, c.wrongs, c.exp);
@@ -414,20 +504,53 @@ const questionTemplates = [
   {
     category: "Documents",
     generate() {
-      const docs = [
-        { d: "la carte grise", r: "Obligatoire à bord du véhicule",
-          exp: "Le certificat d'immatriculation (carte grise) doit être à bord." },
-        { d: "l'attestation d'assurance", r: "Obligatoire à bord du véhicule",
-          exp: "La preuve d'assurance doit pouvoir être présentée lors d'un contrôle." },
-        { d: "le permis de conduire", r: "Obligatoire à présenter en cas de contrôle",
-          exp: "Le permis de conduire doit être présenté lors d'un contrôle routier." }
+      const cas = [
+        { q: "Quels documents doit-on présenter lors d'un contrôle routier ?",
+          r: "Permis de conduire et carte grise",
+          wrongs: ["Uniquement le permis", "Permis, carte grise et attestation d'assurance", "Uniquement la carte grise"],
+          exp: "Permis et carte grise sont obligatoires. Depuis avril 2024, l'assurance n'est plus à présenter (vérification via le Fichier des Véhicules Assurés)." },
+        { q: "Que se passe-t-il si on ne peut pas présenter ses documents immédiatement ?",
+          r: "Amende jusqu'à 38 €, et jusqu'à 750 € sans justification sous 5 jours",
+          wrongs: ["Rien, on a toujours 30 jours", "Suspension immédiate du permis", "Amende fixe de 500 €"],
+          exp: "Ne pas présenter immédiatement = amende jusqu'à 38 €. Sans justification sous 5 jours = jusqu'à 750 €." },
+        { q: "Le permis de conduire numérique est-il accepté lors d'un contrôle ?",
+          r: "Oui, via l'application France Identité",
+          wrongs: ["Non, seul le format papier est valable", "Uniquement pour les moins de 25 ans", "Uniquement en agglomération"],
+          exp: "Le permis numérique via France Identité est accepté, comme l'Attestation de Droits à Conduire Sécurisée (valable 4 mois)." },
+        { q: "Que doit faire un conducteur qui a perdu son permis ?",
+          r: "Présenter le récépissé de déclaration de perte, valable 2 mois",
+          wrongs: ["Rien, il peut conduire sans document", "Attendre 6 mois", "Payer une amende de 500 €"],
+          exp: "Le récépissé de déclaration de perte ou de vol remplace le permis pendant 2 mois maximum." }
       ];
-      const d = pick(docs);
-      return buildQuestion("Documents",
-        `Concernant ${d.d}, que dit la loi ?`,
-        d.r,
-        ["Facultatif si le véhicule est récent", "Uniquement nécessaire pour les longs trajets", "Remplaçable par une simple photo"],
-        d.exp);
+      const c = pick(cas);
+      return buildQuestion("Documents", c.q, c.r, c.wrongs, c.exp);
+    }
+  },
+
+  /* ==================== ASSURANCE ==================== */
+  {
+    category: "Assurance",
+    generate() {
+      const cas = [
+        { q: "L'assurance auto est-elle obligatoire ?",
+          r: "Oui, pour tout véhicule terrestre à moteur, même s'il ne circule pas",
+          wrongs: ["Non, uniquement si on roule", "Oui, mais uniquement pour les voitures neuves", "Non, c'est facultatif"],
+          exp: "Tout véhicule terrestre à moteur doit être assuré, même immobile. Seul un véhicule démonté (roues, batterie retirées) en est exempté." },
+        { q: "Quelle garantie minimale l'assurance auto doit-elle couvrir ?",
+          r: "La responsabilité civile (dommages causés aux tiers)",
+          wrongs: ["Le vol du véhicule", "Le bris de glace", "Les dommages au véhicule du conducteur"],
+          exp: "L'assurance au tiers couvre uniquement les dommages causés aux autres. Le conducteur responsable et son véhicule ne sont pas indemnisés." },
+        { q: "Depuis avril 2024, comment vérifie-t-on qu'un véhicule est assuré ?",
+          r: "Via le Fichier des Véhicules Assurés (FVA)",
+          wrongs: ["Avec la carte verte sur le pare-brise", "Avec l'attestation papier obligatoire", "En appelant l'assureur"],
+          exp: "La carte verte a été supprimée en avril 2024. La vérification se fait via le Fichier des Véhicules Assurés." },
+        { q: "Que risque un conducteur qui roule sans assurance ?",
+          r: "Jusqu'à 3 750 € d'amende et confiscation possible du véhicule",
+          wrongs: ["Un simple avertissement", "Une amende de 135 €", "Rien, c'est une infraction mineure"],
+          exp: "Le défaut d'assurance est un délit puni de 3 750 € d'amende. Peines complémentaires : suspension, annulation, confiscation du véhicule." }
+      ];
+      const c = pick(cas);
+      return buildQuestion("Assurance", c.q, c.r, c.wrongs, c.exp);
     }
   },
 
@@ -435,11 +558,25 @@ const questionTemplates = [
   {
     category: "Premiers secours",
     generate() {
-      return buildQuestion("Premiers secours",
-        "Quel est l'ordre correct des actions à mener face à un accident de la route ?",
-        "Protéger, Alerter, Secourir",
-        ["Secourir, Alerter, Protéger", "Alerter, Secourir, Protéger", "Secourir, Protéger, Alerter"],
-        "Protéger la zone, Alerter les secours, puis Secourir si on est formé.");
+      const cas = [
+        { q: "Quel est l'ordre correct des actions à mener face à un accident de la route ?",
+          r: "Protéger, Alerter, Secourir",
+          wrongs: ["Secourir, Alerter, Protéger", "Alerter, Secourir, Protéger", "Secourir, Protéger, Alerter"],
+          exp: "Protéger la zone, Alerter les secours, puis Secourir si on est formé." },
+        { q: "Que faire face à une victime inconsciente qui respire ?",
+          r: "La placer en Position Latérale de Sécurité (PLS)",
+          wrongs: ["La redresser assise", "Lui donner à boire", "La laisser sur le dos"],
+          exp: "Une victime inconsciente qui respire doit être placée en PLS en attendant les secours." },
+        { q: "Que faire face à une victime inconsciente qui ne respire plus ?",
+          r: "Débuter un massage cardiaque + défibrillateur si disponible",
+          wrongs: ["Attendre les secours sans rien faire", "Lui donner à boire", "La mettre en PLS"],
+          exp: "Une victime inconsciente qui ne respire plus impose un massage cardiaque immédiat et l'usage d'un défibrillateur si disponible." },
+        { q: "Quel numéro d'urgence est valable dans toute l'Union européenne ?",
+          r: "112", wrongs: ["15", "18", "911"],
+          exp: "Le 112 est le numéro d'urgence européen. En France, 15 (SAMU) et 18 (Pompiers) fonctionnent aussi." }
+      ];
+      const c = pick(cas);
+      return buildQuestion("Premiers secours", c.q, c.r, c.wrongs, c.exp);
     }
   },
 
@@ -462,7 +599,15 @@ const questionTemplates = [
         { q: "Un bus quitte son arrêt en agglomération. Que faire ?",
           r: "Le laisser passer",
           wrongs: ["Klaxonner", "Le dépasser rapidement", "Rien, je suis prioritaire"],
-          exp: "En agglomération, les bus qui quittent leur arrêt sont prioritaires." }
+          exp: "En agglomération, les bus qui quittent leur arrêt sont prioritaires." },
+        { q: "Quel usager est prioritaire sur tous les autres ?",
+          r: "Le piéton (sauf face au tramway)",
+          wrongs: ["Le cycliste", "Le motard", "Le poids lourd"],
+          exp: "Le piéton est l'usager le plus vulnérable : il est prioritaire sur tous les autres, sauf face au tramway." },
+        { q: "Pourquoi faut-il se méfier des angles morts des poids lourds ?",
+          r: "Le conducteur ne voit pas les véhicules qui s'y trouvent",
+          wrongs: ["Ils roulent trop vite", "Ils freinent mal", "Ils changent souvent de voie"],
+          exp: "Les poids lourds ont des angles morts très larges. Il ne faut jamais rester à côté ou juste derrière eux." }
       ];
       const c = pick(cas);
       return buildQuestion("Autres usagers", c.q, c.r, c.wrongs, c.exp);
@@ -485,7 +630,11 @@ const questionTemplates = [
         { q: "Que signale un appel de phare ?",
           r: "Un danger, ou (à tort) une autorisation de passer",
           wrongs: ["Uniquement un salut", "Uniquement la priorité à droite", "Uniquement un contrôle policier"],
-          exp: "L'appel de phare signale souvent un danger. Il ne doit pas être interprété comme une autorisation de passer." }
+          exp: "L'appel de phare signale souvent un danger. Il ne doit pas être interprété comme une autorisation de passer." },
+        { q: "Quand faut-il activer les feux de détresse (warning) ?",
+          r: "En cas de panne, de ralentissement brusque ou d'arrêt d'urgence",
+          wrongs: ["Pour stationner en double file", "Pour prévenir d'un dépassement", "Uniquement en cas de brouillard"],
+          exp: "Le warning signale un danger immédiat : panne, freinage brusque, dernier de la file en cas de bouchon." }
       ];
       const c = pick(cas);
       return buildQuestion("Communication", c.q, c.r, c.wrongs, c.exp);
@@ -504,7 +653,9 @@ const questionTemplates = [
         { forme: "un panneau rond bleu", sens: "Panneau d'obligation",
           exp: "Les panneaux ronds bleus indiquent une obligation." },
         { forme: "un panneau carré bleu", sens: "Panneau d'indication",
-          exp: "Les panneaux carrés bleus donnent une indication." }
+          exp: "Les panneaux carrés bleus donnent une indication." },
+        { forme: "un panneau octogonal rouge", sens: "Panneau Stop (arrêt obligatoire)",
+          exp: "Le panneau Stop est le seul panneau octogonal. Il impose un arrêt complet à la ligne d'effet." }
       ];
       const f = pick(formes);
       return buildQuestion("Signalisation",
@@ -525,7 +676,9 @@ const questionTemplates = [
         { r: "Passer les rapports de vitesse tôt, sans monter dans les tours",
           exp: "Rouler à bas régime réduit la consommation." },
         { r: "Couper le moteur à l'arrêt prolongé",
-          exp: "Couper le moteur au-delà de 30 secondes d'arrêt réduit la consommation et la pollution." }
+          exp: "Couper le moteur au-delà de 30 secondes d'arrêt réduit la consommation et la pollution." },
+        { r: "Vérifier régulièrement la pression des pneus",
+          exp: "Des pneus sous-gonflés augmentent la consommation et l'usure." }
       ];
       const c = pick(conseils);
       return buildQuestion("Écoconduite",
@@ -533,6 +686,95 @@ const questionTemplates = [
         c.r,
         ["Accélérer fortement puis freiner brusquement", "Rouler avec des pneus sous-gonflés", "Laisser tourner le moteur au ralenti à l'arrêt prolongé"],
         c.exp);
+    }
+  },
+
+  /* ==================== CONDUITE DIFFICILE ==================== */
+  {
+    category: "Conduite difficile",
+    generate() {
+      const cas = [
+        { q: "Qu'est-ce que l'aquaplanage ?",
+          r: "Une perte de contact des pneus avec la route, due à une pellicule d'eau",
+          wrongs: ["Une projection d'eau sur le pare-brise", "Un excès de vitesse sous la pluie", "Un défaut d'essuie-glaces"],
+          exp: "L'aquaplanage survient quand les pneus ne peuvent plus évacuer l'eau. Il faut relâcher l'accélérateur et tenir le volant, sans freiner brusquement." },
+        { q: "Quelle est la vitesse maximale en cas de brouillard avec visibilité inférieure à 50 m ?",
+          r: "50 km/h",
+          wrongs: ["70 km/h", "80 km/h", "110 km/h"],
+          exp: "Dès que la visibilité descend sous 50 m, la vitesse est limitée à 50 km/h sur tout le réseau." },
+        { q: "Quels feux utiliser en cas de brouillard ?",
+          r: "Feux de croisement + feux de brouillard avant",
+          wrongs: ["Feux de route", "Feux de position uniquement", "Feux de détresse"],
+          exp: "En cas de brouillard, on utilise les feux de croisement et les feux de brouillard avant. Les feux de route éblouissent et se réfléchissent dans le brouillard." },
+        { q: "Comment conduire sur une chaussée verglacée ?",
+          r: "En douceur, sans freinage brusque ni accélération vive",
+          wrongs: ["En accélérant fort pour garder l'adhérence", "En freinant brusquement aux virages", "En roulant au pas uniquement"],
+          exp: "Sur le verglas, toute manœuvre brusque fait perdre l'adhérence. Il faut conduire en douceur et anticiper." },
+        { q: "Que faire en cas de vent latéral violent ?",
+          r: "Tenir fermement le volant et réduire la vitesse",
+          wrongs: ["Accélérer pour stabiliser le véhicule", "Ouvrir les vitres", "Klaxonner"],
+          exp: "Le vent latéral peut déporter le véhicule, surtout à la sortie d'un tunnel ou sur un pont. Tenir le volant et ralentir." }
+      ];
+      const c = pick(cas);
+      return buildQuestion("Conduite difficile", c.q, c.r, c.wrongs, c.exp);
+    }
+  },
+
+  /* ==================== PRENDRE / QUITTER ==================== */
+  {
+    category: "Prendre & quitter",
+    generate() {
+      const cas = [
+        { q: "Que faut-il vérifier avant d'ouvrir sa portière ?",
+          r: "Le rétroviseur et l'angle mort, pour éviter les cyclistes et piétons",
+          wrongs: ["Uniquement le rétroviseur intérieur", "Rien, on ouvre directement", "Uniquement le rétroviseur extérieur gauche"],
+          exp: "Avant d'ouvrir, il faut vérifier le rétroviseur ET l'angle mort. Un cycliste percuté par une portière = accident grave (emportiérage)." },
+        { q: "Comment régler son siège en position de conduite ?",
+          r: "Pouvoir enfoncer les pédales à fond, bras légèrement fléchis sur le volant",
+          wrongs: ["Le plus en arrière possible", "Le plus près possible du volant", "Peu importe, tant qu'on est assis"],
+          exp: "Le siège doit permettre d'enfoncer les pédales à fond et d'avoir les bras légèrement fléchis sur le volant." },
+        { q: "Que faire en quittant son véhicule ?",
+          r: "Couper le moteur, serrer le frein à main, retirer la clé et fermer",
+          wrongs: ["Laisser le moteur tourner", "Laisser les clés sur le contact", "Laisser une portière ouverte"],
+          exp: "En quittant son véhicule : couper le moteur, serrer le frein à main, retirer la clé, fermer à clé." },
+        { q: "Où sortir de son véhicule en cas d'arrêt d'urgence sur autoroute ?",
+          r: "Du côté opposé à la circulation",
+          wrongs: ["Du côté conducteur", "Peu importe", "Par le coffre"],
+          exp: "Sur autoroute, on sort du côté opposé au trafic pour se mettre en sécurité derrière la glissière." }
+      ];
+      const c = pick(cas);
+      return buildQuestion("Prendre & quitter", c.q, c.r, c.wrongs, c.exp);
+    }
+  },
+
+  /* ==================== SÉCURITÉ PASSAGER ==================== */
+  {
+    category: "Sécurité passager",
+    generate() {
+      const cas = [
+        { q: "Le port de la ceinture est-il obligatoire à l'arrière ?",
+          r: "Oui, à toutes les places, à l'avant comme à l'arrière",
+          wrongs: ["Non, uniquement à l'avant", "Uniquement sur autoroute", "Uniquement pour les enfants"],
+          exp: "Le port de la ceinture est obligatoire à toutes les places. Un passager non attaché à l'arrière peut tuer le conducteur en cas de choc." },
+        { q: "Jusqu'à quel âge un enfant doit-il être installé dans un dispositif de retenue homologué ?",
+          r: "Jusqu'à 10 ans",
+          wrongs: ["Jusqu'à 5 ans", "Jusqu'à 12 ans", "Jusqu'à 15 ans"],
+          exp: "Les enfants de moins de 10 ans doivent être installés dans un siège homologué adapté à leur poids et à leur taille." },
+        { q: "Peut-on installer un siège bébé dos à la route sur le siège passager avant ?",
+          r: "Oui, mais uniquement si l'airbag passager est désactivé",
+          wrongs: ["Oui, sans condition", "Non, jamais", "Uniquement pour les trajets courts"],
+          exp: "Un siège bébé dos à la route ne doit JAMAIS être placé face à un airbag actif : le déploiement tuerait l'enfant. Il faut désactiver l'airbag passager." },
+        { q: "Où doit-on ranger les objets lourds dans une voiture ?",
+          r: "Dans le coffre, arrimés",
+          wrongs: ["Sur la plage arrière", "Sur les genoux des passagers", "Sous les sièges avant"],
+          exp: "Les objets lourds doivent être dans le coffre, arrimés. Sur la plage arrière, ils deviennent des projectiles en cas de freinage." },
+        { q: "Combien de passagers peut-on transporter dans un véhicule ?",
+          r: "Autant que de places indiquées sur la carte grise",
+          wrongs: ["Autant qu'on veut", "Uniquement 4", "Uniquement 5"],
+          exp: "Le nombre de passagers est limité aux places indiquées sur la carte grise. Tous doivent être attachés." }
+      ];
+      const c = pick(cas);
+      return buildQuestion("Sécurité passager", c.q, c.r, c.wrongs, c.exp);
     }
   }
 ];
