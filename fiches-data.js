@@ -2,6 +2,11 @@
    CONTENU DES FICHES DE COURS.
    Source unique pour fiches.html (rendu via fiches.js).
    Chaque fiche a un "groupe" pour regrouper dans la sidebar.
+
+   SOURCES PRINCIPALES :
+   - Service-Public.gouv.fr (documents, assurance, infractions)
+   - Sécurité Routière (thèmes officiels ETG)
+   - Codes Rousseau / Ornikar / Permisécole (thèmes pédagogiques)
    ========================================================= */
 
 const FICHES = [
@@ -225,6 +230,7 @@ const FICHES = [
       { label: "Permis probatoire",           texte: "Max <strong>0,2 g/l</strong> de sang (0,10 mg/l d'air expiré)." },
       { label: "Stupéfiants",                 texte: "Tolérance zéro. Dépistage salivaire autorisé." },
       { label: "Médicaments",                 texte: "Certains altèrent la conduite : respecter les pictogrammes de la notice." },
+      { label: "Polyconsommation",            texte: "Prise combinée de plusieurs substances (alcool + drogues + médicaments) : effets multipliés, danger maximal." },
       { label: "Refus de dépistage",          texte: "Délit : jusqu'à 2 ans de prison et 4 500 € d'amende." },
       { label: "Conduite en état d'ivresse",  texte: "Délit : jusqu'à 2 ans de prison et 4 500 € d'amende." }
     ],
@@ -238,12 +244,14 @@ const FICHES = [
     titre: "Conducteur : aptitude & vigilance",
     type: "list",
     items: [
-      { label: "Fatigue",              texte: "Pause toutes les 2 heures. Signes : paupières lourdes, bâillements, perte de concentration." },
-      { label: "Vue",                  texte: "Champ visuel réduit de nuit. Acuité visuelle minimale requise pour le permis." },
-      { label: "Téléphone",            texte: "Téléphone tenu en main interdit. Kit mains libres toléré mais déconseillé." },
-      { label: "Oreillette / casque",  texte: "Interdits au volant (sauf appareils auditifs médicaux)." },
-      { label: "Alcool & fatigue",     texte: "Effets cumulatifs : à éviter absolument." },
-      { label: "Aptitude médicale",    texte: "Certaines pathologies et traitements imposent une visite médicale régulière." }
+      { label: "Temps de réaction",     texte: "Environ 1 seconde. Distance parcourue pendant ce temps = distance de réaction." },
+      { label: "Distance d'arrêt",      texte: "Distance de réaction + distance de freinage. Augmente avec la vitesse et par temps de pluie." },
+      { label: "Fatigue",               texte: "Pause toutes les 2 heures. Signes : paupières lourdes, bâillements, perte de concentration." },
+      { label: "Vue",                   texte: "Champ visuel réduit de nuit (champ de 120°). Acuité visuelle minimale requise pour le permis." },
+      { label: "Téléphone",             texte: "Téléphone tenu en main interdit. Kit mains libres toléré mais déconseillé." },
+      { label: "Oreillette / casque",   texte: "Interdits au volant (sauf appareils auditifs médicaux)." },
+      { label: "Alcool & fatigue",      texte: "Effets cumulatifs : à éviter absolument." },
+      { label: "Aptitude médicale",     texte: "Certaines pathologies et traitements imposent une visite médicale régulière." }
     ],
     astuce: "La fatigue tue plus que l'alcool sur la route. Une pause de 15-20 min toutes les 2 h sauve des vies."
   },
@@ -273,14 +281,14 @@ const FICHES = [
     titre: "Documents & obligations",
     type: "list",
     items: [
-      { label: "Documents à bord",         texte: "Carte grise, attestation d'assurance, permis de conduire." },
+      { label: "Documents à bord",         texte: "Carte grise, permis de conduire. <strong>Assurance : plus obligatoire à présenter</strong> depuis avril 2024 (vérification via FVA)." },
       { label: "Non-port de la ceinture",  texte: "Amende forfaitaire 135 €, -3 points (conducteur)." },
       { label: "Excès de vitesse",         texte: "< 20 km/h : 135 €, -1 point. 20-30 : -2 points. 30-40 : -3 points. 40-50 : -4 points. > 50 : délit." },
       { label: "Alcoolémie",               texte: "≥ 0,8 g/l : délit (2 ans, 4 500 €). Entre 0,5 et 0,8 : amende 135 €, -6 points." },
       { label: "Délit de fuite",           texte: "Jusqu'à 3 ans de prison et 75 000 € d'amende." },
       { label: "Suspension de permis",     texte: "Jusqu'à 6 mois pour une infraction grave, 1 an en cas de récidive." }
     ],
-    astuce: "Toutes les infractions graves entraînent des retraits de points : le solde du permis est consultable sur le site ANTS."
+    astuce: "Ne pas présenter immédiatement les documents = amende jusqu'à 38 €. Sans justification sous 5 jours = jusqu'à 750 €."
   },
 
   /* ============================================================
@@ -374,5 +382,83 @@ const FICHES = [
       { label: "Entretien",       texte: "Un moteur bien entretenu consomme moins." }
     ],
     astuce: "L'écoconduite, c'est aussi de la sécurité : anticiper = freiner moins = conduire plus cool."
+  },
+
+  /* ============================================================
+     GROUPE : CONDUITE & CONDITIONS
+     ============================================================ */
+
+  /* 
+   * Source : Codes Rousseau — Les 10 thèmes du Code de la route
+   * https://public.codesrousseau.fr/conseils-pratiques/783-comment-bien-repondre-aux-questions-de-code.html
+   * Vérifié le : 27 septembre 2026
+   * 
+   * Thème « La route » : conduite de nuit, intempéries, autoroute, zones dangereuses.
+   */
+  {
+    id: "conduite-difficile",
+    groupe: "Conduite",
+    num: "21",
+    emoji: "🌧️",
+    titre: "Conduite par conditions difficiles",
+    type: "list",
+    items: [
+      { label: "Nuit", texte: "Champ visuel réduit, distance de perception limitée. Utiliser feux de croisement, réduire la vitesse." },
+      { label: "Pluie", texte: "Distance de freinage augmentée, risque d'aquaplanage. Réduire la vitesse, augmenter les distances." },
+      { label: "Brouillard", texte: "Visibilité < 50 m → 50 km/h. Utiliser feux de croisement et brouillard (avant), jamais les feux de route." },
+      { label: "Neige / verglas", texte: "Adhérence réduite. Conduire en douceur, éviter les freinages brusques. Chaînes obligatoires en zone signalée." },
+      { label: "Aquaplanage", texte: "Perte de contact avec la route due à une pellicule d'eau. Ne pas freiner brusquement ni accélérer : relâcher l'accélérateur et tenir le volant." },
+      { label: "Vent latéral", texte: "Peut déporter le véhicule, surtout à la sortie d'un tunnel ou sur un pont. Tenir fermement le volant, réduire la vitesse." }
+    ],
+    astuce: "Par conditions difficiles, la règle d'or est toujours la même : ralentir et augmenter les distances de sécurité."
+  },
+
+  /* 
+   * Source : Codes Rousseau — Thème « Prendre et quitter son véhicule »
+   * https://public.codesrousseau.fr/conseils-pratiques/783-comment-bien-repondre-aux-questions-de-code.html
+   * 
+   * Source : Permisécole — Famille P
+   * https://www.permisecole.com/code/examen/familles
+   */
+  {
+    id: "prendre-quitter",
+    groupe: "Conduite",
+    num: "22",
+    emoji: "🚪",
+    titre: "Prendre et quitter son véhicule",
+    type: "list",
+    items: [
+      { label: "Avant de monter", texte: "Vérifier l'état du véhicule (pneus, feux, rétroviseurs) et l'absence d'obstacle autour." },
+      { label: "Installation", texte: "Régler le siège (position, dossier), les rétroviseurs, attacher sa ceinture avant de démarrer." },
+      { label: "Position de conduite", texte: "Pieds pouvant enfoncer les pédales à fond, bras légèrement fléchis sur le volant, vision dégagée." },
+      { label: "Ouverture de portière", texte: "Vérifier rétroviseur et angle mort avant d'ouvrir. Risque d'accident avec cyclistes et piétons (emportiérage)." },
+      { label: "Quitter le véhicule", texte: "Couper le moteur, serrer le frein à main, retirer la clé, fermer à clé. Sur autoroute : sortir côté opposé au trafic." }
+    ],
+    astuce: "Un cycliste percuté par une portière ouverte = un accident grave. Toujours regarder avant d'ouvrir."
+  },
+
+  /* 
+   * Source : Permisécole — Famille S « Équipements de sécurité »
+   * https://www.permisecole.com/code/gratuit
+   * 
+   * Source : Ornikar — Thème « Sécurité du passager et du véhicule »
+   * https://www.ornikar.com/code/gratuit/test-thematique
+   */
+  {
+    id: "securite-passager",
+    groupe: "Conduite",
+    num: "23",
+    emoji: "👶",
+    titre: "Sécurité du passager",
+    type: "list",
+    items: [
+      { label: "Ceinture", texte: "Obligatoire à toutes les places, à l'avant comme à l'arrière. Le conducteur est responsable du port pour les moins de 18 ans." },
+      { label: "Enfants < 10 ans", texte: "Dispositif de retenue homologué obligatoire (siège bébé, rehausseur), adapté au poids et à la taille." },
+      { label: "Siège bébé dos à la route", texte: "Ne jamais l'installer sur le siège passager avant avec airbag actif : désactiver l'airbag passager." },
+      { label: "Airbags", texte: "Complément de la ceinture, pas un substitut. Ne pas approcher le visage du volant ou de la planche de bord." },
+      { label: "Chargement", texte: "Objets lourds dans le coffre, arrimés. Ne rien poser sur la plage arrière (projectiles en cas de freinage)." },
+      { label: "Passagers", texte: "Nombre de passagers limité aux places disponibles (carte grise). Tous doivent être attachés." }
+    ],
+    astuce: "Un passager non attaché à l'arrière peut tuer le conducteur en cas de choc frontal : il est projeté vers l'avant."
   }
 ];
