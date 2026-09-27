@@ -1,143 +1,220 @@
-let mode = null;          // "rapide" | "infini"
-let currentQuestions = []; // utilisé en mode rapide
+/* ============ THÈME ============ */
+function toggleTheme() {
+  document.body.classList.toggle('dark');
+  const isDark = document.body.classList.contains('dark');
+  localStorage.setItem('vroum-theme', isDark ? 'dark' : 'light');
+  document.querySelectorAll('.theme-toggle').forEach(btn => {
+    btn.textContent = isDark ? '☀️' : '🌙';
+  });
+}
+
+// Restaurer le thème
+(function initTheme() {
+  if (localStorage.getItem('vroum-theme') === 'dark') {
+    document.body.classList.add('dark');
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.theme-toggle').forEach(btn => btn.textContent = '☀️');
+    });
+  }
+})();
+
+// Surligner la fiche active dans la sidebar (page fiches)
+(function initSidebarScroll() {
+  const sidebarLinks = document.querySelectorAll('.sidebar a');
+  if (!sidebarLinks.length) return;
+
+  const blocs = [...sidebarLinks].map(a => document.querySelector(a.getAttribute('href')));
+
+  function setActive() {
+    let current = blocs[0];
+    const y = window.scrollY + 120;
+    for (const b of blocs) if (b && b.offsetTop <= y) current = b;
+    sidebarLinks.forEach(a =>
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current.id)
+    );
+  }
+
+  window.addEventListener('scroll', setActive);
+  window.addEventListener('load', setActive);
+})();
+
+/* ============ QCM ============ */
+let mode = null;
+let currentQuestions = [];
 let currentIndex = 0;
 let score = 0;
-let streak = 0;           // utilisé en mode infini
+let streak = 0;
 let lastCategory = null;
 
-const modeSelectBox = document.getElementById('mode-select-box');
-const quizBox = document.getElementById('quiz-box');
-const resultBox = document.getElementById('result-box');
+const modeSelect = document.getElementById('mode-select');
+const quizBox = document.getElementById('quiz');
+const resultBox = document.getElementById('result');
 
-function showOnly(box) {
-    [modeSelectBox, quizBox, resultBox].forEach(b => b.style.display = (b === box) ? 'block' : 'none');
+function showOnly(el) {
+  [modeSelect, quizBox, resultBox].forEach(b => {
+    if (b) b.style.display = (b === el) ? (b === quizBox ? 'grid' : 'block') : 'none';
+  });
 }
 
 function startMode(chosenMode) {
-    mode = chosenMode;
-    score = 0;
-    streak = 0;
-    currentIndex = 0;
-    lastCategory = null;
+  mode = chosenMode;
+  score = 0;
+  streak = 0;
+  currentIndex = 0;
+  lastCategory = null;
 
-    if (mode === 'rapide') {
-        currentQuestions = generateQuestionSet(5);
-    } else {
-        currentQuestions = [generateOneQuestion()];
-    }
+  if (mode === 'rapide') {
+    currentQuestions = generateQuestionSet(5);
+  } else {
+    currentQuestions = [generateOneQuestion()];
+  }
 
-    document.getElementById('mode-indicator').innerText =
-        mode === 'rapide' ? 'Mode rapide — 5 questions' : 'Mode infini — jusqu\'à la première erreur';
-    document.getElementById('streak-counter').style.display = (mode === 'infini') ? 'inline-block' : 'none';
+  document.getElementById('mode-label').innerText =
+    mode === 'rapide' ? 'Mode rapide' : 'Mode infini';
 
-    showOnly(quizBox);
-    loadQuestion();
+  document.getElementById('mode-btn-rapide').classList.toggle('active', mode === 'rapide');
+  document.getElementById('mode-btn-infini').classList.toggle('active', mode === 'infini');
+
+  showOnly(quizBox);
+  loadQuestion();
 }
 
 function loadQuestion() {
-    const q = currentQuestions[currentIndex];
-    lastCategory = q.category;
+  const q = currentQuestions[currentIndex];
+  lastCategory = q.category;
 
-    const progress = mode === 'rapide'
-        ? `${currentIndex + 1}/${currentQuestions.length}`
-        : `Question ${currentIndex + 1}`;
+  const total = mode === 'rapide' ? currentQuestions.length : null;
+  const displayNum = String(currentIndex + 1).padStart(2, '0');
 
-    document.getElementById('question-category').innerText = q.category;
-    document.getElementById('question-text').innerText = `${progress} — ${q.question}`;
-    document.getElementById('streak-counter').innerText = `Série : ${streak}`;
+  document.getElementById('examen-num').innerHTML =
+    `Question <strong>${displayNum}</strong>` + (total ? ` / ${String(total).padStart(2,'0')}` : '');
+  document.getElementById('question-counter').innerText =
+    `Q.${displayNum}` + (total ? ` / ${String(total).padStart(2,'0')}` : '');
+  document.getElementById('examen-cat').innerText = q.category;
+  document.getElementById('examen-question').innerText = q.question;
 
-    const optionsContainer = document.getElementById('options-container');
-    optionsContainer.innerHTML = '';
+  const progress = total ? ((currentIndex) / total) * 100 : 0;
+  document.getElementById('progress-fill').style.width = progress + '%';
 
-    const feedback = document.getElementById('feedback-text');
-    feedback.className = 'feedback-card';
-    feedback.innerText = '';
+  document.getElementById('side-progress').innerText =
+    total ? `${currentIndex + 1} / ${total}` : `Question ${currentIndex + 1}`;
+  document.getElementById('side-streak').innerText = `🔥 ${streak}`;
+  document.getElementById('examen-score').innerHTML =
+    `Série en cours : <strong>🔥 ${streak}</strong>`;
 
-    document.getElementById('next-btn').style.display = 'none';
+  const options = document.getElementById('options');
+  options.innerHTML = '';
 
-    q.shuffledOptions.forEach(opt => {
-        const btn = document.createElement('button');
-        btn.className = 'option-card';
-        btn.innerText = opt;
-        btn.onclick = () => selectOption(opt, q.answer, q.explanation);
-        optionsContainer.appendChild(btn);
-    });
+  const feedback = document.getElementById('feedback');
+  feedback.className = 'feedback';
+  document.getElementById('next-btn').style.display = 'none';
+
+  q.shuffledOptions.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option';
+    btn.innerHTML = `<span class="case">${i + 1}</span>${opt}`;
+    btn.onclick = () => selectOption(btn, opt, q.answer, q.explanation);
+    options.appendChild(btn);
+  });
 }
 
-function selectOption(selectedOpt, correctOpt, explanation) {
-    const buttons = document.querySelectorAll('.option-card');
-    const feedback = document.getElementById('feedback-text');
-    const isCorrect = selectedOpt === correctOpt;
+function selectOption(btn, selectedOpt, correctOpt, explanation) {
+  const buttons = document.querySelectorAll('.option');
+  const feedback = document.getElementById('feedback');
+  const isCorrect = selectedOpt === correctOpt;
 
-    buttons.forEach(btn => {
-        btn.disabled = true;
-        if (btn.innerText === correctOpt) {
-            btn.classList.add('correct');
-        } else if (btn.innerText === selectedOpt) {
-            btn.classList.add('wrong');
-        }
-    });
-
-    if (isCorrect) {
-        score++;
-        streak++;
-        feedback.innerText = "Exact ! " + explanation;
-        feedback.style.backgroundColor = "var(--success-bg)";
-        feedback.style.color = "var(--success-text)";
-        document.getElementById('next-btn').innerText =
-            (mode === 'rapide' && currentIndex === currentQuestions.length - 1) ? 'Voir le résultat' : 'Question suivante';
-    } else {
-        feedback.innerText = "Incorrect. " + explanation;
-        feedback.style.backgroundColor = "var(--error-bg)";
-        feedback.style.color = "var(--error-text)";
-        document.getElementById('next-btn').innerText =
-            (mode === 'infini') ? 'Voir mon score' : 'Voir le résultat';
+  buttons.forEach(b => {
+    b.disabled = true;
+    const val = b.innerText.replace(/^\d+\s*/, '').trim();
+    if (val === correctOpt) {
+      b.classList.add('correct');
+      b.querySelector('.case').innerText = '✓';
+    } else if (b === btn) {
+      b.classList.add('wrong');
+      b.querySelector('.case').innerText = '✗';
     }
+  });
 
-    feedback.classList.add('show');
-    document.getElementById('next-btn').style.display = 'inline-block';
-    document.getElementById('next-btn').dataset.wasCorrect = isCorrect;
+  const stamp = document.getElementById('feedback-stamp');
+  const text = document.getElementById('feedback-text');
+
+  if (isCorrect) {
+    score++;
+    streak++;
+    feedback.className = 'feedback show success';
+    stamp.innerText = 'Correct';
+    text.innerHTML = `<strong>Bien joué.</strong>${explanation}`;
+    document.getElementById('next-btn').innerText =
+      (mode === 'rapide' && currentIndex === currentQuestions.length - 1)
+        ? 'Voir le résultat'
+        : 'Question suivante →';
+  } else {
+    feedback.className = 'feedback show error';
+    stamp.innerText = 'Erreur';
+    text.innerHTML = `<strong>Raté.</strong>${explanation}`;
+    document.getElementById('next-btn').innerText =
+      mode === 'infini' ? 'Voir mon score' : 'Voir le résultat';
+  }
+
+  document.getElementById('next-btn').style.display = 'inline-flex';
+  document.getElementById('next-btn').dataset.correct = isCorrect;
+
+  // MàJ progression sur la bonne réponse
+  document.getElementById('progress-fill').style.width =
+    mode === 'rapide' ? (((currentIndex + 1) / currentQuestions.length) * 100) + '%' : '0%';
+
+  document.getElementById('side-streak').innerText = `🔥 ${streak}`;
+  document.getElementById('examen-score').innerHTML =
+    `Série en cours : <strong>🔥 ${streak}</strong>`;
 }
 
 function nextQuestion() {
-    const wasCorrect = document.getElementById('next-btn').dataset.wasCorrect === 'true';
+  const wasCorrect = document.getElementById('next-btn').dataset.correct === 'true';
 
-    if (mode === 'infini') {
-        if (!wasCorrect) {
-            showResults();
-            return;
-        }
-        currentIndex++;
-        currentQuestions.push(generateOneQuestion(lastCategory));
-        loadQuestion();
-        return;
-    }
-
-    // mode rapide
+  if (mode === 'infini') {
+    if (!wasCorrect) { showResults(); return; }
     currentIndex++;
-    if (currentIndex < currentQuestions.length) {
-        loadQuestion();
-    } else {
-        showResults();
-    }
+    currentQuestions.push(generateOneQuestion(lastCategory));
+    loadQuestion();
+    return;
+  }
+
+  currentIndex++;
+  if (currentIndex < currentQuestions.length) {
+    loadQuestion();
+  } else {
+    showResults();
+  }
 }
 
 function showResults() {
-    showOnly(resultBox);
-    if (mode === 'rapide') {
-        document.getElementById('score-text').innerText = `Score final : ${score} / ${currentQuestions.length}`;
-        document.getElementById('score-detail').innerText = '';
-    } else {
-        document.getElementById('score-text').innerText = `Série terminée à ${streak} bonne(s) réponse(s)`;
-        document.getElementById('score-detail').innerText =
-            streak >= 10 ? "Solide, tu maîtrises bien le programme." :
-            streak >= 5 ? "Pas mal, continue à réviser les thèmes qui te bloquent." :
-            "Retourne voir les fiches de cours avant de retenter.";
-    }
+  showOnly(resultBox);
+
+  const title = document.getElementById('result-title');
+  const detail = document.getElementById('result-detail');
+
+  if (mode === 'rapide') {
+    const total = currentQuestions.length;
+    title.innerText = `Score final : ${score} / ${total}`;
+    const ratio = score / total;
+    detail.innerText =
+      ratio === 1 ? 'Sans faute, bravo !' :
+      ratio >= 0.6 ? 'Bonne base, continue à réviser.' :
+      'Reprends les fiches avant de retenter.';
+  } else {
+    title.innerText = `Série terminée à ${streak} bonne(s) réponse(s)`;
+    detail.innerText =
+      streak >= 10 ? 'Solide, tu maîtrises bien le programme.' :
+      streak >= 5 ? 'Pas mal, continue à réviser les thèmes qui te bloquent.' :
+      'Retourne voir les fiches de cours avant de retenter.';
+  }
 }
 
 function backToModeSelect() {
-    showOnly(modeSelectBox);
+  showOnly(modeSelect);
 }
 
-document.addEventListener('DOMContentLoaded', () => showOnly(modeSelectBox));
+// Init
+document.addEventListener('DOMContentLoaded', () => {
+  if (modeSelect) showOnly(modeSelect);
+});
