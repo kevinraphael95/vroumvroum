@@ -259,13 +259,18 @@ const questionTemplates = [
   {
     category: "Mécanique",
     generate() {
-      const mois = pick([4, 6, 12]);
-      const correct = `Dans les ${mois} mois précédant son 4ᵉ anniversaire`;
-      return buildQuestion("Mécanique",
-        "Quand doit être effectué le tout premier Contrôle Technique d'un véhicule neuf ?",
-        correct,
-        ["Au bout de 2 ans", "À la date exacte de ses 5 ans", "Tous les ans dès la première année"],
-        `Le premier CT a lieu dans les 4 mois précédant le 4ᵉ anniversaire, puis tous les 2 ans.`);
+      const questions = [
+        { q: "Quand doit être effectué le tout premier Contrôle Technique d'un véhicule neuf ?",
+          r: "Dans les 4 mois précédant son 4ᵉ anniversaire",
+          wrongs: ["Au bout de 2 ans", "À la date exacte de ses 5 ans", "Tous les ans dès la première année"],
+          exp: "Le premier CT a lieu dans les 4 mois précédant le 4ᵉ anniversaire de la première immatriculation." },
+        { q: "À quelle fréquence doit être effectué le Contrôle Technique après le premier passage ?",
+          r: "Tous les 2 ans",
+          wrongs: ["Tous les ans", "Tous les 3 ans", "Tous les 5 ans"],
+          exp: "Après le premier CT (dans les 4 mois avant le 4ᵉ anniversaire), le contrôle est à refaire tous les 2 ans." }
+      ];
+      const c = pick(questions);
+      return buildQuestion("Mécanique", c.q, c.r, c.wrongs, c.exp);
     }
   },
   {
