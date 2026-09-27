@@ -26,136 +26,19 @@
 </nav>
 
 <div class="fiches-layout">
-
   <aside class="sidebar">
     <div class="sidebar-title">Sommaire</div>
-    <ul>
-      <li><a href="#vitesses" class="active"><span class="fiche-num">01</span> Vitesses</a></li>
-      <li><a href="#priorites"><span class="fiche-num">02</span> Priorités</a></li>
-      <li><a href="#marquage"><span class="fiche-num">03</span> Marquage au sol</a></li>
-      <li><a href="#mecanique"><span class="fiche-num">04</span> Mécanique & CT</a></li>
-      <li><a href="#alcool"><span class="fiche-num">05</span> Alcool</a></li>
-      <li><a href="#securite"><span class="fiche-num">06</span> Aides à la conduite</a></li>
-    </ul>
+    <ul><!-- rempli par fiches.js --></ul>
   </aside>
-
-  <main>
-
-    <div id="vitesses" class="fiche-bloc">
-      <div class="fiche-bloc-header">
-        <span class="fiche-bloc-num">F.01</span>
-        <h2>⚡ Vitesses maximales autorisées</h2>
-      </div>
-      <table class="fiche-table">
-        <thead>
-          <tr>
-            <th>Situation</th>
-            <th>Temps sec</th>
-            <th>Pluie</th>
-            <th>Probatoire</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Agglomération</td>
-            <td><span class="val">50 km/h</span></td>
-            <td><span class="val">50 km/h</span></td>
-            <td><span class="val">50 km/h</span></td>
-          </tr>
-          <tr>
-            <td>Hors agglomération</td>
-            <td><span class="val">80 km/h</span></td>
-            <td><span class="val">80 km/h</span></td>
-            <td><span class="val">80 km/h</span></td>
-          </tr>
-          <tr>
-            <td>Voie rapide (2×2 voies)</td>
-            <td><span class="val">110 km/h</span></td>
-            <td><span class="val">100 km/h</span></td>
-            <td><span class="val">100 km/h</span></td>
-          </tr>
-          <tr>
-            <td>Autoroute</td>
-            <td><span class="val">130 km/h</span></td>
-            <td><span class="val">110 km/h</span></td>
-            <td><span class="val">110 km/h</span></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div id="priorites" class="fiche-bloc">
-      <div class="fiche-bloc-header">
-        <span class="fiche-bloc-num">F.02</span>
-        <h2>🛑 Priorités & croisements</h2>
-      </div>
-      <ul class="fiche-list">
-        <li><strong>Priorité à droite</strong> — Règle par défaut, sans signalisation ni marquage au sol.</li>
-        <li><strong>Cédez-le-passage</strong> — Ralentir, et s'arrêter si nécessaire. Pas d'arrêt obligatoire.</li>
-        <li><strong>Stop</strong> — Arrêt complet obligatoire à la ligne d'effet, même sans autre véhicule.</li>
-        <li><strong>Giratoire</strong> — Priorité aux véhicules déjà engagés sur l'anneau.</li>
-        <li><strong>Feux tricolores</strong> — Priorité selon l'allumage. Orange = arrêt sauf si dangereux.</li>
-      </ul>
-    </div>
-
-    <div id="marquage" class="fiche-bloc">
-      <div class="fiche-bloc-header">
-        <span class="fiche-bloc-num">F.03</span>
-        <h2>🛣️ Marquage au sol</h2>
-      </div>
-      <ul class="fiche-list">
-        <li><strong>Ligne continue</strong> — Interdiction de franchir ou chevaucher (sauf dépassement de vélos).</li>
-        <li><strong>Ligne discontinue</strong> — Dépassement et changement de voie autorisés.</li>
-        <li><strong>Ligne d'avertissement</strong> — Annonce l'approche d'une ligne continue (3 flèches).</li>
-        <li><strong>Ligne de dissuasion</strong> — Dépassement toléré uniquement pour véhicules très lents.</li>
-      </ul>
-    </div>
-
-    <div id="mecanique" class="fiche-bloc">
-      <div class="fiche-bloc-header">
-        <span class="fiche-bloc-num">F.04</span>
-        <h2>🔧 Mécanique & Contrôle technique</h2>
-      </div>
-      <ul class="fiche-list">
-        <li><strong>Pneumatiques</strong> — Profondeur minimale des rainures : <span class="val">1,6 mm</span>.</li>
-        <li><strong>Niveaux</strong> — À vérifier moteur froid et véhicule à plat (huile, frein, refroidissement).</li>
-        <li><strong>Premier CT</strong> — Dans les <span class="val">4 mois</span> précédant le 4ᵉ anniversaire du véhicule.</li>
-        <li><strong>Ensuite</strong> — Tous les <span class="val">2 ans</span>.</li>
-      </ul>
-    </div>
-
-    <div id="alcool" class="fiche-bloc">
-      <div class="fiche-bloc-header">
-        <span class="fiche-bloc-num">F.05</span>
-        <h2>🍷 Alcool & stupéfiants</h2>
-      </div>
-      <ul class="fiche-list">
-        <li><strong>Conducteur confirmé</strong> — Max <span class="val">0,5 g/l</span> de sang (0,25 mg/l d'air expiré).</li>
-        <li><strong>Permis probatoire</strong> — Max <span class="val">0,2 g/l</span> de sang (0,10 mg/l d'air expiré).</li>
-        <li><strong>Stupéfiants</strong> — Tolérance zéro, dépistage salivaire autorisé.</li>
-      </ul>
-    </div>
-
-    <div id="securite" class="fiche-bloc">
-      <div class="fiche-bloc-header">
-        <span class="fiche-bloc-num">F.06</span>
-        <h2>⚙️ Aides à la conduite (ADAS)</h2>
-      </div>
-      <ul class="fiche-list">
-        <li><strong>ABS</strong> — Empêche le blocage des roues pour conserver la maîtrise du volant.</li>
-        <li><strong>ESP</strong> — Corrige la trajectoire en cas de dérapage.</li>
-        <li><strong>AFU</strong> — Amplifie la pression de freinage lors d'un freinage d'urgence.</li>
-      </ul>
-    </div>
-
-  </main>
-
+  <main><!-- rempli par fiches.js --></main>
 </div>
 
 <footer>
   © 2026 VroumVroum — Fiches de révision du Code de la route
 </footer>
 
+<script src="fiches-data.js"></script>
+<script src="fiches.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
