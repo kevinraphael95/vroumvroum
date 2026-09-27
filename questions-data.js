@@ -1,7 +1,7 @@
 /* =========================================================
    BANQUE DE QUESTIONS.
    Templates paramétrables — génèrent des questions variées.
-   Alignés sur les 24 fiches de fiches-data.js.
+   Alignés sur les 23 fiches de fiches-data.js.
 
    SOURCES :
    - Service-Public.gouv.fr (documents, assurance, sanctions)
@@ -9,7 +9,11 @@
    - Codes Rousseau / Ornikar / Permisécole (contenu pédagogique)
    ========================================================= */
 
-function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+/* ============ UTILITAIRES ============ */
+
+function pick(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
 
 function shuffle(array) {
   let arr = [...array];
@@ -29,6 +33,9 @@ function buildQuestion(category, question, correct, wrongs, explanation) {
     explanation
   };
 }
+
+
+/* ============ TEMPLATES ============ */
 
 const questionTemplates = [
 
@@ -438,7 +445,7 @@ const questionTemplates = [
         { q: "Qu'est-ce que la polyconsommation ?",
           r: "La prise combinée de plusieurs substances (alcool, drogues, médicaments) aux effets multipliés",
           wrongs: ["Boire plusieurs verres d'alcool différents", "Consommer de l'alcool à plusieurs personnes", "Mélanger alcool et boissons énergisantes"],
-          exp: "La polyconsommation désigne la prise combinée de plusieurs substances incompatibles (alcool + drogues + médicaments) : les effets sont multipliés et le danger maximal." },
+          exp: "La polyconsommation désigne la prise combinée de plusieurs substances incompatibles : les effets sont multipliés et le danger maximal." },
         { q: "Boire un café fait-il baisser l'alcoolémie ?",
           r: "Non, seul le temps compte",
           wrongs: ["Oui, ça accélère l'élimination", "Oui, si on boit beaucoup d'eau", "Oui, si on mange en même temps"],
@@ -540,7 +547,7 @@ const questionTemplates = [
         { q: "L'assurance auto est-elle obligatoire ?",
           r: "Oui, pour tout véhicule terrestre à moteur, même s'il ne circule pas",
           wrongs: ["Non, uniquement si on roule", "Oui, mais uniquement pour les voitures neuves", "Non, c'est facultatif"],
-          exp: "Tout véhicule terrestre à moteur doit être assuré, même immobile. Seul un véhicule démonté (roues, batterie retirées) en est exempté." },
+          exp: "Tout véhicule terrestre à moteur doit être assuré, même immobile. Seul un véhicule démonté en est exempté." },
         { q: "Quelle garantie minimale l'assurance auto doit-elle couvrir ?",
           r: "La responsabilité civile (dommages causés aux tiers)",
           wrongs: ["Le vol du véhicule", "Le bris de glace", "Les dommages au véhicule du conducteur"],
@@ -784,25 +791,66 @@ const questionTemplates = [
   }
 ];
 
-/* =========================================================
-   GÉNÉRATION
-   ========================================================= */
 
-function generateQuestionSet(n) {
+/* ============ GÉNÉRATION ============ */
+
+/* Génère N questions sans répéter un énoncé déjà vu */
+function generateQuestionSet(n, seenQuestions) {
+  seenQuestions = seenQuestions || new Set();
   const pool = shuffle(questionTemplates);
   const set = [];
-  for (let i = 0; i < n; i++) {
-    const template = pool[i % pool.length];
-    set.push(template.generate());
+
+  for (let i = 0; i < pool.length && set.length < n; i++) {
+    const template = pool[i];
+    let q = null;
+    let attempts = 0;
+    while (attempts < 10) {
+      q = template.generate();
+      if (!seenQuestions.has(q.question)) break;
+      attempts++;
+    }
+    seenQuestions.add(q.question);
+    set.push(q);
   }
+
+  // Filet de sécurité si on n'a pas assez de questions uniques
+  let safety = 0;
+  while (set.length < n && safety < 20) {
+    const template = pick(questionTemplates);
+    const q = template.generate();
+    if (!seenQuestions.has(q.question)) {
+      seenQuestions.add(q.question);
+      set.push(q);
+    }
+    safety++;
+  }
+
   return set;
 }
 
-function generateOneQuestion(excludeCategory) {
+/* Génère UNE question sans répéter un énoncé déjà vu */
+function generateOneQuestion(excludeCategory, seenQuestions) {
+  seenQuestions = seenQuestions || new Set();
   let candidates = questionTemplates;
+
   if (excludeCategory) {
     const filtered = questionTemplates.filter(t => t.category !== excludeCategory);
     if (filtered.length > 0) candidates = filtered;
   }
-  return pick(candidates).generate();
+
+  // 30 tentatives pour trouver un énoncé unique
+  for (let i = 0; i < 30; i++) {
+    const template = pick(candidates);
+    const q = template.generate();
+    if (!seenQuestions.has(q.question)) {
+      seenQuestions.add(q.question);
+      return q;
+    }
+  }
+
+  // Si tout a été vu (cas extrême), on reset et on renvoie une question
+  seenQuestions.clear();
+  const fallback = pick(candidates).generate();
+  seenQuestions.add(fallback.question);
+  return fallback;
 }
