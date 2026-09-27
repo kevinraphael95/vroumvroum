@@ -217,6 +217,9 @@ function showResults() {
 function backToModeSelect() {
   showOnly(modeSelectBox);
 }
+function replay() {
+  if (mode) startMode(mode);
+}
 
 // Init : si on est sur la page QCM, on affiche l'écran de choix
 document.addEventListener('DOMContentLoaded', () => {
