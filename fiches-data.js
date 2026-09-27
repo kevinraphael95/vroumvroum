@@ -136,7 +136,7 @@ const FICHES = [
       { label: "Premier CT",       texte: "Dans les <strong>4 mois</strong> précédant le 4ᵉ anniversaire du véhicule." },
       { label: "Ensuite",          texte: "Tous les <strong>2 ans</strong>." },
       { label: "Voyants moteur",   texte: "Rouge → arrêt immédiat en sécurité. Jaune → vérification rapide." },
-      { label: "Documents à bord", texte: "Carte grise, attestation d'assurance, permis de conduire." }
+      { label: "Documents à bord", texte: "Carte grise et permis de conduire. Assurance : plus à présenter depuis avril 2024 (vérification via FVA)." }
     ],
     astuce: "Un contrôle technique non effectué à temps peut entraîner une amende et une contre-visite dans les 2 mois."
   },
@@ -264,7 +264,7 @@ const FICHES = [
     type: "list",
     items: [
       { label: "1ʳᵉ classe",            texte: "Le plus léger : stationnement gênant, feux non conformes. Amende forfaitaire réduite." },
-      { label: "2ᵉ classe",             texte: "Téléphone au volant, oubli de clignotant, non-présentation d'assurance, A oublié (jeune conducteur)." },
+      { label: "2ᵉ classe",             texte: "Téléphone au volant, oubli de clignotant, A oublié (jeune conducteur), non-présentation du permis ou de la carte grise." },
       { label: "3ᵉ classe",             texte: "Excès de vitesse de 1 à 19 km/h sur route limitée à plus de 50 km/h." },
       { label: "4ᵉ classe",             texte: "Excès 20-49 km/h, refus de priorité, non-port de ceinture, franchissement ligne continue, stationnement PMR…" },
       { label: "5ᵉ classe",             texte: "Infractions les plus graves : retrait de 6 points, suspension ou annulation possible." },
