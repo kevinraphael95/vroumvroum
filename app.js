@@ -1,79 +1,73 @@
-/* ============ THÈME ============ */
-function toggleTheme() {
-  document.body.classList.toggle('dark');
-  const isDark = document.body.classList.contains('dark');
-  localStorage.setItem('vroum-theme', isDark ? 'dark' : 'light');
+/* =========================================================
+   VroumVroum — App
+   1. Thème clair / sombre (avec sauvegarde)
+   2. QCM (mode rapide + mode infini)
+   ========================================================= */
+
+/* ============ 1. THÈME ============ */
+
+function applyTheme(isDark) {
+  document.body.classList.toggle('dark', isDark);
   document.querySelectorAll('.theme-toggle').forEach(btn => {
     btn.textContent = isDark ? '☀️' : '🌙';
   });
 }
 
-// Restaurer le thème
-(function initTheme() {
-  if (localStorage.getItem('vroum-theme') === 'dark') {
-    document.body.classList.add('dark');
-    document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('.theme-toggle').forEach(btn => btn.textContent = '☀️');
-    });
-  }
-})();
+function toggleTheme() {
+  const isDark = !document.body.classList.contains('dark');
+  applyTheme(isDark);
+  localStorage.setItem('vroum-theme', isDark ? 'dark' : 'light');
+}
 
-// Surligner la fiche active dans la sidebar (page fiches)
-(function initSidebarScroll() {
-  const sidebarLinks = document.querySelectorAll('.sidebar a');
-  if (!sidebarLinks.length) return;
+// Restaurer le thème au chargement
+applyTheme(localStorage.getItem('vroum-theme') === 'dark');
 
-  const blocs = [...sidebarLinks].map(a => document.querySelector(a.getAttribute('href')));
 
-  function setActive() {
-    let current = blocs[0];
-    const y = window.scrollY + 120;
-    for (const b of blocs) if (b && b.offsetTop <= y) current = b;
-    sidebarLinks.forEach(a =>
-      a.classList.toggle('active', a.getAttribute('href') === '#' + current.id)
-    );
-  }
+/* ============ 2. QCM ============ */
 
-  window.addEventListener('scroll', setActive);
-  window.addEventListener('load', setActive);
-})();
-
-/* ============ QCM ============ */
-let mode = null;
+let mode = null;              // "rapide" | "infini"
 let currentQuestions = [];
 let currentIndex = 0;
 let score = 0;
 let streak = 0;
 let lastCategory = null;
 
-const modeSelect = document.getElementById('mode-select');
-const quizBox = document.getElementById('quiz');
-const resultBox = document.getElementById('result');
+// Références DOM (peuvent être null selon la page)
+const modeSelectBox = document.getElementById('mode-select');
+const quizBox       = document.getElementById('quiz');
+const resultBox     = document.getElementById('result');
 
 function showOnly(el) {
-  [modeSelect, quizBox, resultBox].forEach(b => {
-    if (b) b.style.display = (b === el) ? (b === quizBox ? 'grid' : 'block') : 'none';
+  [modeSelectBox, quizBox, resultBox].forEach(b => {
+    if (!b) return;
+    if (b === el) {
+      b.style.display = (b === quizBox) ? 'grid' : 'block';
+    } else {
+      b.style.display = 'none';
+    }
   });
 }
 
 function startMode(chosenMode) {
+  if (typeof generateQuestionSet !== 'function') return;
+
   mode = chosenMode;
   score = 0;
   streak = 0;
   currentIndex = 0;
   lastCategory = null;
 
-  if (mode === 'rapide') {
-    currentQuestions = generateQuestionSet(5);
-  } else {
-    currentQuestions = [generateOneQuestion()];
-  }
+  currentQuestions = (mode === 'rapide')
+    ? generateQuestionSet(5)
+    : [generateOneQuestion()];
 
   document.getElementById('mode-label').innerText =
     mode === 'rapide' ? 'Mode rapide' : 'Mode infini';
 
-  document.getElementById('mode-btn-rapide').classList.toggle('active', mode === 'rapide');
-  document.getElementById('mode-btn-infini').classList.toggle('active', mode === 'infini');
+  document.getElementById('mode-btn-rapide')
+    ?.classList.toggle('active', mode === 'rapide');
+  document.getElementById('mode-btn-infini')
+    ?.classList.toggle('active', mode === 'infini');
 
   showOnly(quizBox);
   loadQuestion();
@@ -85,23 +79,28 @@ function loadQuestion() {
 
   const total = mode === 'rapide' ? currentQuestions.length : null;
   const displayNum = String(currentIndex + 1).padStart(2, '0');
+  const totalDisplay = total ? String(total).padStart(2, '0') : null;
 
+  // Header
   document.getElementById('examen-num').innerHTML =
-    `Question <strong>${displayNum}</strong>` + (total ? ` / ${String(total).padStart(2,'0')}` : '');
+    `Question <strong>${displayNum}</strong>` + (totalDisplay ? ` / ${totalDisplay}` : '');
   document.getElementById('question-counter').innerText =
-    `Q.${displayNum}` + (total ? ` / ${String(total).padStart(2,'0')}` : '');
+    `Q.${displayNum}` + (totalDisplay ? ` / ${totalDisplay}` : '');
   document.getElementById('examen-cat').innerText = q.category;
   document.getElementById('examen-question').innerText = q.question;
 
-  const progress = total ? ((currentIndex) / total) * 100 : 0;
+  // Barre de progression (on la remplit au fur et à mesure des réponses)
+  const progress = total ? (currentIndex / total) * 100 : 0;
   document.getElementById('progress-fill').style.width = progress + '%';
 
+  // Panneau latéral
   document.getElementById('side-progress').innerText =
     total ? `${currentIndex + 1} / ${total}` : `Question ${currentIndex + 1}`;
   document.getElementById('side-streak').innerText = `🔥 ${streak}`;
   document.getElementById('examen-score').innerHTML =
     `Série en cours : <strong>🔥 ${streak}</strong>`;
 
+  // Options
   const options = document.getElementById('options');
   options.innerHTML = '';
 
@@ -123,6 +122,7 @@ function selectOption(btn, selectedOpt, correctOpt, explanation) {
   const feedback = document.getElementById('feedback');
   const isCorrect = selectedOpt === correctOpt;
 
+  // Désactiver + marquer visuellement
   buttons.forEach(b => {
     b.disabled = true;
     const val = b.innerText.replace(/^\d+\s*/, '').trim();
@@ -136,7 +136,7 @@ function selectOption(btn, selectedOpt, correctOpt, explanation) {
   });
 
   const stamp = document.getElementById('feedback-stamp');
-  const text = document.getElementById('feedback-text');
+  const text  = document.getElementById('feedback-text');
 
   if (isCorrect) {
     score++;
@@ -153,16 +153,19 @@ function selectOption(btn, selectedOpt, correctOpt, explanation) {
     stamp.innerText = 'Erreur';
     text.innerHTML = `<strong>Raté.</strong>${explanation}`;
     document.getElementById('next-btn').innerText =
-      mode === 'infini' ? 'Voir mon score' : 'Voir le résultat';
+      (mode === 'infini') ? 'Voir mon score' : 'Voir le résultat';
   }
 
   document.getElementById('next-btn').style.display = 'inline-flex';
   document.getElementById('next-btn').dataset.correct = isCorrect;
 
-  // MàJ progression sur la bonne réponse
-  document.getElementById('progress-fill').style.width =
-    mode === 'rapide' ? (((currentIndex + 1) / currentQuestions.length) * 100) + '%' : '0%';
+  // Barre de progression après réponse
+  if (mode === 'rapide') {
+    const progress = ((currentIndex + 1) / currentQuestions.length) * 100;
+    document.getElementById('progress-fill').style.width = progress + '%';
+  }
 
+  // Panneau latéral (mise à jour de la série)
   document.getElementById('side-streak').innerText = `🔥 ${streak}`;
   document.getElementById('examen-score').innerHTML =
     `Série en cours : <strong>🔥 ${streak}</strong>`;
@@ -179,6 +182,7 @@ function nextQuestion() {
     return;
   }
 
+  // mode rapide
   currentIndex++;
   if (currentIndex < currentQuestions.length) {
     loadQuestion();
@@ -190,7 +194,7 @@ function nextQuestion() {
 function showResults() {
   showOnly(resultBox);
 
-  const title = document.getElementById('result-title');
+  const title  = document.getElementById('result-title');
   const detail = document.getElementById('result-detail');
 
   if (mode === 'rapide') {
@@ -198,23 +202,23 @@ function showResults() {
     title.innerText = `Score final : ${score} / ${total}`;
     const ratio = score / total;
     detail.innerText =
-      ratio === 1 ? 'Sans faute, bravo !' :
-      ratio >= 0.6 ? 'Bonne base, continue à réviser.' :
-      'Reprends les fiches avant de retenter.';
+      ratio === 1   ? 'Sans faute, bravo !' :
+      ratio >= 0.6  ? 'Bonne base, continue à réviser.' :
+                      'Reprends les fiches avant de retenter.';
   } else {
     title.innerText = `Série terminée à ${streak} bonne(s) réponse(s)`;
     detail.innerText =
       streak >= 10 ? 'Solide, tu maîtrises bien le programme.' :
-      streak >= 5 ? 'Pas mal, continue à réviser les thèmes qui te bloquent.' :
-      'Retourne voir les fiches de cours avant de retenter.';
+      streak >= 5  ? 'Pas mal, continue à réviser les thèmes qui te bloquent.' :
+                     'Retourne voir les fiches de cours avant de retenter.';
   }
 }
 
 function backToModeSelect() {
-  showOnly(modeSelect);
+  showOnly(modeSelectBox);
 }
 
-// Init
+// Init : si on est sur la page QCM, on affiche l'écran de choix
 document.addEventListener('DOMContentLoaded', () => {
-  if (modeSelect) showOnly(modeSelect);
+  if (modeSelectBox) showOnly(modeSelectBox);
 });
