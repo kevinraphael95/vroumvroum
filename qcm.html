@@ -1,65 +1,133 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VroumVroum — Entraînement QCM</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QCM — VroumVroum</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <nav>
-        <div class="logo">VroumVroum</div>
-        <ul class="nav-links">
-            <li><a href="index.html">Fiches de Cours</a></li>
-            <li><a href="qcm.html" class="active">Entraînement QCM</a></li>
-        </ul>
-    </nav>
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-badge">V</div>
+      VroumVroum
+    </a>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="fiches.html">Fiches</a></li>
+        <li><a href="qcm.html" class="active">QCM</a></li>
+      </ul>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Changer de thème">🌙</button>
+    </div>
+  </div>
+</nav>
 
-    <div class="container">
-        <h2 class="section-title">Session d'Entraînement</h2>
+<!-- ÉCRAN DE CHOIX DU MODE -->
+<div id="mode-select" class="mode-select">
+  <h1>Choisis ton mode</h1>
+  <p>Deux façons de t'entraîner selon le temps que tu as.</p>
+  <div class="mode-cards">
+    <button class="mode-card" onclick="startMode('rapide')">
+      <h3>⚡ Mode rapide</h3>
+      <p>5 questions, un score final. Idéal pour une révision courte.</p>
+    </button>
+    <button class="mode-card" onclick="startMode('infini')">
+      <h3>♾️ Mode infini</h3>
+      <p>Enchaîne les questions jusqu'à ta première erreur. Vise le meilleur score.</p>
+    </button>
+  </div>
+</div>
 
-        <!-- CHOIX DU MODE -->
-        <div id="mode-select-box" class="mode-grid">
-            <button class="mode-card" onclick="startMode('rapide')">
-                <h3>⚡ Mode Rapide</h3>
-                <p>5 questions, un score final. Idéal pour une révision courte.</p>
-            </button>
-            <button class="mode-card" onclick="startMode('infini')">
-                <h3>♾️ Mode Infini</h3>
-                <p>Enchaîne les questions jusqu'à ta première erreur. Vise le meilleur score.</p>
-            </button>
-        </div>
+<!-- QUIZ -->
+<div id="quiz" class="qcm-layout" style="display:none;">
 
-        <!-- QUIZ -->
-        <div id="quiz-box" class="card" style="display:none;">
-            <div class="quiz-header">
-                <span id="mode-indicator" class="mode-indicator"></span>
-                <span id="streak-counter" class="streak-counter"></span>
-            </div>
-            <div id="question-category" class="question-category"></div>
-            <div id="question-text" class="question-title">Chargement de la question...</div>
-            <div id="options-container" class="options-grid"></div>
-            <div id="feedback-text" class="feedback-card"></div>
+  <main class="examen">
 
-            <div style="text-align: right; margin-top: 1.5rem;">
-                <button id="next-btn" class="btn btn-dark" style="display: none;" onclick="nextQuestion()">Question suivante</button>
-            </div>
-        </div>
-
-        <!-- RÉSULTATS -->
-        <div id="result-box" class="card result-box" style="display: none;">
-            <h3 id="score-text" class="score-text"></h3>
-            <p id="score-detail" class="score-detail"></p>
-            <button class="btn btn-dark" onclick="backToModeSelect()">Choisir un autre mode</button>
-        </div>
+    <div class="examen-header">
+      <div class="left">
+        <span>Épreuve ETG</span>
+        <span id="mode-label">Mode rapide</span>
+      </div>
+      <div class="feu">
+        <span id="question-counter">Q.01 / 05</span>
+        <div class="feu-dot vert"></div>
+        <div class="feu-dot orange"></div>
+        <div class="feu-dot rouge"></div>
+      </div>
     </div>
 
-    <footer>
-        <p>© 2026 PermisDrive — Fiches de révision du Code de la route.</p>
-    </footer>
+    <div class="progress-ligne">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
 
-    <script src="questions-data.js"></script>
-    <script src="app.js"></script>
+    <div class="examen-body">
+      <div class="examen-meta">
+        <div class="examen-num" id="examen-num">Question <strong>01</strong> / 05</div>
+        <div class="examen-cat" id="examen-cat">Vitesses</div>
+      </div>
+
+      <div class="examen-question" id="examen-question">
+        Chargement de la question…
+      </div>
+
+      <div class="options" id="options"></div>
+
+      <div class="feedback" id="feedback">
+        <div class="feedback-stamp" id="feedback-stamp">Correct</div>
+        <div class="feedback-text" id="feedback-text">
+          <strong>Bien joué.</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="examen-footer">
+      <div class="examen-score" id="examen-score">Série en cours : <strong>🔥 0</strong></div>
+      <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()" style="display:none;">Question suivante →</button>
+    </div>
+
+  </main>
+
+  <aside class="quiz-side">
+    <div class="side-block">
+      <div class="side-label">Progression</div>
+      <div class="side-value" id="side-progress">1 / 5</div>
+    </div>
+    <div class="side-block">
+      <div class="side-label">Série en cours</div>
+      <div class="side-value rouge" id="side-streak">🔥 0</div>
+    </div>
+    <div class="side-block">
+      <div class="side-label">Mode</div>
+      <div class="mode-list">
+        <button class="mode-btn active" id="mode-btn-rapide" onclick="startMode('rapide')">
+          <div class="title">⚡ Rapide</div>
+          <div class="desc">5 questions, score final</div>
+        </button>
+        <button class="mode-btn" id="mode-btn-infini" onclick="startMode('infini')">
+          <div class="title">♾️ Infini</div>
+          <div class="desc">Jusqu'à la première erreur</div>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+</div>
+
+<!-- RÉSULTAT -->
+<div id="result" class="result" style="display:none;">
+  <h2 id="result-title">Score final : 4 / 5</h2>
+  <p id="result-detail">Pas mal, continue comme ça.</p>
+  <button class="btn btn-outline" onclick="backToModeSelect()">Choisir un autre mode</button>
+</div>
+
+<footer>
+  © 2026 VroumVroum — Fiches de révision du Code de la route
+</footer>
+
+<script src="questions-data.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
