@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>QCM — VroumVroum</title>
+<meta name="theme-color" content="#003da5">
+<title>QCM - VroumVroum</title>
 <meta name="description" content="Entraînement QCM au Code de la route : mode rapide 5 questions ou mode infini. Score et série en direct.">
-<meta property="og:title" content="QCM — VroumVroum">
+<meta property="og:title" content="QCM - VroumVroum">
 <meta property="og:description" content="Quiz d'entraînement au Code de la route, paramétrés et variés.">
 <meta property="og:type" content="website">
 <link rel="stylesheet" href="style.css">
@@ -43,6 +44,13 @@
       <p>Enchaîne les questions jusqu'à ta première erreur. Vise le meilleur score.</p>
     </button>
   </div>
+  <p class="kbd-hint">
+    Clavier :
+    <kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd>
+    pour répondre,
+    <kbd>Entrée</kbd> pour continuer,
+    <kbd>Échap</kbd> pour quitter.
+  </p>
 </div>
 
 <!-- QUIZ -->
@@ -52,7 +60,7 @@
 
     <div class="examen-header">
       <div class="left">
-        <span>Épreuve ETG</span>
+        <span>Entraînement ETG</span>
         <span id="mode-label">Mode rapide</span>
       </div>
       <div class="feu">
@@ -79,7 +87,7 @@
 
       <div class="options" id="options"></div>
 
-      <div class="feedback" id="feedback">
+      <div class="feedback" id="feedback" role="status" aria-live="polite">
         <div class="feedback-stamp" id="feedback-stamp">Correct</div>
         <div class="feedback-text" id="feedback-text">
           <strong>Bien joué.</strong>
@@ -88,7 +96,7 @@
     </div>
 
     <div class="examen-footer">
-      <div class="examen-score" id="examen-score">Série en cours : <strong>🔥 0</strong></div>
+      <div class="examen-score" id="examen-score" role="status" aria-live="polite">Série en cours : <strong>🔥 0</strong></div>
       <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()" style="display:none;">Question suivante →</button>
     </div>
 
@@ -131,7 +139,7 @@
 </div>
 
 <footer>
-  © 2026 VroumVroum — Fiches de révision du Code de la route
+  © 2026 VroumVroum - Fiches de révision du Code de la route
 </footer>
 
 <script src="questions-data.js"></script>
