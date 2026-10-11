@@ -1,14 +1,5 @@
 /* =========================================================
    VroumVroum - App
-   1. Stockage + thème clair / sombre
-   2. Progression des fiches (fiches lues, sauvegardées)
-   3. Accueil : anneau de progression, stats, parcours
-   4. QCM : 3 modes
-      - Rapide : 5 questions, correction immédiate
-      - Examen : 40 questions, 30 min, correction à la fin style Codes Rousseau
-      - Infini : jusqu'à la première erreur
-   5. Anti-répétition, bouton Rejouer, navigation clavier,
-      meilleure série / meilleur score sauvegardés
    ========================================================= */
 
 (function () {
@@ -123,7 +114,6 @@
     infini: 'Mode infini'
   };
 
-  /* Mapping catégorie de question → famille (L, C, R, U, D, A, P, M, S, E) */
   const CAT_TO_FAM = {
     "Signalisation": "L", "Signalisation temporaire": "L", "Marquage au sol": "L",
     "Priorités": "L", "Communication": "L", "Circuler": "L", "Vitesses": "L",
@@ -241,6 +231,7 @@
   let timerInterval = null;
   let timeRemaining = 0;
   let infiniBestAtStart = 0;
+  let examResultsCache = [];
 
   let modeSelectBox = null;
   let quizBox = null;
@@ -317,6 +308,7 @@
     lastAnswerWasCorrect = false;
     seenQuestions = new Set();
     examAnswers = [];
+    examResultsCache = [];
     infiniBestAtStart = getBest('infini');
     stopExamTimer();
 
@@ -578,6 +570,8 @@
       if (isCorrect) themeStats[fam].correct++;
     });
 
+    examResultsCache = results;
+
     const total = currentQuestions.length;
     const prev = getBest('examen');
     saveBest('examen', correct);
@@ -593,11 +587,11 @@
     if (correct > prev && correct > 0) message += ' Nouveau meilleur score !';
     else if (prev > 0) message += ` Ton meilleur : ${prev} / ${total}.`;
 
-    // Grille des numéros
+    // Grille des numéros cliquables
     const gridHTML = results.map((r, i) => {
       const num = String(i + 1).padStart(2, '0');
       const cls = r.userAns == null ? 'unanswered' : (r.isCorrect ? 'correct' : 'wrong');
-      return `<span class="exam-num ${cls}">${num}</span>`;
+      return `<span class="exam-num ${cls}" data-index="${i}">${num}</span>`;
     }).join('');
 
     // Thèmes (dans l'ordre officiel L, C, R, U, D, A, P, M, S, E)
@@ -615,45 +609,18 @@
         `;
       }).join('');
 
-    // Liste des erreurs (compacte)
-    const wrongs = results.map((r, i) => ({ ...r, num: i + 1 }))
-                          .filter(r => !r.isCorrect);
-
-    const errorsHTML = wrongs.length === 0 ? '' : `
-      <div class="exam-errors">
-        <div class="exam-errors-head">
-          <span class="exam-errors-title">Erreurs \u00e0 revoir</span>
-          <span class="exam-errors-count">${wrongs.length} question${wrongs.length > 1 ? 's' : ''}</span>
-        </div>
-        <div class="exam-errors-list">
-          ${wrongs.map(w => `
-            <div class="exam-error">
-              <div class="exam-error-num">${String(w.num).padStart(2, '0')}</div>
-              <div class="exam-error-body">
-                <div class="exam-error-q">${w.q.question}</div>
-                <div class="exam-error-choices">
-                  <div class="exam-error-choice wrong">
-                    <span class="exam-error-tag">Ton choix</span>
-                    <span>${w.userAns || '<em>Non r\u00e9pondu</em>'}</span>
-                  </div>
-                  <div class="exam-error-choice correct">
-                    <span class="exam-error-tag">Bonne r\u00e9ponse</span>
-                    <span>${w.q.answer}</span>
-                  </div>
-                </div>
-                ${w.q.explanation ? `<div class="exam-error-exp">${w.q.explanation}</div>` : ''}
-              </div>
-            </div>
-          `).join('')}
-        </div>
-      </div>
-    `;
-
     resultBox.className = 'result result-wide';
     resultBox.innerHTML = `
       <div class="exam-result-head">
-        <h2>Examen blanc termin\u00e9</h2>
-        <p>${message}</p>
+        <div class="exam-result-head-text">
+          <h2>Examen blanc termin\u00e9</h2>
+          <p>${message}</p>
+        </div>
+        <div class="exam-result-score ${reussi ? 'pass' : 'fail'}">
+          <span class="exam-result-score-value">${correct}</span>
+          <span class="exam-result-score-sep">/</span>
+          <span class="exam-result-score-total">${total}</span>
+        </div>
       </div>
 
       <div class="exam-result-body">
@@ -662,13 +629,9 @@
           <div class="exam-numbers">${gridHTML}</div>
         </div>
 
-        <div class="exam-result-col exam-result-circle-col">
-          <div class="exam-circle ${reussi ? 'pass' : 'fail'}">
-            <span class="exam-circle-value">${correct}</span>
-            <span class="exam-circle-sep">/</span>
-            <span class="exam-circle-total">${total}</span>
-          </div>
-          <div class="exam-circle-sub">${reussi ? '\u2713 R\u00e9ussi' : '\u2717 \u00c9chou\u00e9'}</div>
+        <div class="exam-result-col exam-result-center">
+          <div class="exam-result-label">D\u00e9tail de la question</div>
+          <div class="exam-detail" id="exam-detail"></div>
         </div>
 
         <div class="exam-result-col exam-result-themes">
@@ -677,12 +640,55 @@
         </div>
       </div>
 
-      ${errorsHTML}
-
       <div class="result-actions">
         <button class="btn btn-primary" onclick="replay()">Rejouer \u2192</button>
         <button class="btn btn-outline" onclick="backToModeSelect()">Changer de mode</button>
       </div>
+    `;
+
+    // Affiche par défaut la première question ratée (ou la 1ʳᵉ si tout est bon)
+    const firstWrong = results.findIndex(r => !r.isCorrect);
+    renderExamDetail(firstWrong >= 0 ? firstWrong : 0);
+  }
+
+
+  /* ---- Détail d'une question (affiché au centre) ---- */
+
+  function renderExamDetail(index) {
+    const detail = document.getElementById('exam-detail');
+    if (!detail || !examResultsCache[index]) return;
+
+    const r = examResultsCache[index];
+    const num = String(index + 1).padStart(2, '0');
+    const isCorrect = r.isCorrect;
+    const userAns = r.userAns;
+
+    // Surligne le numéro sélectionné dans la grille
+    document.querySelectorAll('.exam-num').forEach((el, i) => {
+      el.classList.toggle('selected', i === index);
+    });
+
+    detail.innerHTML = `
+      <div class="exam-detail-head">
+        <span class="exam-detail-num">Question ${num}</span>
+        <span class="exam-detail-status ${isCorrect ? 'correct' : 'wrong'}">
+          ${isCorrect ? '\u2713 Correct' : '\u2717 Erreur'}
+        </span>
+      </div>
+      <div class="exam-detail-q">${r.q.question}</div>
+      <div class="exam-detail-choices">
+        <div class="exam-detail-choice ${isCorrect ? 'correct' : 'wrong'}">
+          <span class="exam-detail-tag">Ton choix</span>
+          <span>${userAns || '<em>Non r\u00e9pondu</em>'}</span>
+        </div>
+        ${!isCorrect ? `
+          <div class="exam-detail-choice correct">
+            <span class="exam-detail-tag">Bonne r\u00e9ponse</span>
+            <span>${r.q.answer}</span>
+          </div>
+        ` : ''}
+      </div>
+      ${r.q.explanation ? `<div class="exam-detail-exp">${r.q.explanation}</div>` : ''}
     `;
   }
 
@@ -732,7 +738,17 @@
   });
 
 
-  /* ============ 18. INITIALISATION ============ */
+  /* ============ 18. CLIC SUR UN NUMÉRO DE LA GRILLE ============ */
+
+  document.addEventListener('click', (e) => {
+    const num = e.target.closest('.exam-num');
+    if (!num) return;
+    const index = parseInt(num.dataset.index, 10);
+    if (!isNaN(index)) renderExamDetail(index);
+  });
+
+
+  /* ============ 19. INITIALISATION ============ */
 
   window.toggleTheme = toggleTheme;
   window.startMode = startMode;
