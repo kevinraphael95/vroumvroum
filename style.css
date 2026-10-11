@@ -81,6 +81,8 @@ body {
   color: var(--text);
   line-height: 1.5;
   min-height: 100vh;
+  display: flex;              /* AJOUT : permet au footer de descendre */
+  flex-direction: column;     /* AJOUT : empile nav / contenu / footer */
   background-image:
     repeating-linear-gradient(
       0deg,
@@ -215,7 +217,7 @@ footer {
   letter-spacing: 1px;
   text-transform: uppercase;
   border-top: 3px dashed var(--border);
-  margin-top: 3rem;
+  margin-top: auto;          /* MODIF : pousse le footer en bas de page */
 }
 
 
@@ -536,6 +538,7 @@ footer {
   margin: 0 auto;
   padding: 2rem 1.5rem 4rem;
   align-items: start;
+  width: 100%;               /* AJOUT : prend toute la largeur dans le body flex */
 }
 
 /* --- Sidebar --- */
@@ -797,6 +800,7 @@ footer {
   margin: 0 auto;
   padding: 2rem 1.5rem 4rem;
   align-items: start;
+  width: 100%;               /* AJOUT : prend toute la largeur dans le body flex */
 }
 
 /* --- Bloc principal examen --- */
@@ -1148,6 +1152,7 @@ footer {
   max-width: 680px;
   margin: 2.5rem auto 4rem;
   padding: 0 1.5rem;
+  width: 100%;               /* AJOUT : prend toute la largeur dans le body flex */
 }
 
 .mode-select h1 {
@@ -1215,6 +1220,7 @@ footer {
   box-shadow: 6px 6px 0 var(--shadow-color);
   max-width: 600px;
   margin: 3rem auto;
+  width: calc(100% - 3rem);  /* AJOUT : prend toute la largeur dans le body flex, avec marge */
 }
 
 .result h2 {
