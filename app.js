@@ -29,14 +29,14 @@
   /* ============ 2. THÈME ============ */
 
   function applyTheme(isDark) {
-    document.body.classList.toggle('dark', isDark);
+    document.documentElement.classList.toggle('dark', isDark);
     document.querySelectorAll('.theme-toggle').forEach(btn => {
       btn.textContent = isDark ? '\u2600\uFE0F' : '\uD83C\uDF19';
     });
   }
 
   function toggleTheme() {
-    const isDark = !document.body.classList.contains('dark');
+    const isDark = !document.documentElement.classList.contains('dark');
     applyTheme(isDark);
     storage.set('vroum-theme', isDark ? 'dark' : 'light');
   }
@@ -80,16 +80,38 @@
     return fiches.filter(f => set.has(f.id)).length;
   }
 
-  function getBestStreak() {
-    return parseInt(storage.get('vroum-best-streak', '0'), 10) || 0;
+  // Records séparés par mode
+  //  infini : meilleure série | rapide : meilleur score /5 | examen : meilleur score /40
+  const RECORD_KEYS = {
+    infini: 'vroum-best-infini',
+    rapide: 'vroum-best-rapide',
+    examen: 'vroum-best-examen'
+  };
+
+  // Migration : l'ancien record unique (série) passe sur le mode infini
+  (function migrerAncienRecord() {
+    const old = storage.get('vroum-best-streak');
+    if (old !== null && storage.get(RECORD_KEYS.infini) === null) {
+      storage.set(RECORD_KEYS.infini, old);
+    }
+  })();
+
+  function getBest(m) {
+    return parseInt(storage.get(RECORD_KEYS[m], '0'), 10) || 0;
   }
 
-  function saveBestStreak(current) {
-    if (current > getBestStreak()) storage.set('vroum-best-streak', String(current));
+  function saveBest(m, value) {
+    if (value > getBest(m)) storage.set(RECORD_KEYS[m], String(value));
   }
 
   // Partagé avec fiches.js
-  window.VV = { isLue, toggleLue, countLues, getLues, getBestStreak };
+  window.VV = { isLue, toggleLue, countLues, getLues, getBest };
+
+
+  const RAPIDE_COUNT = 5;
+  const EXAM_COUNT = 40;
+  const EXAM_DURATION = 30 * 60;         // 30 minutes en secondes
+  const EXAM_PASSING_SCORE = 35;         // seuil de réussite ETG
 
 
   /* ============ 4. ACCUEIL ============ */
@@ -130,7 +152,10 @@
     }
 
     document.getElementById('stat-fiches').textContent = `${done} / ${total}`;
-    document.getElementById('stat-record').textContent = `Record ${getBestStreak()}`;
+    const rInf = getBest('infini'), rExa = getBest('examen'), rRap = getBest('rapide');
+    document.getElementById('stat-infini').textContent = rInf;
+    document.getElementById('stat-examen').textContent = rExa ? `${rExa} / ${EXAM_COUNT}` : '\u2014';
+    document.getElementById('stat-rapide').textContent = rRap ? `${rRap} / ${RAPIDE_COUNT}` : '\u2014';
 
     // Parcours = familles de fiches, dans l'ordre des données
     const familles = new Map();
@@ -165,10 +190,6 @@
 
   /* ============ 5. QCM : CONSTANTES ============ */
 
-  const RAPIDE_COUNT = 5;
-  const EXAM_COUNT = 40;
-  const EXAM_DURATION = 30 * 60;         // 30 minutes en secondes
-  const EXAM_PASSING_SCORE = 35;         // seuil de réussite ETG
 
   const MODE_LABELS = {
     rapide: 'Mode rapide',
@@ -190,6 +211,7 @@
   let examAnswers = [];                  // réponses stockées pour l'examen
   let timerInterval = null;
   let timeRemaining = 0;
+  let infiniBestAtStart = 0;             // record infini avant la partie
 
   // Refs DOM
   let modeSelectBox = null;
@@ -266,6 +288,7 @@
     lastAnswerWasCorrect = false;
     seenQuestions = new Set();
     examAnswers = [];
+    infiniBestAtStart = getBest('infini');
     stopExamTimer();
 
     if (mode === 'rapide') {
@@ -388,7 +411,7 @@
     if (isCorrect) {
       score++;
       streak++;
-      saveBestStreak(streak);
+      if (mode === 'infini') saveBest('infini', streak);
       feedback.className = 'feedback show success';
       stamp.textContent = 'Correct';
       text.innerHTML = `<strong>Bien jou\u00e9.</strong>${explanation}`;
@@ -456,7 +479,6 @@
 
     const title = document.getElementById('result-title');
     const detail = document.getElementById('result-detail');
-    const best = getBestStreak();
 
     if (mode === 'examen') {
       let correct = 0;
@@ -464,32 +486,43 @@
         if (examAnswers[i] === q.answer) correct++;
       });
       const total = currentQuestions.length;
+      const prev = getBest('examen');
+      saveBest('examen', correct);
       title.textContent = `Score : ${correct} / ${total}`;
 
+      let msg;
       if (correct >= EXAM_PASSING_SCORE) {
-        detail.textContent = `R\u00e9ussi ! Tu aurais eu ton examen (${EXAM_PASSING_SCORE}/${total} minimum).`;
+        msg = `R\u00e9ussi ! Tu aurais eu ton examen (${EXAM_PASSING_SCORE}/${total} minimum).`;
       } else {
         const manque = EXAM_PASSING_SCORE - correct;
-        detail.textContent = `Il te manque ${manque} point${manque > 1 ? 's' : ''} pour r\u00e9ussir. Continue \u00e0 r\u00e9viser.`;
+        msg = `Il te manque ${manque} point${manque > 1 ? 's' : ''} pour r\u00e9ussir. Continue \u00e0 r\u00e9viser.`;
       }
+      if (correct > prev && correct > 0) msg += ' Nouveau meilleur score !';
+      else if (prev > 0) msg += ` Ton meilleur : ${prev} / ${total}.`;
+      detail.textContent = msg;
 
     } else if (mode === 'rapide') {
       const total = currentQuestions.length;
+      const prev = getBest('rapide');
+      saveBest('rapide', score);
       title.textContent = `Score final : ${score} / ${total}`;
       const ratio = score / total;
-      detail.textContent =
+      let msg =
         ratio === 1  ? 'Sans faute, bravo !' :
         ratio >= 0.6 ? 'Bonne base, continue \u00e0 r\u00e9viser.' :
                        'Reprends les fiches avant de retenter.';
+      if (score > prev && score > 0) msg += ' Nouveau meilleur score !';
+      else if (prev > 0) msg += ` Ton meilleur : ${prev} / ${total}.`;
+      detail.textContent = msg;
 
     } else {
+      const best = getBest('infini');
       title.textContent = `S\u00e9rie termin\u00e9e \u00e0 ${streak} bonne${streak > 1 ? 's' : ''} r\u00e9ponse${streak > 1 ? 's' : ''}`;
       let msg =
         streak >= 10 ? 'Solide, tu ma\u00eetrises bien le programme.' :
         streak >= 5  ? 'Pas mal, continue \u00e0 r\u00e9viser les th\u00e8mes qui te bloquent.' :
                        'Retourne voir les fiches de cours avant de retenter.';
-
-      if (streak > 0 && streak >= best && streak > 2) {
+      if (streak > 0 && streak > infiniBestAtStart) {
         msg += ` Nouveau record : ${streak} bonnes r\u00e9ponses d\u2019affil\u00e9e !`;
       } else if (best > 0) {
         msg += ` Ton record : ${best}.`;

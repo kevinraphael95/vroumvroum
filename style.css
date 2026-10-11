@@ -1,4 +1,6 @@
 :root {
+  --bleu-fill: #2563eb;
+  --bleu-fill-dark: #1d4ed8;
   --bg: #f4f7fc;
   --surface: #ffffff;
   --surface-2: #eef2f9;
@@ -34,36 +36,40 @@
   --radius-xl: 24px;
 }
 
-body.dark {
-  --bg: #0b1120;
-  --surface: #1e293b;
-  --surface-2: #334155;
-  --border: #334155;
+:root.dark {
+  color-scheme: dark;
 
-  --text: #f1f5f9;
-  --text-soft: #cbd5e1;
-  --text-muted: #64748b;
+  --bg: #0d1220;
+  --surface: #151c30;
+  --surface-2: #1e2742;
+  --border: #29345a;
 
-  --bleu: #3b82f6;
-  --bleu-dark: #2563eb;
-  --bleu-tint: #1e3a8a;
+  --text: #e9eef9;
+  --text-soft: #b6c1da;
+  --text-muted: #7f8cab;
 
-  --jaune: #fde047;
-  --jaune-soft: #422006;
+  --bleu: #6aa3ff;
+  --bleu-dark: #4a87f0;
+  --bleu-tint: rgba(106, 163, 255, 0.13);
+  --bleu-fill: #2f6fe0;
+  --bleu-fill-dark: #1f56b8;
 
-  --rouge: #ef4444;
-  --rouge-soft: #450a0a;
+  --jaune: #fcd34d;
+  --jaune-soft: rgba(252, 211, 77, 0.12);
 
-  --vert: #22c55e;
-  --vert-soft: #052e16;
+  --rouge: #f87171;
+  --rouge-soft: rgba(248, 113, 113, 0.13);
+
+  --vert: #4ade80;
+  --vert-soft: rgba(74, 222, 128, 0.12);
 
   --rose: #f472b6;
   --violet: #a78bfa;
   --orange: #fbbf24;
 
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
-  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.3);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.3);
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.35);
+  --shadow: 0 4px 10px -2px rgb(0 0 0 / 0.45), 0 2px 4px -2px rgb(0 0 0 / 0.35);
+  --shadow-lg: 0 14px 22px -4px rgb(0 0 0 / 0.55), 0 4px 8px -4px rgb(0 0 0 / 0.4);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -1072,3 +1078,25 @@ a:focus-visible, button:focus-visible { outline: 3px solid var(--bleu); outline-
   .fiche-actions { flex-direction: column; align-items: stretch; }
   .fiche-nav { justify-content: space-between; }
 }
+
+
+/* =========================================================
+   THÈME : pas de flash blanc + fonds pleins lisibles en sombre
+   ========================================================= */
+html { background: var(--bg); }
+
+.logo-mark { background: var(--bleu-fill); box-shadow: 0 2px 0 var(--bleu-fill-dark); }
+.btn-primary { background: var(--bleu-fill); box-shadow: 0 3px 0 var(--bleu-fill-dark); }
+.btn-primary:hover:not(:disabled) { background: var(--bleu-fill-dark); box-shadow: 0 4px 0 var(--bleu-fill-dark); }
+.btn-primary:active:not(:disabled) { box-shadow: 0 1px 0 var(--bleu-fill-dark); }
+.option:hover:not(:disabled) .option-letter,
+.option.selected .option-letter { background: var(--bleu-fill); }
+.dashboard-header { background: linear-gradient(135deg, var(--bleu-fill) 0%, var(--bleu-fill-dark) 100%); }
+:root.dark .dashboard-header { background: linear-gradient(135deg, #2a5bd7 0%, #1b3b94 100%); }
+:root.dark .fiche-astuce { border-left-color: var(--jaune); }
+
+/* ---- Accueil : 4 stats (fiches + record par mode) ---- */
+.stats-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.stat-icon.infini { background: var(--rouge-soft); }
+.stat-icon.examen { background: var(--vert-soft); }
+.stat-icon.rapide { background: var(--bleu-tint); }

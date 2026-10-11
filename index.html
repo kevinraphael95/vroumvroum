@@ -13,6 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<script>try{if(localStorage.getItem("vroum-theme")==="dark")document.documentElement.classList.add("dark")}catch(e){}</script>
 </head>
 <body>
 
@@ -56,10 +57,24 @@
       </div>
     </a>
     <a href="qcm.html" class="stat-card">
-      <div class="stat-icon trophy">🏆</div>
+      <div class="stat-icon infini">♾️</div>
       <div>
-        <div class="stat-value" id="stat-record">Record 0</div>
-        <div class="stat-label">Meilleure série au QCM</div>
+        <div class="stat-value" id="stat-infini">0</div>
+        <div class="stat-label">Record en mode infini</div>
+      </div>
+    </a>
+    <a href="qcm.html" class="stat-card">
+      <div class="stat-icon examen">📝</div>
+      <div>
+        <div class="stat-value" id="stat-examen">—</div>
+        <div class="stat-label">Meilleur examen blanc</div>
+      </div>
+    </a>
+    <a href="qcm.html" class="stat-card">
+      <div class="stat-icon rapide">⚡</div>
+      <div>
+        <div class="stat-value" id="stat-rapide">—</div>
+        <div class="stat-label">Meilleur score rapide</div>
       </div>
     </a>
   </div>
