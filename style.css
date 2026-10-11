@@ -4,7 +4,6 @@
    VARIABLES
    ========================================================= */
 
-/* Theme clair (defaut) */
 :root {
   --bg: #f5f1e8;
   --bg-line: #d9d2bf;
@@ -28,7 +27,6 @@
   --texture-opacity: 0.012;
 }
 
-/* Theme sombre */
 body.dark {
   --bg: #16161a;
   --bg-line: #2a2a33;
@@ -52,18 +50,17 @@ body.dark {
   --texture-opacity: 0.008;
 }
 
-/* Couleurs des badges de famille (alignees sur le Codes Rousseau) */
 :root {
-  --fam-L: #4a8bb5;  /* La circulation routiere */
-  --fam-C: #d63384;  /* Le conducteur */
-  --fam-R: #8b7cb5;  /* La route */
-  --fam-U: #d9534f;  /* Les autres usagers */
-  --fam-D: #e8b923;  /* Les notions diverses */
-  --fam-A: #dc3545;  /* Les premiers secours */
-  --fam-P: #8b7355;  /* Prendre et quitter son vehicule */
-  --fam-M: #e8952e;  /* La mecanique et les equipements */
-  --fam-S: #8ba8c9;  /* La securite du passager et du vehicule */
-  --fam-E: #94b43e;  /* L'environnement */
+  --fam-L: #4a8bb5;
+  --fam-C: #d63384;
+  --fam-R: #8b7cb5;
+  --fam-U: #d9534f;
+  --fam-D: #e8b923;
+  --fam-A: #dc3545;
+  --fam-P: #8b7355;
+  --fam-M: #e8952e;
+  --fam-S: #8ba8c9;
+  --fam-E: #94b43e;
 }
 
 
@@ -72,7 +69,6 @@ body.dark {
    ========================================================= */
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-
 html { scroll-behavior: smooth; }
 
 body {
@@ -81,22 +77,18 @@ body {
   color: var(--text);
   line-height: 1.5;
   min-height: 100vh;
-  display: flex;              /* AJOUT : permet au footer de descendre */
-  flex-direction: column;     /* AJOUT : empile nav / contenu / footer */
+  display: flex;
+  flex-direction: column;
   background-image:
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
+    repeating-linear-gradient(0deg,
+      transparent, transparent 2px,
       rgba(0, 0, 0, var(--texture-opacity)) 2px,
-      rgba(0, 0, 0, var(--texture-opacity)) 3px
-    );
+      rgba(0, 0, 0, var(--texture-opacity)) 3px);
   transition: background 0.2s, color 0.2s;
   -webkit-font-smoothing: antialiased;
 }
 
 a { color: inherit; text-decoration: none; }
-
 ul { list-style: none; }
 
 
@@ -135,8 +127,7 @@ nav {
 }
 
 .logo-badge {
-  width: 30px;
-  height: 30px;
+  width: 30px; height: 30px;
   background: var(--rouge);
   border: 3px solid white;
   border-radius: 50%;
@@ -149,16 +140,8 @@ nav {
   flex-shrink: 0;
 }
 
-.nav-right {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-
-.nav-links {
-  display: flex;
-  gap: 0.3rem;
-}
+.nav-right { display: flex; align-items: center; gap: 0.4rem; }
+.nav-links { display: flex; gap: 0.3rem; }
 
 .nav-links a {
   color: white;
@@ -173,15 +156,10 @@ nav {
 }
 
 .nav-links a:hover { border-color: white; }
-
-.nav-links a.active {
-  background: var(--jaune);
-  color: #1a1a1a;
-}
+.nav-links a.active { background: var(--jaune); color: #1a1a1a; }
 
 .theme-toggle {
-  width: 34px;
-  height: 34px;
+  width: 34px; height: 34px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.15);
   border: 2px solid white;
@@ -217,7 +195,7 @@ footer {
   letter-spacing: 1px;
   text-transform: uppercase;
   border-top: 3px dashed var(--border);
-  margin-top: auto;          /* MODIF : pousse le footer en bas de page */
+  margin-top: auto;
 }
 
 
@@ -265,7 +243,7 @@ footer {
 
 
 /* =========================================================
-   PAGE ACCUEIL : HERO
+   PAGE ACCUEIL
    ========================================================= */
 
 .hero {
@@ -308,10 +286,7 @@ footer {
   color: var(--text);
 }
 
-.hero h1 em {
-  font-style: normal;
-  color: var(--bleu);
-}
+.hero h1 em { font-style: normal; color: var(--bleu); }
 
 .hero p {
   font-size: 1rem;
@@ -321,13 +296,8 @@ footer {
   margin-bottom: 1.8rem;
 }
 
-.hero-actions {
-  display: flex;
-  gap: 0.7rem;
-  flex-wrap: wrap;
-}
+.hero-actions { display: flex; gap: 0.7rem; flex-wrap: wrap; }
 
-/* Panneaux decoratifs */
 .panneau-stack {
   position: relative;
   height: 300px;
@@ -337,8 +307,7 @@ footer {
 }
 
 .panneau-rond {
-  width: 170px;
-  height: 170px;
+  width: 170px; height: 170px;
   border-radius: 50%;
   background: var(--surface);
   border: 15px solid var(--rouge);
@@ -356,8 +325,7 @@ footer {
 .panneau-rond::after {
   content: '';
   position: absolute;
-  width: 162px;
-  height: 5px;
+  width: 162px; height: 5px;
   background: var(--rouge);
   transform: rotate(-45deg);
   border-radius: 3px;
@@ -365,10 +333,8 @@ footer {
 
 .panneau-triangle {
   position: absolute;
-  top: 12px;
-  right: 15px;
-  width: 0;
-  height: 0;
+  top: 12px; right: 15px;
+  width: 0; height: 0;
   border-left: 58px solid transparent;
   border-right: 58px solid transparent;
   border-bottom: 100px solid var(--rouge);
@@ -378,10 +344,8 @@ footer {
 .panneau-triangle::before {
   content: '';
   position: absolute;
-  top: 12px;
-  left: -48px;
-  width: 0;
-  height: 0;
+  top: 12px; left: -48px;
+  width: 0; height: 0;
   border-left: 48px solid transparent;
   border-right: 48px solid transparent;
   border-bottom: 84px solid var(--surface);
@@ -390,8 +354,7 @@ footer {
 .panneau-triangle::after {
   content: '!';
   position: absolute;
-  top: 33px;
-  left: -7px;
+  top: 33px; left: -7px;
   font-family: 'Archivo Black', sans-serif;
   font-size: 2.5rem;
   color: var(--text);
@@ -399,10 +362,8 @@ footer {
 
 .panneau-bleu {
   position: absolute;
-  bottom: 8px;
-  left: 10px;
-  width: 95px;
-  height: 95px;
+  bottom: 8px; left: 10px;
+  width: 95px; height: 95px;
   border-radius: 50%;
   background: var(--bleu);
   border: 7px solid var(--surface);
@@ -414,11 +375,6 @@ footer {
   z-index: 3;
   box-shadow: 0 5px 0 var(--shadow-color);
 }
-
-
-/* =========================================================
-   TITRE DE SECTION (accueil)
-   ========================================================= */
 
 .section-header {
   display: flex;
@@ -448,17 +404,10 @@ footer {
 .section-header .line {
   flex: 1;
   height: 3px;
-  background: repeating-linear-gradient(
-    90deg,
+  background: repeating-linear-gradient(90deg,
     var(--border-strong) 0px, var(--border-strong) 12px,
-    transparent 12px, transparent 20px
-  );
+    transparent 12px, transparent 20px);
 }
-
-
-/* =========================================================
-   CARTES ACCUEIL
-   ========================================================= */
 
 .cards-grid {
   display: grid;
@@ -487,8 +436,7 @@ footer {
 }
 
 .card-link-icon {
-  width: 46px;
-  height: 46px;
+  width: 46px; height: 46px;
   border-radius: 6px;
   display: flex;
   align-items: center;
@@ -527,7 +475,7 @@ footer {
 
 
 /* =========================================================
-   PAGE FICHES : LAYOUT
+   PAGE FICHES
    ========================================================= */
 
 .fiches-layout {
@@ -538,10 +486,9 @@ footer {
   margin: 0 auto;
   padding: 2rem 1.5rem 4rem;
   align-items: start;
-  width: 100%;               /* AJOUT : prend toute la largeur dans le body flex */
+  width: 100%;
 }
 
-/* --- Sidebar --- */
 .sidebar {
   background: var(--surface);
   border: 2px solid var(--border-strong);
@@ -590,13 +537,8 @@ footer {
 }
 
 .sidebar li a:hover { background: var(--surface-2); color: var(--text); }
+.sidebar li a.active { background: var(--bleu); color: white; }
 
-.sidebar li a.active {
-  background: var(--bleu);
-  color: white;
-}
-
-/* Famille (titre principal dans la sidebar) */
 .sidebar-groupe {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.6rem;
@@ -609,7 +551,6 @@ footer {
 
 .sidebar-groupe:first-child { padding-top: 0.4rem; }
 
-/* Sous-groupe (sous-titre dans la sidebar) */
 .sidebar-sous-groupe {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.56rem;
@@ -621,7 +562,6 @@ footer {
   opacity: 0.75;
 }
 
-/* Titre tronque dans la sidebar */
 .fiche-titre-side {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -629,13 +569,11 @@ footer {
   min-width: 0;
 }
 
-/* Badges famille (ronds, style Codes Rousseau) */
 .fiche-badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
-  height: 20px;
+  width: 20px; height: 20px;
   border-radius: 50%;
   font-family: 'Archivo Black', sans-serif;
   font-size: 0.6rem;
@@ -653,11 +591,6 @@ footer {
 .badge-M { background: var(--fam-M); }
 .badge-S { background: var(--fam-S); }
 .badge-E { background: var(--fam-E); }
-
-
-/* =========================================================
-   PAGE FICHES : BLOCS DE CONTENU
-   ========================================================= */
 
 .fiche-bloc {
   background: var(--surface);
@@ -678,7 +611,6 @@ footer {
   border-bottom: 2px dashed var(--border);
 }
 
-/* Badge rectangulaire dans le header du bloc */
 .fiche-bloc-badge {
   display: inline-flex;
   align-items: center;
@@ -701,11 +633,7 @@ footer {
   color: var(--text);
 }
 
-/* --- Tableaux --- */
-.fiche-table {
-  width: 100%;
-  border-collapse: collapse;
-}
+.fiche-table { width: 100%; border-collapse: collapse; }
 
 .fiche-table th {
   text-align: left;
@@ -739,7 +667,6 @@ footer {
   font-size: 0.82rem;
 }
 
-/* --- Listes --- */
 .fiche-list li {
   display: flex;
   gap: 0.8rem;
@@ -754,8 +681,7 @@ footer {
 
 .fiche-list li::before {
   content: '';
-  width: 6px;
-  height: 6px;
+  width: 6px; height: 6px;
   border-radius: 50%;
   background: var(--rouge);
   flex-shrink: 0;
@@ -764,7 +690,6 @@ footer {
 
 .fiche-list strong { color: var(--text); font-weight: 700; }
 
-/* --- Encadre "A retenir" --- */
 .fiche-astuce {
   margin-top: 1.5rem;
   padding: 1rem 1.2rem;
@@ -800,10 +725,9 @@ footer {
   margin: 0 auto;
   padding: 2rem 1.5rem 4rem;
   align-items: start;
-  width: 100%;               /* AJOUT : prend toute la largeur dans le body flex */
+  width: 100%;
 }
 
-/* --- Bloc principal examen --- */
 .examen {
   background: var(--surface);
   border: 3px solid var(--border-strong);
@@ -837,8 +761,7 @@ footer {
 }
 
 .feu-dot {
-  width: 11px;
-  height: 11px;
+  width: 11px; height: 11px;
   border-radius: 50%;
   background: #555;
 }
@@ -858,11 +781,9 @@ footer {
   content: '';
   position: absolute;
   inset: 0;
-  background: repeating-linear-gradient(
-    90deg,
+  background: repeating-linear-gradient(90deg,
     transparent 0px, transparent 8px,
-    var(--bg) 8px, var(--bg) 12px
-  );
+    var(--bg) 8px, var(--bg) 12px);
   z-index: 2;
 }
 
@@ -924,7 +845,6 @@ footer {
   margin-right: 0.4rem;
 }
 
-/* --- Options --- */
 .options {
   display: flex;
   flex-direction: column;
@@ -958,8 +878,7 @@ footer {
 .option:disabled { cursor: default; }
 
 .case {
-  width: 22px;
-  height: 22px;
+  width: 22px; height: 22px;
   border: 2px solid var(--border-strong);
   border-radius: 2px;
   display: flex;
@@ -997,7 +916,19 @@ footer {
   color: white;
 }
 
-/* --- Feedback --- */
+/* Sélection en mode examen (sans correction immédiate) */
+.option.selected {
+  background: rgba(0, 61, 165, 0.08);
+  border-color: var(--bleu);
+  box-shadow: 3px 3px 0 var(--bleu);
+}
+
+.option.selected .case {
+  background: var(--bleu);
+  border-color: var(--bleu);
+  color: white;
+}
+
 .feedback {
   margin-top: 1.3rem;
   padding: 1rem 1.2rem;
@@ -1043,7 +974,6 @@ footer {
 .feedback-text { color: var(--text); line-height: 1.5; }
 .feedback-text strong { display: block; margin-bottom: 0.2rem; }
 
-/* --- Footer examen --- */
 .examen-footer {
   padding: 1rem 1.8rem 1.3rem;
   display: flex;
@@ -1065,7 +995,6 @@ footer {
 
 .examen-score strong { color: var(--text); font-size: 0.9rem; }
 
-/* --- Sidebar QCM --- */
 .quiz-side {
   background: var(--surface);
   border: 2px solid var(--border-strong);
@@ -1082,11 +1011,7 @@ footer {
   border-bottom: 2px dashed var(--border);
 }
 
-.side-block:last-child {
-  border-bottom: none;
-  margin-bottom: 0;
-  padding-bottom: 0;
-}
+.side-block:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
 
 .side-label {
   font-family: 'JetBrains Mono', monospace;
@@ -1107,11 +1032,7 @@ footer {
 
 .side-value.rouge { color: var(--rouge); }
 
-.mode-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
+.mode-list { display: flex; flex-direction: column; gap: 0.5rem; }
 
 .mode-btn {
   background: var(--surface);
@@ -1137,10 +1058,30 @@ footer {
   margin-bottom: 0.15rem;
 }
 
-.mode-btn .desc {
-  font-size: 0.72rem;
-  color: inherit;
-  opacity: 0.75;
+.mode-btn .desc { font-size: 0.72rem; color: inherit; opacity: 0.75; }
+
+
+/* =========================================================
+   TIMER CHIP (mode examen)
+   ========================================================= */
+
+.timer-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.3rem 0.7rem;
+  background: var(--jaune);
+  color: #1a1a1a;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+
+body.dark .timer-chip {
+  background: var(--jaune);
+  color: #1a1a1a;
 }
 
 
@@ -1149,10 +1090,10 @@ footer {
    ========================================================= */
 
 .mode-select {
-  max-width: 680px;
+  max-width: 900px;
   margin: 2.5rem auto 4rem;
   padding: 0 1.5rem;
-  width: 100%;               /* AJOUT : prend toute la largeur dans le body flex */
+  width: 100%;
 }
 
 .mode-select h1 {
@@ -1177,6 +1118,10 @@ footer {
   gap: 1.1rem;
 }
 
+.mode-cards-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
 .mode-card {
   background: var(--surface);
   border: 2px solid var(--border-strong);
@@ -1188,22 +1133,84 @@ footer {
   font-family: inherit;
   color: var(--text);
   transition: all 0.12s;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-height: 260px;
 }
 
 .mode-card:hover { transform: translate(-1px, -1px); box-shadow: 5px 5px 0 var(--shadow-color); }
 .mode-card:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--shadow-color); }
 
+.mode-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+}
+
+.mode-card-icon {
+  width: 46px; height: 46px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  border: 2px solid var(--border-strong);
+  flex-shrink: 0;
+}
+
+.mode-card-rapide .mode-card-icon { background: var(--jaune); color: #1a1a1a; }
+.mode-card-examen .mode-card-icon { background: var(--bleu); color: white; border-color: var(--bleu); }
+.mode-card-infini .mode-card-icon { background: var(--border-strong); color: var(--bg); }
+
+.mode-card-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  padding: 0.28rem 0.6rem;
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--text-muted);
+}
+
+.mode-card-tag-officiel { background: rgba(0, 61, 165, 0.12); color: var(--bleu); }
+.mode-card-tag-serie { background: rgba(138, 115, 85, 0.12); color: var(--text-soft); }
+
 .mode-card h3 {
   font-family: 'Archivo Black', sans-serif;
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   text-transform: uppercase;
-  margin-bottom: 0.5rem;
+  letter-spacing: -0.3px;
+  margin-bottom: 0.15rem;
 }
 
 .mode-card p {
   font-size: 0.85rem;
   color: var(--text-soft);
-  line-height: 1.5;
+  line-height: 1.55;
+  flex: 1;
+}
+
+.mode-card-meta {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.7rem;
+  flex-wrap: wrap;
+}
+
+.mode-card-meta span {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.66rem;
+  font-weight: 700;
+  padding: 0.25rem 0.55rem;
+  border-radius: 3px;
+  background: var(--surface-2);
+  color: var(--text-soft);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
 
@@ -1220,7 +1227,7 @@ footer {
   box-shadow: 6px 6px 0 var(--shadow-color);
   max-width: 600px;
   margin: 3rem auto;
-  width: calc(100% - 3rem);  /* AJOUT : prend toute la largeur dans le body flex, avec marge */
+  width: calc(100% - 3rem);
 }
 
 .result h2 {
@@ -1246,7 +1253,7 @@ footer {
 
 
 /* =========================================================
-   ACCESSIBILITE : FOCUS CLAVIER
+   ACCESSIBILITE
    ========================================================= */
 
 .option:focus-visible,
@@ -1262,7 +1269,7 @@ footer {
 
 
 /* =========================================================
-   HINT CLAVIER (page QCM)
+   HINT CLAVIER
    ========================================================= */
 
 .kbd-hint {
@@ -1293,29 +1300,13 @@ footer {
    ========================================================= */
 
 @media (max-width: 900px) {
-  /* --- Navbar --- */
-  .nav-inner {
-    padding: 0.7rem 1rem;
-    flex-wrap: wrap;
-  }
-
+  .nav-inner { padding: 0.7rem 1rem; flex-wrap: wrap; }
   .logo { font-size: 0.95rem; }
   .logo-badge { width: 26px; height: 26px; font-size: 0.8rem; border-width: 2px; }
-
-  .nav-right {
-    flex: 1;
-    justify-content: flex-end;
-  }
-
-  .nav-links a {
-    padding: 0.4rem 0.65rem;
-    font-size: 0.7rem;
-    letter-spacing: 0.5px;
-  }
-
+  .nav-right { flex: 1; justify-content: flex-end; }
+  .nav-links a { padding: 0.4rem 0.65rem; font-size: 0.7rem; letter-spacing: 0.5px; }
   .theme-toggle { width: 30px; height: 30px; font-size: 0.85rem; }
 
-  /* --- Layouts --- */
   .container { padding: 1.5rem 1rem 3rem; }
 
   .fiches-layout, .qcm-layout {
@@ -1325,15 +1316,9 @@ footer {
   }
 
   .sidebar, .quiz-side { position: static; }
-
-  .sidebar {
-    max-height: 340px;
-    overflow-y: auto;
-  }
-
+  .sidebar { max-height: 340px; overflow-y: auto; }
   .sidebar-groupe { padding: 0.8rem 0.8rem 0.3rem; }
 
-  /* --- Hero --- */
   .hero {
     grid-template-columns: 1fr;
     gap: 1.5rem;
@@ -1346,35 +1331,24 @@ footer {
   .hero-actions { gap: 0.5rem; }
   .btn { padding: 0.75rem 1.2rem; font-size: 0.75rem; }
 
-  /* --- Panneaux decoratifs --- */
   .panneau-stack { height: 220px; }
   .panneau-rond { width: 130px; height: 130px; font-size: 2.6rem; border-width: 11px; }
   .panneau-rond::after { width: 124px; height: 4px; }
   .panneau-triangle { border-left-width: 44px; border-right-width: 44px; border-bottom-width: 76px; }
-  .panneau-triangle::before {
-    border-left-width: 36px;
-    border-right-width: 36px;
-    border-bottom-width: 64px;
-    left: -36px;
-    top: 10px;
-  }
+  .panneau-triangle::before { border-left-width: 36px; border-right-width: 36px; border-bottom-width: 64px; left: -36px; top: 10px; }
   .panneau-triangle::after { font-size: 1.9rem; top: 26px; left: -5px; }
   .panneau-bleu { width: 72px; height: 72px; font-size: 1.6rem; border-width: 5px; }
 
-  /* --- Cartes accueil --- */
-  .cards-grid, .mode-cards { grid-template-columns: 1fr; gap: 1rem; }
-
+  .cards-grid { grid-template-columns: 1fr; gap: 1rem; }
   .card-link { padding: 1.3rem; }
   .card-link-icon { width: 40px; height: 40px; font-size: 1.15rem; }
 
-  /* --- Blocs fiches --- */
   .fiche-bloc { padding: 1.3rem; }
   .fiche-bloc h2 { font-size: 0.92rem; }
 
   .fiche-table th, .fiche-table td { padding: 0.6rem 0.5rem; font-size: 0.82rem; }
   .fiche-table th { font-size: 0.6rem; }
 
-  /* --- Examen QCM --- */
   .examen-header { padding: 0.7rem 1rem; font-size: 0.65rem; letter-spacing: 1px; }
   .examen-header .left { gap: 0.8rem; }
   .examen-body { padding: 1.3rem; }
@@ -1383,12 +1357,11 @@ footer {
   .examen-footer { padding: 1rem 1.3rem; }
   .feedback { flex-direction: column; gap: 0.6rem; }
 
-  /* --- Mode select --- */
   .mode-select { margin: 1.5rem auto 3rem; padding: 0 1rem; }
   .mode-select h1 { font-size: 1.4rem; }
-  .mode-card { padding: 1.3rem; }
+  .mode-cards, .mode-cards-3 { grid-template-columns: 1fr; gap: 1rem; }
+  .mode-card { padding: 1.3rem; min-height: 0; }
 
-  /* --- Resultats --- */
   .result { padding: 2rem 1.3rem; margin: 2rem 1rem; }
   .result h2 { font-size: 1.4rem; }
 }
