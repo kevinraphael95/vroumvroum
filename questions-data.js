@@ -1,6 +1,6 @@
 /* =========================================================
    BANQUE DE QUESTIONS.
-   Templates paramétrables — génèrent des questions variées.
+   Templates paramétrables - génèrent des questions variées.
    Alignés sur les 23 fiches de fiches-data.js.
 
    SOURCES :
@@ -794,7 +794,9 @@ const questionTemplates = [
 
 /* ============ GÉNÉRATION ============ */
 
-/* Génère N questions sans répéter un énoncé déjà vu */
+/* Génère N questions sans répéter un énoncé déjà vu.
+   Si un template épuise ses 10 tentatives sans produire de question unique,
+   il est ignoré au profit du template suivant (pas de doublon ajouté). */
 function generateQuestionSet(n, seenQuestions) {
   seenQuestions = seenQuestions || new Set();
   const pool = shuffle(questionTemplates);
@@ -803,21 +805,27 @@ function generateQuestionSet(n, seenQuestions) {
   for (let i = 0; i < pool.length && set.length < n; i++) {
     const template = pool[i];
     let q = null;
-    let attempts = 0;
-    while (attempts < 10) {
+    let unique = false;
+
+    for (let attempts = 0; attempts < 10; attempts++) {
       q = template.generate();
-      if (!seenQuestions.has(q.question)) break;
-      attempts++;
+      if (!seenQuestions.has(q.question)) { unique = true; break; }
     }
+
+    if (!unique) {
+      console.warn('[VroumVroum] Template épuisé, ignoré :', template.category);
+      continue;
+    }
+
     seenQuestions.add(q.question);
     set.push(q);
   }
 
-  // Filet de sécurité si on n'a pas assez de questions uniques
+  // Filet de sécurité : si on n'a pas atteint n questions, on complète
+  // avec des questions inédites piochées au hasard dans tous les templates.
   let safety = 0;
   while (set.length < n && safety < 20) {
-    const template = pick(questionTemplates);
-    const q = template.generate();
+    const q = pick(questionTemplates).generate();
     if (!seenQuestions.has(q.question)) {
       seenQuestions.add(q.question);
       set.push(q);
