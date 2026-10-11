@@ -5,7 +5,7 @@
    3. Accueil : anneau de progression, stats, parcours
    4. QCM : 3 modes
       - Rapide : 5 questions, correction immédiate
-      - Examen : 40 questions, 30 min, correction à la fin avec récap
+      - Examen : 40 questions, 30 min, correction à la fin style Codes Rousseau
       - Infini : jusqu'à la première erreur
    5. Anti-répétition, bouton Rejouer, navigation clavier,
       meilleure série / meilleur score sauvegardés
@@ -92,7 +92,6 @@
     examen: 'vroum-best-examen'
   };
 
-  // Migration : l'ancien record unique (série) passe sur le mode infini
   (function migrerAncienRecord() {
     const old = storage.get('vroum-best-streak');
     if (old !== null && storage.get(RECORD_KEYS.infini) === null) {
@@ -108,7 +107,6 @@
     if (value > getBest(m)) storage.set(RECORD_KEYS[m], String(value));
   }
 
-  // Partagé avec fiches.js
   window.VV = { isLue, toggleLue, countLues, getLues, getBest };
 
 
@@ -116,13 +114,43 @@
 
   const RAPIDE_COUNT = 5;
   const EXAM_COUNT = 40;
-  const EXAM_DURATION = 30 * 60;         // 30 minutes
-  const EXAM_PASSING_SCORE = 35;         // seuil de réussite ETG
+  const EXAM_DURATION = 30 * 60;
+  const EXAM_PASSING_SCORE = 35;
 
   const MODE_LABELS = {
     rapide: 'Mode rapide',
     examen: 'Examen blanc',
     infini: 'Mode infini'
+  };
+
+  /* Mapping catégorie de question → famille (L, C, R, U, D, A, P, M, S, E) */
+  const CAT_TO_FAM = {
+    "Signalisation": "L", "Signalisation temporaire": "L", "Marquage au sol": "L",
+    "Priorités": "L", "Communication": "L", "Circuler": "L", "Vitesses": "L",
+    "Conséquences vitesse": "L", "Dépassement": "L", "Stationnement": "L",
+    "Conducteur": "C", "Alcool & stupéfiants": "C",
+    "Conduite difficile": "R", "Autoroute": "R", "Zones dangereuses": "R",
+    "Autres usagers": "U",
+    "Documents": "D", "Assurance": "D", "Chargement": "D",
+    "Permis à points": "D", "Infractions": "D",
+    "Premiers secours": "A",
+    "Prendre & quitter": "P",
+    "Mécanique": "M", "Voyants": "M", "Éclairage": "M", "Équipements": "M",
+    "Sécurité passager": "S", "Sécurité": "S",
+    "Écomobilité": "E", "Choisir son véhicule": "E", "Écoconduite": "E"
+  };
+
+  const FAM_NAMES = {
+    L: "La circulation routière",
+    C: "Le conducteur",
+    R: "La route",
+    U: "Les autres usagers",
+    D: "Les notions diverses",
+    A: "Les premiers secours",
+    P: "Prendre et quitter son véhicule",
+    M: "La mécanique et les équipements",
+    S: "La sécurité du passager et du véhicule",
+    E: "L'environnement"
   };
 
 
@@ -142,7 +170,6 @@
     const done = countLues(FICHES);
     const pct = total ? Math.round((done / total) * 100) : 0;
 
-    // Anneau (circonférence = 2 * PI * 54)
     const CIRC = 339.292;
     const ring = document.getElementById('ring-fg');
     if (ring) {
@@ -170,7 +197,6 @@
     setText('stat-examen', rExa ? `${rExa} / ${EXAM_COUNT}` : '\u2014');
     setText('stat-rapide', rRap ? `${rRap} / ${RAPIDE_COUNT}` : '\u2014');
 
-    // Parcours = familles de fiches, dans l'ordre des données
     const familles = new Map();
     FICHES.forEach(f => {
       if (!familles.has(f.badge)) familles.set(f.badge, { nom: f.groupe, fiches: [] });
@@ -211,12 +237,11 @@
   let lastCategory = null;
   let lastAnswerWasCorrect = false;
   let seenQuestions = new Set();
-  let examAnswers = [];                  // réponses stockées pour l'examen
+  let examAnswers = [];
   let timerInterval = null;
   let timeRemaining = 0;
   let infiniBestAtStart = 0;
 
-  // Refs DOM
   let modeSelectBox = null;
   let quizBox = null;
   let resultBox = null;
@@ -358,7 +383,6 @@
       ? (currentIndex === currentQuestions.length - 1 ? 'Terminer l\u2019examen' : 'Question suivante \u2192')
       : 'Valider';
 
-    // Examen : restaure la réponse précédente
     const previousAnswer = (mode === 'examen') ? examAnswers[currentIndex] : null;
 
     q.shuffledOptions.forEach((opt, i) => {
@@ -425,7 +449,6 @@
       text.innerHTML = `<strong>Rat\u00e9.</strong>${explanation}`;
     }
 
-    // Libellé du bouton suivant — CORRIGÉ
     const isLast = (currentIndex === currentQuestions.length - 1);
     if (mode === 'infini' && !isCorrect) {
       nextBtn.textContent = 'Voir mon score';
@@ -445,7 +468,6 @@
   /* ============ 13. QCM : RÉPONSE (examen) ============ */
 
   function selectExamOption(btn, selectedOpt) {
-    // On peut changer d'avis tant qu'on n'a pas passé la question
     document.querySelectorAll('#options .option').forEach(b => b.classList.remove('selected'));
     btn.classList.add('selected');
     examAnswers[currentIndex] = selectedOpt;
@@ -456,7 +478,6 @@
   /* ============ 14. QCM : QUESTION SUIVANTE ============ */
 
   function nextQuestion() {
-    // Examen : pas de correction, on enchaîne
     if (mode === 'examen') {
       currentIndex++;
       if (currentIndex < currentQuestions.length) loadQuestion();
@@ -464,7 +485,6 @@
       return;
     }
 
-    // Infini : on s'arrête à la première erreur
     if (mode === 'infini') {
       if (!lastAnswerWasCorrect) { showResults(); return; }
       currentIndex++;
@@ -473,7 +493,6 @@
       return;
     }
 
-    // Rapide
     currentIndex++;
     if (currentIndex < currentQuestions.length) loadQuestion();
     else showResults();
@@ -486,52 +505,24 @@
     stopExamTimer();
     showOnly(resultBox);
 
-    const title = document.getElementById('result-title');
-    const detail = document.getElementById('result-detail');
-
-    // Nettoyer l'ancien récap s'il existe
-    const oldRecap = document.getElementById('exam-recap');
-    if (oldRecap) oldRecap.remove();
-
     if (mode === 'examen') {
-      let correct = 0;
-      const wrongs = [];
-      currentQuestions.forEach((q, i) => {
-        const userAns = examAnswers[i];
-        if (userAns === q.answer) {
-          correct++;
-        } else {
-          wrongs.push({
-            question: q.question,
-            userAnswer: userAns || null,
-            correctAnswer: q.answer,
-            explanation: q.explanation
-          });
-        }
-      });
-      const total = currentQuestions.length;
-      const prev = getBest('examen');
-      saveBest('examen', correct);
-      title.textContent = `Score : ${correct} / ${total}`;
+      showExamResults();
+    } else {
+      showSimpleResults();
+    }
+  }
 
-      let msg;
-      if (correct >= EXAM_PASSING_SCORE) {
-        msg = `R\u00e9ussi ! Tu aurais eu ton examen (${EXAM_PASSING_SCORE}/${total} minimum).`;
-      } else {
-        const manque = EXAM_PASSING_SCORE - correct;
-        msg = `Il te manque ${manque} point${manque > 1 ? 's' : ''} pour r\u00e9ussir. Continue \u00e0 r\u00e9viser.`;
-      }
-      if (correct > prev && correct > 0) msg += ' Nouveau meilleur score !';
-      else if (prev > 0) msg += ` Ton meilleur : ${prev} / ${total}.`;
-      detail.textContent = msg;
 
-      if (wrongs.length > 0) renderExamRecap(wrongs);
+  /* ---- Résultat simple (rapide / infini) ---- */
 
-    } else if (mode === 'rapide') {
+  function showSimpleResults() {
+    let title, detail;
+
+    if (mode === 'rapide') {
       const total = currentQuestions.length;
       const prev = getBest('rapide');
       saveBest('rapide', score);
-      title.textContent = `Score final : ${score} / ${total}`;
+      title = `Score final : ${score} / ${total}`;
       const ratio = score / total;
       let msg =
         ratio === 1  ? 'Sans faute, bravo !' :
@@ -539,11 +530,10 @@
                        'Reprends les fiches avant de retenter.';
       if (score > prev && score > 0) msg += ' Nouveau meilleur score !';
       else if (prev > 0) msg += ` Ton meilleur : ${prev} / ${total}.`;
-      detail.textContent = msg;
-
+      detail = msg;
     } else {
       const best = getBest('infini');
-      title.textContent = `S\u00e9rie termin\u00e9e \u00e0 ${streak} bonne${streak > 1 ? 's' : ''} r\u00e9ponse${streak > 1 ? 's' : ''}`;
+      title = `S\u00e9rie termin\u00e9e \u00e0 ${streak} bonne${streak > 1 ? 's' : ''} r\u00e9ponse${streak > 1 ? 's' : ''}`;
       let msg =
         streak >= 10 ? 'Solide, tu ma\u00eetrises bien le programme.' :
         streak >= 5  ? 'Pas mal, continue \u00e0 r\u00e9viser les th\u00e8mes qui te bloquent.' :
@@ -553,81 +543,151 @@
       } else if (best > 0) {
         msg += ` Ton record : ${best}.`;
       }
-      detail.textContent = msg;
+      detail = msg;
     }
+
+    resultBox.className = 'result';
+    resultBox.innerHTML = `
+      <h2>${title}</h2>
+      <p>${detail}</p>
+      <div class="result-actions">
+        <button class="btn btn-primary" onclick="replay()">Rejouer \u2192</button>
+        <button class="btn btn-outline" onclick="backToModeSelect()">Changer de mode</button>
+      </div>
+    `;
   }
 
 
-  /* ============ 16. QCM : RÉCAP DES ERREURS (examen) ============ */
+  /* ---- Résultat examen (style Codes Rousseau) ---- */
 
-  function renderExamRecap(wrongs) {
-    const detail = document.getElementById('result-detail');
-    if (!detail) return;
+  function showExamResults() {
+    let correct = 0;
+    const results = [];
+    const themeStats = {};
 
-    const recap = document.createElement('div');
-    recap.id = 'exam-recap';
-    recap.className = 'exam-recap';
+    currentQuestions.forEach((q, i) => {
+      const userAns = examAnswers[i];
+      const isCorrect = userAns === q.answer;
+      if (isCorrect) correct++;
 
-    const header = document.createElement('div');
-    header.className = 'exam-recap-header';
-    header.innerHTML = `<span class="exam-recap-title">Tes erreurs</span>
-                        <span class="exam-recap-count">${wrongs.length} question${wrongs.length > 1 ? 's' : ''} \u00e0 revoir</span>`;
-    recap.appendChild(header);
+      const fam = CAT_TO_FAM[q.category] || 'L';
+      results.push({ q, userAns, isCorrect, fam });
 
-    const list = document.createElement('div');
-    list.className = 'exam-recap-list';
-
-    wrongs.forEach((w, idx) => {
-      const item = document.createElement('div');
-      item.className = 'exam-recap-item';
-
-      const num = document.createElement('div');
-      num.className = 'exam-recap-num';
-      num.textContent = String(idx + 1).padStart(2, '0');
-
-      const body = document.createElement('div');
-      body.className = 'exam-recap-body';
-
-      const qEl = document.createElement('div');
-      qEl.className = 'exam-recap-question';
-      qEl.textContent = w.question;
-
-      const answers = document.createElement('div');
-      answers.className = 'exam-recap-answers';
-
-      const userLine = document.createElement('div');
-      userLine.className = 'exam-recap-answer wrong';
-      userLine.innerHTML = w.userAnswer
-        ? `<span class="exam-recap-tag">Ton choix</span>${w.userAnswer}`
-        : `<span class="exam-recap-tag">Ton choix</span><em>Non r\u00e9pondu</em>`;
-      answers.appendChild(userLine);
-
-      const correctLine = document.createElement('div');
-      correctLine.className = 'exam-recap-answer correct';
-      correctLine.innerHTML = `<span class="exam-recap-tag">Bonne r\u00e9ponse</span>${w.correctAnswer}`;
-      answers.appendChild(correctLine);
-
-      body.appendChild(qEl);
-      body.appendChild(answers);
-
-      if (w.explanation) {
-        const exp = document.createElement('div');
-        exp.className = 'exam-recap-explanation';
-        exp.textContent = w.explanation;
-        body.appendChild(exp);
-      }
-
-      item.appendChild(num);
-      item.appendChild(body);
-      list.appendChild(item);
+      if (!themeStats[fam]) themeStats[fam] = { correct: 0, total: 0 };
+      themeStats[fam].total++;
+      if (isCorrect) themeStats[fam].correct++;
     });
 
-    recap.appendChild(list);
-    detail.parentNode.insertBefore(recap, detail.nextSibling);
+    const total = currentQuestions.length;
+    const prev = getBest('examen');
+    saveBest('examen', correct);
+    const reussi = correct >= EXAM_PASSING_SCORE;
+    const manque = EXAM_PASSING_SCORE - correct;
+
+    let message;
+    if (reussi) {
+      message = `R\u00e9ussi ! Tu aurais eu ton examen (${EXAM_PASSING_SCORE}/${total} minimum).`;
+    } else {
+      message = `Il te manque ${manque} point${manque > 1 ? 's' : ''} pour r\u00e9ussir. Continue \u00e0 r\u00e9viser.`;
+    }
+    if (correct > prev && correct > 0) message += ' Nouveau meilleur score !';
+    else if (prev > 0) message += ` Ton meilleur : ${prev} / ${total}.`;
+
+    // Grille des numéros
+    const gridHTML = results.map((r, i) => {
+      const num = String(i + 1).padStart(2, '0');
+      const cls = r.userAns == null ? 'unanswered' : (r.isCorrect ? 'correct' : 'wrong');
+      return `<span class="exam-num ${cls}">${num}</span>`;
+    }).join('');
+
+    // Thèmes (dans l'ordre officiel L, C, R, U, D, A, P, M, S, E)
+    const ORDRE = ['L', 'C', 'R', 'U', 'D', 'A', 'P', 'M', 'S', 'E'];
+    const themesHTML = ORDRE
+      .filter(fam => themeStats[fam])
+      .map(fam => {
+        const s = themeStats[fam];
+        return `
+          <div class="exam-theme fam-${fam}">
+            <span class="exam-theme-badge">${fam}</span>
+            <span class="exam-theme-name">${FAM_NAMES[fam]}</span>
+            <span class="exam-theme-score">${s.correct}/${s.total}</span>
+          </div>
+        `;
+      }).join('');
+
+    // Liste des erreurs (compacte)
+    const wrongs = results.map((r, i) => ({ ...r, num: i + 1 }))
+                          .filter(r => !r.isCorrect);
+
+    const errorsHTML = wrongs.length === 0 ? '' : `
+      <div class="exam-errors">
+        <div class="exam-errors-head">
+          <span class="exam-errors-title">Erreurs \u00e0 revoir</span>
+          <span class="exam-errors-count">${wrongs.length} question${wrongs.length > 1 ? 's' : ''}</span>
+        </div>
+        <div class="exam-errors-list">
+          ${wrongs.map(w => `
+            <div class="exam-error">
+              <div class="exam-error-num">${String(w.num).padStart(2, '0')}</div>
+              <div class="exam-error-body">
+                <div class="exam-error-q">${w.q.question}</div>
+                <div class="exam-error-choices">
+                  <div class="exam-error-choice wrong">
+                    <span class="exam-error-tag">Ton choix</span>
+                    <span>${w.userAns || '<em>Non r\u00e9pondu</em>'}</span>
+                  </div>
+                  <div class="exam-error-choice correct">
+                    <span class="exam-error-tag">Bonne r\u00e9ponse</span>
+                    <span>${w.q.answer}</span>
+                  </div>
+                </div>
+                ${w.q.explanation ? `<div class="exam-error-exp">${w.q.explanation}</div>` : ''}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `;
+
+    resultBox.className = 'result result-wide';
+    resultBox.innerHTML = `
+      <div class="exam-result-head">
+        <h2>Examen blanc termin\u00e9</h2>
+        <p>${message}</p>
+      </div>
+
+      <div class="exam-result-body">
+        <div class="exam-result-col">
+          <div class="exam-result-label">R\u00e9ponses</div>
+          <div class="exam-numbers">${gridHTML}</div>
+        </div>
+
+        <div class="exam-result-col exam-result-circle-col">
+          <div class="exam-circle ${reussi ? 'pass' : 'fail'}">
+            <span class="exam-circle-value">${correct}</span>
+            <span class="exam-circle-sep">/</span>
+            <span class="exam-circle-total">${total}</span>
+          </div>
+          <div class="exam-circle-sub">${reussi ? '\u2713 R\u00e9ussi' : '\u2717 \u00c9chou\u00e9'}</div>
+        </div>
+
+        <div class="exam-result-col exam-result-themes">
+          <div class="exam-result-label">R\u00e9sultats par th\u00e8me</div>
+          <div class="exam-themes-list">${themesHTML}</div>
+        </div>
+      </div>
+
+      ${errorsHTML}
+
+      <div class="result-actions">
+        <button class="btn btn-primary" onclick="replay()">Rejouer \u2192</button>
+        <button class="btn btn-outline" onclick="backToModeSelect()">Changer de mode</button>
+      </div>
+    `;
   }
 
 
-  /* ============ 17. QCM : NAVIGATION ============ */
+  /* ============ 16. QCM : NAVIGATION ============ */
 
   function replay() {
     if (mode) startMode(mode);
@@ -639,13 +699,12 @@
   }
 
 
-  /* ============ 18. QCM : CLAVIER ============ */
+  /* ============ 17. QCM : CLAVIER ============ */
 
   document.addEventListener('keydown', (e) => {
     if (!quizBox && !resultBox) return;
     if (e.target.matches('input, textarea, select')) return;
 
-    // Échap : quitter
     if (e.key === 'Escape') {
       if (quizBox && quizBox.style.display !== 'none') {
         const enCours = streak > 0 || currentIndex > 0;
@@ -655,7 +714,6 @@
       return;
     }
 
-    // Touches 1 à 4 : sélection d'une option
     if (/^[1-4]$/.test(e.key)) {
       if (!quizBox || quizBox.style.display === 'none') return;
       const btn = document.querySelectorAll('#options .option')[parseInt(e.key, 10) - 1];
@@ -663,7 +721,6 @@
       return;
     }
 
-    // Entrée ou Espace : question suivante
     if (e.key === 'Enter' || e.key === ' ') {
       const nextBtn = document.getElementById('next-btn');
       if (quizBox && quizBox.style.display !== 'none' &&
@@ -675,7 +732,7 @@
   });
 
 
-  /* ============ 19. INITIALISATION ============ */
+  /* ============ 18. INITIALISATION ============ */
 
   window.toggleTheme = toggleTheme;
   window.startMode = startMode;
