@@ -3,17 +3,17 @@
    Source unique pour fiches.html (rendu via fiches.js).
    Chaque fiche a un "groupe" pour regrouper dans la sidebar.
 
-   Organisation alignée sur les 10 thèmes officiels de l'ETG :
-   1. La circulation routière
-   2. Le conducteur
-   3. La route
-   4. Les autres usagers
-   5. Notions diverses
-   6. Premiers secours
-   7. Prendre et quitter son véhicule
-   8. Mécanique et équipements
-   9. Sécurité du passager et du véhicule
-   10. Environnement
+   Organisation alignée sur les 10 familles du Codes Rousseau :
+   L - La circulation routière
+   C - Le conducteur
+   R - La route
+   U - Les autres usagers
+   D - Les notions diverses
+   A - Les premiers secours
+   P - Prendre et quitter son véhicule
+   M - La mécanique et les équipements
+   S - La sécurité du passager et du véhicule
+   E - L'environnement
 
    SOURCES PRINCIPALES :
    - Service-Public.gouv.fr (documents, assurance, infractions)
@@ -24,15 +24,74 @@
 const FICHES = [
 
   /* ============================================================
-     GROUPE 1 : LA CIRCULATION ROUTIÈRE
+     FAMILLE L : LA CIRCULATION ROUTIÈRE
      ============================================================ */
 
   {
+    id: "signalisation",
+    groupe: "La circulation routière",
+    badge: "L",
+    num: "01",
+    emoji: "🚸",
+    titre: "La signalisation routière",
+    type: "list",
+    items: [
+      { label: "Triangle bordure rouge",            texte: "Panneau de danger. Annonce un danger à venir (virage, chaussée glissante…)." },
+      { label: "Rond bordure rouge",                texte: "Panneau d'interdiction (sens interdit, dépassement interdit…)." },
+      { label: "Rond bleu",                         texte: "Panneau d'obligation (sens obligatoire, piste cyclable…)." },
+      { label: "Carré bleu",                        texte: "Panneau d'indication (parking, hôpital, aire de repos…)." },
+      { label: "Panneau de priorité (carré jaune)", texte: "Positionne la voie par rapport aux autres (route prioritaire, croisement)." },
+      { label: "Panneau d'agglomération",           texte: "Entrée / sortie d'agglomération : applique les règles urbaines (50 km/h)." },
+      { label: "Feux tricolores",                   texte: "Orange = arrêt, sauf si dangereux. Rouge clignotant = arrêt puis céder." },
+      { label: "Marquage au sol",                   texte: "Ligne continue (franchissement interdit), discontinue (autorisé), lignes d'arrêt, passages piétons." }
+    ],
+    astuce: "La forme et la couleur comptent plus que le dessin : un panneau rond à bordure rouge est toujours une interdiction."
+  },
+  {
+    id: "priorites",
+    groupe: "La circulation routière",
+    badge: "L",
+    num: "02",
+    emoji: "🛑",
+    titre: "Les intersections",
+    type: "list",
+    items: [
+      { label: "Priorité à droite",   texte: "Règle par défaut, sans signalisation ni marquage au sol." },
+      { label: "Cédez-le-passage",    texte: "Ralentir, et s'arrêter si nécessaire. Pas d'arrêt obligatoire." },
+      { label: "Stop",                texte: "Arrêt complet obligatoire à la ligne d'effet, même sans autre véhicule." },
+      { label: "Giratoire",           texte: "Priorité aux véhicules déjà engagés sur l'anneau." },
+      { label: "Tramway",             texte: "Toujours prioritaire, quelle que soit la signalisation." },
+      { label: "Véhicules d'urgence", texte: "Prioritaires en intervention. Se ranger à droite pour faciliter le passage." },
+      { label: "Sortie de parking",   texte: "Céder le passage à tous les usagers déjà sur la chaussée." }
+    ],
+    astuce: "Ne jamais s'engager dans un carrefour si on risque d'y rester bloqué, même en étant prioritaire."
+  },
+  {
+    id: "communication",
+    groupe: "La circulation routière",
+    badge: "L",
+    num: "03",
+    emoji: "👋",
+    titre: "Circuler : communication",
+    type: "list",
+    items: [
+      { label: "Clignotant",           texte: "Obligatoire avant tout changement de direction ou de voie, et en sortie de giratoire." },
+      { label: "Appel de phare",       texte: "Signale un danger, ou autorise (à tort) à passer. À utiliser avec discernement." },
+      { label: "Avertisseur sonore",   texte: "Réservé aux situations d'urgence. Interdit en agglomération, sauf danger immédiat." },
+      { label: "Warning",              texte: "Signale un danger, un ralentissement brusque ou un arrêt d'urgence." },
+      { label: "Signes cyclistes",     texte: "Bras tendu = changement de direction. Bras levé = arrêt. Mouvements bas-haut = ralentir." },
+      { label: "Signes motards",       texte: "Salut entre motards. Jambe tendue en se rabattant = remerciement." },
+      { label: "Courtoisie",           texte: "Remercier d'un geste, faciliter les insertions. La courtoisie, c'est aussi de la sécurité." }
+    ],
+    astuce: "Bien communiquer, c'est éviter les malentendus. Le clignotant oublié ou le warning non allumé sont responsables de beaucoup d'accidents."
+  },
+  {
     id: "vitesses",
     groupe: "La circulation routière",
-    num: "01",
+    badge: "L",
+    num: "04",
     emoji: "⚡",
-    titre: "Vitesses maximales autorisées",
+    titre: "La vitesse",
     type: "table",
     colonnes: ["Situation", "Temps sec", "Pluie", "Probatoire"],
     lignes: [
@@ -44,30 +103,12 @@ const FICHES = [
     astuce: "Brouillard (visibilité < 50 m) : 50 km/h sur tout le réseau, même autoroute."
   },
   {
-    id: "priorites",
-    groupe: "La circulation routière",
-    num: "02",
-    emoji: "🛑",
-    titre: "Priorités & croisements",
-    type: "list",
-    items: [
-      { label: "Priorité à droite",   texte: "Règle par défaut, sans signalisation ni marquage au sol." },
-      { label: "Cédez-le-passage",    texte: "Ralentir, et s'arrêter si nécessaire. Pas d'arrêt obligatoire." },
-      { label: "Stop",                texte: "Arrêt complet obligatoire à la ligne d'effet, même sans autre véhicule." },
-      { label: "Giratoire",           texte: "Priorité aux véhicules déjà engagés sur l'anneau." },
-      { label: "Feux tricolores",     texte: "Orange = arrêt, sauf si dangereux. Rouge clignotant = arrêt puis céder." },
-      { label: "Tramway",             texte: "Toujours prioritaire, quelle que soit la signalisation." },
-      { label: "Véhicules d'urgence", texte: "Prioritaires en intervention. Se ranger à droite pour faciliter le passage." },
-      { label: "Sortie de parking",   texte: "Céder le passage à tous les usagers déjà sur la chaussée." }
-    ],
-    astuce: "Ne jamais s'engager dans un carrefour si on risque d'y rester bloqué, même en étant prioritaire."
-  },
-  {
     id: "marquage",
     groupe: "La circulation routière",
-    num: "03",
+    badge: "L",
+    num: "05",
     emoji: "🛣️",
-    titre: "Marquage au sol",
+    titre: "Marquage au sol (détail)",
     type: "list",
     items: [
       { label: "Ligne continue",           texte: "Interdiction de franchir ou chevaucher (sauf dépassement d'un cycliste)." },
@@ -83,9 +124,10 @@ const FICHES = [
   {
     id: "depassement",
     groupe: "La circulation routière",
-    num: "04",
+    badge: "L",
+    num: "06",
     emoji: "↗️",
-    titre: "Dépassement",
+    titre: "Croiser et dépasser",
     type: "list",
     items: [
       { label: "Règle de base",                 texte: "Dépassement par la gauche. Par la droite uniquement si le véhicule devant tourne à gauche." },
@@ -99,9 +141,10 @@ const FICHES = [
   {
     id: "stationnement",
     groupe: "La circulation routière",
-    num: "05",
+    badge: "L",
+    num: "07",
     emoji: "🅿️",
-    titre: "Stationnement & arrêt",
+    titre: "Stationner ou s'arrêter",
     type: "list",
     items: [
       { label: "Arrêt",                  texte: "Immobilisation brève, conducteur à bord, moteur pouvant rester allumé." },
@@ -113,87 +156,18 @@ const FICHES = [
     ],
     astuce: "En descente, on braque les roues vers le trottoir ; en montée, on les éloigne du trottoir."
   },
-  {
-    id: "autoroute",
-    groupe: "La circulation routière",
-    num: "06",
-    emoji: "🛤️",
-    titre: "Autoroute",
-    type: "list",
-    items: [
-      { label: "Vitesse",                    texte: "130 km/h (110 par temps de pluie). Probatoire : 110 km/h." },
-      { label: "Voie de droite",             texte: "On roule à droite, sauf pour dépasser." },
-      { label: "Bande d'arrêt d'urgence",    texte: "Réservée aux urgences et véhicules de secours." },
-      { label: "Demi-tour",                  texte: "Interdit. Sortie par la prochaine sortie ou aire de repos." },
-      { label: "Arrêt",                      texte: "Interdit, sauf urgence absolue (panne, malaise)." },
-      { label: "Insertion",                  texte: "Céder le passage aux véhicules déjà sur l'autoroute. Accélérer sur la voie d'accélération." }
-    ],
-    astuce: "Sur autoroute, une pause toutes les 2 heures est fortement recommandée."
-  },
-  {
-    id: "signalisation",
-    groupe: "La circulation routière",
-    num: "07",
-    emoji: "🚸",
-    titre: "Signalisation",
-    type: "list",
-    items: [
-      { label: "Triangle bordure rouge",            texte: "Panneau de danger. Annonce un danger à venir (virage, chaussée glissante…)." },
-      { label: "Rond bordure rouge",                texte: "Panneau d'interdiction (sens interdit, dépassement interdit…)." },
-      { label: "Rond bleu",                         texte: "Panneau d'obligation (sens obligatoire, piste cyclable…)." },
-      { label: "Carré bleu",                        texte: "Panneau d'indication (parking, hôpital, aire de repos…)." },
-      { label: "Panneau de priorité (carré jaune)", texte: "Positionne la voie par rapport aux autres (route prioritaire, croisement)." },
-      { label: "Panneau d'agglomération",           texte: "Entrée / sortie d'agglomération : applique les règles urbaines (50 km/h)." }
-    ],
-    astuce: "La forme et la couleur comptent plus que le dessin : un panneau rond à bordure rouge est toujours une interdiction."
-  },
-  {
-    id: "communication",
-    groupe: "La circulation routière",
-    num: "08",
-    emoji: "👋",
-    titre: "Communication entre usagers",
-    type: "list",
-    items: [
-      { label: "Clignotant",           texte: "Obligatoire avant tout changement de direction ou de voie, et en sortie de giratoire." },
-      { label: "Appel de phare",       texte: "Signale un danger, ou autorise (à tort) à passer. À utiliser avec discernement." },
-      { label: "Avertisseur sonore",   texte: "Réservé aux situations d'urgence. Interdit en agglomération, sauf danger immédiat." },
-      { label: "Warning",              texte: "Signale un danger, un ralentissement brusque ou un arrêt d'urgence." },
-      { label: "Signes cyclistes",     texte: "Bras tendu = changement de direction. Bras levé = arrêt. Mouvements bas-haut = ralentir." },
-      { label: "Signes motards",       texte: "Salut entre motards. Jambe tendue en se rabattant = remerciement." },
-      { label: "Courtoisie",           texte: "Remercier d'un geste, faciliter les insertions. La courtoisie, c'est aussi de la sécurité." }
-    ],
-    astuce: "Bien communiquer, c'est éviter les malentendus. Le clignotant oublié ou le warning non allumé sont responsables de beaucoup d'accidents."
-  },
 
   /* ============================================================
-     GROUPE 2 : LE CONDUCTEUR
+     FAMILLE C : LE CONDUCTEUR
      ============================================================ */
 
   {
-    id: "alcool",
-    groupe: "Le conducteur",
-    num: "09",
-    emoji: "🍷",
-    titre: "Alcool & stupéfiants",
-    type: "list",
-    items: [
-      { label: "Conducteur confirmé",         texte: "Max <strong>0,5 g/l</strong> de sang (0,25 mg/l d'air expiré)." },
-      { label: "Permis probatoire",           texte: "Max <strong>0,2 g/l</strong> de sang (0,10 mg/l d'air expiré)." },
-      { label: "Stupéfiants",                 texte: "Tolérance zéro. Dépistage salivaire autorisé." },
-      { label: "Médicaments",                 texte: "Certains altèrent la conduite : respecter les pictogrammes de la notice." },
-      { label: "Polyconsommation",            texte: "Prise combinée de plusieurs substances (alcool + drogues + médicaments) : effets multipliés, danger maximal." },
-      { label: "Refus de dépistage",          texte: "Délit : jusqu'à 2 ans de prison et 4 500 € d'amende." },
-      { label: "Conduite en état d'ivresse",  texte: "Délit : jusqu'à 2 ans de prison et 4 500 € d'amende." }
-    ],
-    astuce: "Boire un café, dormir ou manger ne fait pas baisser l'alcoolémie : seul le temps compte."
-  },
-  {
     id: "conducteur",
     groupe: "Le conducteur",
-    num: "10",
+    badge: "C",
+    num: "08",
     emoji: "🧠",
-    titre: "Aptitude & vigilance",
+    titre: "Conduire : aptitude & vigilance",
     type: "list",
     items: [
       { label: "Temps de réaction",     texte: "Environ 1 seconde. Distance parcourue pendant ce temps = distance de réaction." },
@@ -207,17 +181,37 @@ const FICHES = [
     ],
     astuce: "La fatigue tue plus que l'alcool sur la route. Une pause de 15-20 min toutes les 2 h sauve des vies."
   },
+  {
+    id: "alcool",
+    groupe: "Le conducteur",
+    badge: "C",
+    num: "09",
+    emoji: "🍷",
+    titre: "Être en état de conduire",
+    type: "list",
+    items: [
+      { label: "Conducteur confirmé",         texte: "Max <strong>0,5 g/l</strong> de sang (0,25 mg/l d'air expiré)." },
+      { label: "Permis probatoire",           texte: "Max <strong>0,2 g/l</strong> de sang (0,10 mg/l d'air expiré)." },
+      { label: "Stupéfiants",                 texte: "Tolérance zéro. Dépistage salivaire autorisé." },
+      { label: "Médicaments",                 texte: "Certains altèrent la conduite : respecter les pictogrammes de la notice." },
+      { label: "Polyconsommation",            texte: "Prise combinée de plusieurs substances (alcool + drogues + médicaments) : effets multipliés, danger maximal." },
+      { label: "Refus de dépistage",          texte: "Délit : jusqu'à 2 ans de prison et 4 500 € d'amende." },
+      { label: "Conduite en état d'ivresse",  texte: "Délit : jusqu'à 2 ans de prison et 4 500 € d'amende." }
+    ],
+    astuce: "Boire un café, dormir ou manger ne fait pas baisser l'alcoolémie : seul le temps compte."
+  },
 
   /* ============================================================
-     GROUPE 3 : LA ROUTE
+     FAMILLE R : LA ROUTE
      ============================================================ */
 
   {
     id: "conduite-difficile",
     groupe: "La route",
-    num: "11",
+    badge: "R",
+    num: "10",
     emoji: "🌧️",
-    titre: "Conduite par conditions difficiles",
+    titre: "Conduire dans des conditions difficiles",
     type: "list",
     items: [
       { label: "Nuit",            texte: "Champ visuel réduit, distance de perception limitée. Utiliser feux de croisement, réduire la vitesse." },
@@ -229,17 +223,56 @@ const FICHES = [
     ],
     astuce: "Par conditions difficiles, la règle d'or est toujours la même : ralentir et augmenter les distances de sécurité."
   },
+  {
+    id: "autoroute",
+    groupe: "La route",
+    badge: "R",
+    num: "11",
+    emoji: "🛤️",
+    titre: "Conduire sur autoroute",
+    type: "list",
+    items: [
+      { label: "Vitesse",                    texte: "130 km/h (110 par temps de pluie). Probatoire : 110 km/h." },
+      { label: "Voie de droite",             texte: "On roule à droite, sauf pour dépasser." },
+      { label: "Bande d'arrêt d'urgence",    texte: "Réservée aux urgences et véhicules de secours." },
+      { label: "Demi-tour",                  texte: "Interdit. Sortie par la prochaine sortie ou aire de repos." },
+      { label: "Arrêt",                      texte: "Interdit, sauf urgence absolue (panne, malaise)." },
+      { label: "Insertion",                  texte: "Céder le passage aux véhicules déjà sur l'autoroute. Accélérer sur la voie d'accélération." }
+    ],
+    astuce: "Sur autoroute, une pause toutes les 2 heures est fortement recommandée."
+  },
+  {
+    id: "zones-dangereuses",
+    groupe: "La route",
+    badge: "R",
+    num: "12",
+    emoji: "⚠️",
+    titre: "Traversée de zones dangereuses",
+    type: "list",
+    items: [
+      { label: "Passage à niveau",         texte: "Ralentir, vérifier, ne jamais s'engager si un train approche. Ne jamais s'arrêter sur les rails." },
+      { label: "Tunnel",                   texte: "Allumer les feux de croisement. Respecter les distances. En cas d'incendie, couper le moteur et gagner une issue de secours." },
+      { label: "Pont",                     texte: "Attention au vent latéral et au rétrécissement. Interdiction de dépasser si la visibilité est insuffisante." },
+      { label: "Zone de travaux",          texte: "Ralentir, respecter la signalisation temporaire (panneaux jaunes). Les ouvriers sont prioritaires." },
+      { label: "Zone piétonne / aire piétonne", texte: "Vitesse limitée au pas. Priorité absolue aux piétons. Accès réglementé." },
+      { label: "Zone de rencontre",        texte: "Vitesse limitée à 20 km/h. Priorité aux piétons sur toute la chaussée." },
+      { label: "Rue scolaire / abords d'école", texte: "Vigilance maximale aux heures d'entrée et de sortie. Ralentir, être prêt à s'arrêter." },
+      { label: "Chantier mobile",          texte: "Véhicule lent (collecte, voirie). Ne pas le coller, attendre une zone de dépassement sûre." }
+    ],
+    astuce: "Dans une zone dangereuse, la vitesse n'est jamais ta priorité : c'est la visibilité et l'anticipation."
+  },
 
   /* ============================================================
-     GROUPE 4 : LES AUTRES USAGERS
+     FAMILLE U : LES AUTRES USAGERS
      ============================================================ */
 
   {
     id: "autres-usagers",
     groupe: "Les autres usagers",
-    num: "12",
+    badge: "U",
+    num: "13",
     emoji: "🤝",
-    titre: "Autres usagers de la route",
+    titre: "Partage de la rue & spécificités",
     type: "list",
     items: [
       { label: "Piétons",                 texte: "Toujours prioritaires (sauf face au tramway). Céder le passage à tout piéton engagé ou manifestant l'intention de traverser." },
@@ -255,50 +288,34 @@ const FICHES = [
   },
 
   /* ============================================================
-     GROUPE 5 : NOTIONS DIVERSES
+     FAMILLE D : LES NOTIONS DIVERSES
      ============================================================ */
 
   {
     id: "documents",
-    groupe: "Notions diverses",
-    num: "13",
+    groupe: "Les notions diverses",
+    badge: "D",
+    num: "14",
     emoji: "📄",
-    titre: "Documents & obligations",
+    titre: "Les documents administratifs",
     type: "list",
     items: [
       { label: "Documents à bord",         texte: "Carte grise, permis de conduire. <strong>Assurance : plus obligatoire à présenter</strong> depuis avril 2024 (vérification via FVA)." },
-      { label: "Non-port de la ceinture",  texte: "Amende forfaitaire 135 €, -3 points (conducteur)." },
-      { label: "Excès de vitesse",         texte: "< 20 km/h : 135 €, -1 point. 20-30 : -2 points. 30-40 : -3 points. 40-50 : -4 points. > 50 : délit." },
-      { label: "Alcoolémie",               texte: "≥ 0,8 g/l : délit (2 ans, 4 500 €). Entre 0,5 et 0,8 : amende 135 €, -6 points." },
-      { label: "Délit de fuite",           texte: "Jusqu'à 3 ans de prison et 75 000 € d'amende." },
-      { label: "Suspension de permis",     texte: "Jusqu'à 6 mois pour une infraction grave, 1 an en cas de récidive." }
+      { label: "Permis numérique",         texte: "Accepté via l'application France Identité, comme l'Attestation de Droits à Conduire Sécurisée (4 mois)." },
+      { label: "Perte ou vol du permis",   texte: "Récépissé de déclaration valable 2 mois, en attendant le nouveau titre." },
+      { label: "Assurance obligatoire",    texte: "Tout véhicule terrestre à moteur, même immobile. Le défaut d'assurance est un délit (3 750 € d'amende, confiscation possible)." },
+      { label: "Garantie minimale",        texte: "Responsabilité civile (dommages causés aux tiers). Le conducteur responsable n'est pas indemnisé." },
+      { label: "Non-présentation",         texte: "Amende jusqu'à 38 €, portée à 750 € sans justification sous 5 jours." }
     ],
-    astuce: "Ne pas présenter immédiatement les documents = amende jusqu'à 38 €. Sans justification sous 5 jours = jusqu'à 750 €."
-  },
-  {
-    id: "permis-points",
-    groupe: "Notions diverses",
-    num: "14",
-    emoji: "🎫",
-    titre: "Permis à points",
-    type: "list",
-    items: [
-      { label: "Capital initial",           texte: "6 points à l'obtention du permis. Passe à <strong>12 points</strong> après 3 ans sans infraction (2 ans en cas de conduite accompagnée)." },
-      { label: "Récupération annuelle",     texte: "+2 points par an sans infraction. +3 points par an pour les conducteurs en probatoire ayant fait la conduite accompagnée." },
-      { label: "Stage volontaire",          texte: "+4 points maximum, dans la limite du plafond. Stage de 2 jours, payant." },
-      { label: "Retrait de points",         texte: "De 1 à 6 points selon la gravité. Le retrait est effectif une fois l'infraction payée ou jugée." },
-      { label: "Solde à zéro",              texte: "Permis invalidé. Obligation de repasser le code et la conduite après 6 mois (1 an en cas de récidive)." },
-      { label: "Délai probatoire",          texte: "3 ans (2 ans avec conduite accompagnée). Pendant cette période : 6 points max, vitesse réduite, taux d'alcool abaissé." },
-      { label: "Infraction hors points",    texte: "Certaines infractions (1ʳᵉ classe) n'enlèvent pas de points : stationnement, défaut de documents…" }
-    ],
-    astuce: "Le solde de points est consultable sur le site du Ministère de l'Intérieur (Télépoints) avec son numéro de dossier."
+    astuce: "Depuis avril 2024, la carte verte n'existe plus. La vérification d'assurance passe par le Fichier des Véhicules Assurés (FVA)."
   },
   {
     id: "chargement",
-    groupe: "Notions diverses",
+    groupe: "Les notions diverses",
+    badge: "D",
     num: "15",
     emoji: "📦",
-    titre: "Chargement du véhicule",
+    titre: "Le chargement",
     type: "list",
     items: [
       { label: "Poids maximal",         texte: "Ne jamais dépasser le PTAC (poids total autorisé en charge) indiqué sur la carte grise." },
@@ -312,11 +329,31 @@ const FICHES = [
     astuce: "Une surcharge augmente la distance de freinage, use les pneus et peut entraîner une amende et l'immobilisation du véhicule."
   },
   {
-    id: "infractions",
-    groupe: "Notions diverses",
+    id: "permis-points",
+    groupe: "Les notions diverses",
+    badge: "D",
     num: "16",
+    emoji: "🎫",
+    titre: "Le permis à points",
+    type: "list",
+    items: [
+      { label: "Capital initial",           texte: "6 points à l'obtention du permis. Passe à <strong>12 points</strong> après 3 ans sans infraction (2 ans en cas de conduite accompagnée)." },
+      { label: "Récupération annuelle",     texte: "+2 points par an sans infraction. +3 points par an pour les conducteurs en probatoire ayant fait la conduite accompagnée." },
+      { label: "Stage volontaire",          texte: "+4 points maximum, dans la limite du plafond. Stage de 2 jours, payant." },
+      { label: "Retrait de points",         texte: "De 1 à 6 points selon la gravité. Le retrait est effectif une fois l'infraction payée ou jugée." },
+      { label: "Solde à zéro",              texte: "Permis invalidé. Obligation de repasser le code et la conduite après 6 mois (1 an en cas de récidive)." },
+      { label: "Délai probatoire",          texte: "3 ans (2 ans avec conduite accompagnée). Pendant cette période : 6 points max, vitesse réduite, taux d'alcool abaissé." },
+      { label: "Infraction hors points",    texte: "Certaines infractions (1ʳᵉ classe) n'enlèvent pas de points : stationnement, défaut de documents…" }
+    ],
+    astuce: "Le solde de points est consultable sur le site du Ministère de l'Intérieur (Télépoints) avec son numéro de dossier."
+  },
+  {
+    id: "infractions",
+    groupe: "Les notions diverses",
+    badge: "D",
+    num: "17",
     emoji: "⚖️",
-    titre: "Infractions & sanctions",
+    titre: "Les infractions et sanctions",
     type: "list",
     items: [
       { label: "1ʳᵉ classe",            texte: "Le plus léger : stationnement gênant, feux non conformes. Amende forfaitaire réduite." },
@@ -331,15 +368,16 @@ const FICHES = [
   },
 
   /* ============================================================
-     GROUPE 6 : PREMIERS SECOURS
+     FAMILLE A : LES PREMIERS SECOURS
      ============================================================ */
 
   {
     id: "premiers-secours",
-    groupe: "Premiers secours",
-    num: "17",
+    groupe: "Les premiers secours",
+    badge: "A",
+    num: "18",
     emoji: "🚑",
-    titre: "Premiers secours",
+    titre: "Porter secours",
     type: "list",
     items: [
       { label: "Ordre des actions",                texte: "<strong>Protéger</strong>, <strong>Alerter</strong>, <strong>Secourir</strong>." },
@@ -353,15 +391,16 @@ const FICHES = [
   },
 
   /* ============================================================
-     GROUPE 7 : PRENDRE ET QUITTER SON VÉHICULE
+     FAMILLE P : PRENDRE ET QUITTER SON VÉHICULE
      ============================================================ */
 
   {
     id: "prendre-quitter",
     groupe: "Prendre et quitter son véhicule",
-    num: "18",
+    badge: "P",
+    num: "19",
     emoji: "🚪",
-    titre: "Prendre et quitter son véhicule",
+    titre: "S'installer, entrer et sortir",
     type: "list",
     items: [
       { label: "Avant de monter",       texte: "Vérifier l'état du véhicule (pneus, feux, rétroviseurs) et l'absence d'obstacle autour." },
@@ -374,30 +413,32 @@ const FICHES = [
   },
 
   /* ============================================================
-     GROUPE 8 : MÉCANIQUE ET ÉQUIPEMENTS
+     FAMILLE M : LA MÉCANIQUE ET LES ÉQUIPEMENTS
      ============================================================ */
 
   {
     id: "mecanique",
-    groupe: "Mécanique et équipements",
-    num: "19",
+    groupe: "La mécanique et les équipements",
+    badge: "M",
+    num: "20",
     emoji: "🔧",
-    titre: "Mécanique & contrôle technique",
+    titre: "Le fonctionnement",
     type: "list",
     items: [
       { label: "Pneumatiques",     texte: "Profondeur minimale des rainures : <strong>1,6 mm</strong>. Vérifier aussi la pression." },
       { label: "Niveaux",          texte: "Huile, liquide de frein, refroidissement : à vérifier moteur froid et véhicule à plat." },
-      { label: "Premier CT",       texte: "Dans les <strong>4 mois</strong> précédant le 4ᵉ anniversaire du véhicule." },
-      { label: "Ensuite",          texte: "Tous les <strong>2 ans</strong>." },
-      { label: "Voyants moteur",   texte: "Rouge : arrêt immédiat en sécurité. Jaune : vérification rapide." },
-      { label: "Documents à bord", texte: "Carte grise et permis de conduire. Assurance : plus à présenter depuis avril 2024 (vérification via FVA)." }
+      { label: "Freins",           texte: "Pédale qui s'enfonce trop, bruit ou vibration : à faire contrôler sans attendre." },
+      { label: "Direction",        texte: "Volant qui tire d'un côté, jeu excessif : usure ou défaut d'alignement." },
+      { label: "Batterie",         texte: "Démarrage difficile, feux faibles : signe d'usure ou de décharge." },
+      { label: "Voyants moteur",   texte: "Rouge : arrêt immédiat en sécurité. Jaune : vérification rapide." }
     ],
-    astuce: "Un contrôle technique non effectué à temps peut entraîner une amende et une contre-visite dans les 2 mois."
+    astuce: "Un entretien régulier évite la panne et réduit la consommation. Un moteur bien réglé pollue moins."
   },
   {
     id: "voyants",
-    groupe: "Mécanique et équipements",
-    num: "20",
+    groupe: "La mécanique et les équipements",
+    badge: "M",
+    num: "21",
     emoji: "🚨",
     titre: "Voyants du tableau de bord",
     type: "list",
@@ -418,8 +459,9 @@ const FICHES = [
   },
   {
     id: "eclairage",
-    groupe: "Mécanique et équipements",
-    num: "21",
+    groupe: "La mécanique et les équipements",
+    badge: "M",
+    num: "22",
     emoji: "💡",
     titre: "Éclairage & signalisation",
     type: "list",
@@ -435,14 +477,16 @@ const FICHES = [
   },
   {
     id: "equipements",
-    groupe: "Mécanique et équipements",
-    num: "22",
+    groupe: "La mécanique et les équipements",
+    badge: "M",
+    num: "23",
     emoji: "🧰",
-    titre: "Équipements obligatoires",
+    titre: "L'entretien et le dépannage",
     type: "list",
     items: [
       { label: "Gilet haute visibilité",        texte: "Obligatoire à bord. À enfiler avant de sortir du véhicule en cas d'arrêt d'urgence." },
       { label: "Triangle de présignalisation",  texte: "Obligatoire à bord. À placer 30 m avant le véhicule (jamais sur autoroute : se réfugier)." },
+      { label: "Premier CT",                    texte: "Dans les <strong>4 mois</strong> précédant le 4ᵉ anniversaire du véhicule. Ensuite, tous les 2 ans." },
       { label: "Éclairage",                     texte: "Tous les feux en état de marche (croisement, route, stop, clignotants, plaque)." },
       { label: "Pneumatiques",                  texte: "Profondeur minimale 1,6 mm. Pression vérifiée régulièrement." },
       { label: "Pare-brise et vitres",          texte: "Non obstrués, parfaitement transparents. Pare-brise sans fissure devant le conducteur." },
@@ -453,31 +497,16 @@ const FICHES = [
   },
 
   /* ============================================================
-     GROUPE 9 : SÉCURITÉ DU PASSAGER ET DU VÉHICULE
+     FAMILLE S : LA SÉCURITÉ DU PASSAGER ET DU VÉHICULE
      ============================================================ */
 
   {
-    id: "securite",
-    groupe: "Sécurité du passager et du véhicule",
-    num: "23",
-    emoji: "⚙️",
-    titre: "Aides à la conduite (ADAS)",
-    type: "list",
-    items: [
-      { label: "ABS",                    texte: "Empêche le blocage des roues : garder le contrôle du volant au freinage." },
-      { label: "ESP",                    texte: "Corrige la trajectoire en cas de dérapage (agit sur freins + moteur)." },
-      { label: "AFU",                    texte: "Amplifie la pression de freinage lors d'un freinage d'urgence." },
-      { label: "Régulateur / limiteur",  texte: "Maintient une vitesse constante. Le régulateur ne freine pas seul en descente." },
-      { label: "Aide au stationnement",  texte: "Radars et caméras : complètent la vision mais ne remplacent pas le conducteur." }
-    ],
-    astuce: "Les ADAS assistent, mais ne pilotent pas : la responsabilité reste toujours celle du conducteur."
-  },
-  {
     id: "securite-passager",
-    groupe: "Sécurité du passager et du véhicule",
+    groupe: "La sécurité du passager et du véhicule",
+    badge: "S",
     num: "24",
     emoji: "👶",
-    titre: "Sécurité du passager",
+    titre: "Installation sécurisée des passagers",
     type: "list",
     items: [
       { label: "Ceinture",                    texte: "Obligatoire à toutes les places, à l'avant comme à l'arrière. Le conducteur est responsable du port pour les moins de 18 ans." },
@@ -489,17 +518,37 @@ const FICHES = [
     ],
     astuce: "Un passager non attaché à l'arrière peut tuer le conducteur en cas de choc frontal : il est projeté vers l'avant."
   },
+  {
+    id: "securite",
+    groupe: "La sécurité du passager et du véhicule",
+    badge: "S",
+    num: "25",
+    emoji: "⚙️",
+    titre: "Les nouvelles aides technologiques",
+    type: "list",
+    items: [
+      { label: "ABS",                    texte: "Empêche le blocage des roues : garder le contrôle du volant au freinage." },
+      { label: "ESP",                    texte: "Corrige la trajectoire en cas de dérapage (agit sur freins + moteur)." },
+      { label: "AFU",                    texte: "Amplifie la pression de freinage lors d'un freinage d'urgence." },
+      { label: "Régulateur / limiteur",  texte: "Maintient une vitesse constante. Le régulateur ne freine pas seul en descente." },
+      { label: "Aide au stationnement",  texte: "Radars et caméras : complètent la vision mais ne remplacent pas le conducteur." },
+      { label: "Aide au maintien de voie", texte: "Alerte ou corrige la trajectoire si le véhicule franchit une ligne sans clignotant." },
+      { label: "Freinage automatique d'urgence", texte: "Détecte un risque de collision et freine seul si le conducteur ne réagit pas." }
+    ],
+    astuce: "Les ADAS assistent, mais ne pilotent pas : la responsabilité reste toujours celle du conducteur."
+  },
 
   /* ============================================================
-     GROUPE 10 : ENVIRONNEMENT
+     FAMILLE E : L'ENVIRONNEMENT
      ============================================================ */
 
   {
     id: "ecoconduite",
-    groupe: "Environnement",
-    num: "25",
+    groupe: "L'environnement",
+    badge: "E",
+    num: "26",
     emoji: "🌱",
-    titre: "Écoconduite",
+    titre: "Choisir l'écomobilité & être éco-conducteur",
     type: "list",
     items: [
       { label: "Anticipation",    texte: "Lever le pied tôt plutôt que freiner au dernier moment." },
@@ -507,8 +556,28 @@ const FICHES = [
       { label: "Arrêt prolongé",  texte: "Couper le moteur au-delà de 30 secondes d'arrêt." },
       { label: "Pneumatiques",    texte: "Vérifier régulièrement la pression (sous-gonflage = surconsommation)." },
       { label: "Climatisation",   texte: "À utiliser avec parcimonie : +10 à +20 % de consommation." },
-      { label: "Entretien",       texte: "Un moteur bien entretenu consomme moins." }
+      { label: "Entretien",       texte: "Un moteur bien entretenu consomme moins." },
+      { label: "Covoiturage",     texte: "Partager un véhicule réduit le nombre de voitures et la pollution globale." },
+      { label: "Transports doux", texte: "Marche, vélo, transports en commun : à privilégier pour les trajets courts." }
     ],
     astuce: "L'écoconduite, c'est aussi de la sécurité : anticiper = freiner moins = conduire plus cool."
+  },
+  {
+    id: "choisir-vehicule",
+    groupe: "L'environnement",
+    badge: "E",
+    num: "27",
+    emoji: "🚗",
+    titre: "Choisir son véhicule",
+    type: "list",
+    items: [
+      { label: "Énergie",              texte: "Essence, diesel, hybride, électrique : à choisir selon l'usage (ville, route, longs trajets)." },
+      { label: "Bonus / malus",        texte: "Le malus écologique s'applique aux véhicules les plus polluants. Le bonus favorise les véhicules propres." },
+      { label: "Vignette Crit'Air",    texte: "Obligatoire dans certaines zones (ZFE, zones à faibles émissions). Classe selon les émissions." },
+      { label: "Consommation",         texte: "Regarder la consommation mixte et le rejet de CO2 avant l'achat. Une voiture plus légère consomme moins." },
+      { label: "Entretien",            texte: "Un véhicule bien entretenu consomme moins et pollue moins. Contrôle technique à jour." },
+      { label: "Taille adaptée",       texte: "Choisir un véhicule adapté à ses besoins réels : un petit gabarit suffit souvent en ville." }
+    ],
+    astuce: "Le véhicule le plus écologique reste celui qu'on n'utilise pas : marche, vélo et transports en commun d'abord."
   }
 ];
