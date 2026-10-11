@@ -1,256 +1,355 @@
 /* =========================================================
-   VroumVroum — App
-   1. Thème clair / sombre (avec sauvegarde)
+   VroumVroum - App
+   1. Theme clair / sombre (avec sauvegarde)
    2. QCM : mode rapide + mode infini
-      - Anti-répétition des questions
+      - Anti-repetition des questions
       - Bouton "Rejouer"
+      - Navigation clavier (1-4, Entree, Espace, Echap)
+      - Meilleure serie sauvegardee
    ========================================================= */
 
-/* ============ 1. THÈME ============ */
+(function () {
+  'use strict';
 
-function applyTheme(isDark) {
-  document.body.classList.toggle('dark', isDark);
-  document.querySelectorAll('.theme-toggle').forEach(btn => {
-    btn.textContent = isDark ? '☀️' : '🌙';
-  });
-}
+  /* ============ 1. STORAGE (safe) ============ */
 
-function toggleTheme() {
-  const isDark = !document.body.classList.contains('dark');
-  applyTheme(isDark);
-  localStorage.setItem('vroum-theme', isDark ? 'dark' : 'light');
-}
+  const storage = {
+    get(key, fallback = null) {
+      try { return localStorage.getItem(key) ?? fallback; }
+      catch (e) { return fallback; }
+    },
+    set(key, value) {
+      try { localStorage.setItem(key, value); } catch (e) {}
+    }
+  };
 
-// Restaurer le thème au chargement
-applyTheme(localStorage.getItem('vroum-theme') === 'dark');
+  /* ============ 2. THEME ============ */
 
+  function applyTheme(isDark) {
+    document.body.classList.toggle('dark', isDark);
+    document.querySelectorAll('.theme-toggle').forEach(btn => {
+      btn.textContent = isDark ? '\u2600\uFE0F' : '\uD83C\uDF19';
+    });
+  }
 
-/* ============ 2. QCM — ÉTAT ============ */
+  function toggleTheme() {
+    const isDark = !document.body.classList.contains('dark');
+    applyTheme(isDark);
+    storage.set('vroum-theme', isDark ? 'dark' : 'light');
+  }
 
-let mode = null;                    // "rapide" | "infini"
-let currentQuestions = [];
-let currentIndex = 0;
-let score = 0;
-let streak = 0;
-let lastCategory = null;
-let seenQuestions = new Set();      // mémorise les énoncés déjà posés dans la session
-
-// Références DOM (peuvent être null selon la page)
-const modeSelectBox = document.getElementById('mode-select');
-const quizBox       = document.getElementById('quiz');
-const resultBox     = document.getElementById('result');
+  applyTheme(storage.get('vroum-theme') === 'dark');
 
 
-/* ============ 3. AFFICHAGE ============ */
+  /* ============ 3. ETAT QCM ============ */
 
-function showOnly(el) {
-  [modeSelectBox, quizBox, resultBox].forEach(b => {
-    if (!b) return;
-    if (b === el) {
-      b.style.display = (b === quizBox) ? 'grid' : 'block';
+  let mode = null;                    // "rapide" | "infini"
+  let currentQuestions = [];
+  let currentIndex = 0;
+  let score = 0;
+  let streak = 0;
+  let lastCategory = null;
+  let lastAnswerWasCorrect = false;   // remplace dataset.correct
+  let seenQuestions = new Set();
+
+  // Refs DOM (peuvent etre null selon la page)
+  let modeSelectBox = null;
+  let quizBox = null;
+  let resultBox = null;
+
+
+  /* ============ 4. AFFICHAGE ============ */
+
+  function showOnly(el) {
+    [modeSelectBox, quizBox, resultBox].forEach(b => {
+      if (!b) return;
+      if (b === el) {
+        b.style.display = (b === quizBox) ? 'grid' : 'block';
+      } else {
+        b.style.display = 'none';
+      }
+    });
+  }
+
+  function updateProgress(pct) {
+    const fill = document.getElementById('progress-fill');
+    if (!fill) return;
+    // Mode infini : jauge basee sur la serie (feedback visuel)
+    if (mode === 'infini') {
+      fill.style.width = Math.min(streak * 8, 100) + '%';
     } else {
-      b.style.display = 'none';
+      fill.style.width = pct + '%';
     }
-  });
-}
-
-
-/* ============ 4. LANCEMENT D'UN MODE ============ */
-
-function startMode(chosenMode) {
-  if (typeof generateQuestionSet !== 'function') return;
-
-  mode = chosenMode;
-  score = 0;
-  streak = 0;
-  currentIndex = 0;
-  lastCategory = null;
-  seenQuestions = new Set();       // reset à chaque nouvelle session
-
-  currentQuestions = (mode === 'rapide')
-    ? generateQuestionSet(5, seenQuestions)
-    : [generateOneQuestion(null, seenQuestions)];
-
-  document.getElementById('mode-label').innerText =
-    mode === 'rapide' ? 'Mode rapide' : 'Mode infini';
-
-  document.getElementById('mode-btn-rapide')
-    ?.classList.toggle('active', mode === 'rapide');
-  document.getElementById('mode-btn-infini')
-    ?.classList.toggle('active', mode === 'infini');
-
-  showOnly(quizBox);
-  loadQuestion();
-}
-
-
-/* ============ 5. CHARGEMENT D'UNE QUESTION ============ */
-
-function loadQuestion() {
-  const q = currentQuestions[currentIndex];
-  lastCategory = q.category;
-
-  const total = mode === 'rapide' ? currentQuestions.length : null;
-  const displayNum = String(currentIndex + 1).padStart(2, '0');
-  const totalDisplay = total ? String(total).padStart(2, '0') : null;
-
-  // Header
-  document.getElementById('examen-num').innerHTML =
-    `Question <strong>${displayNum}</strong>` + (totalDisplay ? ` / ${totalDisplay}` : '');
-  document.getElementById('question-counter').innerText =
-    `Q.${displayNum}` + (totalDisplay ? ` / ${totalDisplay}` : '');
-  document.getElementById('examen-cat').innerText = q.category;
-  document.getElementById('examen-question').innerText = q.question;
-
-  // Barre de progression
-  const progress = total ? (currentIndex / total) * 100 : 0;
-  document.getElementById('progress-fill').style.width = progress + '%';
-
-  // Panneau latéral
-  document.getElementById('side-progress').innerText =
-    total ? `${currentIndex + 1} / ${total}` : `Question ${currentIndex + 1}`;
-  document.getElementById('side-streak').innerText = `🔥 ${streak}`;
-  document.getElementById('examen-score').innerHTML =
-    `Série en cours : <strong>🔥 ${streak}</strong>`;
-
-  // Options
-  const options = document.getElementById('options');
-  options.innerHTML = '';
-
-  const feedback = document.getElementById('feedback');
-  feedback.className = 'feedback';
-  document.getElementById('next-btn').style.display = 'none';
-
-  q.shuffledOptions.forEach((opt, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'option';
-    btn.innerHTML = `<span class="case">${i + 1}</span>${opt}`;
-    btn.onclick = () => selectOption(btn, opt, q.answer, q.explanation);
-    options.appendChild(btn);
-  });
-}
-
-
-/* ============ 6. RÉPONSE À UNE QUESTION ============ */
-
-function selectOption(btn, selectedOpt, correctOpt, explanation) {
-  const buttons = document.querySelectorAll('.option');
-  const feedback = document.getElementById('feedback');
-  const isCorrect = selectedOpt === correctOpt;
-
-  // Désactiver + marquer visuellement
-  buttons.forEach(b => {
-    b.disabled = true;
-    const val = b.innerText.replace(/^\d+\s*/, '').trim();
-    if (val === correctOpt) {
-      b.classList.add('correct');
-      b.querySelector('.case').innerText = '✓';
-    } else if (b === btn) {
-      b.classList.add('wrong');
-      b.querySelector('.case').innerText = '✗';
-    }
-  });
-
-  const stamp = document.getElementById('feedback-stamp');
-  const text  = document.getElementById('feedback-text');
-
-  if (isCorrect) {
-    score++;
-    streak++;
-    feedback.className = 'feedback show success';
-    stamp.innerText = 'Correct';
-    text.innerHTML = `<strong>Bien joué.</strong>${explanation}`;
-    document.getElementById('next-btn').innerText =
-      (mode === 'rapide' && currentIndex === currentQuestions.length - 1)
-        ? 'Voir le résultat'
-        : 'Question suivante →';
-  } else {
-    feedback.className = 'feedback show error';
-    stamp.innerText = 'Erreur';
-    text.innerHTML = `<strong>Raté.</strong>${explanation}`;
-    document.getElementById('next-btn').innerText =
-      (mode === 'infini') ? 'Voir mon score' : 'Voir le résultat';
   }
 
-  document.getElementById('next-btn').style.display = 'inline-flex';
-  document.getElementById('next-btn').dataset.correct = isCorrect;
 
-  // Barre de progression après réponse
-  if (mode === 'rapide') {
-    const progress = ((currentIndex + 1) / currentQuestions.length) * 100;
-    document.getElementById('progress-fill').style.width = progress + '%';
+  /* ============ 5. LANCEMENT D'UN MODE ============ */
+
+  function startMode(chosenMode) {
+    if (typeof generateQuestionSet !== 'function') return;
+
+    mode = chosenMode;
+    score = 0;
+    streak = 0;
+    currentIndex = 0;
+    lastCategory = null;
+    lastAnswerWasCorrect = false;
+    seenQuestions = new Set();
+
+    currentQuestions = (mode === 'rapide')
+      ? generateQuestionSet(5, seenQuestions)
+      : [generateOneQuestion(null, seenQuestions)];
+
+    document.getElementById('mode-label').innerText =
+      mode === 'rapide' ? 'Mode rapide' : 'Mode infini';
+
+    document.getElementById('mode-btn-rapide')
+      ?.classList.toggle('active', mode === 'rapide');
+    document.getElementById('mode-btn-infini')
+      ?.classList.toggle('active', mode === 'infini');
+
+    showOnly(quizBox);
+    loadQuestion();
   }
 
-  // Panneau latéral
-  document.getElementById('side-streak').innerText = `🔥 ${streak}`;
-  document.getElementById('examen-score').innerHTML =
-    `Série en cours : <strong>🔥 ${streak}</strong>`;
-}
+
+  /* ============ 6. CHARGEMENT D'UNE QUESTION ============ */
+
+  function loadQuestion() {
+    const q = currentQuestions[currentIndex];
+    lastCategory = q.category;
+
+    const total = mode === 'rapide' ? currentQuestions.length : null;
+    const displayNum = String(currentIndex + 1).padStart(2, '0');
+    const totalDisplay = total ? String(total).padStart(2, '0') : null;
+
+    // Header
+    document.getElementById('examen-num').innerHTML =
+      `Question <strong>${displayNum}</strong>` + (totalDisplay ? ` / ${totalDisplay}` : '');
+    document.getElementById('question-counter').innerText =
+      `Q.${displayNum}` + (totalDisplay ? ` / ${totalDisplay}` : '');
+    document.getElementById('examen-cat').innerText = q.category;
+    document.getElementById('examen-question').innerText = q.question;
+
+    // Barre de progression
+    updateProgress(total ? (currentIndex / total) * 100 : 0);
+
+    // Panneau lateral
+    document.getElementById('side-progress').innerText =
+      total ? `${currentIndex + 1} / ${total}` : `Question ${currentIndex + 1}`;
+    document.getElementById('side-streak').innerText = `\uD83D\uDD25 ${streak}`;
+    document.getElementById('examen-score').innerHTML =
+      `Serie en cours : <strong>\uD83D\uDD25 ${streak}</strong>`;
+
+    // Options
+    const options = document.getElementById('options');
+    options.innerHTML = '';
+
+    const feedback = document.getElementById('feedback');
+    feedback.className = 'feedback';
+    document.getElementById('next-btn').style.display = 'none';
+
+    q.shuffledOptions.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'option';
+      btn.dataset.value = opt;       // stockage robuste
+      btn.dataset.index = String(i);
+      btn.innerHTML = `<span class="case">${i + 1}</span>${opt}`;
+      btn.onclick = () => selectOption(btn, opt, q.answer, q.explanation);
+      options.appendChild(btn);
+    });
+  }
 
 
-/* ============ 7. QUESTION SUIVANTE ============ */
+  /* ============ 7. REPONSE A UNE QUESTION ============ */
 
-function nextQuestion() {
-  const wasCorrect = document.getElementById('next-btn').dataset.correct === 'true';
+  function selectOption(btn, selectedOpt, correctOpt, explanation) {
+    const buttons = document.querySelectorAll('.option');
+    const feedback = document.getElementById('feedback');
+    const isCorrect = selectedOpt === correctOpt;
+    lastAnswerWasCorrect = isCorrect;
 
-  // Mode infini : on enchaîne tant que c'est correct
-  if (mode === 'infini') {
-    if (!wasCorrect) { showResults(); return; }
+    // Desactiver + marquer visuellement (via dataset, pas via innerText)
+    buttons.forEach(b => {
+      b.disabled = true;
+      const val = b.dataset.value;
+      if (val === correctOpt) {
+        b.classList.add('correct');
+        b.querySelector('.case').innerText = '\u2713';
+      } else if (b === btn) {
+        b.classList.add('wrong');
+        b.querySelector('.case').innerText = '\u2717';
+      }
+    });
+
+    const stamp = document.getElementById('feedback-stamp');
+    const text  = document.getElementById('feedback-text');
+
+    if (isCorrect) {
+      score++;
+      streak++;
+      saveBestStreak(streak);
+      feedback.className = 'feedback show success';
+      stamp.innerText = 'Correct';
+      text.innerHTML = `<strong>Bien joue.</strong>${explanation}`;
+      document.getElementById('next-btn').innerText =
+        (mode === 'rapide' && currentIndex === currentQuestions.length - 1)
+          ? 'Voir le resultat'
+          : 'Question suivante \u2192';
+    } else {
+      feedback.className = 'feedback show error';
+      stamp.innerText = 'Erreur';
+      text.innerHTML = `<strong>Rate.</strong>${explanation}`;
+      document.getElementById('next-btn').innerText =
+        (mode === 'infini') ? 'Voir mon score' : 'Voir le resultat';
+    }
+
+    document.getElementById('next-btn').style.display = 'inline-flex';
+
+    // Barre de progression
+    if (mode === 'rapide') {
+      updateProgress(((currentIndex + 1) / currentQuestions.length) * 100);
+    } else {
+      updateProgress(0); // recalcule selon la serie
+    }
+
+    // Panneau lateral
+    document.getElementById('side-streak').innerText = `\uD83D\uDD25 ${streak}`;
+    document.getElementById('examen-score').innerHTML =
+      `Serie en cours : <strong>\uD83D\uDD25 ${streak}</strong>`;
+  }
+
+
+  /* ============ 8. MEILLEURE SERIE ============ */
+
+  function saveBestStreak(current) {
+    const best = parseInt(storage.get('vroum-best-streak', '0'), 10) || 0;
+    if (current > best) storage.set('vroum-best-streak', String(current));
+  }
+
+  function getBestStreak() {
+    return parseInt(storage.get('vroum-best-streak', '0'), 10) || 0;
+  }
+
+
+  /* ============ 9. QUESTION SUIVANTE ============ */
+
+  function nextQuestion() {
+    // Mode infini : on enchaine tant que c'est correct
+    if (mode === 'infini') {
+      if (!lastAnswerWasCorrect) { showResults(); return; }
+      currentIndex++;
+      currentQuestions.push(generateOneQuestion(lastCategory, seenQuestions));
+      loadQuestion();
+      return;
+    }
+
+    // Mode rapide : 5 questions, puis resultats
     currentIndex++;
-    currentQuestions.push(generateOneQuestion(lastCategory, seenQuestions));
-    loadQuestion();
-    return;
+    if (currentIndex < currentQuestions.length) {
+      loadQuestion();
+    } else {
+      showResults();
+    }
   }
 
-  // Mode rapide : 5 questions, puis résultats
-  currentIndex++;
-  if (currentIndex < currentQuestions.length) {
-    loadQuestion();
-  } else {
-    showResults();
+
+  /* ============ 10. RESULTATS ============ */
+
+  function showResults() {
+    showOnly(resultBox);
+
+    const title  = document.getElementById('result-title');
+    const detail = document.getElementById('result-detail');
+    const best = getBestStreak();
+
+    if (mode === 'rapide') {
+      const total = currentQuestions.length;
+      title.innerText = `Score final : ${score} / ${total}`;
+      const ratio = score / total;
+      detail.innerText =
+        ratio === 1   ? 'Sans faute, bravo !' :
+        ratio >= 0.6  ? 'Bonne base, continue a reviser.' :
+                        'Reprends les fiches avant de retenter.';
+    } else {
+      title.innerText = `Serie terminee a ${streak} bonne(s) reponse(s)`;
+      let msg =
+        streak >= 10 ? 'Solide, tu maitrises bien le programme.' :
+        streak >= 5  ? 'Pas mal, continue a reviser les themes qui te bloquent.' :
+                       'Retourne voir les fiches de cours avant de retenter.';
+
+      if (streak > 0 && streak >= best && streak > 2) {
+        msg += ` Nouveau record : ${streak} bonnes reponses d'affilee !`;
+      } else if (best > 0) {
+        msg += ` Ton record : ${best}.`;
+      }
+      detail.innerText = msg;
+    }
   }
-}
 
 
-/* ============ 8. RÉSULTATS ============ */
+  /* ============ 11. NAVIGATION ============ */
 
-function showResults() {
-  showOnly(resultBox);
-
-  const title  = document.getElementById('result-title');
-  const detail = document.getElementById('result-detail');
-
-  if (mode === 'rapide') {
-    const total = currentQuestions.length;
-    title.innerText = `Score final : ${score} / ${total}`;
-    const ratio = score / total;
-    detail.innerText =
-      ratio === 1   ? 'Sans faute, bravo !' :
-      ratio >= 0.6  ? 'Bonne base, continue à réviser.' :
-                      'Reprends les fiches avant de retenter.';
-  } else {
-    title.innerText = `Série terminée à ${streak} bonne(s) réponse(s)`;
-    detail.innerText =
-      streak >= 10 ? 'Solide, tu maîtrises bien le programme.' :
-      streak >= 5  ? 'Pas mal, continue à réviser les thèmes qui te bloquent.' :
-                     'Retourne voir les fiches de cours avant de retenter.';
+  function replay() {
+    if (mode) startMode(mode);
   }
-}
+
+  function backToModeSelect() {
+    showOnly(modeSelectBox);
+  }
 
 
-/* ============ 9. NAVIGATION ============ */
+  /* ============ 12. NAVIGATION CLAVIER ============ */
 
-function replay() {
-  if (mode) startMode(mode);
-}
+  document.addEventListener('keydown', (e) => {
+    // Ne pas intercepter la saisie dans un champ
+    if (e.target.matches('input, textarea, select')) return;
 
-function backToModeSelect() {
-  showOnly(modeSelectBox);
-}
+    // Echap : quitter le quiz (avec confirmation si en cours)
+    if (e.key === 'Escape') {
+      if (quizBox && quizBox.style.display !== 'none') {
+        const enCours = streak > 0 || currentIndex > 0;
+        if (enCours && !confirm('Quitter le quiz en cours ? Ta serie sera perdue.')) return;
+        backToModeSelect();
+      }
+      return;
+    }
+
+    // Touches 1 a 4 : selection d'une option
+    if (/^[1-4]$/.test(e.key)) {
+      if (!quizBox || quizBox.style.display === 'none') return;
+      const btns = document.querySelectorAll('.option');
+      const btn = btns[parseInt(e.key, 10) - 1];
+      if (btn && !btn.disabled) btn.click();
+      return;
+    }
+
+    // Entree ou Espace : question suivante si le bouton est visible
+    if (e.key === 'Enter' || e.key === ' ') {
+      const nextBtn = document.getElementById('next-btn');
+      if (nextBtn && nextBtn.style.display !== 'none' && !nextBtn.disabled) {
+        e.preventDefault();
+        nextBtn.click();
+      }
+    }
+  });
 
 
-/* ============ 10. INITIALISATION ============ */
+  /* ============ 13. INITIALISATION ============ */
 
-document.addEventListener('DOMContentLoaded', () => {
-  if (modeSelectBox) showOnly(modeSelectBox);
-});
+  // Exposer les fonctions utilisees dans les onclick inline du HTML
+  window.toggleTheme = toggleTheme;
+  window.startMode = startMode;
+  window.nextQuestion = nextQuestion;
+  window.replay = replay;
+  window.backToModeSelect = backToModeSelect;
+
+  document.addEventListener('DOMContentLoaded', () => {
+    modeSelectBox = document.getElementById('mode-select');
+    quizBox       = document.getElementById('quiz');
+    resultBox     = document.getElementById('result');
+    if (modeSelectBox) showOnly(modeSelectBox);
+  });
+
+})();
