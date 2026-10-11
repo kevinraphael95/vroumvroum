@@ -2,12 +2,10 @@
    CONTENU DES FICHES DE COURS.
    Source unique pour fiches.html (rendu via fiches.js).
 
-   Structure calée sur le sommaire du livre Codes Rousseau.
-
    ---------------------------------------------------------
    COMMENT AJOUTER / MODIFIER UNE FICHE
    ---------------------------------------------------------
-   1. Repérer l'entrée dans le SOMMAIRE ci-dessous.
+   1. Repérer la rubrique dans le SOMMAIRE ci-dessous.
    2. Ajouter la fiche dans sa famille, à la bonne place.
    3. "num" = numéro LOCAL à la famille (L01, L02… M01, M02…).
       Insertion au milieu : on ne renumérote que cette famille.
@@ -18,7 +16,7 @@
    {
      id: "mon-id",
      groupe: "Nom de la famille",
-     sousGroupe: "Titre de la rubrique du livre",
+     sousGroupe: "Nom de la rubrique",
      badge: "L",
      num: "00",
      emoji: "📌",
@@ -31,162 +29,149 @@
    },
 
    ---------------------------------------------------------
-   SOMMAIRE DU LIVRE → FICHES
+   SOMMAIRE
    ---------------------------------------------------------
-   p.xx = page du livre.  Lxx / Cxx… = fiche correspondante.
-   ⚠ = fiche nouvelle, rédigée sans le texte du livre : à relire.
-   ~ = fiche existante complétée de quelques lignes : à relire.
 
-   L - LA CIRCULATION ROUTIÈRE (p.16)
-     La signalisation routière
-       p.16  Les panneaux ............................................ L01
-       p.30  Quelques risques à connaître ............................ L02 ⚠
-       p.32  La signalisation temporaire ............................. L03 ~
-       p.34  Les panneaux de direction ............................... L04 ~
-       p.36  Le marquage au sol ...................................... L05
-     Les intersections
-       p.38  Aborder une intersection ................................ L06
-       p.40  Les panneaux de priorité ................................ L07 ⚠
-       p.42  Intersections complexes, agglomération, voie
-             d'accélération .......................................... L08 ⚠
-       p.44  Les carrefours à sens giratoire ......................... L09 ⚠
-       p.46  Les feux, combinaison feux + panneaux, signes des agents  L10 ~
-     Circuler
-       p.48  Les règles générales .................................... L11
-       p.50  Les changements de direction ............................ L11
-       p.50  Tourner à droite ........................................ L11
-       p.52  Tourner à gauche ........................................ L11
-     La vitesse
-       p.54  Limitations de vitesse .................................. L12
-       p.56  Ajustement de la vitesse ................................ L13
-       p.58  Conséquences de la vitesse .............................. L13
-       p.58  Contrôle des vitesses ................................... L13
-     Croiser et dépasser
-       p.60  Se croiser .............................................. L14 ~
-       p.62  Croisements difficiles .................................. L14
-       p.64  Dépasser ................................................ L15 ~
-       p.68  Conditions indispensables pour dépasser ................. L15
-       p.70  Dépassements difficiles ................................. L15
-       p.72  Comment dépasser en toute sécurité ? .................... L15
-       p.74  Dépassements par la droite .............................. L15
-       p.74  Être dépassé ............................................ L15
-     Stationner ou s'arrêter
-       p.76  La signalisation d'interdiction ......................... L16
-       p.78  Stationnement payant ou gratuit contrôlé par disque ..... L16
-       p.80  Stationnement unilatéral à alternance semi-mensuelle .... L16
-       p.82  Où stationner en ville ? ................................ L16
-       p.86  Où stationner sur route ? ............................... L16
+   L - LA CIRCULATION ROUTIÈRE
+    La signalisation routière
+     Les panneaux ................................................ L01
+     Quelques risques à connaître ................................ L02
+     La signalisation temporaire ................................. L03
+     Les panneaux de direction ................................... L04
+     Le marquage au sol .......................................... L05
+    Les intersections
+     Aborder une intersection .................................... L06
+     Les panneaux de priorité .................................... L07
+     Intersections complexes, agglomération, voie d'accélération .. L08
+     Les carrefours à sens giratoire ............................. L09
+     Les feux, combinaison feux + panneaux, signes des agents .... L10
+    Circuler
+     Les règles générales ........................................ L11
+     Les changements de direction ................................ L11
+     Tourner à droite ............................................ L11
+     Tourner à gauche ............................................ L11
+    La vitesse
+     Limitations de vitesse ...................................... L12
+     Ajustement de la vitesse .................................... L13
+     Conséquences de la vitesse .................................. L13
+     Contrôle des vitesses ....................................... L13
+    Croiser et dépasser
+     Se croiser .................................................. L14
+     Croisements difficiles ...................................... L14
+     Dépasser .................................................... L15
+     Conditions indispensables pour dépasser ..................... L15
+     Dépassements difficiles ..................................... L15
+     Comment dépasser en toute sécurité .......................... L15
+     Dépassements par la droite .................................. L15
+     Être dépassé ................................................ L15
+    Stationner ou s'arrêter
+     La signalisation d'interdiction ............................. L16
+     Stationnement payant ou gratuit contrôlé par disque ......... L16
+     Stationnement unilatéral à alternance semi-mensuelle ........ L16
+     Où stationner en ville ...................................... L16
+     Où stationner sur route ..................................... L16
 
-   C - LE CONDUCTEUR (p.92)
-     Conduire
-       p.92  Qu'est-ce que conduire ? ................................ C01 ~
-       p.92  L'exploration visuelle .................................. C01
-       p.94  Stratégie de conduite ................................... C01
-       p.96  Les situations à risque ................................. C01
-       p.96  Conduire pour soi et pour les autres .................... C01 ~
-       p.98  Communiquer avec les autres ............................. C02
-       p.100 Maintenir des intervalles de sécurité ................... C01
-       p.102 S'arrêter à temps ....................................... C01 ~
-     Être en état de conduire
-       p.104 Évaluer son état physique ............................... C03 ⚠
-       p.106 La vue du conducteur .................................... C03 ⚠
-       p.106 L'ouïe .................................................. C03 ⚠
-       p.108 La prise de médicaments ................................. C04
-       p.108 La prise de drogues ..................................... C04
-       p.110 L'alcool ................................................ C04
-       p.114 La vigilance ............................................ C05
-       p.116 La somnolence ........................................... C05
-       p.118 Évaluer son état psychologique .......................... C05
+   C - LE CONDUCTEUR
+    Conduire
+     Qu'est-ce que conduire ? .................................... C01
+     L'exploration visuelle ...................................... C01
+     Stratégie de conduite ....................................... C01
+     Les situations à risque ..................................... C01
+     Conduire pour soi et pour les autres ........................ C01
+     Communiquer avec les autres ................................. C02
+     Maintenir des intervalles de sécurité ....................... C01
+     S'arrêter à temps ........................................... C01
+    Être en état de conduire
+     Évaluer son état physique ................................... C03
+     La vue du conducteur ........................................ C03
+     L'ouïe ...................................................... C03
+     La prise de médicaments ..................................... C04
+     La prise de drogues ......................................... C04
+     L'alcool .................................................... C04
+     La vigilance ................................................ C05
+     La somnolence ............................................... C05
+     Évaluer son état psychologique .............................. C05
 
-   R - LA ROUTE (p.124)
-     Conduire dans des conditions difficiles
-       p.124 Nuit .................................................... R01 ~
-       p.128 Pluie ................................................... R01
-       p.130 Brouillard .............................................. R01
-       p.132 Neige / Verglas ......................................... R01
-       p.134 Vent / Soleil ........................................... R01
-     Conduire sur autoroute
-       p.136 La signalisation ........................................ R02
-       p.138 Les règles de circulation ............................... R02
-       p.140 Vitesse / Distance de sécurité / Dépassements ........... R02
-       p.142 Comportements ........................................... R02
-     La traversée de zones dangereuses
-       p.144 Les chantiers routiers .................................. R03
-       p.146 Les tunnels ............................................. R03
-       p.150 Les passages à niveau ................................... R03
-       p.152 Les tramways ............................................ R03
+   R - LA ROUTE
+    Conduire dans des conditions difficiles
+     Nuit, pluie, brouillard ..................................... R01
+     Neige, verglas, vent, soleil ................................ R01
+    Conduire sur autoroute
+     La signalisation, les règles de circulation ................. R02
+     Vitesse, distance de sécurité, dépassements ................. R02
+     Comportements ............................................... R02
+    La traversée de zones dangereuses
+     Chantiers routiers, tunnels ................................. R03
+     Passages à niveau, tramways ................................. R03
 
-   U - LES AUTRES USAGERS (p.158)
-     Le partage de la rue
-       p.158 Une nouvelle organisation de l'espace public ............ U01 ⚠
-     Les spécificités des autres usagers
-       p.160 Piétons, cyclistes, EDPM ................................ U02
-       p.162 Les deux-roues motorisés ................................ U02
-       p.164 Véhicules d'urgence, convois exceptionnels, guidage ..... U02
-       p.166 Véhicules encombrants, véhicules lents .................. U02
-       p.168 Les bus, les autocars ................................... U02
+   U - LES AUTRES USAGERS
+    Le partage de la rue
+     Une nouvelle organisation de l'espace public ................ U01
+    Les spécificités des autres usagers
+     Piétons, cyclistes, EDPM, deux-roues motorisés .............. U02
+     Véhicules d'urgence, convois exceptionnels, guidage ......... U02
+     Véhicules encombrants, véhicules lents ...................... U02
+     Les bus, les autocars ....................................... U02
 
-   D - LES NOTIONS DIVERSES (p.172)
-     Les documents administratifs
-       p.172 Documents obligatoires .................................. D01
-       p.174 Documents facultatifs, assurance ........................ D01
-     Le chargement
-       p.176 Bagages, objets encombrants ............................. D02
-       p.178 Remorques et caravanes, tracter une remorque ............ D02
-       p.180 Le transport des passagers, les animaux ................. D02
-     Le permis à points
-       p.182 Capital initial et probatoire, parcours à 12 points ..... D03
-       p.184 Perte de points, reconstitution, invalidation ........... D03
-     Les infractions
-       p.186 Retrait immédiat, contraventions, délits ................ D04
+   D - LES NOTIONS DIVERSES
+    Les documents administratifs
+     Documents obligatoires, facultatifs, assurance .............. D01
+    Le chargement
+     Bagages, objets encombrants ................................. D02
+     Remorques et caravanes, tracter une remorque ................ D02
+     Le transport des passagers, les animaux ..................... D02
+    Le permis à points
+     Capital initial et probatoire, parcours à 12 points ......... D03
+     Perte de points, reconstitution, invalidation ............... D03
+    Les infractions
+     Retrait immédiat, contraventions, délits .................... D04
 
-   A - LES PREMIERS SECOURS (p.190)
-       p.190 La protection ........................................... A01 ~
-       p.191 L'alerte ................................................ A01
-       p.192 L'accident de la route .................................. A02 ⚠
-       p.194 Alerte et protection des populations .................... A03 ⚠
-       p.196 Hémorragie .............................................. A04
-       p.197 Traumatisme ............................................. A04
-       p.198 La perte de connaissance ................................ A04
-       p.200 L'arrêt cardiaque ....................................... A04
-       (    ) Présentation des formations (GQS, PSC1, PSE1, PSE2) ... A04 ~
+   A - LES PREMIERS SECOURS
+    Protéger et alerter
+     La protection, l'alerte ..................................... A01
+     L'accident de la route ...................................... A02
+    Alerte et protection des populations
+     Alerte et protection des populations ........................ A03
+    Les premiers secours
+     Hémorragie, traumatisme ..................................... A04
+     La perte de connaissance, l'arrêt cardiaque ................. A04
+     Présentation des formations ................................. A04
 
-   P - PRENDRE ET QUITTER SON VÉHICULE (p.206)
-     S'installer au poste de conduite
-       p.206 Être à l'aise, être bien assis ........................... P01
-       p.208 Avoir une visibilité optimale, ajuster la ceinture ...... P01
-     Entrer et sortir du véhicule
-       p.210 Avant de partir ......................................... P02
-       p.212 Précautions avant de quitter la voiture ................. P02
+   P - PRENDRE ET QUITTER SON VÉHICULE
+    S'installer au poste de conduite
+     Être à l'aise, être bien assis .............................. P01
+     Avoir une visibilité optimale, ajuster la ceinture .......... P01
+    Entrer et sortir du véhicule
+     Avant de partir ............................................. P02
+     Précautions avant de quitter la voiture ..................... P02
 
-   M - LA MÉCANIQUE ET LES ÉQUIPEMENTS (p.216)
-     Le fonctionnement
-       p.216 Vue d'ensemble ......................................... M01 ~
-       p.218 Le tableau de bord ...................................... M02
-       p.220 L'éclairage ............................................. M03
-     L'entretien et le dépannage
-       p.222 Les visites techniques, la surveillance du conducteur ... M04
-       p.224 Les pneus ............................................... M04
+   M - LA MÉCANIQUE ET LES ÉQUIPEMENTS
+    Le fonctionnement
+     Vue d'ensemble .............................................. M01
+     Le tableau de bord .......................................... M02
+     L'éclairage ................................................. M03
+    L'entretien et le dépannage
+     Les visites techniques, la surveillance du conducteur ....... M04
+     Les pneus ................................................... M04
 
-   S - LA SÉCURITÉ DU PASSAGER ET DU VÉHICULE (p.230)
-     L'installation sécurisée des passagers adultes
-       p.230 La ceinture, coussins gonflables (airbags) .............. S01
-     L'installation sécurisée des enfants
-       p.232 Sièges homologués, système de sécurité enfant ........... S02 ⚠
-     Les nouvelles aides technologiques
-       p.234 Aides au freinage, aides à la tenue de route ............ S03
-       p.236 Aides à la conduite ...................................... S03
+   S - LA SÉCURITÉ DU PASSAGER ET DU VÉHICULE
+    L'installation sécurisée des passagers adultes
+     La ceinture, coussins gonflables (airbags) .................. S01
+    L'installation sécurisée des enfants
+     Sièges homologués, système de sécurité enfant ............... S02
+    Les nouvelles aides technologiques
+     Aides au freinage, aides à la tenue de route ................ S03
+     Aides à la conduite ......................................... S03
 
-   E - L'ENVIRONNEMENT (p.240)
-     Choisir l'écomobilité
-       p.240 À pied, à vélo, en bus / modes alternatifs / intermodalité E01
-     Choisir son véhicule
-       p.242 Un achat éco-responsable ................................ E02
-     Être éco-conducteur
-       p.244 L'éco-conduite ........................................... E03
+   E - L'ENVIRONNEMENT
+    Choisir l'écomobilité
+     À pied, à vélo, en bus, modes alternatifs, intermodalité .... E01
+    Choisir son véhicule
+     Un achat éco-responsable .................................... E02
+    Être éco-conducteur
+     L'éco-conduite .............................................. E03
 
    SOURCES PRINCIPALES :
-   - Livre Codes Rousseau (structure et contenu pédagogique)
    - Service-Public.gouv.fr (documents, assurance, infractions)
    - Sécurité Routière (thèmes officiels ETG)
    ========================================================= */
@@ -218,7 +203,7 @@ const FICHES = [
     ],
     astuce: "La forme et la couleur comptent plus que le dessin : rond à bordure rouge = toujours une interdiction."
   },
-  /* ⚠ NOUVELLE : à relire avec le livre (p.30) */
+  /* ⚠ NOUVELLE : à relire */
   {
     id: "signalisation-risques",
     groupe: "La circulation routière",
@@ -317,7 +302,7 @@ const FICHES = [
     ],
     astuce: "Ne jamais s'engager dans un carrefour si on risque d'y rester bloqué, même en étant prioritaire."
   },
-  /* ⚠ NOUVELLE : à relire avec le livre (p.40) */
+  /* ⚠ NOUVELLE : à relire */
   {
     id: "panneaux-priorite",
     groupe: "La circulation routière",
@@ -337,7 +322,7 @@ const FICHES = [
     ],
     astuce: "Losange jaune = je suis prioritaire. Losange barré = je ne le suis plus."
   },
-  /* ⚠ NOUVELLE : à relire avec le livre (p.42) */
+  /* ⚠ NOUVELLE : à relire */
   {
     id: "intersections-complexes",
     groupe: "La circulation routière",
@@ -356,7 +341,7 @@ const FICHES = [
     ],
     astuce: "Devant une intersection compliquée, une seule méthode : panneaux d'abord, marquage ensuite, priorité à droite en dernier."
   },
-  /* ⚠ NOUVELLE : à relire avec le livre (p.44) */
+  /* ⚠ NOUVELLE : à relire */
   {
     id: "giratoire",
     groupe: "La circulation routière",
@@ -563,7 +548,7 @@ const FICHES = [
   },
 
   /* --- Être en état de conduire --- */
-  /* ⚠ NOUVELLE : à relire avec le livre (pp.104-106) */
+  /* ⚠ NOUVELLE : à relire */
   {
     id: "physique-vue-ouie",
     groupe: "Le conducteur",
@@ -691,7 +676,7 @@ const FICHES = [
      FAMILLE U : LES AUTRES USAGERS
      ============================================================ */
 
-  /* ⚠ NOUVELLE : à relire avec le livre (p.158) */
+  /* ⚠ NOUVELLE : à relire */
   {
     id: "partage-rue",
     groupe: "Les autres usagers",
@@ -839,7 +824,7 @@ const FICHES = [
     ],
     astuce: "Protéger, Alerter, Secourir : toujours dans cet ordre. On ne devient pas une deuxième victime."
   },
-  /* ⚠ NOUVELLE : à relire avec le livre (p.192) */
+  /* ⚠ NOUVELLE : à relire */
   {
     id: "accident-route",
     groupe: "Les premiers secours",
@@ -857,7 +842,7 @@ const FICHES = [
     ],
     astuce: "Face à un accident : je m'arrête en sécurité, je protège, j'alerte, puis seulement je secours."
   },
-  /* ⚠ NOUVELLE : à relire avec le livre (p.194) */
+  /* ⚠ NOUVELLE : à relire */
   {
     id: "alerte-populations",
     groupe: "Les premiers secours",
@@ -1043,7 +1028,7 @@ const FICHES = [
     ],
     astuce: "Un passager non attaché à l'arrière peut tuer le conducteur en cas de choc frontal : il est projeté vers l'avant."
   },
-  /* ⚠ NOUVELLE (en partie) : à relire avec le livre (p.232) */
+  /* ⚠ NOUVELLE : à relire */
   {
     id: "securite-enfant",
     groupe: "La sécurité du passager et du véhicule",
