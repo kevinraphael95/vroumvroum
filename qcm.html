@@ -3,22 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#003da5">
+<meta name="theme-color" content="#2563eb">
 <title>QCM - VroumVroum</title>
 <meta name="description" content="Entraînement QCM au Code de la route : mode rapide, examen blanc 40 questions, mode infini.">
 <meta property="og:title" content="QCM - VroumVroum">
 <meta property="og:description" content="Quiz d'entraînement au Code de la route, paramétrés et variés.">
 <meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <nav>
   <div class="nav-inner">
-    <a href="index.html" class="logo">
-      <div class="logo-badge">V</div>
-      VroumVroum
-    </a>
+    <a href="index.html" class="logo"><div class="logo-mark">V</div>VroumVroum</a>
     <div class="nav-right">
       <ul class="nav-links">
         <li><a href="index.html">Accueil</a></li>
@@ -30,15 +30,12 @@
   </div>
 </nav>
 
-<!-- ============================================================
-     ÉCRAN DE CHOIX DU MODE — 3 cartes
-     ============================================================ -->
+<!-- ===== CHOIX DU MODE ===== -->
 <div id="mode-select" class="mode-select">
   <h1>Choisis ton mode</h1>
   <p>Trois façons de t'entraîner selon ton temps et ton objectif.</p>
 
-  <div class="mode-cards mode-cards-3">
-
+  <div class="mode-cards">
     <button class="mode-card mode-card-rapide" onclick="startMode('rapide')">
       <div class="mode-card-top">
         <div class="mode-card-icon">⚡</div>
@@ -46,10 +43,7 @@
       </div>
       <h3>Mode rapide</h3>
       <p>5 questions pour une révision éclair. Correction immédiate.</p>
-      <div class="mode-card-meta">
-        <span>5 questions</span>
-        <span>~3 min</span>
-      </div>
+      <div class="mode-card-meta"><span>5 questions</span><span>~3 min</span></div>
     </button>
 
     <button class="mode-card mode-card-examen" onclick="startMode('examen')">
@@ -59,10 +53,7 @@
       </div>
       <h3>Examen blanc</h3>
       <p>40 questions chronométrées, comme le vrai ETG. Correction à la fin.</p>
-      <div class="mode-card-meta">
-        <span>40 questions</span>
-        <span>30 min</span>
-      </div>
+      <div class="mode-card-meta"><span>40 questions</span><span>30 min</span></div>
     </button>
 
     <button class="mode-card mode-card-infini" onclick="startMode('infini')">
@@ -72,111 +63,73 @@
       </div>
       <h3>Mode infini</h3>
       <p>Enchaîne jusqu'à ta première erreur. Vise le meilleur score.</p>
-      <div class="mode-card-meta">
-        <span>Sans limite</span>
-        <span>Streak</span>
-      </div>
+      <div class="mode-card-meta"><span>Sans limite</span><span>Streak</span></div>
     </button>
-
   </div>
 
   <p class="kbd-hint">
-    Clavier :
-    <kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd>
-    pour répondre,
-    <kbd>Entrée</kbd> pour continuer,
-    <kbd>Échap</kbd> pour quitter.
+    Clavier : <kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd> pour répondre,
+    <kbd>Entrée</kbd> pour continuer, <kbd>Échap</kbd> pour quitter.
   </p>
 </div>
 
-<!-- ============================================================
-     QUIZ — carte principale + sidebar
-     ============================================================ -->
-<div id="quiz" class="qcm-layout-mockup" style="display:none;">
-
-  <main class="qcm-main">
-    <div class="qcm-topbar">
-      <div class="qcm-topbar-left">
-        <span class="qcm-cat" id="examen-cat">Catégorie</span>
-        <span class="qcm-mode-label" id="mode-label">Mode rapide</span>
-      </div>
-      <div class="qcm-topbar-right">
-        <span id="timer-chip" class="timer-chip" style="display:none;">⏱ <span id="timer-display">30:00</span></span>
-        <span class="qcm-counter">Question <strong id="qcm-counter-num">01</strong><span id="qcm-counter-total"></span></span>
-      </div>
-    </div>
-
-    <div class="qcm-progress">
-      <div class="qcm-progress-fill" id="progress-fill"></div>
-    </div>
-
-    <div class="qcm-body">
-      <h2 class="qcm-question" id="examen-question">Chargement de la question…</h2>
-      <p class="qcm-hint" id="qcm-hint"></p>
-
-      <div class="options" id="options"></div>
-
-      <div class="feedback" id="feedback" role="status" aria-live="polite">
-        <div class="feedback-stamp" id="feedback-stamp">Correct</div>
-        <div class="feedback-text" id="feedback-text">
-          <strong>Bien joué.</strong>
+<!-- ===== QUIZ ===== -->
+<div id="quiz" class="container" style="display:none;">
+  <div class="qcm-wrap">
+    <main class="qcm-main">
+      <div class="qcm-topbar">
+        <div class="qcm-topbar-left">
+          <span class="qcm-cat" id="examen-cat">Catégorie</span>
+          <span class="qcm-mode-label" id="mode-label">Mode rapide</span>
+        </div>
+        <div class="qcm-meta">
+          <span id="timer-chip" class="qcm-chip timer-chip" style="display:none;">⏱ <span id="timer-display">30:00</span></span>
+          <span class="qcm-counter">Question <strong id="qcm-counter-num">01</strong><span id="qcm-counter-total"></span></span>
+          <span class="qcm-chip streak">🔥 <span id="chip-streak">0</span></span>
+          <span class="qcm-chip score">✓ <span id="chip-score">0 / 0</span></span>
         </div>
       </div>
 
-      <div class="qcm-actions">
-        <button class="qcm-skip" onclick="backToModeSelect()">Quitter</button>
-        <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()" style="display:none;">Valider</button>
+      <div class="qcm-progress"><div class="qcm-progress-fill" id="progress-fill"></div></div>
+
+      <div class="qcm-body">
+        <h2 class="qcm-question" id="examen-question">Chargement de la question…</h2>
+        <p class="qcm-hint" id="qcm-hint"></p>
+
+        <div class="options" id="options"></div>
+
+        <div class="feedback" id="feedback" role="status" aria-live="polite">
+          <div class="feedback-stamp" id="feedback-stamp">Correct</div>
+          <div class="feedback-text" id="feedback-text"></div>
+        </div>
+
+        <div class="qcm-actions">
+          <div class="qcm-modes">
+            <button class="qcm-mode" id="qcm-mode-rapide" onclick="startMode('rapide')">⚡ Rapide</button>
+            <button class="qcm-mode" id="qcm-mode-examen" onclick="startMode('examen')">📝 Examen</button>
+            <button class="qcm-mode" id="qcm-mode-infini" onclick="startMode('infini')">♾️ Infini</button>
+          </div>
+          <div class="qcm-buttons">
+            <button class="qcm-skip" onclick="backToModeSelect()">Quitter</button>
+            <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()" style="display:none;">Valider</button>
+          </div>
+        </div>
       </div>
-    </div>
-  </main>
-
-  <aside class="qcm-side">
-    <div class="side-card">
-      <div class="side-label">Série en cours</div>
-      <div class="side-value" id="side-streak">🔥 0</div>
-    </div>
-
-    <div class="side-card">
-      <div class="side-label">Score</div>
-      <div class="side-value" id="side-progress">0 / 5</div>
-    </div>
-
-    <div class="side-card">
-      <div class="side-label">Mode d'entraînement</div>
-      <div class="modes-list">
-        <button class="mode-option" id="mode-btn-rapide" onclick="startMode('rapide')">
-          <div class="mtitle">⚡ Rapide</div>
-          <div class="mdesc">5 questions</div>
-        </button>
-        <button class="mode-option" id="mode-btn-examen" onclick="startMode('examen')">
-          <div class="mtitle">📝 Examen blanc</div>
-          <div class="mdesc">40 questions · 30 min</div>
-        </button>
-        <button class="mode-option" id="mode-btn-infini" onclick="startMode('infini')">
-          <div class="mtitle">♾️ Infini</div>
-          <div class="mdesc">Jusqu'à première erreur</div>
-        </button>
-      </div>
-    </div>
-  </aside>
-
+    </main>
+  </div>
 </div>
 
-<!-- ============================================================
-     RÉSULTAT
-     ============================================================ -->
+<!-- ===== RÉSULTAT ===== -->
 <div id="result" class="result" style="display:none;">
-  <h2 id="result-title">Score final : 4 / 5</h2>
-  <p id="result-detail">Pas mal, continue comme ça.</p>
+  <h2 id="result-title">Score final</h2>
+  <p id="result-detail"></p>
   <div class="result-actions">
     <button class="btn btn-primary" onclick="replay()">Rejouer →</button>
     <button class="btn btn-outline" onclick="backToModeSelect()">Changer de mode</button>
   </div>
 </div>
 
-<footer>
-  © 2026 VroumVroum - Fiches de révision du Code de la route
-</footer>
+<footer>© 2026 VroumVroum — Fiches de révision du Code de la route</footer>
 
 <script src="questions-data.js"></script>
 <script src="app.js"></script>

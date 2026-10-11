@@ -3,22 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#003da5">
+<meta name="theme-color" content="#2563eb">
 <title>VroumVroum - Réussis ton code</title>
 <meta name="description" content="VroumVroum - Fiches de révision et quiz d'entraînement pour réussir ton Code de la route. Préparation ETG 2026.">
 <meta property="og:title" content="VroumVroum - Réussis ton code">
 <meta property="og:description" content="Fiches synthétiques et quiz d'entraînement pour le Code de la route.">
 <meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <nav>
   <div class="nav-inner">
-    <a href="index.html" class="logo">
-      <div class="logo-badge">V</div>
-      VroumVroum
-    </a>
+    <a href="index.html" class="logo"><div class="logo-mark">V</div>VroumVroum</a>
     <div class="nav-right">
       <ul class="nav-links">
         <li><a href="index.html" class="active">Accueil</a></li>
@@ -32,54 +32,53 @@
 
 <div class="container">
 
-  <section class="hero">
+  <div class="dashboard-header">
+    <div class="greeting">
+      <h1>Bonjour, prêt à réviser ton <em>code</em> ?</h1>
+      <p id="dash-msg">Chargement…</p>
+    </div>
+    <div class="progress-ring">
+      <svg width="130" height="130" aria-hidden="true">
+        <circle class="bg" cx="65" cy="65" r="54"></circle>
+        <circle class="fg" id="ring-fg" cx="65" cy="65" r="54" style="stroke-dashoffset:339"></circle>
+      </svg>
+      <span class="label" id="dash-pct">0%</span>
+      <span class="sub">Progression</span>
+    </div>
+  </div>
+
+  <div class="stats-grid">
+    <a href="fiches.html" class="stat-card">
+      <div class="stat-icon book">📚</div>
+      <div>
+        <div class="stat-value" id="stat-fiches">0 / 0</div>
+        <div class="stat-label">Fiches terminées</div>
+      </div>
+    </a>
+    <a href="qcm.html" class="stat-card">
+      <div class="stat-icon trophy">🏆</div>
+      <div>
+        <div class="stat-value" id="stat-record">Record 0</div>
+        <div class="stat-label">Meilleure série au QCM</div>
+      </div>
+    </a>
+  </div>
+
+  <div class="section-head">
     <div>
-      <div class="hero-eyebrow">Préparation ETG 2026</div>
-      <h1>Réussis ton <em>code</em><br>du premier coup.</h1>
-      <p>Fiches synthétiques et quiz d'entraînement. Tout ce qu'il faut pour arriver serein le jour de l'examen.</p>
-      <div class="hero-actions">
-        <a href="qcm.html" class="btn btn-primary">Lancer un quiz →</a>
-        <a href="fiches.html" class="btn btn-outline">Voir les fiches</a>
-      </div>
+      <h2>Mes parcours</h2>
+      <p>Continue là où tu t'es arrêté</p>
     </div>
-    <div class="panneau-stack">
-      <div class="panneau-triangle"></div>
-      <div class="panneau-rond">50</div>
-      <div class="panneau-bleu">➜</div>
-    </div>
-  </section>
-
-  <div class="section-header">
-    <span class="num">01</span>
-    <h2>Commencer</h2>
-    <div class="line"></div>
+    <a href="fiches.html" class="section-link">Tout voir →</a>
   </div>
 
-  <div class="cards-grid">
-    <a href="fiches.html" class="card-link bleu">
-      <div class="card-link-top">
-        <div class="card-link-icon">📚</div>
-        <h3>Fiches de cours</h3>
-      </div>
-      <p>Tout le programme résumé en tableaux clairs : vitesses, priorités, marquage, mécanique…</p>
-      <span class="card-link-arrow">Consulter →</span>
-    </a>
-    <a href="qcm.html" class="card-link rouge">
-      <div class="card-link-top">
-        <div class="card-link-icon">🎯</div>
-        <h3>Entraînement QCM</h3>
-      </div>
-      <p>Quiz paramétrés, mode rapide 5 questions ou mode infini. Score final et série en direct.</p>
-      <span class="card-link-arrow">S'entraîner →</span>
-    </a>
-  </div>
+  <div class="modules-grid" id="modules-grid"></div>
 
 </div>
 
-<footer>
-  © 2026 VroumVroum - Fiches de révision du Code de la route
-</footer>
+<footer>© 2026 VroumVroum — Fiches de révision du Code de la route</footer>
 
+<script src="fiches-data.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

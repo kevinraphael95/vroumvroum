@@ -3,22 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#003da5">
+<meta name="theme-color" content="#2563eb">
 <title>Fiches - VroumVroum</title>
 <meta name="description" content="Fiches de révision du Code de la route : vitesses, priorités, marquage, mécanique, alcool, premiers secours…">
 <meta property="og:title" content="Fiches - VroumVroum">
 <meta property="og:description" content="Tout le programme du Code de la route résumé en fiches claires.">
 <meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <nav>
   <div class="nav-inner">
-    <a href="index.html" class="logo">
-      <div class="logo-badge">V</div>
-      VroumVroum
-    </a>
+    <a href="index.html" class="logo"><div class="logo-mark">V</div>VroumVroum</a>
     <div class="nav-right">
       <ul class="nav-links">
         <li><a href="index.html">Accueil</a></li>
@@ -30,20 +30,28 @@
   </div>
 </nav>
 
-<div class="fiches-layout">
-  <aside class="sidebar">
-    <div class="sidebar-title">Sommaire</div>
-    <ul><!-- rempli par fiches.js --></ul>
-  </aside>
-  <main><!-- rempli par fiches.js --></main>
+<!-- Liste des fiches (remplie par fiches.js) -->
+<div class="container" id="fiches-liste">
+  <div class="fiches-hero">
+    <div>
+      <h1>Toutes les fiches</h1>
+      <p>Le programme complet, résumé en fiches claires.</p>
+    </div>
+    <div class="progress-inline">
+      <span id="fiches-progress-label">0 / 0 fiches</span>
+      <div class="progress-bar-inline"><div class="fill" id="fiches-progress-fill" style="width:0%"></div></div>
+    </div>
+  </div>
+  <div id="fiches-groupes"></div>
 </div>
 
-<footer>
-  © 2026 VroumVroum - Fiches de révision du Code de la route
-</footer>
+<!-- Détail d'une fiche (rempli par fiches.js) -->
+<div class="container" id="fiche-detail" style="display:none"></div>
+
+<footer>© 2026 VroumVroum — Fiches de révision du Code de la route</footer>
 
 <script src="fiches-data.js"></script>
-<script src="fiches.js"></script>
 <script src="app.js"></script>
+<script src="fiches.js"></script>
 </body>
 </html>
