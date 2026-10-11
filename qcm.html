@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#003da5">
 <title>QCM - VroumVroum</title>
-<meta name="description" content="Entraînement QCM au Code de la route : mode rapide, examen blanc 40 questions, mode infini. Score et série en direct.">
+<meta name="description" content="Entraînement QCM au Code de la route : mode rapide, examen blanc 40 questions, mode infini.">
 <meta property="og:title" content="QCM - VroumVroum">
 <meta property="og:description" content="Quiz d'entraînement au Code de la route, paramétrés et variés.">
 <meta property="og:type" content="website">
@@ -30,13 +30,10 @@
   </div>
 </nav>
 
-<!-- ============================================================
-     ÉCRAN DE CHOIX DU MODE — 3 modes
-     ============================================================ -->
+<!-- ÉCRAN DE CHOIX DU MODE -->
 <div id="mode-select" class="mode-select">
   <h1>Choisis ton mode</h1>
   <p>Trois façons de t'entraîner selon ton temps et ton objectif.</p>
-
   <div class="mode-cards mode-cards-3">
 
     <button class="mode-card mode-card-rapide" onclick="startMode('rapide')">
@@ -79,7 +76,6 @@
     </button>
 
   </div>
-
   <p class="kbd-hint">
     Clavier :
     <kbd>1</kbd><kbd>2</kbd><kbd>3</kbd><kbd>4</kbd>
@@ -89,9 +85,7 @@
   </p>
 </div>
 
-<!-- ============================================================
-     QUIZ
-     ============================================================ -->
+<!-- QUIZ -->
 <div id="quiz" class="qcm-layout" style="display:none;">
 
   <main class="examen">
@@ -137,9 +131,7 @@
     </div>
 
     <div class="examen-footer">
-      <div class="examen-score" id="examen-score" role="status" aria-live="polite">
-        Série en cours : <strong>🔥 0</strong>
-      </div>
+      <div class="examen-score" id="examen-score" role="status" aria-live="polite">Série en cours : <strong>🔥 0</strong></div>
       <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()" style="display:none;">Question suivante →</button>
     </div>
 
@@ -175,9 +167,7 @@
 
 </div>
 
-<!-- ============================================================
-     RÉSULTAT
-     ============================================================ -->
+<!-- RÉSULTAT -->
 <div id="result" class="result" style="display:none;">
   <h2 id="result-title">Score final : 4 / 5</h2>
   <p id="result-detail">Pas mal, continue comme ça.</p>
