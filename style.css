@@ -476,7 +476,20 @@ nav {
   box-shadow: 4px 4px 0 var(--shadow-color);
   position: sticky;
   top: 5rem;
+  max-height: calc(100vh - 7rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
 }
+
+.sidebar::-webkit-scrollbar { width: 6px; }
+.sidebar::-webkit-scrollbar-track { background: transparent; }
+.sidebar::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+.sidebar::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
 
 .sidebar-title {
   font-family: 'JetBrains Mono', monospace;
@@ -1040,6 +1053,13 @@ nav {
   margin-bottom: 1.8rem;
 }
 
+.result-actions {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 /* ============ FOOTER ============ */
 footer {
   text-align: center;
@@ -1051,6 +1071,81 @@ footer {
   text-transform: uppercase;
   border-top: 3px dashed var(--border);
   margin-top: 3rem;
+}
+
+/* ============ SIDEBAR : TITRES DE GROUPE ============ */
+.sidebar-groupe {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 1rem 0.8rem 0.4rem;
+}
+
+.sidebar-groupe:first-child {
+  padding-top: 0.4rem;
+}
+
+.sidebar ul { list-style: none; }
+
+/* ============ ASTUCE EN BAS DE CHAQUE FICHE ============ */
+.fiche-astuce {
+  margin-top: 1.5rem;
+  padding: 1rem 1.2rem;
+  background: var(--surface-2);
+  border-left: 4px solid var(--jaune);
+  border-radius: 4px;
+  font-size: 0.9rem;
+  color: var(--text-soft);
+  line-height: 1.55;
+}
+
+.fiche-astuce strong {
+  display: block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-bottom: 0.4rem;
+}
+
+/* ============ FOCUS CLAVIER ============ */
+.option:focus-visible,
+.btn:focus-visible,
+.mode-card:focus-visible,
+.mode-btn:focus-visible,
+.theme-toggle:focus-visible,
+.nav-links a:focus-visible,
+.sidebar a:focus-visible {
+  outline: 3px solid var(--jaune);
+  outline-offset: 2px;
+}
+
+/* ============ HINT CLAVIER (QCM) ============ */
+.kbd-hint {
+  margin-top: 1.6rem;
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.kbd-hint kbd {
+  display: inline-block;
+  padding: 0.15rem 0.45rem;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  background: var(--surface-2);
+  font-family: inherit;
+  font-size: 0.7rem;
+  color: var(--text-soft);
+  margin: 0 0.15rem;
 }
 
 /* ============ RESPONSIVE MOBILE ============ */
@@ -1084,6 +1179,11 @@ footer {
   }
 
   .sidebar, .quiz-side { position: static; }
+
+  .sidebar {
+    max-height: 340px;
+    overflow-y: auto;
+  }
 
   .hero {
     grid-template-columns: 1fr;
@@ -1130,6 +1230,10 @@ footer {
 
   .result { padding: 2rem 1.3rem; margin: 2rem 1rem; }
   .result h2 { font-size: 1.4rem; }
+
+  .sidebar-groupe {
+    padding: 0.8rem 0.8rem 0.3rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -1138,58 +1242,4 @@ footer {
   .hero h1 { font-size: 1.7rem; }
   .section-header h2 { font-size: 1.1rem; }
   .examen-question { font-size: 0.98rem; }
-}
-
-/* ============ SIDEBAR : TITRES DE GROUPE ============ */
-.sidebar-groupe {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.6rem;
-  font-weight: 700;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  padding: 1rem 0.8rem 0.4rem;
-}
-
-.sidebar-groupe:first-child {
-  padding-top: 0.4rem;
-}
-
-.sidebar ul { list-style: none; }
-
-/* ============ ASTUCE EN BAS DE CHAQUE FICHE ============ */
-.fiche-astuce {
-  margin-top: 1.5rem;
-  padding: 1rem 1.2rem;
-  background: var(--surface-2);
-  border-left: 4px solid var(--jaune);
-  border-radius: 4px;
-  font-size: 0.9rem;
-  color: var(--text-soft);
-  line-height: 1.55;
-}
-
-.fiche-astuce strong {
-  display: block;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: var(--text);
-  margin-bottom: 0.4rem;
-}
-
-/* Ajustement mobile pour la sidebar groupée */
-@media (max-width: 900px) {
-  .sidebar-groupe {
-    padding: 0.8rem 0.8rem 0.3rem;
-  }
-}
-
-.result-actions {
-  display: flex;
-  gap: 0.8rem;
-  justify-content: center;
-  flex-wrap: wrap;
 }
