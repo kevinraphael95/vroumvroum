@@ -1,5 +1,5 @@
 /* =========================================================
-   RENDU DES FICHES — depuis fiches-data.js
+   RENDU DES FICHES - depuis fiches-data.js
    - Sidebar groupée par catégorie
    - Bloc contenu (table ou liste) + encadré astuce
    - Surlignage automatique au scroll
@@ -67,7 +67,7 @@
         body = `
           <ul class="fiche-list">
             ${f.items.map(it => `
-              <li><strong>${it.label}</strong> — ${it.texte}</li>
+              <li><strong>${it.label}</strong> : ${it.texte}</li>
             `).join('')}
           </ul>`;
       }
@@ -90,18 +90,20 @@
 
   /* --- 3. Surlignage actif au scroll --- */
   const links = sidebarUl.querySelectorAll('a');
-  const blocs = [...links].map(a => document.querySelector(a.getAttribute('href')));
+  const blocs = [...links]
+    .map(a => document.querySelector(a.getAttribute('href')))
+    .filter(Boolean);
 
   function setActive() {
+    if (!blocs.length) return;
     let current = blocs[0];
     const y = window.scrollY + 130;
-    for (const b of blocs) if (b && b.offsetTop <= y) current = b;
-    if (!current) return;
+    for (const b of blocs) if (b.offsetTop <= y) current = b;
     links.forEach(a =>
       a.classList.toggle('active', a.getAttribute('href') === '#' + current.id)
     );
   }
 
-  window.addEventListener('scroll', setActive);
+  window.addEventListener('scroll', setActive, { passive: true });
   window.addEventListener('load', setActive);
 })();
