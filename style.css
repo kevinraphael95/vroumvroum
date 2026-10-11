@@ -8,25 +8,21 @@
 :root {
   color-scheme: light;
 
-  /* Couleurs de base */
   --bg: #f4f7fc;
   --surface: #ffffff;
   --surface-2: #eef2f9;
   --border: #e2e8f0;
 
-  /* Texte */
   --text: #0f172a;
   --text-soft: #475569;
   --text-muted: #94a3b8;
 
-  /* Bleu (couleur principale) */
   --bleu: #2563eb;
   --bleu-dark: #1d4ed8;
   --bleu-tint: #eff6ff;
   --bleu-fill: #2563eb;
   --bleu-fill-dark: #1d4ed8;
 
-  /* Accents */
   --jaune: #facc15;
   --jaune-soft: #fef9c3;
 
@@ -40,12 +36,10 @@
   --violet: #8b5cf6;
   --orange: #f59e0b;
 
-  /* Ombres */
   --shadow-sm: 0 1px 2px 0 rgb(15 23 42 / 0.05);
   --shadow: 0 4px 6px -1px rgb(15 23 42 / 0.08), 0 2px 4px -2px rgb(15 23 42 / 0.06);
   --shadow-lg: 0 10px 15px -3px rgb(15 23 42 / 0.1), 0 4px 6px -4px rgb(15 23 42 / 0.05);
 
-  /* Rayons */
   --radius: 12px;
   --radius-lg: 16px;
   --radius-xl: 24px;
@@ -87,7 +81,6 @@ html.dark {
   --shadow-lg: 0 14px 22px -4px rgb(0 0 0 / 0.55), 0 4px 8px -4px rgb(0 0 0 / 0.4);
 }
 
-/* Couleurs de familles (badges L, C, R, U, D, A, P, M, S, E) */
 .fam-L { --fam: #2563eb; }
 .fam-C { --fam: #ec4899; }
 .fam-R { --fam: #8b5cf6; }
@@ -338,7 +331,6 @@ html.dark .dashboard-header {
 .dashboard-header h1 em { font-style: normal; color: var(--jaune); }
 .dashboard-header p { color: rgba(255,255,255,0.85); font-size: 1rem; }
 
-/* Anneau de progression */
 .progress-ring {
   position: relative;
   z-index: 1;
@@ -380,7 +372,6 @@ html.dark .dashboard-header {
   font-weight: 600;
 }
 
-/* Stats cards */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -428,7 +419,6 @@ html.dark .dashboard-header {
   margin-top: 0.15rem;
 }
 
-/* Modules / parcours */
 .modules-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -1034,7 +1024,6 @@ html.dark .fiche-astuce { border-left-color: var(--jaune); }
 }
 .qcm-hint strong { color: var(--bleu); font-weight: 600; }
 
-/* Options */
 .options {
   display: flex;
   flex-direction: column;
@@ -1085,7 +1074,6 @@ html.dark .fiche-astuce { border-left-color: var(--jaune); }
 .option.wrong { border-color: var(--rouge); background: var(--rouge-soft); }
 .option.wrong .option-letter { background: var(--rouge); color: white; }
 
-/* Actions du bas */
 .qcm-actions {
   display: flex;
   justify-content: space-between;
@@ -1168,7 +1156,7 @@ html.dark .fiche-astuce { border-left-color: var(--jaune); }
 
 
 /* =========================================================
-   12. QCM — Résultat
+   12. QCM — Résultat (rapide / infini)
    ========================================================= */
 
 .result {
@@ -1197,7 +1185,271 @@ html.dark .fiche-astuce { border-left-color: var(--jaune); }
 
 
 /* =========================================================
-   13. FOOTER
+   13. RÉSULTAT EXAMEN — style Codes Rousseau
+   ========================================================= */
+
+.result.result-wide {
+  max-width: 1080px;
+  padding: 2rem 2rem 1.75rem;
+  text-align: left;
+}
+
+.exam-result-head {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.exam-result-head h2 {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 1.6rem;
+  letter-spacing: -0.6px;
+  margin-bottom: 0.5rem;
+}
+.exam-result-head p {
+  color: var(--text-soft);
+  font-size: 1rem;
+  margin: 0;
+}
+
+.exam-result-body {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 2.5rem;
+  align-items: start;
+  margin-bottom: 2.25rem;
+}
+
+.exam-result-col { min-width: 0; }
+
+.exam-result-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--text-muted);
+  margin-bottom: 0.85rem;
+  text-align: center;
+}
+
+.exam-numbers {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.35rem;
+  max-width: 300px;
+  margin: 0 auto;
+}
+.exam-num {
+  aspect-ratio: 1;
+  border-radius: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.3px;
+}
+.exam-num.correct { background: var(--vert); }
+.exam-num.wrong { background: var(--rouge); }
+.exam-num.unanswered {
+  background: var(--surface-2);
+  color: var(--text-muted);
+}
+
+.exam-result-circle-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding-top: 1.5rem;
+}
+.exam-circle {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.1rem;
+  color: white;
+  font-family: 'Archivo Black', sans-serif;
+  box-shadow: var(--shadow-lg);
+}
+.exam-circle.pass { background: var(--vert); }
+.exam-circle.fail { background: var(--rouge); }
+.exam-circle-value {
+  font-size: 2.8rem;
+  letter-spacing: -2px;
+  line-height: 1;
+}
+.exam-circle-sep {
+  font-size: 1.3rem;
+  opacity: 0.65;
+  align-self: center;
+  padding-top: 0.5rem;
+}
+.exam-circle-total {
+  font-size: 1.3rem;
+  opacity: 0.85;
+  align-self: center;
+  padding-top: 0.5rem;
+}
+.exam-circle-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--text-soft);
+}
+
+.exam-themes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.exam-theme {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.55rem 0.7rem;
+  background: var(--surface-2);
+  border-radius: 8px;
+  font-size: 0.85rem;
+}
+.exam-theme-badge {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 0.62rem;
+  color: white;
+  background: var(--fam, var(--bleu));
+  flex-shrink: 0;
+}
+.exam-theme-name {
+  flex: 1;
+  color: var(--text-soft);
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.exam-theme-score {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: 0.3px;
+}
+
+.exam-errors {
+  margin-bottom: 1.75rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--border);
+}
+.exam-errors-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 1rem;
+}
+.exam-errors-title {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: 1rem;
+  letter-spacing: -0.3px;
+}
+.exam-errors-count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--rouge);
+}
+.exam-errors-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+.exam-error {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 1rem;
+  padding: 0.9rem 1rem;
+  background: var(--surface-2);
+  border-radius: 10px;
+}
+.exam-error-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--rouge);
+  padding-top: 0.1rem;
+}
+.exam-error-body { min-width: 0; }
+.exam-error-q {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text);
+  line-height: 1.45;
+  margin-bottom: 0.6rem;
+}
+.exam-error-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 0.5rem;
+}
+.exam-error-choice {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 0.4rem 0.7rem;
+  border-radius: 6px;
+  font-size: 0.83rem;
+  line-height: 1.4;
+  border-left: 3px solid;
+}
+.exam-error-choice.wrong {
+  background: var(--rouge-soft);
+  border-color: var(--rouge);
+  color: var(--text-soft);
+}
+.exam-error-choice.correct {
+  background: var(--vert-soft);
+  border-color: var(--vert);
+  color: var(--text);
+}
+.exam-error-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  padding-top: 0.1rem;
+}
+.exam-error-choice.wrong .exam-error-tag { color: var(--rouge); }
+.exam-error-choice.correct .exam-error-tag { color: var(--vert); }
+.exam-error-exp {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-style: italic;
+  line-height: 1.5;
+  padding-top: 0.4rem;
+  border-top: 1px dashed var(--border);
+  margin-top: 0.3rem;
+}
+
+
+/* =========================================================
+   14. FOOTER
    ========================================================= */
 
 footer {
@@ -1212,7 +1464,7 @@ footer {
 
 
 /* =========================================================
-   14. RESPONSIVE
+   15. RESPONSIVE
    ========================================================= */
 
 @media (max-width: 900px) {
@@ -1254,4 +1506,24 @@ footer {
   .qcm-actions { flex-direction: column; align-items: stretch; gap: 0.75rem; }
   .qcm-modes { justify-content: center; }
   .qcm-buttons { justify-content: space-between; }
+
+  /* Résultat examen */
+  .result.result-wide {
+    padding: 1.5rem 1rem;
+    margin: 2rem 1rem;
+  }
+  .exam-result-body {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+  .exam-result-circle-col { padding-top: 0; }
+  .exam-circle { width: 110px; height: 110px; }
+  .exam-circle-value { font-size: 2.4rem; }
+  .exam-numbers { max-width: 260px; }
+  .exam-error {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  .exam-error-num { padding-top: 0; }
+  .exam-error-choice { flex-direction: column; gap: 0.25rem; }
 }
