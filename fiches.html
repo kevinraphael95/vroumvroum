@@ -21,12 +21,16 @@
   <div class="nav-inner">
     <a href="index.html" class="logo"><div class="logo-mark">V</div>VroumVroum</a>
     <div class="nav-right">
-      <ul class="nav-links">
+      <ul class="nav-links" id="nav-links">
         <li><a href="index.html">Accueil</a></li>
         <li><a href="fiches.html" class="active">Fiches</a></li>
         <li><a href="qcm.html">QCM</a></li>
       </ul>
       <button class="theme-toggle" onclick="toggleTheme()" aria-label="Changer de thème">🌙</button>
+      <button class="nav-burger" id="nav-burger" onclick="toggleMenu()"
+              aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-links">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </div>
 </nav>
