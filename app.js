@@ -756,6 +756,52 @@
   window.replay = replay;
   window.backToModeSelect = backToModeSelect;
 
+
+  /* ============ 20. MENU BURGER ============ */
+
+  function toggleMenu() {
+    const burger = document.getElementById('nav-burger');
+    const links = document.getElementById('nav-links');
+    if (!burger || !links) return;
+
+    const isOpen = links.classList.toggle('open');
+    burger.classList.toggle('open', isOpen);
+    burger.setAttribute('aria-expanded', String(isOpen));
+    burger.setAttribute('aria-label', isOpen ? 'Fermer le menu' : 'Ouvrir le menu');
+  }
+
+  function closeMenu() {
+    const burger = document.getElementById('nav-burger');
+    const links = document.getElementById('nav-links');
+    if (!burger || !links) return;
+
+    links.classList.remove('open');
+    burger.classList.remove('open');
+    burger.setAttribute('aria-expanded', 'false');
+    burger.setAttribute('aria-label', 'Ouvrir le menu');
+  }
+
+  // Fermer au clic sur un lien
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('#nav-links a')) closeMenu();
+  });
+
+  // Fermer au clic en dehors de la navbar
+  document.addEventListener('click', (e) => {
+    const nav = document.querySelector('.nav-inner');
+    if (nav && !nav.contains(e.target)) closeMenu();
+  });
+
+  // Fermer avec Échap
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeMenu();
+  });
+
+  window.toggleMenu = toggleMenu;
+
+
+  /* ============ 21. DOM READY ============ */
+
   document.addEventListener('DOMContentLoaded', () => {
     modeSelectBox = document.getElementById('mode-select');
     quizBox       = document.getElementById('quiz');
