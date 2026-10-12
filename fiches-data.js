@@ -215,6 +215,7 @@ const FICHES = [
     type: "list",
     items: [
       { label: "Panneaux de danger",              texte: "Triangle à bordure rouge, placé avant le danger. Un panonceau peut préciser la distance ou l'étendue du danger." },
+      { label: "Panonceaux",                      texte: "Petits panneaux rectangulaires placés sous un panneau principal. Précisent distance (M1), étendue (M2), position (M3), catégorie d'usagers (M4), ou exceptions (M9)." },
       { label: "Chaussée glissante",              texte: "Pluie, verglas, feuilles, gravillons : ralentir, éviter freinages et mouvements de volant brusques." },
       { label: "Virages & descentes dangereuses", texte: "Ralentir avant le virage, pas dedans. En descente, rétrograder pour garder le frein moteur." },
       { label: "Piétons, enfants, cyclistes",     texte: "Abords d'écoles, passages piétons, débouchés de cyclistes : lever le pied, redoubler de vigilance." },
@@ -378,7 +379,10 @@ const FICHES = [
       { label: "Panonceau pour cyclistes",    texte: "Au feu rouge, les cyclistes peuvent passer dans le sens indiqué, en cédant le passage." },
       { label: "Feux en panne ou éteints",    texte: "Appliquer la signalisation de priorité présente, sinon la priorité à droite." },
       { label: "Combinaison feux + panneaux", texte: "Ordre de priorité : agents, puis feux, puis panneaux, puis marquage, puis règles générales." },
-      { label: "Signes des agents",           texte: "Bras levés ou agités face à moi = je m'arrête. Les agents sont prioritaires sur tout, même les feux." }
+      { label: "Agent : bras levé vertical",  texte: "Signifie 'arrêt pour tous les usagers'. Aucun véhicule ne doit avancer." },
+      { label: "Agent : bras tendu horizontal", texte: "Les véhicules venant de la direction perpendiculaire au bras doivent s'arrêter. Ceux venant de la direction du bras peuvent passer." },
+      { label: "Agent : balancement transversal", texte: "Un agent agite son bras ou un feu rouge de gauche à droite face à moi : je m'arrête." },
+      { label: "Agent : mouvement circulaire", texte: "Un agent fait un mouvement circulaire de la main : les véhicules peuvent passer ou accélérer." }
     ],
     astuce: "En cas de contradiction entre un agent et un feu, c'est toujours l'agent qui prime."
   },
@@ -431,14 +435,18 @@ const FICHES = [
     titre: "Ajustement, conséquences & contrôle des vitesses",
     type: "list",
     items: [
-      { label: "Distance d'arrêt",          texte: "Distance de réaction (environ 1 s) + distance de freinage. Augmente avec la vitesse." },
-      { label: "À 50 km/h",                 texte: "Environ 28 m pour s'arrêter. À 90 km/h : environ 70 m. À 130 km/h : environ 120 m." },
-      { label: "Choc à 50 km/h",            texte: "Équivalent d'une chute du 3ᵉ étage. À 90 km/h : du 12ᵉ étage." },
-      { label: "Ajustement",                texte: "Adapter sa vitesse aux conditions : pluie, brouillard, trafic, visibilité." },
-      { label: "Contrôles",                 texte: "Radars fixes, mobiles, embarqués, tronçons. Excès = amende + retrait de points." },
-      { label: "Excès et sanction",         texte: "< 20 km/h : 135 € et -1 pt. 20-30 : -2 pts. 30-40 : -3 pts. 40-50 : -4 pts. > 50 : délit." }
+      { label: "Distance de réaction",     texte: "= (vitesse ÷ 10) × 3 mètres. Correspond à 1 seconde de temps de réaction. Ex : 90 km/h → 9 × 3 = 27 m." },
+      { label: "Distance de sécurité",     texte: "= distance de réaction × 2 (règle des 2 secondes). Ex : 90 km/h → 27 × 2 = 54 m." },
+      { label: "Distance d'arrêt (sec)",   texte: "= (vitesse ÷ 10)². Ex : 90 km/h → 9 × 9 = 81 m. Somme de la distance de réaction et de la distance de freinage." },
+      { label: "Distance d'arrêt (pluie)", texte: "= distance d'arrêt sec × 1,5. Ex : 90 km/h → 81 × 1,5 ≈ 121 m." },
+      { label: "Valeurs légales",          texte: "50 km/h → 28 m. 90 km/h → 50 m. 110 km/h → 62 m. 130 km/h → 73 m." },
+      { label: "Doublement de vitesse",    texte: "Si la vitesse double, la distance d'arrêt est multipliée par 4 (proportionnelle au carré de la vitesse)." },
+      { label: "Choc à 50 km/h",           texte: "Équivalent d'une chute du 3ᵉ étage. À 90 km/h : du 12ᵉ étage." },
+      { label: "Ajustement",               texte: "Adapter sa vitesse aux conditions : pluie, brouillard, trafic, visibilité." },
+      { label: "Contrôles",                texte: "Radars fixes, mobiles, embarqués, tronçons. Excès = amende + retrait de points." },
+      { label: "Excès et sanction",        texte: "< 20 km/h : 135 € et -1 pt. 20-30 : -2 pts. 30-40 : -3 pts. 40-50 : -4 pts. > 50 : délit." }
     ],
-    astuce: "La vitesse tue deux fois : elle augmente la distance d'arrêt et diminue le temps de réaction disponible."
+    astuce: "Trois formules : ×3 pour réagir, ×6 pour la sécurité (2s), au carré pour s'arrêter. Sur pluie, multiplie l'arrêt par 1,5."
   },
 
   /* --- Croiser et dépasser --- */
@@ -709,13 +717,14 @@ const FICHES = [
       { label: "Cyclistes",                  texte: "1 m de distance en ville, 1,5 m hors agglomération. Imprévisibles : redoubler de vigilance." },
       { label: "EDPM (trottinettes)",        texte: "Interdits sur les trottoirs. Sur piste cyclable, ou sur la chaussée si limitée à 50 km/h." },
       { label: "Deux-roues motorisés",       texte: "Peu visibles (angles morts), souvent rapides. Conduite inter-files autorisée dans certains départements." },
-      { label: "Véhicules d'urgence",        texte: "Police, pompiers, SAMU, SMUR, douanes en mission : leur faciliter le passage, se ranger à droite." },
+      { label: "Véhicules prioritaires (art. R415-1)", texte: "Police, pompiers, SAMU, SMUR, douanes : gyrophare + sirène. Priorité absolue, je dois les laisser passer, me ranger à droite, m'arrêter si nécessaire." },
+      { label: "Véhicules à facilités de passage (art. R415-2)", texte: "Ambulances privées, dépanneuses, service hivernal. Ils n'ont PAS de priorité : je dois juste leur faciliter le passage sans m'arrêter obligatoirement." },
       { label: "Convois exceptionnels",      texte: "Prioritaires aux croisements. Longs et lents : ne pas s'engager à l'intersection. Souvent précédés d'un véhicule de guidage." },
       { label: "Véhicules encombrants",      texte: "Bus, camions, bennes : angles morts importants, distances de freinage plus longues." },
       { label: "Véhicules lents",            texte: "Collecte de déchets, entretien de voirie. S'arrêtent souvent, travailleurs piétons autour." },
       { label: "Bus & autocars",             texte: "Prioritaires en ville quand ils quittent leur arrêt. Attention aux passagers qui peuvent surgir." }
     ],
-    astuce: "Le principe, c'est la protection des usagers les plus vulnérables : piéton > cycliste > deux-roues > voiture > poids lourd."
+    astuce: "Distinction clé : véhicule prioritaire (avec sirène) = je m'arrête pour le laisser passer. Véhicule à facilités de passage = je facilite simplement, sans obligation d'arrêt."
   },
 
   /* ============================================================
@@ -1040,11 +1049,12 @@ const FICHES = [
     type: "list",
     items: [
       { label: "Sièges homologués",           texte: "Enfants < 10 ans : dispositif de retenue homologué obligatoire, adapté au poids et à la taille." },
+      { label: "Interdiction à l'avant",      texte: "Enfant de moins de 10 ans : INTERDIT à l'avant, sauf si le véhicule n'a pas de banquette arrière, ou si les places arrière sont déjà occupées par d'autres enfants de moins de 10 ans, ou si le siège dos-route est installé avec airbag passager désactivé." },
       { label: "Homologation",                texte: "Vérifier l'étiquette d'homologation sur le siège (norme européenne)." },
       { label: "Système de sécurité enfant",  texte: "Siège bébé dos à la route : JAMAIS sur le siège passager avant avec airbag actif. Désactiver l'airbag passager." },
       { label: "Installation",                texte: "Siège bien fixé, harnais ajusté sans jeu. Jamais d'enfant sur les genoux d'un adulte." }
     ],
-    astuce: "Siège enfant dos à la route à l'avant : on désactive l'airbag passager, sinon on installe l'enfant à l'arrière."
+    astuce: "Règle simple : moins de 10 ans → à l'arrière, dans un siège adapté. Dos à la route à l'avant → airbag passager obligatoirement désactivé."
   },
   {
     id: "securite",
