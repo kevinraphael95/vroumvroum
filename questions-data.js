@@ -69,6 +69,27 @@ const questionTemplates = [
     }
   },
   {
+    category: "Signalisation",
+    generate() {
+      const cas = [
+        { q: "Qu'est-ce qu'un panonceau ?",
+          r: "Un petit panneau rectangulaire placé sous un panneau principal pour en préciser le sens",
+          wrongs: ["Un panneau publicitaire", "Un panneau temporaire de chantier", "Un marquage au sol"],
+          exp: "Le panonceau précise la distance (M1), l'étendue (M2), la position (M3), la catégorie d'usagers (M4) ou une exception (M9)." },
+        { q: "Sur une route prioritaire, quel panneau indique que la priorité prend fin ?",
+          r: "Le losange barré (panneau AB6)",
+          wrongs: ["Le losange jaune plein", "Le triangle pointe en bas", "Le panneau octogonal"],
+          exp: "Le losange jaune (AB6) indique la priorité. Barré, il signale la fin de priorité et le retour à la priorité à droite." },
+        { q: "Un panneau rond à bordure rouge signifie :",
+          r: "Une interdiction",
+          wrongs: ["Un danger", "Une obligation", "Une indication"],
+          exp: "Le rond à bordure rouge indique toujours une interdiction (sens interdit, dépassement interdit, arrêt…)." }
+      ];
+      const c = pick(cas);
+      return buildQuestion("Signalisation", c.q, c.r, c.wrongs, c.exp);
+    }
+  },
+  {
     category: "Signalisation temporaire",
     generate() {
       const cas = [
@@ -173,6 +194,31 @@ const questionTemplates = [
         s.r,
         ["Klaxonner et passer", "Accélérer pour passer avant", "Rien de particulier, on passe normalement"],
         s.exp);
+    }
+  },
+  {
+    category: "Priorités",
+    generate() {
+      const cas = [
+        { q: "Un agent de circulation a le bras levé verticalement. Que signifie ce geste ?",
+          r: "Arrêt pour tous les usagers",
+          wrongs: ["Les véhicules peuvent passer", "Le feu passe au vert", "Rien, l'agent salue"],
+          exp: "Le bras levé verticalement signifie 'arrêt pour tous'. Aucun véhicule ne doit avancer." },
+        { q: "Un agent tend le bras horizontalement. Qui doit s'arrêter ?",
+          r: "Les véhicules venant de la direction perpendiculaire au bras",
+          wrongs: ["Tous les véhicules", "Les véhicules venant dans la direction du bras", "Uniquement les piétons"],
+          exp: "Le bras tendu horizontalement : les véhicules venant de la direction perpendiculaire au bras s'arrêtent. Ceux venant dans la direction du bras peuvent passer." },
+        { q: "Un agent fait un mouvement circulaire de la main. Que signifie ce geste ?",
+          r: "Les véhicules peuvent passer ou accélérer",
+          wrongs: ["Tout le monde s'arrête", "Il y a un danger", "Il faut faire demi-tour"],
+          exp: "Le mouvement circulaire de la main signifie 'circulez' ou 'accélérez'." },
+        { q: "Un agent agite un feu rouge de gauche à droite face à vous. Que faire ?",
+          r: "S'arrêter",
+          wrongs: ["Accélérer", "Klaxonner", "Continuer normalement"],
+          exp: "Le balancement transversal d'un feu rouge signifie 'arrêtez-vous'." }
+      ];
+      const c = pick(cas);
+      return buildQuestion("Priorités", c.q, c.r, c.wrongs, c.exp);
     }
   },
 
@@ -300,6 +346,45 @@ const questionTemplates = [
           r: "La distance de freinage est multipliée par 4",
           wrongs: ["Elle est multipliée par 2", "Elle ne change pas", "Elle est divisée par 2"],
           exp: "La distance de freinage augmente avec le carré de la vitesse : en doublant la vitesse, elle est multipliée par 4." }
+      ];
+      const c = pick(cas);
+      return buildQuestion("Conséquences vitesse", c.q, c.r, c.wrongs, c.exp);
+    }
+  },
+  /* ⚠ NOUVEAU : calcul des distances */
+  {
+    category: "Conséquences vitesse",
+    generate() {
+      const cas = [
+        { q: "Quelle est la formule de la distance de réaction (en mètres) ?",
+          r: "(vitesse ÷ 10) × 3",
+          wrongs: ["(vitesse ÷ 10) × 6", "(vitesse ÷ 10)²", "vitesse × 2"],
+          exp: "Distance de réaction = (vitesse ÷ 10) × 3. Ex : 90 km/h → 9 × 3 = 27 m. C'est la distance parcourue pendant 1 seconde de réaction." },
+        { q: "Quelle est la formule de la distance de sécurité ?",
+          r: "Distance de réaction × 2 (règle des 2 secondes)",
+          wrongs: ["(vitesse ÷ 10)²", "(vitesse ÷ 10) × 3", "vitesse × 2"],
+          exp: "La distance de sécurité = distance de réaction × 2 = environ 2 secondes de parcours. Ex : 90 km/h → 27 × 2 = 54 m." },
+        { q: "Quelle est la formule de la distance d'arrêt sur route sèche ?",
+          r: "(vitesse ÷ 10)²",
+          wrongs: ["(vitesse ÷ 10) × 3", "(vitesse ÷ 10) × 6", "vitesse × 3"],
+          exp: "Distance d'arrêt = (vitesse ÷ 10)². Ex : 90 km/h → 9 × 9 = 81 m. C'est la somme de la réaction et du freinage." },
+        { q: "À 50 km/h, la distance de réaction est d'environ :",
+          r: "15 m", wrongs: ["28 m", "25 m", "50 m"],
+          exp: "Distance de réaction à 50 km/h = 5 × 3 = 15 m." },
+        { q: "À 130 km/h, la distance d'arrêt sur route sèche est d'environ :",
+          r: "169 m", wrongs: ["100 m", "120 m", "200 m"],
+          exp: "Distance d'arrêt à 130 km/h = 13 × 13 = 169 m. C'est pour cela qu'il faut respecter les distances de sécurité." },
+        { q: "Par temps de pluie, la distance d'arrêt est :",
+          r: "Multipliée par 1,5",
+          wrongs: ["Identique", "Multipliée par 2", "Divisée par 2"],
+          exp: "Sur route mouillée, la distance d'arrêt est multipliée par 1,5. Ex : 90 km/h → 81 × 1,5 ≈ 121 m." },
+        { q: "Un conducteur roule à 100 km/h. Quelle est sa distance de sécurité minimale ?",
+          r: "60 m", wrongs: ["30 m", "100 m", "50 m"],
+          exp: "Distance de sécurité = distance de réaction × 2 = (100 ÷ 10 × 3) × 2 = 30 × 2 = 60 m." },
+        { q: "Que se passe-t-il pour la distance d'arrêt si la vitesse est multipliée par 3 ?",
+          r: "Elle est multipliée par 9",
+          wrongs: ["Par 3", "Par 6", "Elle ne change pas"],
+          exp: "La distance d'arrêt est proportionnelle au carré de la vitesse. ×3 en vitesse = ×9 en distance d'arrêt." }
       ];
       const c = pick(cas);
       return buildQuestion("Conséquences vitesse", c.q, c.r, c.wrongs, c.exp);
@@ -565,6 +650,32 @@ const questionTemplates = [
           r: "Un transport de charges très volumineuses, prioritaire aux croisements",
           wrongs: ["Un convoi de plusieurs voitures", "Un camion de livraison", "Un véhicule de secours"],
           exp: "Les convois exceptionnels sont prioritaires aux croisements. Longs et lents, il ne faut pas s'engager à l'intersection devant eux." }
+      ];
+      const c = pick(cas);
+      return buildQuestion("Autres usagers", c.q, c.r, c.wrongs, c.exp);
+    }
+  },
+  /* ⚠ NOUVEAU : distinction véhicules prioritaires / facilités de passage */
+  {
+    category: "Autres usagers",
+    generate() {
+      const cas = [
+        { q: "Qu'est-ce qu'un véhicule prioritaire au sens du Code de la route ?",
+          r: "Un véhicule avec gyrophare et sirène (police, pompiers, SAMU) qui a la priorité absolue",
+          wrongs: ["Un véhicule qui roule vite", "Un bus en agglomération", "Un camion de livraison"],
+          exp: "Les véhicules prioritaires (art. R415-1) ont gyrophare + sirène. Je dois les laisser passer, me ranger à droite, m'arrêter si nécessaire." },
+        { q: "Un véhicule à 'facilités de passage' (ambulance privée, dépanneuse) :",
+          r: "N'a pas de priorité, je dois juste lui faciliter le passage",
+          wrongs: ["A la priorité absolue", "Doit s'arrêter à tous les carrefours", "Ne peut pas circuler sur la voie publique"],
+          exp: "Les véhicules à facilités de passage (art. R415-2) n'ont PAS de priorité. Je facilite leur passage, sans obligation d'arrêt." },
+        { q: "Face à une ambulance privée sans sirène ni gyrophare, que dois-je faire ?",
+          r: "Circuler normalement, aucune obligation particulière",
+          wrongs: ["M'arrêter immédiatement", "Me ranger à droite", "Klaxonner"],
+          exp: "Sans sirène ni gyrophare en fonctionnement, l'ambulance privée n'a aucune priorité. Je circule normalement." },
+        { q: "Face à un véhicule de police avec sirène et gyrophare en intervention, que faire ?",
+          r: "Me ranger à droite et m'arrêter si nécessaire pour le laisser passer",
+          wrongs: ["Le suivre de près", "Accélérer pour ne pas le gêner", "Klaxonner"],
+          exp: "Le véhicule prioritaire en intervention (gyrophare + sirène) doit être laissé passer. Je me range à droite, je m'arrête si nécessaire." }
       ];
       const c = pick(cas);
       return buildQuestion("Autres usagers", c.q, c.r, c.wrongs, c.exp);
@@ -949,6 +1060,28 @@ const questionTemplates = [
           r: "Non, il la complète",
           wrongs: ["Oui, totalement", "Oui, à l'avant", "Uniquement pour les enfants"],
           exp: "L'airbag est un complément de la ceinture, pas un substitut. Il peut être dangereux si le passager n'est pas attaché." }
+      ];
+      const c = pick(cas);
+      return buildQuestion("Sécurité passager", c.q, c.r, c.wrongs, c.exp);
+    }
+  },
+  /* ⚠ NOUVEAU : enfant < 10 ans à l'avant */
+  {
+    category: "Sécurité passager",
+    generate() {
+      const cas = [
+        { q: "Un enfant de moins de 10 ans peut-il s'installer à l'avant ?",
+          r: "Non, sauf cas particuliers (pas de banquette arrière, ou places arrière déjà occupées par d'autres enfants < 10 ans)",
+          wrongs: ["Oui, toujours", "Non, jamais dans aucun cas", "Oui, si le trajet est court"],
+          exp: "Un enfant de moins de 10 ans est interdit à l'avant, sauf si le véhicule n'a pas de banquette arrière, ou si les places arrière sont déjà occupées par d'autres enfants de moins de 10 ans." },
+        { q: "Un enfant de 8 ans peut-il s'installer à l'avant avec un siège auto adapté ?",
+          r: "Non, sauf cas particuliers prévus par la loi",
+          wrongs: ["Oui, s'il est bien attaché", "Oui, si l'airbag est actif", "Oui, en agglomération uniquement"],
+          exp: "La règle est claire : moins de 10 ans = à l'arrière. Sauf cas particuliers (pas de banquette arrière, ou places arrière déjà occupées par des enfants < 10 ans)." },
+        { q: "Vous avez 3 enfants de moins de 10 ans et une voiture 5 places. Où s'installent-ils ?",
+          r: "Deux à l'arrière avec dispositifs de retenue, un à l'avant avec dispositif adapté (cas exceptionnel autorisé)",
+          wrongs: ["Tous à l'arrière, attachés avec la ceinture", "Un sur les genoux d'un adulte", "Aucun ne peut monter"],
+          exp: "Si les places arrière sont déjà occupées par 2 enfants < 10 ans, le 3ᵉ peut s'installer à l'avant avec un dispositif de retenue adapté. C'est une exception légale." }
       ];
       const c = pick(cas);
       return buildQuestion("Sécurité passager", c.q, c.r, c.wrongs, c.exp);
