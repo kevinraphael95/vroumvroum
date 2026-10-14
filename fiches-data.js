@@ -440,7 +440,6 @@ const FICHES = [
       { label: "Distance de freinage (sec)", texte: "≈ (vitesse ÷ 10)² ÷ 2. Ex : 90 km/h → 81 ÷ 2 ≈ 40 m." },
       { label: "Distance d'arrêt (sec)",     texte: "= distance de réaction + distance de freinage. Ex : 90 km/h → 27 + 40 ≈ 70 m. À 130 km/h : ≈ 120 m." },
       { label: "Sur route mouillée",         texte: "La distance de freinage est environ doublée. Ex : 90 km/h → 27 + 80 ≈ 107 m d'arrêt." },
-      { label: "Distance de sécurité (2 s)", texte: "50 km/h → 28 m. 90 km/h → 50 m. 110 km/h → 62 m. 130 km/h → 73 m." },
       { label: "Doublement de vitesse",      texte: "Si la vitesse double, la distance de freinage est multipliée par 4 (proportionnelle au carré de la vitesse)." },
       { label: "Choc à 50 km/h",           texte: "Équivalent d'une chute du 3ᵉ étage. À 90 km/h : du 12ᵉ étage." },
       { label: "Ajustement",               texte: "Adapter sa vitesse aux conditions : pluie, brouillard, trafic, visibilité." },
@@ -806,7 +805,7 @@ const FICHES = [
       { label: "1ʳᵉ classe",            texte: "Le plus léger : stationnement gênant, feux non conformes. Amende forfaitaire réduite." },
       { label: "2ᵉ classe",             texte: "Oubli de clignotant, non-présentation du permis ou de la carte grise." },
       { label: "3ᵉ classe",             texte: "Excès de vitesse de 1 à 19 km/h sur route limitée à plus de 50 km/h." },
-      { label: "4ᵉ classe",             texte: "Excès 20-49 km/h, refus de priorité, non-port de ceinture, franchissement ligne continue, stationnement PMR." },
+      { label: "4ᵉ classe",             texte: "Excès 20-49 km/h, téléphone tenu en main, refus de priorité, non-port de ceinture, franchissement ligne continue, stationnement PMR." },
       { label: "5ᵉ classe",             texte: "Infractions les plus graves : retrait de 6 points, suspension ou annulation possible." },
       { label: "Délits",                texte: "Alcoolémie ≥ 0,8 g/l, refus d'obtempérer, délit de fuite, conduite malgré suspension. Jusqu'à 10 ans de prison." },
       { label: "Annulation du permis",  texte: "Solde de points à zéro, ou décision judiciaire. Re-passage obligatoire après visite médicale et tests psychotechniques." }
