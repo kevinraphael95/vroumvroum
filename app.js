@@ -116,9 +116,9 @@
 
   const CAT_TO_FAM = {
     "Signalisation": "L", "Signalisation temporaire": "L", "Marquage au sol": "L",
-    "Priorités": "L", "Communication": "L", "Circuler": "L", "Vitesses": "L",
+    "Priorités": "L", "Circuler": "L", "Vitesses": "L",
     "Conséquences vitesse": "L", "Dépassement": "L", "Stationnement": "L",
-    "Conducteur": "C", "Alcool & stupéfiants": "C",
+    "Conducteur": "C", "Communication": "C", "Alcool & stupéfiants": "C",
     "Conduite difficile": "R", "Autoroute": "R", "Zones dangereuses": "R",
     "Autres usagers": "U",
     "Documents": "D", "Assurance": "D", "Chargement": "D",
@@ -300,6 +300,11 @@
     if (typeof generateQuestionSet !== 'function') return;
     if (!['rapide', 'examen', 'infini'].includes(chosenMode)) return;
 
+    // Confirmation si un quiz est en cours (boutons de mode dans le quiz)
+    const enCours = quizBox && quizBox.style.display !== 'none' &&
+      (currentIndex > 0 || streak > 0 || examAnswers.some(a => a != null));
+    if (enCours && !confirm('Changer de mode ? Ta progression en cours sera perdue.')) return;
+
     mode = chosenMode;
     score = 0;
     streak = 0;
@@ -329,6 +334,11 @@
 
     const timerChip = document.getElementById('timer-chip');
     if (timerChip) timerChip.style.display = (mode === 'examen') ? '' : 'none';
+
+    // En examen, pas de correction : on masque la série et le score
+    document.querySelectorAll('.qcm-chip.streak, .qcm-chip.score').forEach(el => {
+      el.style.display = (mode === 'examen') ? 'none' : '';
+    });
 
     showOnly(quizBox);
     loadQuestion();
