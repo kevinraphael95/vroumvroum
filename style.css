@@ -937,7 +937,8 @@ html.dark .fiche-astuce { border-left-color: var(--jaune); }
   flex-wrap: wrap;
 }
 .qcm-topbar-left,
-.qcm-topbar-right {
+.qcm-topbar-right,
+.qcm-meta {
   display: flex;
   align-items: center;
   gap: 0.6rem;
@@ -981,7 +982,7 @@ html.dark .fiche-astuce { border-left-color: var(--jaune); }
   color: var(--text-soft);
   font-family: 'JetBrains Mono', monospace;
 }
-.qcm-chip.streak { background: var(--jaune-soft); color: #78350f; }
+html.dark .qcm-chip.streak { color: var(--jaune); }
 .qcm-chip.score { background: var(--vert-soft); color: var(--vert); }
 
 .timer-chip {
