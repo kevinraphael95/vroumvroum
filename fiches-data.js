@@ -904,10 +904,16 @@ const FICHES = [
     titre: "S'installer au poste de conduite",
     type: "list",
     items: [
-      { label: "Être à l'aise",            texte: "Régler le siège (position, dossier, appui-tête). Dossier légèrement incliné, jambes semi-fléchies." },
-      { label: "Être bien assis",          texte: "Fesses au fond du siège, dos plaqué contre le dossier, épaules relâchées." },
-      { label: "Avoir une visibilité optimale", texte: "Régler les rétroviseurs intérieur et extérieurs. Voir le maximum de route derrière soi." },
-      { label: "Ajuster la ceinture",      texte: "Sangle basse sur le bassin, jamais sur le ventre. Sangle haute sur l'épaule, pas sur le cou." }
+      { label: "Être à l'aise",            texte: "Vêtements amples, chaussures adaptées (pas de talons hauts ni de tongs). Rien ne doit gêner les pédales, le volant ou les commandes." },
+      { label: "Distance au pédalier",     texte: "Pédale enfoncée à fond, la jambe reste légèrement fléchie. Les pieds appuient sans effort excessif." },
+      { label: "Hauteur du siège",         texte: "Bien voir la route et tout le tableau de bord. Fesses au fond du siège, dos plaqué contre le dossier." },
+      { label: "Inclinaison du dossier",   texte: "Dossier peu incliné, dos bien soutenu : pas de tension dans le cou ni les épaules." },
+      { label: "Position des mains",       texte: "Tenir le volant souplement, à « 9 h 15 » ou « 10 h 10 », sans crispation. Jamais les mains ni les pouces à l'intérieur du volant (danger en cas de déclenchement de l'airbag)." },
+      { label: "Réglage du volant",        texte: "En hauteur et en profondeur : tout le tableau de bord reste visible et les bras restent légèrement fléchis." },
+      { label: "Appuie-tête",              texte: "Haut de l'appuie-tête à hauteur du sommet de la tête (protège la nuque en cas de choc arrière). S'il n'y a pas de passager arrière, abaisser les appuie-tête arrière pour mieux voir." },
+      { label: "Position des pieds",       texte: "Pied droit : talon au sol, seule la pointe du pied passe de l'accélérateur au frein. Pied gauche : embrayage, puis repos sur le repose-pied." },
+      { label: "Rétroviseurs",             texte: "Réglés une fois bien assis, pour réduire les angles morts. Position « nuit » du rétroviseur intérieur contre l'éblouissement. Les angles morts restent à contrôler en tournant la tête." },
+      { label: "Ceinture",                 texte: "Sangle à plat, bien tendue, jamais vrillée. Sangle haute au milieu de l'épaule, pas sur le cou. Sangle basse sur le bassin, jamais sur le ventre." }
     ],
     astuce: "Les réglages se font à l'arrêt, avant de démarrer : jamais en roulant."
   },
