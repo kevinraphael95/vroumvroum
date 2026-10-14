@@ -296,8 +296,7 @@ const questionTemplates = [
     category: "Vitesses",
     generate() {
       const seuils = [
-        { seuil: 50, limite: "50 km/h" },
-        { seuil: 100, limite: "80 km/h" }
+        { seuil: 50, limite: "50 km/h" }
       ];
       const s = pick(seuils);
       const wrongs = ["50 km/h", "70 km/h", "80 km/h", "90 km/h", "110 km/h"].filter(v => v !== s.limite);
@@ -351,7 +350,7 @@ const questionTemplates = [
       return buildQuestion("Conséquences vitesse", c.q, c.r, c.wrongs, c.exp);
     }
   },
-  /* ⚠ NOUVEAU : calcul des distances */
+  /* Calcul des distances */
   {
     category: "Conséquences vitesse",
     generate() {
@@ -364,27 +363,27 @@ const questionTemplates = [
           r: "Distance de réaction × 2 (règle des 2 secondes)",
           wrongs: ["(vitesse ÷ 10)²", "(vitesse ÷ 10) × 3", "vitesse × 2"],
           exp: "La distance de sécurité = distance de réaction × 2 = environ 2 secondes de parcours. Ex : 90 km/h → 27 × 2 = 54 m." },
-        { q: "Quelle est la formule de la distance d'arrêt sur route sèche ?",
-          r: "(vitesse ÷ 10)²",
+        { q: "Quelle est la formule approchée de la distance de freinage sur route sèche ?",
+          r: "(vitesse ÷ 10)² ÷ 2",
           wrongs: ["(vitesse ÷ 10) × 3", "(vitesse ÷ 10) × 6", "vitesse × 3"],
-          exp: "Distance d'arrêt = (vitesse ÷ 10)². Ex : 90 km/h → 9 × 9 = 81 m. C'est la somme de la réaction et du freinage." },
+          exp: "Distance de freinage ≈ (vitesse ÷ 10)² ÷ 2. Ex : 90 km/h → 81 ÷ 2 ≈ 40 m. Distance d'arrêt = réaction + freinage ≈ 27 + 40 ≈ 70 m." },
         { q: "À 50 km/h, la distance de réaction est d'environ :",
           r: "15 m", wrongs: ["28 m", "25 m", "50 m"],
           exp: "Distance de réaction à 50 km/h = 5 × 3 = 15 m." },
         { q: "À 130 km/h, la distance d'arrêt sur route sèche est d'environ :",
-          r: "169 m", wrongs: ["100 m", "120 m", "200 m"],
-          exp: "Distance d'arrêt à 130 km/h = 13 × 13 = 169 m. C'est pour cela qu'il faut respecter les distances de sécurité." },
-        { q: "Par temps de pluie, la distance d'arrêt est :",
-          r: "Multipliée par 1,5",
-          wrongs: ["Identique", "Multipliée par 2", "Divisée par 2"],
-          exp: "Sur route mouillée, la distance d'arrêt est multipliée par 1,5. Ex : 90 km/h → 81 × 1,5 ≈ 121 m." },
+          r: "120 m", wrongs: ["70 m", "170 m", "200 m"],
+          exp: "Réaction : 13 × 3 = 39 m. Freinage : 13² ÷ 2 ≈ 85 m. Arrêt ≈ 120 m." },
+        { q: "Par temps de pluie, la distance de freinage est :",
+          r: "Environ doublée",
+          wrongs: ["Identique", "Multipliée par 1,5", "Divisée par 2"],
+          exp: "Sur route mouillée, la distance de freinage double environ." },
         { q: "Un conducteur roule à 100 km/h. Quelle est sa distance de sécurité minimale ?",
           r: "60 m", wrongs: ["30 m", "100 m", "50 m"],
           exp: "Distance de sécurité = distance de réaction × 2 = (100 ÷ 10 × 3) × 2 = 30 × 2 = 60 m." },
-        { q: "Que se passe-t-il pour la distance d'arrêt si la vitesse est multipliée par 3 ?",
+        { q: "Que se passe-t-il pour la distance de freinage si la vitesse est multipliée par 3 ?",
           r: "Elle est multipliée par 9",
           wrongs: ["Par 3", "Par 6", "Elle ne change pas"],
-          exp: "La distance d'arrêt est proportionnelle au carré de la vitesse. ×3 en vitesse = ×9 en distance d'arrêt." }
+          exp: "La distance de freinage est proportionnelle au carré de la vitesse. ×3 en vitesse = ×9 en distance de freinage." }
       ];
       const c = pick(cas);
       return buildQuestion("Conséquences vitesse", c.q, c.r, c.wrongs, c.exp);
@@ -507,6 +506,10 @@ const questionTemplates = [
           r: "Jusqu'à 2 ans de prison et 4 500 € d'amende",
           wrongs: ["Un simple avertissement", "Une amende de 35 € seulement", "Rien, c'est un droit"],
           exp: "Le refus de dépistage est un délit puni de 2 ans d'emprisonnement et 4 500 € d'amende." },
+        { q: "Quelle sanction pour un taux d'alcoolémie compris entre 0,5 et 0,8 g/l ?",
+          r: "Contravention de 4ᵉ classe : 135 € d'amende et -6 points",
+          wrongs: ["Un simple avertissement", "Un délit puni de 2 ans de prison", "Une amende de 35 € sans retrait de points"],
+          exp: "Entre 0,5 et 0,8 g/l, c'est une contravention de 4ᵉ classe (135 €, -6 points). À partir de 0,8 g/l, c'est un délit." },
         { q: "Qu'est-ce que la polyconsommation ?",
           r: "La prise combinée de plusieurs substances (alcool, drogues, médicaments) aux effets multipliés",
           wrongs: ["Boire plusieurs verres d'alcool différents", "Consommer de l'alcool à plusieurs personnes", "Mélanger alcool et boissons énergisantes"],
@@ -638,10 +641,10 @@ const questionTemplates = [
           r: "Le laisser passer",
           wrongs: ["Klaxonner", "Le dépasser rapidement", "Rien, je suis prioritaire"],
           exp: "En agglomération, les bus qui quittent leur arrêt sont prioritaires." },
-        { q: "Quel usager est prioritaire sur tous les autres ?",
-          r: "Le piéton (sauf face au tramway)",
-          wrongs: ["Le cycliste", "Le motard", "Le poids lourd"],
-          exp: "Le piéton est l'usager le plus vulnérable : il est prioritaire sur tous les autres, sauf face au tramway." },
+        { q: "Qui doit-on laisser passer à un passage piéton ?",
+          r: "Tout piéton engagé ou qui manifeste l'intention de traverser",
+          wrongs: ["Uniquement les enfants", "Uniquement les piétons déjà au milieu de la chaussée", "Aucun, le conducteur est prioritaire"],
+          exp: "Le piéton est prioritaire au passage piéton, sauf face au tramway." },
         { q: "Pourquoi faut-il se méfier des angles morts des poids lourds ?",
           r: "Le conducteur ne voit pas les véhicules qui s'y trouvent",
           wrongs: ["Ils roulent trop vite", "Ils freinent mal", "Ils changent souvent de voie"],
@@ -655,7 +658,7 @@ const questionTemplates = [
       return buildQuestion("Autres usagers", c.q, c.r, c.wrongs, c.exp);
     }
   },
-  /* ⚠ NOUVEAU : distinction véhicules prioritaires / facilités de passage */
+  /* Distinction véhicules prioritaires / facilités de passage */
   {
     category: "Autres usagers",
     generate() {
@@ -803,7 +806,7 @@ const questionTemplates = [
           exp: "Les contraventions sont classées de la 1ʳᵉ à la 5ᵉ classe, par ordre de gravité croissante." },
         { q: "Un excès de vitesse entre 20 et 49 km/h relève de quelle classe ?",
           r: "4ᵉ classe", wrongs: ["2ᵉ classe", "3ᵉ classe", "5ᵉ classe"],
-          exp: "Un excès de vitesse de 20 à 49 km/h relève de la 4ᵉ classe : amende, retrait de points, tribunal de proximité." },
+          exp: "Un excès de vitesse de 20 à 49 km/h relève de la 4ᵉ classe : amende et retrait de points." },
         { q: "Que signifie une infraction de 5ᵉ classe ?",
           r: "Une infraction grave, avec retrait de 6 points et possible suspension",
           wrongs: ["Une simple contravention sans conséquence", "Une infraction uniquement passible d'une amende", "Une infraction réservée aux poids lourds"],
@@ -912,13 +915,13 @@ const questionTemplates = [
     generate() {
       const questions = [
         { q: "Quand doit être effectué le tout premier Contrôle Technique d'un véhicule neuf ?",
-          r: "Dans les 4 mois précédant son 4ᵉ anniversaire",
+          r: "Dans les 6 mois précédant son 4ᵉ anniversaire",
           wrongs: ["Au bout de 2 ans", "À la date exacte de ses 5 ans", "Tous les ans dès la première année"],
-          exp: "Le premier CT a lieu dans les 4 mois précédant le 4ᵉ anniversaire de la première immatriculation." },
+          exp: "Le premier CT a lieu dans les 6 mois précédant le 4ᵉ anniversaire de la première immatriculation." },
         { q: "À quelle fréquence doit être effectué le Contrôle Technique après le premier passage ?",
           r: "Tous les 2 ans",
           wrongs: ["Tous les ans", "Tous les 3 ans", "Tous les 5 ans"],
-          exp: "Après le premier CT (dans les 4 mois avant le 4ᵉ anniversaire), le contrôle est à refaire tous les 2 ans." }
+          exp: "Après le premier CT (dans les 6 mois avant le 4ᵉ anniversaire), le contrôle est à refaire tous les 2 ans." }
       ];
       const c = pick(questions);
       return buildQuestion("Mécanique", c.q, c.r, c.wrongs, c.exp);
@@ -1065,7 +1068,7 @@ const questionTemplates = [
       return buildQuestion("Sécurité passager", c.q, c.r, c.wrongs, c.exp);
     }
   },
-  /* ⚠ NOUVEAU : enfant < 10 ans à l'avant */
+  /* Enfant < 10 ans à l'avant */
   {
     category: "Sécurité passager",
     generate() {
