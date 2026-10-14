@@ -279,7 +279,7 @@ const FICHES = [
       { label: "Passage piéton",           texte: "Céder le passage à tout piéton engagé ou manifestant l'intention de traverser." },
       { label: "Lignes d'arrêt",           texte: "Trait épais continu en travers de la voie : arrêt obligatoire." }
     ],
-    astuce: "Une ligne continue ne s'arrête jamais au niveau d'une intersection : elle reprend après."
+    astuce: "Une ligne continue s'interrompt à une intersection : on peut y tourner, mais pas dépasser."
   },
 
   /* --- Les intersections --- */
@@ -437,16 +437,17 @@ const FICHES = [
     items: [
       { label: "Distance de réaction",     texte: "= (vitesse ÷ 10) × 3 mètres. Correspond à 1 seconde de temps de réaction. Ex : 90 km/h → 9 × 3 = 27 m." },
       { label: "Distance de sécurité",     texte: "= distance de réaction × 2 (règle des 2 secondes). Ex : 90 km/h → 27 × 2 = 54 m." },
-      { label: "Distance d'arrêt (sec)",   texte: "= (vitesse ÷ 10)². Ex : 90 km/h → 9 × 9 = 81 m. Somme de la distance de réaction et de la distance de freinage." },
-      { label: "Distance d'arrêt (pluie)", texte: "= distance d'arrêt sec × 1,5. Ex : 90 km/h → 81 × 1,5 ≈ 121 m." },
-      { label: "Valeurs légales",          texte: "50 km/h → 28 m. 90 km/h → 50 m. 110 km/h → 62 m. 130 km/h → 73 m." },
-      { label: "Doublement de vitesse",    texte: "Si la vitesse double, la distance d'arrêt est multipliée par 4 (proportionnelle au carré de la vitesse)." },
+      { label: "Distance de freinage (sec)", texte: "≈ (vitesse ÷ 10)² ÷ 2. Ex : 90 km/h → 81 ÷ 2 ≈ 40 m." },
+      { label: "Distance d'arrêt (sec)",     texte: "= distance de réaction + distance de freinage. Ex : 90 km/h → 27 + 40 ≈ 70 m. À 130 km/h : ≈ 120 m." },
+      { label: "Sur route mouillée",         texte: "La distance de freinage est environ doublée. Ex : 90 km/h → 27 + 80 ≈ 107 m d'arrêt." },
+      { label: "Distance de sécurité (2 s)", texte: "50 km/h → 28 m. 90 km/h → 50 m. 110 km/h → 62 m. 130 km/h → 73 m." },
+      { label: "Doublement de vitesse",      texte: "Si la vitesse double, la distance de freinage est multipliée par 4 (proportionnelle au carré de la vitesse)." },
       { label: "Choc à 50 km/h",           texte: "Équivalent d'une chute du 3ᵉ étage. À 90 km/h : du 12ᵉ étage." },
       { label: "Ajustement",               texte: "Adapter sa vitesse aux conditions : pluie, brouillard, trafic, visibilité." },
       { label: "Contrôles",                texte: "Radars fixes, mobiles, embarqués, tronçons. Excès = amende + retrait de points." },
-      { label: "Excès et sanction",        texte: "< 20 km/h : 135 € et -1 pt. 20-30 : -2 pts. 30-40 : -3 pts. 40-50 : -4 pts. > 50 : délit." }
+      { label: "Excès et sanction",        texte: "< 20 km/h : -1 pt (68 € si limite > 50, 135 € si ≤ 50). 20-29 : -2 pts. 30-39 : -3 pts. 40-49 : -4 pts. ≥ 50 : -6 pts, 5ᵉ classe (délit en cas de récidive)." }
     ],
-    astuce: "Trois formules : ×3 pour réagir, ×6 pour la sécurité (2s), au carré pour s'arrêter. Sur pluie, multiplie l'arrêt par 1,5."
+    astuce: "Réaction = (v÷10)×3. Freinage = (v÷10)²÷2. Arrêt = réaction + freinage. Sur sol mouillé, le freinage double."
   },
 
   /* --- Croiser et dépasser --- */
@@ -593,7 +594,8 @@ const FICHES = [
       { label: "Médicaments",                 texte: "Certains altèrent la conduite : respecter les pictogrammes de la notice." },
       { label: "Polyconsommation",            texte: "Alcool + drogues + médicaments : effets multipliés, danger maximal." },
       { label: "Refus de dépistage",          texte: "Délit : jusqu'à 2 ans de prison et 4 500 € d'amende." },
-      { label: "Conduite en état d'ivresse",  texte: "Délit : jusqu'à 2 ans de prison et 4 500 € d'amende." }
+      { label: "Entre 0,5 et 0,8 g/l",        texte: "Contravention de 4ᵉ classe : 135 € d'amende et -6 points." },
+      { label: "À partir de 0,8 g/l",         texte: "Délit (état d'ivresse) : jusqu'à 2 ans de prison et 4 500 € d'amende, -6 points." }
     ],
     astuce: "Boire un café, dormir ou manger ne fait pas baisser l'alcoolémie : seul le temps compte."
   },
@@ -713,7 +715,7 @@ const FICHES = [
     titre: "Piétons, cyclistes, deux-roues, véhicules spéciaux, bus",
     type: "list",
     items: [
-      { label: "Piétons",                    texte: "Toujours prioritaires (sauf face au tramway). Céder le passage à tout piéton engagé ou manifestant l'intention de traverser." },
+      { label: "Piétons",                    texte: "Prioritaires sur un passage piéton et quand ils sont engagés sur la chaussée (sauf face au tramway). Céder le passage à tout piéton engagé ou manifestant l'intention de traverser." },
       { label: "Cyclistes",                  texte: "1 m de distance en ville, 1,5 m hors agglomération. Imprévisibles : redoubler de vigilance." },
       { label: "EDPM (trottinettes)",        texte: "Interdits sur les trottoirs. Sur piste cyclable, ou sur la chaussée si limitée à 50 km/h." },
       { label: "Deux-roues motorisés",       texte: "Peu visibles (angles morts), souvent rapides. Conduite inter-files autorisée dans certains départements." },
@@ -802,7 +804,7 @@ const FICHES = [
     items: [
       { label: "Retrait immédiat",      texte: "Excès ≥ 40 km/h, alcoolémie, stupéfiants, refus d'obtempérer : permis retiré sur place (suspension à venir)." },
       { label: "1ʳᵉ classe",            texte: "Le plus léger : stationnement gênant, feux non conformes. Amende forfaitaire réduite." },
-      { label: "2ᵉ classe",             texte: "Téléphone au volant, oubli de clignotant, A oublié, non-présentation du permis ou de la carte grise." },
+      { label: "2ᵉ classe",             texte: "Oubli de clignotant, non-présentation du permis ou de la carte grise." },
       { label: "3ᵉ classe",             texte: "Excès de vitesse de 1 à 19 km/h sur route limitée à plus de 50 km/h." },
       { label: "4ᵉ classe",             texte: "Excès 20-49 km/h, refus de priorité, non-port de ceinture, franchissement ligne continue, stationnement PMR." },
       { label: "5ᵉ classe",             texte: "Infractions les plus graves : retrait de 6 points, suspension ou annulation possible." },
@@ -1005,7 +1007,7 @@ const FICHES = [
     titre: "Entretien, pneus, surveillance du conducteur",
     type: "list",
     items: [
-      { label: "Les visites techniques",    texte: "Premier CT : dans les <strong>4 mois</strong> précédant le 4ᵉ anniversaire. Ensuite tous les 2 ans." },
+      { label: "Les visites techniques",    texte: "Premier CT : dans les <strong>6 mois</strong> précédant le 4ᵉ anniversaire. Ensuite tous les 2 ans." },
       { label: "Les pneus",                 texte: "Profondeur minimale : 1,6 mm. Pression vérifiée à froid, une fois par mois environ." },
       { label: "Pression des pneus",        texte: "Sous-gonflage : surconsommation, usure, risque d'éclatement. Sur-gonflage : tenue de route dégradée." },
       { label: "La surveillance du conducteur", texte: "Rétroviseurs, essuie-glaces, éclairage, klaxon, feux stop : à vérifier régulièrement." },
