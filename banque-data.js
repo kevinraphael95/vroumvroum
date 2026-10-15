@@ -149,9 +149,9 @@ const BANQUE = [
     explication: "Relâcher l'accélérateur, tenir le volant droit et ne pas freiner brusquement." },
 
   { id: "r-conditions-03", fiche: "conditions-difficiles", famille: "R", categorie: "Conditions difficiles",
-    question: "Quel panneau signale une zone où les chaînes à neige sont obligatoires ?",
-    bonne: "Le panneau B26", fausses: ["Le panneau B14", "Le panneau AB6", "Le panneau M9"],
-    explication: "Le panneau B26 impose l'équipement de chaînes à neige dans la zone signalée." },
+    question: "Un panneau impose les chaînes à neige dans une zone enneigée. Que devez-vous faire ?",
+    bonne: "Équiper mon véhicule de chaînes à neige", fausses: ["Simplement ralentir", "Allumer les feux de brouillard", "Dégonfler légèrement les pneus"],
+    explication: "Sur neige, l'adhérence est réduite : conduire en douceur, et chaînes obligatoires dans la zone signalée." },
 
   { id: "r-autoroute-01", fiche: "autoroute", famille: "R", categorie: "Autoroute",
     question: "À quoi est réservée la bande d'arrêt d'urgence sur autoroute ?",
@@ -216,6 +216,42 @@ const BANQUE = [
 ];
 
 
+
+/* ============ BANQUE PERSONNELLE (privée) ============
+   Questions importées par l'utilisateur via import.html.
+   Stockées UNIQUEMENT dans le localStorage du navigateur
+   (clé vroum-banque-perso) : rien n'est publié avec le site.
+   Format accepté : le même que BANQUE (fiche / famille / categorie /
+   explication facultatifs ; 1 à 3 fausses réponses). */
+
+const CLE_PERSO = 'vroum-banque-perso';
+
+function normaliserQuestion(o, i) {
+  if (!o || typeof o.question !== 'string' || typeof o.bonne !== 'string') return null;
+  if (!Array.isArray(o.fausses)) return null;
+  const fausses = o.fausses.filter(f => typeof f === 'string' && f.trim() && f !== o.bonne).slice(0, 3);
+  if (!o.question.trim() || !o.bonne.trim() || fausses.length < 1) return null;
+  return {
+    id: o.id || ('perso-' + (i + 1)),
+    fiche: o.fiche || null,
+    famille: o.famille || 'X',
+    categorie: o.categorie || 'Perso',
+    question: o.question.trim(),
+    bonne: o.bonne.trim(),
+    fausses: fausses.map(f => f.trim()),
+    explication: o.explication || ''
+  };
+}
+
+function chargerPerso() {
+  try {
+    const arr = JSON.parse(localStorage.getItem(CLE_PERSO) || '[]');
+    return Array.isArray(arr) ? arr.map(normaliserQuestion).filter(Boolean) : [];
+  } catch (e) { return []; }
+}
+
+function toutesLesQuestions() { return BANQUE.concat(chargerPerso()); }
+
 /* ============ ADAPTATEUR ============
    Transforme une entrée de BANQUE en question utilisable par app.js
    (même format que buildQuestion + champs fiche / id). */
@@ -259,7 +295,7 @@ const _generateOneQuestionTemplates = generateOneQuestion;
 
 function _tirerBanqueEquilibree(n, seen) {
   const parFamille = new Map();
-  shuffle(BANQUE).forEach(b => {
+  shuffle(toutesLesQuestions()).forEach(b => {
     if (seen.has(b.question)) return;
     if (!parFamille.has(b.famille)) parFamille.set(b.famille, []);
     parFamille.get(b.famille).push(b);
@@ -293,7 +329,7 @@ generateQuestionSet = function (n, seenQuestions) {
 generateOneQuestion = function (excludeCategory, seenQuestions) {
   seenQuestions = seenQuestions || new Set();
   if (Math.random() < 0.5) {
-    const dispo = BANQUE.filter(b => !seenQuestions.has(b.question) && b.categorie !== excludeCategory);
+    const dispo = toutesLesQuestions().filter(b => !seenQuestions.has(b.question) && b.categorie !== excludeCategory);
     if (dispo.length) {
       const b = pick(dispo);
       seenQuestions.add(b.question);
