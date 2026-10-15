@@ -416,6 +416,13 @@
 
   /* ============ 12. QCM : RÉPONSE (rapide / infini) ============ */
 
+  /* Lien "Revoir la fiche" (questions de la banque liées à une fiche) */
+  function ficheLink(q) {
+    return (q && q.fiche)
+      ? ` <a class="revoir-fiche" href="fiches.html#${q.fiche}">Revoir la fiche \u2192</a>`
+      : '';
+  }
+
   function selectOption(btn, selectedOpt, correctOpt, explanation) {
     const buttons = document.querySelectorAll('#options .option');
     const feedback = document.getElementById('feedback');
@@ -448,7 +455,7 @@
     } else {
       feedback.className = 'feedback show error';
       stamp.textContent = 'Erreur';
-      text.innerHTML = `<strong>Rat\u00e9.</strong>${explanation}`;
+      text.innerHTML = `<strong>Rat\u00e9.</strong>${explanation}${ficheLink(currentQuestions[currentIndex])}`;
     }
 
     const isLast = (currentIndex === currentQuestions.length - 1);
@@ -698,7 +705,7 @@
           </div>
         ` : ''}
       </div>
-      ${r.q.explanation ? `<div class="exam-detail-exp">${r.q.explanation}</div>` : ''}
+      ${r.q.explanation ? `<div class="exam-detail-exp">${r.q.explanation}${!isCorrect ? ficheLink(r.q) : ''}</div>` : ''}
     `;
   }
 
