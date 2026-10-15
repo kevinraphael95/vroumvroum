@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#2563eb">
+<title>Examen blanc - VroumVroum</title>
+<meta name="description" content="Examen blanc du Code de la route avec images : 40 questions chronométrées, correction à la fin.">
+<meta property="og:title" content="Examen blanc - VroumVroum">
+<meta property="og:description" content="Un vrai test avec images, chronométré, corrigé à la fin.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script>try{if(localStorage.getItem("vroum-theme")==="dark")document.documentElement.classList.add("dark")}catch(e){}</script>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="logo"><div class="logo-mark">V</div>VroumVroum</a>
+    <div class="nav-right">
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="fiches.html">Fiches</a></li>
+        <li><a href="qcm.html">QCM</a></li>
+        <li><a href="examen.html" class="active">Examen</a></li>
+      </ul>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Changer de thème">🌙</button>
+      <button class="nav-burger" id="nav-burger" onclick="toggleMenu()"
+              aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-links">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== ACCUEIL DE L'EXAMEN ===== -->
+<div id="ex-intro" class="mode-select">
+  <h1>Examen blanc</h1>
+  <p>Un test avec images, dans les conditions de l'examen.</p>
+
+  <ul class="ex-rules" id="ex-rules"></ul>
+  <p class="ex-best" id="ex-best"></p>
+  <p class="ex-warn" id="ex-warn" hidden></p>
+
+  <button type="button" class="btn btn-primary" id="ex-start">Commencer l'examen →</button>
+  <p class="kbd-hint">
+    Clavier : <kbd>1</kbd> à <kbd>4</kbd> pour cocher une réponse, <kbd>Entrée</kbd> pour valider.
+  </p>
+</div>
+
+<!-- ===== QUESTION ===== -->
+<div id="ex-quiz" class="container" hidden>
+  <div class="qcm-wrap">
+    <main class="qcm-main">
+      <div class="qcm-topbar">
+        <div class="qcm-topbar-left">
+          <span class="qcm-cat">Examen blanc</span>
+        </div>
+        <div class="qcm-meta">
+          <span class="qcm-chip ex-timer" id="ex-timer" aria-live="off">⏱ <span id="ex-timer-display">30:00</span></span>
+          <span class="qcm-counter">Question <strong id="ex-num">01</strong><span id="ex-total"></span></span>
+        </div>
+      </div>
+
+      <div class="qcm-progress"><div class="qcm-progress-fill" id="ex-progress"></div></div>
+
+      <div class="qcm-body">
+        <figure class="ex-figure" id="ex-figure" hidden></figure>
+        <h2 class="qcm-question" id="ex-question"></h2>
+        <p class="qcm-hint">Coche <strong>toutes les bonnes réponses</strong> (une ou plusieurs). Pas de retour en arrière.</p>
+
+        <div class="options" id="ex-options"></div>
+
+        <div class="qcm-actions">
+          <div></div>
+          <div class="qcm-buttons">
+            <button type="button" class="qcm-skip" id="ex-quit">Quitter</button>
+            <button type="button" class="btn btn-primary" id="ex-next">Question suivante →</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ===== RÉSULTAT ===== -->
+<div id="ex-result" class="container" hidden>
+  <div class="ex-result-card">
+    <h2 id="ex-score">Score</h2>
+    <p class="ex-verdict" id="ex-verdict"></p>
+    <p class="ex-best" id="ex-result-best"></p>
+
+    <h3>Correction</h3>
+    <p class="ex-help">Clique sur un numéro pour voir le détail.</p>
+    <div class="ex-grid" id="ex-grid"></div>
+    <div class="ex-detail" id="ex-detail"></div>
+
+    <div class="result-actions">
+      <button type="button" class="btn btn-primary" id="ex-replay">Refaire un examen →</button>
+      <a class="btn btn-outline" href="fiches.html">Revoir les fiches</a>
+    </div>
+  </div>
+</div>
+
+<footer>© 2026 VroumVroum — Fiches de révision du Code de la route</footer>
+
+<script src="app.js"></script>
+<script src="examen-data.js"></script>
+<script src="examen.js"></script>
+</body>
+</html>
