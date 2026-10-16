@@ -378,7 +378,7 @@
       const isCorrect = userAns === q.answer;
       if (isCorrect) correct++;
 
-      const fam = VV.CAT_TO_FAM[q.category] || 'L';
+      const fam = (q.famille && VV.FAM_NAMES[q.famille]) ? q.famille : (VV.CAT_TO_FAM[q.category] || 'L');
       results.push({ q, userAns, isCorrect, fam });
 
       if (!themeStats[fam]) themeStats[fam] = { correct: 0, total: 0 };
