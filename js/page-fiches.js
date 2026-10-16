@@ -1,10 +1,7 @@
 /* =========================================================
-   RENDU DES FICHES - depuis fiches-data.js
-   - Liste : groupée par famille, cartes avec statut (terminée / à lire)
-   - Détail : #<id-fiche> ouvre la fiche (tableau ou liste + astuce)
-   - Navigation précédente / suivante, bouton "terminée"
-   - #groupe-<lettre> fait défiler jusqu'à la famille
-   Dépend de : fiches-data.js (FICHES) et app.js (window.VV)
+   page-fiches.js — Liste + détail des fiches (fiches.html)
+   DOIT ÊTRE CHARGÉ APRÈS : core.js, data-fiches.js
+   Utilise : FICHES (data-fiches.js), window.VV (core.js)
    ========================================================= */
 
 (function renderFiches() {
@@ -37,7 +34,6 @@
      ======================================================= */
 
   function renderListe() {
-    // Grouper par famille (ordre des données)
     const familles = new Map();
     FICHES.forEach(f => {
       if (!familles.has(f.badge)) familles.set(f.badge, { nom: f.groupe, fiches: [] });
@@ -71,7 +67,6 @@
       groupesBox.appendChild(groupe);
     });
 
-    // Progression globale
     const total = FICHES.length;
     const done = VV.countLues(FICHES);
     document.getElementById('fiches-progress-label').textContent = `${done} / ${total} fiches`;
@@ -140,7 +135,6 @@
       </article>
     `;
 
-    // Bouton "terminée"
     const toggle = document.getElementById('fiche-toggle');
     function paintToggle() {
       const done = VV.isLue(f.id);
@@ -176,7 +170,6 @@
     listeBox.style.display = '';
     document.title = TITRE_PAGE;
 
-    // #groupe-X : on défile jusqu'à la famille
     if (hash.startsWith('groupe-')) {
       const cible = document.getElementById(hash);
       if (cible) {

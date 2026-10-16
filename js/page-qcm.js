@@ -1,107 +1,15 @@
 /* =========================================================
-   VroumVroum - App
+   page-qcm.js — QCM (qcm.html)
+   DOIT ÊTRE CHARGÉ APRÈS : core.js, data-fiches.js, quiz.js
+   Utilise : VV (core.js), generateQuestionSet/generateOneQuestion (quiz.js)
    ========================================================= */
 
 (function () {
   'use strict';
 
-  /* ============ 1. STOCKAGE ============ */
+  const VV = window.VV;
 
-  const storage = {
-    get(key, fallback = null) {
-      try { return localStorage.getItem(key) ?? fallback; }
-      catch (e) { return fallback; }
-    },
-    set(key, value) {
-      try { localStorage.setItem(key, value); } catch (e) {}
-    },
-    del(key) {
-      try { localStorage.removeItem(key); } catch (e) {}
-    }
-  };
-
-
-  /* ============ 2. THÈME ============ */
-
-  function applyTheme(isDark) {
-    document.documentElement.classList.toggle('dark', isDark);
-    document.querySelectorAll('.theme-toggle').forEach(btn => {
-      btn.textContent = isDark ? '\u2600\uFE0F' : '\uD83C\uDF19';
-      btn.setAttribute('aria-label', isDark ? 'Passer en thème clair' : 'Passer en thème sombre');
-    });
-  }
-
-  function toggleTheme() {
-    const isDark = !document.documentElement.classList.contains('dark');
-    applyTheme(isDark);
-    storage.set('vroum-theme', isDark ? 'dark' : 'light');
-  }
-
-  applyTheme(storage.get('vroum-theme') === 'dark');
-
-
-  /* ============ 3. PROGRESSION DES FICHES ============ */
-
-  const LUES_KEY = 'vroum-fiches-lues';
-
-  function getLues() {
-    try {
-      const arr = JSON.parse(storage.get(LUES_KEY, '[]'));
-      return new Set(Array.isArray(arr) ? arr : []);
-    } catch (e) {
-      return new Set();
-    }
-  }
-
-  function saveLues(set) {
-    storage.set(LUES_KEY, JSON.stringify([...set]));
-  }
-
-  function isLue(id) {
-    return getLues().has(id);
-  }
-
-  function toggleLue(id) {
-    const set = getLues();
-    const nowDone = !set.has(id);
-    if (nowDone) set.add(id); else set.delete(id);
-    saveLues(set);
-    return nowDone;
-  }
-
-  function countLues(fiches) {
-    const set = getLues();
-    return fiches.filter(f => set.has(f.id)).length;
-  }
-
-
-  /* ============ 4. RECORDS PAR MODE ============ */
-
-  const RECORD_KEYS = {
-    infini: 'vroum-best-infini',
-    rapide: 'vroum-best-rapide',
-    examen: 'vroum-best-examen'
-  };
-
-  (function migrerAncienRecord() {
-    const old = storage.get('vroum-best-streak');
-    if (old !== null && storage.get(RECORD_KEYS.infini) === null) {
-      storage.set(RECORD_KEYS.infini, old);
-    }
-  })();
-
-  function getBest(m) {
-    return parseInt(storage.get(RECORD_KEYS[m], '0'), 10) || 0;
-  }
-
-  function saveBest(m, value) {
-    if (value > getBest(m)) storage.set(RECORD_KEYS[m], String(value));
-  }
-
-  window.VV = { isLue, toggleLue, countLues, getLues, getBest };
-
-
-  /* ============ 5. CONSTANTES QCM ============ */
+  /* ============ 1. CONSTANTES ============ */
 
   const RAPIDE_COUNT = 5;
   const EXAM_COUNT = 40;
@@ -114,118 +22,8 @@
     infini: 'Mode infini'
   };
 
-  const CAT_TO_FAM = {
-    "Signalisation": "L", "Signalisation temporaire": "L", "Marquage au sol": "L",
-    "Priorités": "L", "Circuler": "L", "Vitesses": "L",
-    "Conséquences vitesse": "L", "Dépassement": "L", "Stationnement": "L",
-    "Conducteur": "C", "Communication": "C", "Alcool & stupéfiants": "C",
-    "Conduite difficile": "R", "Autoroute": "R", "Zones dangereuses": "R",
-    "Autres usagers": "U",
-    "Documents": "D", "Assurance": "D", "Chargement": "D",
-    "Permis à points": "D", "Infractions": "D",
-    "Premiers secours": "A",
-    "Prendre & quitter": "P",
-    "Mécanique": "M", "Voyants": "M", "Éclairage": "M", "Équipements": "M",
-    "Sécurité passager": "S", "Sécurité": "S",
-    "Écomobilité": "E", "Choisir son véhicule": "E", "Écoconduite": "E"
-  };
 
-  const FAM_NAMES = {
-    L: "La circulation routière",
-    C: "Le conducteur",
-    R: "La route",
-    U: "Les autres usagers",
-    D: "Les notions diverses",
-    A: "Les premiers secours",
-    P: "Prendre et quitter son véhicule",
-    M: "La mécanique et les équipements",
-    S: "La sécurité du passager et du véhicule",
-    E: "L'environnement"
-  };
-
-
-  /* ============ 6. ACCUEIL ============ */
-
-  const FAMILLE_ICONES = {
-    L: '\uD83D\uDEA6', C: '\uD83E\uDDE0', R: '\uD83D\uDEE3\uFE0F', U: '\uD83D\uDEB8',
-    D: '\uD83D\uDCC4', A: '\uD83D\uDE91', P: '\uD83D\uDEAA', M: '\uD83D\uDD27',
-    S: '\uD83E\uDDBA', E: '\uD83C\uDF31'
-  };
-
-  function renderDashboard() {
-    const grid = document.getElementById('modules-grid');
-    if (!grid || typeof FICHES === 'undefined') return;
-
-    const total = FICHES.length;
-    const done = countLues(FICHES);
-    const pct = total ? Math.round((done / total) * 100) : 0;
-
-    const CIRC = 339.292;
-    const ring = document.getElementById('ring-fg');
-    if (ring) {
-      ring.style.strokeDasharray = String(CIRC);
-      requestAnimationFrame(() => {
-        ring.style.strokeDashoffset = String(CIRC * (1 - pct / 100));
-      });
-    }
-    setText('dash-pct', pct + '%');
-
-    const msg = document.getElementById('dash-msg');
-    if (msg) {
-      if (done === 0) {
-        msg.textContent = 'Tu n\u2019as pas encore commenc\u00e9. Ouvre ta premi\u00e8re fiche !';
-      } else if (done === total) {
-        msg.textContent = 'Toutes les fiches sont termin\u00e9es. Passe \u00e0 l\u2019examen blanc !';
-      } else {
-        msg.textContent = `Tu es \u00e0 ${pct} % de progression. Continue comme \u00e7a !`;
-      }
-    }
-
-    setText('stat-fiches', `${done} / ${total}`);
-    const rInf = getBest('infini'), rExa = getBest('examen'), rRap = getBest('rapide');
-    setText('stat-infini', rInf);
-    setText('stat-examen', rExa ? `${rExa} / ${EXAM_COUNT}` : '\u2014');
-    setText('stat-rapide', rRap ? `${rRap} / ${RAPIDE_COUNT}` : '\u2014');
-
-    // Examen avec images (examen.html) : record stocké par examen.js
-    try {
-      const b = JSON.parse(storage.get('vroum-examen-best', 'null'));
-      if (b && typeof b.score === 'number' && b.total > 0) {
-        setText('stat-examen-img', `${b.score} / ${b.total}`);
-      }
-    } catch (e) {}
-
-    const familles = new Map();
-    FICHES.forEach(f => {
-      if (!familles.has(f.badge)) familles.set(f.badge, { nom: f.groupe, fiches: [] });
-      familles.get(f.badge).fiches.push(f);
-    });
-
-    grid.innerHTML = '';
-    familles.forEach((fam, badge) => {
-      const n = fam.fiches.length;
-      const d = countLues(fam.fiches);
-      const p = Math.round((d / n) * 100);
-      const a = document.createElement('a');
-      a.className = `module-card fam-${badge}`;
-      a.href = `fiches.html#groupe-${badge}`;
-      a.innerHTML = `
-        <div class="module-head">
-          <div class="module-icon">${FAMILLE_ICONES[badge] || '\uD83D\uDCDA'}</div>
-          <div>
-            <div class="module-title">${fam.nom}</div>
-            <div class="module-meta">${n} fiche${n > 1 ? 's' : ''}</div>
-          </div>
-        </div>
-        <div class="module-progress"><div class="module-progress-fill" style="width:${p}%"></div></div>
-        <div class="module-footer"><span>${d} / ${n} termin\u00e9e${d > 1 ? 's' : ''}</span><span class="pct">${p}%</span></div>
-      `;
-      grid.appendChild(a);
-    });
-  }
-
-
-  /* ============ 7. QCM : ÉTAT ============ */
+  /* ============ 2. ÉTAT ============ */
 
   let mode = null;
   let currentQuestions = [];
@@ -246,7 +44,7 @@
   let resultBox = null;
 
 
-  /* ============ 8. QCM : UTILITAIRES ============ */
+  /* ============ 3. UTILITAIRES ============ */
 
   function setText(id, value) {
     const el = document.getElementById(id);
@@ -272,7 +70,7 @@
   }
 
 
-  /* ============ 9. QCM : TIMER ============ */
+  /* ============ 4. TIMER ============ */
 
   function formatTime(sec) {
     const m = Math.floor(Math.max(0, sec) / 60);
@@ -302,13 +100,12 @@
   }
 
 
-  /* ============ 10. QCM : LANCEMENT ============ */
+  /* ============ 5. LANCEMENT ============ */
 
   function startMode(chosenMode) {
     if (typeof generateQuestionSet !== 'function') return;
     if (!['rapide', 'examen', 'infini'].includes(chosenMode)) return;
 
-    // Confirmation si un quiz est en cours (boutons de mode dans le quiz)
     const enCours = quizBox && quizBox.style.display !== 'none' &&
       (currentIndex > 0 || streak > 0 || examAnswers.some(a => a != null));
     if (enCours && !confirm('Changer de mode ? Ta progression en cours sera perdue.')) return;
@@ -322,7 +119,7 @@
     seenQuestions = new Set();
     examAnswers = [];
     examResultsCache = [];
-    infiniBestAtStart = getBest('infini');
+    infiniBestAtStart = VV.getBest('infini');
     stopExamTimer();
 
     if (mode === 'rapide') {
@@ -343,7 +140,6 @@
     const timerChip = document.getElementById('timer-chip');
     if (timerChip) timerChip.style.display = (mode === 'examen') ? '' : 'none';
 
-    // En examen, pas de correction : on masque la série et le score
     document.querySelectorAll('.qcm-chip.streak, .qcm-chip.score').forEach(el => {
       el.style.display = (mode === 'examen') ? 'none' : '';
     });
@@ -353,7 +149,7 @@
   }
 
 
-  /* ============ 11. QCM : CHARGEMENT D'UNE QUESTION ============ */
+  /* ============ 6. CHARGEMENT D'UNE QUESTION ============ */
 
   function loadQuestion() {
     const q = currentQuestions[currentIndex];
@@ -422,9 +218,8 @@
   }
 
 
-  /* ============ 12. QCM : RÉPONSE (rapide / infini) ============ */
+  /* ============ 7. RÉPONSE (rapide / infini) ============ */
 
-  /* Lien "Revoir la fiche" (questions de la banque liées à une fiche) */
   function ficheLink(q) {
     return (q && q.fiche)
       ? ` <a class="revoir-fiche" href="fiches.html#${q.fiche}">Revoir la fiche \u2192</a>`
@@ -456,7 +251,7 @@
     if (isCorrect) {
       score++;
       streak++;
-      if (mode === 'infini') saveBest('infini', streak);
+      if (mode === 'infini') VV.saveBest('infini', streak);
       feedback.className = 'feedback show success';
       stamp.textContent = 'Correct';
       text.innerHTML = `<strong>Bien jou\u00e9.</strong>${explanation}`;
@@ -482,7 +277,7 @@
   }
 
 
-  /* ============ 13. QCM : RÉPONSE (examen) ============ */
+  /* ============ 8. RÉPONSE (examen) ============ */
 
   function selectExamOption(btn, selectedOpt) {
     document.querySelectorAll('#options .option').forEach(b => b.classList.remove('selected'));
@@ -492,7 +287,7 @@
   }
 
 
-  /* ============ 14. QCM : QUESTION SUIVANTE ============ */
+  /* ============ 9. QUESTION SUIVANTE ============ */
 
   function nextQuestion() {
     if (mode === 'examen') {
@@ -516,7 +311,7 @@
   }
 
 
-  /* ============ 15. QCM : RÉSULTATS ============ */
+  /* ============ 10. RÉSULTATS ============ */
 
   function showResults() {
     stopExamTimer();
@@ -530,15 +325,13 @@
   }
 
 
-  /* ---- Résultat simple (rapide / infini) ---- */
-
   function showSimpleResults() {
     let title, detail;
 
     if (mode === 'rapide') {
       const total = currentQuestions.length;
-      const prev = getBest('rapide');
-      saveBest('rapide', score);
+      const prev = VV.getBest('rapide');
+      VV.saveBest('rapide', score);
       title = `Score final : ${score} / ${total}`;
       const ratio = score / total;
       let msg =
@@ -549,7 +342,7 @@
       else if (prev > 0) msg += ` Ton meilleur : ${prev} / ${total}.`;
       detail = msg;
     } else {
-      const best = getBest('infini');
+      const best = VV.getBest('infini');
       title = `S\u00e9rie termin\u00e9e \u00e0 ${streak} bonne${streak > 1 ? 's' : ''} r\u00e9ponse${streak > 1 ? 's' : ''}`;
       let msg =
         streak >= 10 ? 'Solide, tu ma\u00eetrises bien le programme.' :
@@ -575,8 +368,6 @@
   }
 
 
-  /* ---- Résultat examen (style Codes Rousseau) ---- */
-
   function showExamResults() {
     let correct = 0;
     const results = [];
@@ -587,7 +378,7 @@
       const isCorrect = userAns === q.answer;
       if (isCorrect) correct++;
 
-      const fam = CAT_TO_FAM[q.category] || 'L';
+      const fam = VV.CAT_TO_FAM[q.category] || 'L';
       results.push({ q, userAns, isCorrect, fam });
 
       if (!themeStats[fam]) themeStats[fam] = { correct: 0, total: 0 };
@@ -598,8 +389,8 @@
     examResultsCache = results;
 
     const total = currentQuestions.length;
-    const prev = getBest('examen');
-    saveBest('examen', correct);
+    const prev = VV.getBest('examen');
+    VV.saveBest('examen', correct);
     const reussi = correct >= EXAM_PASSING_SCORE;
     const manque = EXAM_PASSING_SCORE - correct;
 
@@ -612,14 +403,12 @@
     if (correct > prev && correct > 0) message += ' Nouveau meilleur score !';
     else if (prev > 0) message += ` Ton meilleur : ${prev} / ${total}.`;
 
-    // Grille des numéros cliquables
     const gridHTML = results.map((r, i) => {
       const num = String(i + 1).padStart(2, '0');
       const cls = r.userAns == null ? 'unanswered' : (r.isCorrect ? 'correct' : 'wrong');
       return `<span class="exam-num ${cls}" data-index="${i}">${num}</span>`;
     }).join('');
 
-    // Thèmes (dans l'ordre officiel L, C, R, U, D, A, P, M, S, E)
     const ORDRE = ['L', 'C', 'R', 'U', 'D', 'A', 'P', 'M', 'S', 'E'];
     const themesHTML = ORDRE
       .filter(fam => themeStats[fam])
@@ -628,7 +417,7 @@
         return `
           <div class="exam-theme fam-${fam}">
             <span class="exam-theme-badge">${fam}</span>
-            <span class="exam-theme-name">${FAM_NAMES[fam]}</span>
+            <span class="exam-theme-name">${VV.FAM_NAMES[fam]}</span>
             <span class="exam-theme-score">${s.correct}/${s.total}</span>
           </div>
         `;
@@ -671,13 +460,10 @@
       </div>
     `;
 
-    // Affiche par défaut la première question ratée (ou la 1ʳᵉ si tout est bon)
     const firstWrong = results.findIndex(r => !r.isCorrect);
     renderExamDetail(firstWrong >= 0 ? firstWrong : 0);
   }
 
-
-  /* ---- Détail d'une question (affiché au centre) ---- */
 
   function renderExamDetail(index) {
     const detail = document.getElementById('exam-detail');
@@ -688,7 +474,6 @@
     const isCorrect = r.isCorrect;
     const userAns = r.userAns;
 
-    // Surligne le numéro sélectionné dans la grille
     document.querySelectorAll('.exam-num').forEach((el, i) => {
       el.classList.toggle('selected', i === index);
     });
@@ -718,7 +503,7 @@
   }
 
 
-  /* ============ 16. QCM : NAVIGATION ============ */
+  /* ============ 11. NAVIGATION ============ */
 
   function replay() {
     if (mode) startMode(mode);
@@ -730,7 +515,7 @@
   }
 
 
-  /* ============ 17. QCM : CLAVIER ============ */
+  /* ============ 12. CLAVIER ============ */
 
   document.addEventListener('keydown', (e) => {
     if (!quizBox && !resultBox) return;
@@ -763,7 +548,7 @@
   });
 
 
-  /* ============ 18. CLIC SUR UN NUMÉRO DE LA GRILLE ============ */
+  /* ============ 13. CLIC SUR UN NUMÉRO DE LA GRILLE ============ */
 
   document.addEventListener('click', (e) => {
     const num = e.target.closest('.exam-num');
@@ -773,66 +558,21 @@
   });
 
 
-  /* ============ 19. INITIALISATION ============ */
+  /* ============ 14. EXPORTS GLOBAUX ============ */
 
-  window.toggleTheme = toggleTheme;
   window.startMode = startMode;
   window.nextQuestion = nextQuestion;
   window.replay = replay;
   window.backToModeSelect = backToModeSelect;
 
 
-  /* ============ 20. MENU BURGER ============ */
-
-  function toggleMenu() {
-    const burger = document.getElementById('nav-burger');
-    const links = document.getElementById('nav-links');
-    if (!burger || !links) return;
-
-    const isOpen = links.classList.toggle('open');
-    burger.classList.toggle('open', isOpen);
-    burger.setAttribute('aria-expanded', String(isOpen));
-    burger.setAttribute('aria-label', isOpen ? 'Fermer le menu' : 'Ouvrir le menu');
-  }
-
-  function closeMenu() {
-    const burger = document.getElementById('nav-burger');
-    const links = document.getElementById('nav-links');
-    if (!burger || !links) return;
-
-    links.classList.remove('open');
-    burger.classList.remove('open');
-    burger.setAttribute('aria-expanded', 'false');
-    burger.setAttribute('aria-label', 'Ouvrir le menu');
-  }
-
-  // Fermer au clic sur un lien
-  document.addEventListener('click', (e) => {
-    if (e.target.closest('#nav-links a')) closeMenu();
-  });
-
-  // Fermer au clic en dehors de la navbar
-  document.addEventListener('click', (e) => {
-    const nav = document.querySelector('.nav-inner');
-    if (nav && !nav.contains(e.target)) closeMenu();
-  });
-
-  // Fermer avec Échap
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeMenu();
-  });
-
-  window.toggleMenu = toggleMenu;
-
-
-  /* ============ 21. DOM READY ============ */
+  /* ============ 15. INITIALISATION ============ */
 
   document.addEventListener('DOMContentLoaded', () => {
     modeSelectBox = document.getElementById('mode-select');
     quizBox       = document.getElementById('quiz');
     resultBox     = document.getElementById('result');
     if (modeSelectBox) showOnly(modeSelectBox);
-    renderDashboard();
   });
 
 })();

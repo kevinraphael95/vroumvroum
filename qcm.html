@@ -12,7 +12,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/pages.css">
 <script>try{if(localStorage.getItem("vroum-theme")==="dark")document.documentElement.classList.add("dark")}catch(e){}</script>
 </head>
 <body>
@@ -126,14 +127,14 @@
 </div>
 
 <!-- ===== RÉSULTAT ===== -->
-<!-- Le contenu est généré dynamiquement par app.js (showSimpleResults / showExamResults) -->
+<!-- Le contenu est généré dynamiquement par page-qcm.js (showSimpleResults / showExamResults) -->
 <div id="result" class="result" style="display:none;"></div>
 
 <footer>© 2026 VroumVroum — Fiches de révision du Code de la route</footer>
 
-<script src="fiches-data.js"></script>
-<script src="questions-data.js"></script>
-<script src="banque-data.js"></script>
-<script src="app.js"></script>
+<script src="js/core.js"></script>
+<script src="js/data-fiches.js"></script>
+<script src="js/quiz.js"></script>
+<script src="js/page-qcm.js"></script>
 </body>
 </html>
