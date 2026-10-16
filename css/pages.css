@@ -778,12 +778,12 @@ body.ex-immersive footer { display: none; }
   overflow: hidden;
   background: var(--bg);
   border-top: 1px solid var(--border);
-  padding: 1rem 12rem 3rem 5.5rem;
+  padding: 1rem 4rem 3rem 4rem;
   font-size: clamp(13px, 1.35vw, 19px);
   display: flex;
   flex-direction: column;
 }
-.ex-panel-main { width: 100%; max-width: 760px; flex: 1; min-height: 0; }
+.ex-panel-main { width: 100%; max-width: 760px; flex: 1; min-height: 0; margin: 0 auto; }
 
 .ex-q {
   font-weight: 700;
