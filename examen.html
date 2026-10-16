@@ -39,7 +39,7 @@
 <!-- ===== ACCUEIL DE L'EXAMEN ===== -->
 <div id="ex-intro" class="mode-select">
   <h1>Examen blanc</h1>
-  <p>Un test avec images, dans les conditions de l'examen.</p>
+  <p>Un test avec images, présenté comme l'examen réel.</p>
 
   <ul class="ex-rules" id="ex-rules"></ul>
   <p class="ex-best" id="ex-best"></p>
@@ -47,42 +47,36 @@
 
   <button type="button" class="btn btn-primary" id="ex-start">Commencer l'examen →</button>
   <p class="kbd-hint">
-    Clavier : <kbd>1</kbd> à <kbd>4</kbd> pour cocher une réponse, <kbd>Entrée</kbd> pour valider.
+    Clavier : <kbd>A</kbd> <kbd>B</kbd> <kbd>C</kbd> <kbd>D</kbd> pour répondre, <kbd>Entrée</kbd> pour valider.
   </p>
 </div>
 
-<!-- ===== QUESTION ===== -->
-<div id="ex-quiz" class="container" hidden>
-  <div class="qcm-wrap">
-    <main class="qcm-main">
-      <div class="qcm-topbar">
-        <div class="qcm-topbar-left">
-          <span class="qcm-cat">Examen blanc</span>
-        </div>
-        <div class="qcm-meta">
-          <span class="qcm-chip ex-timer" id="ex-timer" aria-live="off">⏱ <span id="ex-timer-display">30:00</span></span>
-          <span class="qcm-counter">Question <strong id="ex-num">01</strong><span id="ex-total"></span></span>
-        </div>
+<!-- ===== QUESTION (plein écran, style examen) ===== -->
+<div id="ex-quiz" class="ex-screen" hidden>
+  <div class="ex-media" id="ex-figure"></div>
+  <div class="ex-panel">
+    <div class="ex-panel-main">
+      <p class="ex-q" id="ex-question"></p>
+      <div class="ex-answers" id="ex-answers"></div>
+    </div>
+    <div class="ex-side">
+      <span class="ex-mode" id="ex-mode"></span>
+      <div class="ex-ring" id="ex-ring">
+        <svg viewBox="0 0 80 80" aria-hidden="true">
+          <rect x="33" y="2" width="14" height="6" rx="1.5" class="ex-ring-cap"></rect>
+          <circle cx="40" cy="44" r="30" class="ex-ring-bg"></circle>
+          <circle id="ex-ring-fg" cx="40" cy="44" r="30" class="ex-ring-fg" transform="rotate(-90 40 44)"></circle>
+        </svg>
+        <span class="ex-secs" id="ex-secs" aria-label="Temps restant"></span>
       </div>
-
-      <div class="qcm-progress"><div class="qcm-progress-fill" id="ex-progress"></div></div>
-
-      <div class="qcm-body">
-        <figure class="ex-figure" id="ex-figure" hidden></figure>
-        <h2 class="qcm-question" id="ex-question"></h2>
-        <p class="qcm-hint">Coche <strong>toutes les bonnes réponses</strong> (une ou plusieurs). Pas de retour en arrière.</p>
-
-        <div class="options" id="ex-options"></div>
-
-        <div class="qcm-actions">
-          <div></div>
-          <div class="qcm-buttons">
-            <button type="button" class="qcm-skip" id="ex-quit">Quitter</button>
-            <button type="button" class="btn btn-primary" id="ex-next">Question suivante →</button>
-          </div>
-        </div>
-      </div>
-    </main>
+    </div>
+    <div class="ex-bar">
+      <span class="ex-count">Question <strong id="ex-num">01</strong><span id="ex-total"></span></span>
+      <span class="ex-bar-btns">
+        <button type="button" class="ex-link" id="ex-quit">Quitter</button>
+        <button type="button" class="ex-link ex-link-main" id="ex-next">Valider</button>
+      </span>
+    </div>
   </div>
 </div>
 

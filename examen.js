@@ -1,10 +1,10 @@
 /* =========================================================
    EXAMEN BLANC (examen.html)
-   - Tire les questions de EXAMEN_QUESTIONS (examen-data.js)
-   - Chrono global, pas de retour en arrière
-   - Une question est juste si TOUTES les bonnes réponses sont cochées
-     et AUCUNE mauvaise
-   - Correction détaillée à la fin (clic sur un numéro)
+   - Questions de EXAMEN_QUESTIONS (examen-data.js), 2 types :
+       "choix" (A B C D, une ou plusieurs bonnes réponses)
+       "oui-non" (1 ou 2 affirmations ; OUI = A/C, NON = B/D)
+   - Minuteur rond PAR QUESTION, passage automatique à la suivante
+   - Pas de retour en arrière ; correction détaillée à la fin
    - Meilleur score : localStorage "vroum-examen-best"
    Dépend de : app.js (thème, menu) et examen-data.js
    ========================================================= */
@@ -14,6 +14,9 @@
 
   const $ = id => document.getElementById(id);
   const BEST_KEY = 'vroum-examen-best';
+  const LETTERS = ['A', 'B', 'C', 'D'];
+  const RING_R = 30;
+  const RING_C = 2 * Math.PI * RING_R;
 
   const secIntro  = $('ex-intro');
   const secQuiz   = $('ex-quiz');
@@ -30,9 +33,18 @@
     }
     return a;
   }
-
   function pad(n) { return String(n).padStart(2, '0'); }
-  function fmt(sec) { return pad(Math.floor(sec / 60)) + ':' + pad(sec % 60); }
+  function el(tag, className, text) {
+    const e = document.createElement(tag);
+    if (className) e.className = className;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  function sameSet(a, b) {
+    if (a.size !== b.size) return false;
+    for (const x of a) if (!b.has(x)) return false;
+    return true;
+  }
 
   function getBest() {
     try {
@@ -47,31 +59,37 @@
     return true;
   }
 
-  function showOnly(el) {
-    [secIntro, secQuiz, secResult].forEach(s => { s.hidden = (s !== el); });
+  function showOnly(target) {
+    [secIntro, secQuiz, secResult].forEach(s => { s.hidden = (s !== target); });
+    document.body.classList.toggle('ex-immersive', target === secQuiz);
     window.scrollTo(0, 0);
-  }
-
-  function el(tag, className, text) {
-    const e = document.createElement(tag);
-    if (className) e.className = className;
-    if (text != null) e.textContent = text;
-    return e;
   }
 
   /* ---------- Données ---------- */
 
-  const CFG = Object.assign({ nbQuestions: 40, dureeSec: 1800, seuil: 35 },
+  const CFG = Object.assign({ nbQuestions: 40, dureeQuestionSec: 30, seuil: 35 },
     (typeof EXAMEN_CONFIG !== 'undefined') ? EXAMEN_CONFIG : {});
+
+  function questionValide(q) {
+    if (!q || !q.question) return false;
+    if (q.type === 'oui-non') {
+      const a = q.affirmations;
+      return Array.isArray(a) && a.length >= 1 && a.length <= 2 &&
+             a.every(x => x && x.texte && typeof x.vrai === 'boolean');
+    }
+    const r = q.reponses;
+    return Array.isArray(r) && r.length >= 2 && r.length <= 4 &&
+           r.some(x => x.correcte) && r.every(x => x.texte);
+  }
 
   function bankValid() {
     if (typeof EXAMEN_QUESTIONS === 'undefined' || !Array.isArray(EXAMEN_QUESTIONS)) return [];
     const ids = new Set();
     return EXAMEN_QUESTIONS.filter(q => {
-      const rep = q && q.reponses;
-      const ok = q && q.question && Array.isArray(rep) && rep.length >= 2 &&
-                 rep.some(r => r.correcte) && rep.every(r => r.texte);
-      if (!ok) { console.warn('[VroumVroum] question d\'examen invalide ignorée :', q && q.id); return false; }
+      if (!questionValide(q)) {
+        console.warn('[VroumVroum] question d\'examen invalide ignorée :', q && q.id);
+        return false;
+      }
       if (q.id) {
         if (ids.has(q.id)) console.warn('[VroumVroum] id d\'examen en double :', q.id);
         ids.add(q.id);
@@ -82,18 +100,32 @@
 
   const BANK = bankValid();
   const N = Math.min(CFG.nbQuestions, BANK.length);
-  const SEUIL = (N === CFG.nbQuestions)
-    ? CFG.seuil
-    : Math.ceil(N * CFG.seuil / CFG.nbQuestions);
+  const SEUIL = (N === CFG.nbQuestions) ? CFG.seuil : Math.ceil(N * CFG.seuil / CFG.nbQuestions);
+
+  /* Prépare une question : boutons numérotés 0..3 = lettres A..D.
+     choix   : un bouton par réponse (ordre mélangé)
+     oui-non : affirmation i => boutons 2i (OUI) et 2i+1 (NON) */
+  function buildItem(q) {
+    if (q.type === 'oui-non') {
+      const correct = new Set();
+      q.affirmations.forEach((a, i) => correct.add(2 * i + (a.vrai ? 0 : 1)));
+      return { q, kind: 'ouinon', correct, multi: q.affirmations.length > 1 };
+    }
+    const choix = shuffle(q.reponses);
+    const correct = new Set();
+    choix.forEach((c, i) => { if (c.correcte) correct.add(i); });
+    return { q, kind: 'choix', choix, correct, multi: correct.size > 1 };
+  }
 
   /* ---------- État ---------- */
 
-  let items = [];       // [{ q, choix }]
-  let answers = [];     // [Set d'indices cochés]
+  let items = [];
+  let answers = [];
   let idx = 0;
-  let endAt = 0;
-  let timerId = null;
   let running = false;
+  let qTimer = null;
+  let qEnd = 0;
+  let qDur = 30;
 
   /* ---------- Accueil ---------- */
 
@@ -102,9 +134,9 @@
     rules.innerHTML = '';
     [
       `${N} question${N > 1 ? 's' : ''} avec images`,
-      `${Math.round(CFG.dureeSec / 60)} minutes au total`,
+      `${CFG.dureeQuestionSec} secondes par question, passage automatique`,
       `Réussite à ${SEUIL} / ${N}`,
-      'Une question est juste si tu coches toutes les bonnes réponses et aucune mauvaise',
+      'Une question est juste si toutes les réponses sont justes',
       'Pas de retour en arrière, correction à la fin'
     ].forEach(t => rules.appendChild(el('li', null, t)));
 
@@ -112,10 +144,12 @@
     $('ex-best').textContent = best ? `Ton meilleur score : ${best.score} / ${best.total}` : '';
 
     const warn = $('ex-warn');
+    const start = $('ex-start');
+    start.disabled = false;
     if (BANK.length === 0) {
       warn.hidden = false;
-      warn.textContent = 'Aucune question dans examen-data.js.';
-      $('ex-start').disabled = true;
+      warn.textContent = 'Aucune question valide dans examen-data.js.';
+      start.disabled = true;
     } else if (BANK.length < CFG.nbQuestions) {
       warn.hidden = false;
       warn.textContent = `Base incomplète : ${BANK.length} question${BANK.length > 1 ? 's' : ''} sur ${CFG.nbQuestions} prévues. L'examen est raccourci (seuil ajusté à ${SEUIL} / ${N}).`;
@@ -128,39 +162,45 @@
 
   function start() {
     if (!N) return;
-    items = shuffle(BANK).slice(0, N).map(q => ({ q, choix: shuffle(q.reponses) }));
+    items = shuffle(BANK).slice(0, N).map(buildItem);
     answers = items.map(() => new Set());
     idx = 0;
     running = true;
-    endAt = Date.now() + CFG.dureeSec * 1000;
-    startTimer();
     showOnly(secQuiz);
     renderQuestion();
   }
 
-  /* ---------- Chrono ---------- */
+  /* ---------- Minuteur par question ---------- */
 
-  function tick() {
-    const left = Math.max(0, Math.round((endAt - Date.now()) / 1000));
-    $('ex-timer-display').textContent = fmt(left);
-    $('ex-timer').classList.toggle('warn', left <= 300);
-    if (left === 0) finish(true);
+  function paintTimer() {
+    const left = Math.max(0, (qEnd - Date.now()) / 1000);
+    const frac = qDur > 0 ? left / qDur : 0;
+    $('ex-ring-fg').style.strokeDashoffset = String(RING_C * (1 - frac));
+    $('ex-secs').textContent = String(Math.ceil(left));
+    $('ex-ring').classList.toggle('warn', left <= 5);
+    if (left <= 0) { next(); }
   }
-  function startTimer() {
-    stopTimer();
-    tick();
-    timerId = setInterval(tick, 500);
+  function startQTimer(sec) {
+    stopQTimer();
+    qDur = sec;
+    qEnd = Date.now() + sec * 1000;
+    const fg = $('ex-ring-fg');
+    fg.style.strokeDasharray = String(RING_C);
+    fg.style.strokeDashoffset = '0';
+    qTimer = setInterval(paintTimer, 100);
+    paintTimer();
   }
-  function stopTimer() {
-    if (timerId) { clearInterval(timerId); timerId = null; }
+  function stopQTimer() {
+    if (qTimer) { clearInterval(qTimer); qTimer = null; }
   }
 
-  /* ---------- Question ---------- */
+  /* ---------- Affichage d'une question ---------- */
 
   function buildFigure(container, q) {
     container.innerHTML = '';
     if (!q.image) { container.hidden = true; return; }
     container.hidden = false;
+    container.classList.toggle('contain', /\.svg(\?|$)/i.test(q.image));
     const img = document.createElement('img');
     img.src = q.image;
     img.alt = q.alt || '';
@@ -171,63 +211,95 @@
     container.appendChild(img);
   }
 
-  function renderQuestion() {
-    const { q, choix } = items[idx];
-    $('ex-num').textContent = pad(idx + 1);
-    $('ex-total').textContent = ' / ' + pad(items.length);
-    $('ex-progress').style.width = ((idx / items.length) * 100) + '%';
-    $('ex-question').textContent = q.question;
-    buildFigure($('ex-figure'), q);
-
-    const box = $('ex-options');
-    box.innerHTML = '';
-    choix.forEach((c, i) => {
-      const btn = el('button', 'option');
-      btn.type = 'button';
-      btn.setAttribute('aria-pressed', 'false');
-      btn.appendChild(el('span', 'option-letter', String(i + 1)));
-      btn.appendChild(document.createTextNode(c.texte));
-      btn.addEventListener('click', () => toggle(i, btn));
-      box.appendChild(btn);
-    });
-
-    $('ex-next').textContent = (idx === items.length - 1) ? 'Terminer l\u2019examen' : 'Question suivante \u2192';
+  function answerButton(text, k) {
+    const b = el('button', 'ex-ans');
+    b.type = 'button';
+    b.dataset.k = String(k);
+    b.setAttribute('aria-pressed', 'false');
+    b.appendChild(el('span', 'ex-ans-text', text));
+    b.appendChild(el('span', 'ex-dots'));
+    b.appendChild(el('span', 'ex-key', LETTERS[k]));
+    b.addEventListener('click', () => select(k));
+    return b;
   }
 
-  function toggle(i, btn) {
+  function renderQuestion() {
+    const item = items[idx];
+    const q = item.q;
+
+    $('ex-num').textContent = pad(idx + 1);
+    $('ex-total').textContent = ' / ' + pad(items.length);
+    $('ex-question').textContent = q.question;
+    $('ex-mode').textContent = item.multi ? 'Plusieurs réponses' : 'Une réponse';
+    buildFigure($('ex-figure'), q);
+
+    const box = $('ex-answers');
+    box.innerHTML = '';
+    if (item.kind === 'choix') {
+      item.choix.forEach((c, i) => box.appendChild(answerButton(c.texte, i)));
+    } else {
+      q.affirmations.forEach((a, i) => {
+        box.appendChild(el('p', 'ex-stmt', a.texte));
+        const row = el('div', 'ex-yn');
+        row.appendChild(answerButton('OUI', 2 * i));
+        row.appendChild(answerButton('NON', 2 * i + 1));
+        box.appendChild(row);
+      });
+    }
+
+    $('ex-next').textContent = (idx === items.length - 1) ? 'Terminer' : 'Valider';
+    startQTimer(q.duree || CFG.dureeQuestionSec);
+  }
+
+  function paintSelection() {
     const set = answers[idx];
-    if (set.has(i)) set.delete(i); else set.add(i);
-    const on = set.has(i);
-    btn.classList.toggle('selected', on);
-    btn.setAttribute('aria-pressed', String(on));
+    document.querySelectorAll('#ex-answers .ex-ans').forEach(b => {
+      const on = set.has(parseInt(b.dataset.k, 10));
+      b.classList.toggle('on', on);
+      b.setAttribute('aria-pressed', String(on));
+    });
+  }
+
+  function select(k) {
+    if (!running) return;
+    const item = items[idx];
+    const set = answers[idx];
+    if (item.kind === 'ouinon') {
+      const partner = k ^ 1;                 // OUI <-> NON de la même affirmation
+      if (set.has(k)) set.delete(k);
+      else { set.add(k); set.delete(partner); }
+    } else if (!item.multi) {
+      if (set.has(k)) set.delete(k);
+      else { set.clear(); set.add(k); }      // "Une réponse" : une seule à la fois
+    } else {
+      if (set.has(k)) set.delete(k); else set.add(k);
+    }
+    paintSelection();
   }
 
   function next() {
     if (!running) return;
+    stopQTimer();
     if (idx < items.length - 1) { idx++; renderQuestion(); }
-    else finish(false);
+    else finish();
   }
 
   function quit() {
     if (!confirm('Quitter l\u2019examen ? Ta progression sera perdue.')) return;
     running = false;
-    stopTimer();
+    stopQTimer();
     renderIntro();
     showOnly(secIntro);
   }
 
   /* ---------- Correction ---------- */
 
-  function isCorrect(item, set) {
-    return item.choix.every((c, i) => !!c.correcte === set.has(i));
-  }
-
-  function finish(timeUp) {
+  function finish() {
     if (!running) return;
     running = false;
-    stopTimer();
+    stopQTimer();
 
-    const results = items.map((it, i) => ({ item: it, set: answers[i], ok: isCorrect(it, answers[i]) }));
+    const results = items.map((item, i) => ({ item, set: answers[i], ok: sameSet(item.correct, answers[i]) }));
     const score = results.filter(r => r.ok).length;
     const total = items.length;
     const reussi = score >= SEUIL;
@@ -238,10 +310,9 @@
     $('ex-score').textContent = `Score : ${score} / ${total}`;
     const verdict = $('ex-verdict');
     verdict.className = 'ex-verdict ' + (reussi ? 'pass' : 'fail');
-    verdict.textContent =
-      (timeUp ? 'Temps écoulé. ' : '') +
-      (reussi ? `Réussi : le seuil de ${SEUIL} / ${total} est atteint.`
-              : `Pas encore : il fallait ${SEUIL} / ${total}.`);
+    verdict.textContent = reussi
+      ? `Réussi : le seuil de ${SEUIL} / ${total} est atteint.`
+      : `Pas encore : il fallait ${SEUIL} / ${total}.`;
 
     const best = getBest();
     $('ex-result-best').textContent = improved
@@ -266,7 +337,7 @@
 
   function showDetail(results, i) {
     const r = results[i];
-    const { q, choix } = r.item;
+    const { q } = r.item;
     const box = $('ex-detail');
     box.innerHTML = '';
 
@@ -284,17 +355,30 @@
     }
     box.appendChild(el('p', 'ex-detail-q', q.question));
 
-    choix.forEach((c, k) => {
-      const picked = r.set.has(k);
-      let cls = 'ex-choice', tag = '';
-      if (c.correcte && picked)       { cls += ' good';   tag = 'Bonne r\u00e9ponse, coch\u00e9e'; }
-      else if (c.correcte && !picked) { cls += ' missed'; tag = 'Bonne r\u00e9ponse, oubli\u00e9e'; }
-      else if (!c.correcte && picked) { cls += ' bad';    tag = 'Coch\u00e9e \u00e0 tort'; }
-      const row = el('div', cls);
-      row.appendChild(el('span', null, c.texte));
-      if (tag) row.appendChild(el('span', 'ex-choice-tag', tag));
-      box.appendChild(row);
-    });
+    if (r.item.kind === 'choix') {
+      r.item.choix.forEach((c, k) => {
+        const picked = r.set.has(k);
+        let cls = 'ex-choice', tag = '';
+        if (c.correcte && picked)       { cls += ' good';   tag = 'Bonne r\u00e9ponse, coch\u00e9e'; }
+        else if (c.correcte && !picked) { cls += ' missed'; tag = 'Bonne r\u00e9ponse, oubli\u00e9e'; }
+        else if (!c.correcte && picked) { cls += ' bad';    tag = 'Coch\u00e9e \u00e0 tort'; }
+        const row = el('div', cls);
+        row.appendChild(el('span', null, `${LETTERS[k]}. ${c.texte}`));
+        if (tag) row.appendChild(el('span', 'ex-choice-tag', tag));
+        box.appendChild(row);
+      });
+    } else {
+      q.affirmations.forEach((a, k) => {
+        const donne = r.set.has(2 * k) ? 'OUI' : (r.set.has(2 * k + 1) ? 'NON' : null);
+        const attendu = a.vrai ? 'OUI' : 'NON';
+        const ok = donne === attendu;
+        const row = el('div', 'ex-choice ' + (ok ? 'good' : 'bad'));
+        row.appendChild(el('span', null, a.texte));
+        row.appendChild(el('span', 'ex-choice-tag',
+          ok ? `${attendu} \u2713` : `Ta r\u00e9ponse : ${donne || 'aucune'} \u2014 attendu : ${attendu}`));
+        box.appendChild(row);
+      });
+    }
 
     if (q.explication) box.appendChild(el('p', 'ex-detail-exp', q.explication));
     if (q.fiche) {
@@ -313,9 +397,12 @@
 
   document.addEventListener('keydown', e => {
     if (secQuiz.hidden || !running) return;
-    if (/^[1-9]$/.test(e.key)) {
-      const btn = document.querySelectorAll('#ex-options .option')[parseInt(e.key, 10) - 1];
-      if (btn) btn.click();
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    const m = /^[a-dA-D]$/.test(e.key) ? 'abcd'.indexOf(e.key.toLowerCase())
+            : (/^[1-4]$/.test(e.key) ? parseInt(e.key, 10) - 1 : -1);
+    if (m >= 0) {
+      const btn = document.querySelector(`#ex-answers .ex-ans[data-k="${m}"]`);
+      if (btn) select(m);
     } else if (e.key === 'Enter' && e.target.tagName !== 'BUTTON') {
       e.preventDefault();
       next();
