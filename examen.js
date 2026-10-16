@@ -59,9 +59,17 @@
     return true;
   }
 
+  /* Hauteur de la barre de navigation : l'écran d'examen se place juste dessous */
+  function syncNav() {
+    const nav = document.querySelector('nav');
+    document.documentElement.style.setProperty('--nav-h', (nav ? nav.offsetHeight : 0) + 'px');
+  }
+  window.addEventListener('resize', syncNav);
+
   function showOnly(target) {
     [secIntro, secQuiz, secResult].forEach(s => { s.hidden = (s !== target); });
     document.body.classList.toggle('ex-immersive', target === secQuiz);
+    syncNav();
     window.scrollTo(0, 0);
   }
 
