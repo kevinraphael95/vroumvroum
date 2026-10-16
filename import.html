@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Import privé - VroumVroum</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script>try{if(localStorage.getItem("vroum-theme")==="dark")document.documentElement.classList.add("dark")}catch(e){}</script>
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="logo"><div class="logo-mark">V</div>VroumVroum</a>
+    <div class="nav-right">
+      <ul class="nav-links" id="nav-links">
+        <li><a href="index.html">Accueil</a></li>
+        <li><a href="fiches.html">Fiches</a></li>
+        <li><a href="qcm.html">QCM</a></li>
+        <li><a href="examen.html">Examen</a></li>
+      </ul>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Changer de thème">🌙</button>
+      <button class="nav-burger" id="nav-burger" onclick="toggleMenu()" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-links"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<div class="container" style="max-width:760px;">
+  <h1>Ma banque privée</h1>
+  <p>Importe tes propres questions (fichier JSON). Elles restent <strong>dans ce navigateur uniquement</strong> : rien n'est envoyé ni publié avec le site. Elles sont mélangées aux autres dans le QCM.</p>
+
+  <p><strong id="nb">0</strong> question(s) personnelle(s) enregistrée(s).</p>
+
+  <p><input type="file" id="fichier" accept=".json,application/json"></p>
+  <textarea id="zone" rows="10" style="width:100%;font-family:'JetBrains Mono',monospace;font-size:13px;padding:10px;border:1px solid var(--border,#ccc);border-radius:8px;background:transparent;color:inherit;" placeholder='Colle ici un tableau JSON, ou choisis un fichier ci-dessus.'></textarea>
+
+  <p style="display:flex;gap:10px;flex-wrap:wrap;">
+    <button class="btn btn-primary" id="btn-ajouter">Ajouter à ma banque</button>
+    <button class="btn btn-outline" id="btn-export">Exporter ma banque</button>
+    <button class="btn btn-outline" id="btn-vider">Tout supprimer</button>
+  </p>
+  <p id="msg" role="status" aria-live="polite"></p>
+
+  <h2>Format attendu</h2>
+  <pre style="overflow:auto;padding:12px;border:1px solid var(--border,#ccc);border-radius:8px;font-size:13px;">[
+  {
+    "question": "Énoncé de la question ?",
+    "bonne": "La bonne réponse",
+    "fausses": ["Fausse 1", "Fausse 2", "Fausse 3"],
+    "explication": "Facultatif",
+    "categorie": "Facultatif",
+    "fiche": "vitesses"
+  }
+]</pre>
+  <p>Seuls <code>question</code>, <code>bonne</code> et <code>fausses</code> (1 à 3) sont obligatoires. <code>fiche</code> doit être l'id d'une fiche pour afficher « Revoir la fiche ».</p>
+</div>
+
+<footer>© 2026 VroumVroum — Fiches de révision du Code de la route</footer>
+
+<script src="fiches-data.js"></script>
+<script src="questions-data.js"></script>
+<script src="banque-data.js"></script>
+<script src="app.js"></script>
+<script>
+(function () {
+  const $ = id => document.getElementById(id);
+  const msg = t => { $('msg').textContent = t; };
+
+  function brutes() {
+    try { const a = JSON.parse(localStorage.getItem(CLE_PERSO) || '[]'); return Array.isArray(a) ? a : []; }
+    catch (e) { return []; }
+  }
+  function maj() { $('nb').textContent = chargerPerso().length; }
+
+  $('fichier').addEventListener('change', e => {
+    const f = e.target.files[0];
+    if (!f) return;
+    const r = new FileReader();
+    r.onload = () => { $('zone').value = r.result; msg('Fichier chargé : clique sur « Ajouter ».'); };
+    r.readAsText(f);
+  });
+
+  $('btn-ajouter').addEventListener('click', () => {
+    let data;
+    try { data = JSON.parse($('zone').value); } catch (e) { msg('JSON invalide : ' + e.message); return; }
+    if (!Array.isArray(data)) { msg('Il faut un tableau JSON : [ {...}, {...} ]'); return; }
+
+    const existantes = new Set(brutes().map(q => q && q.question));
+    const valides = data.map(normaliserQuestion).filter(Boolean);
+    const nouvelles = valides.filter(q => !existantes.has(q.question));
+    const ignorees = data.length - valides.length;
+
+    try {
+      localStorage.setItem(CLE_PERSO, JSON.stringify(brutes().concat(nouvelles)));
+    } catch (e) { msg('Enregistrement impossible (stockage plein ou bloqué).'); return; }
+
+    msg(nouvelles.length + ' ajoutée(s), ' + (valides.length - nouvelles.length) + ' doublon(s), ' + ignorees + ' invalide(s) ignorée(s).');
+    $('zone').value = '';
+    maj();
+  });
+
+  $('btn-export').addEventListener('click', () => {
+    const blob = new Blob([JSON.stringify(brutes(), null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'ma-banque.json';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+
+  $('btn-vider').addEventListener('click', () => {
+    if (!confirm('Supprimer toutes tes questions personnelles ?')) return;
+    try { localStorage.removeItem(CLE_PERSO); } catch (e) {}
+    msg('Banque personnelle vidée.');
+    maj();
+  });
+
+  maj();
+})();
+</script>
+</body>
+</html>

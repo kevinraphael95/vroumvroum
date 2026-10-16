@@ -12,6 +12,7 @@ Fiches de révision et quiz d'entraînement pour le Code de la route (ETG).
   - Rapide : 5 questions, correction immédiate.
   - Examen blanc : 40 questions, 30 min, correction à la fin (seuil de réussite : 35/40).
   - Infini : on enchaîne jusqu'à la première erreur.
+- **Examen blanc** (page `examen.html`) : test avec images, base de questions séparée du QCM, une ou plusieurs bonnes réponses par question, chrono, correction détaillée à la fin.
 - Thème clair / sombre.
 
 ## Lancer en local
@@ -30,6 +31,10 @@ Site statique, aucune dépendance. Deux options :
 | `qcm.html` | Choix du mode, quiz, résultat |
 | `app.js` | Thème, progression, accueil, logique du QCM |
 | `style.css` | Tout le style (variables clair / sombre en haut) |
+| `examen.html` + `examen.js` | Page d'examen blanc avec images |
+| `examen-data.js` | Base de questions de l'examen (config + questions) |
+| `images/examen/` | Images de l'examen |
+| `banque-data.js` | Banque de questions du QCM (+ banque perso via `import.html`) |
 | `fiches-data.js` | Contenu des fiches |
 | `questions-data.js` | Banque de questions |
 
@@ -72,6 +77,29 @@ Dans `questions-data.js`, ajouter un modèle à `questionTemplates` :
 }
 ```
 
+## Ajouter une question d'examen
+
+1. Mettre l'image dans `images/examen/` (svg, png, jpg ou webp).
+2. Dans `examen-data.js`, ajouter un objet à `EXAMEN_QUESTIONS` :
+
+```js
+{
+  id: "ex-011",
+  image: "images/examen/ma-photo.jpg",
+  alt: "Description courte de l'image",
+  fiche: "priorites",           // facultatif : lien « Revoir la fiche »
+  question: "Que faites-vous ?",
+  reponses: [
+    { texte: "Réponse A", correcte: true },
+    { texte: "Réponse B", correcte: false },
+    { texte: "Réponse C", correcte: true }   // plusieurs bonnes réponses possibles
+  ],
+  explication: "Facultatif."
+}
+```
+
+Une question est juste si toutes les bonnes réponses sont cochées et aucune mauvaise. Les 10 questions fournies sont des placeholders. N'utilise que des images dont tu as les droits (les tiennes, ou libres de droits).
+
 ## Données sauvegardées (localStorage)
 
 | Clé | Contenu |
@@ -79,6 +107,8 @@ Dans `questions-data.js`, ajouter un modèle à `questionTemplates` :
 | `vroum-theme` | `light` ou `dark` |
 | `vroum-fiches-lues` | liste des ids de fiches terminées |
 | `vroum-best-streak` | meilleure série en mode infini |
+| `vroum-examen-best` | meilleur score de l'examen blanc |
+| `vroum-banque-perso` | questions importées via `import.html` (privées) |
 
 Les données restent dans le navigateur : pas de compte, pas de serveur.
 
