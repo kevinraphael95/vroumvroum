@@ -1,12 +1,12 @@
 /* =========================================================
    EXAMEN BLANC (examen.html)
-   - Questions de EXAMEN_QUESTIONS (examen-data.js), 2 types :
+   - Questions de EXAMEN_QUESTIONS (data-examen.js), 2 types :
        "choix" (A B C D, une ou plusieurs bonnes réponses)
        "oui-non" (1 ou 2 affirmations ; OUI = A/C, NON = B/D)
    - Minuteur rond PAR QUESTION, passage automatique à la suivante
    - Pas de retour en arrière ; correction détaillée à la fin
    - Meilleur score : localStorage "vroum-examen-best"
-   Dépend de : app.js (thème, menu) et examen-data.js
+   Dépend de : core.js (thème, menu) et data-examen.js
    ========================================================= */
 
 (function () {
@@ -156,7 +156,7 @@
     start.disabled = false;
     if (BANK.length === 0) {
       warn.hidden = false;
-      warn.textContent = 'Aucune question valide dans examen-data.js.';
+      warn.textContent = 'Aucune question valide dans data-examen.js.';
       start.disabled = true;
     } else if (BANK.length < CFG.nbQuestions) {
       warn.hidden = false;
@@ -300,41 +300,81 @@
     showOnly(secIntro);
   }
 
-  /* ---------- Correction ---------- */
+  /* ---------- Correction (mise en page identique au QCM mode examen) ---------- */
+
+  const ORDRE_FAM = ['L', 'C', 'R', 'U', 'D', 'A', 'P', 'M', 'S', 'E'];
+
+  /* Famille d'une question d'examen, déduite de sa fiche (data-fiches.js) */
+  function familleDe(q) {
+    if (typeof FICHES === 'undefined' || !q.fiche) return null;
+    const f = FICHES.find(x => x.id === q.fiche);
+    return f ? f.badge : null;
+  }
 
   function finish() {
     if (!running) return;
     running = false;
     stopQTimer();
 
-    const results = items.map((item, i) => ({ item, set: answers[i], ok: sameSet(item.correct, answers[i]) }));
+    const results = items.map((item, i) => ({
+      item,
+      set: answers[i],
+      ok: sameSet(item.correct, answers[i]),
+      answered: answers[i].size > 0
+    }));
     const score = results.filter(r => r.ok).length;
     const total = items.length;
     const reussi = score >= SEUIL;
+    const manque = SEUIL - score;
 
     const prev = getBest();
     const improved = saveBest(score, total) && (!prev || score / total > prev.score / prev.total);
 
-    $('ex-score').textContent = `Score : ${score} / ${total}`;
-    const verdict = $('ex-verdict');
-    verdict.className = 'ex-verdict ' + (reussi ? 'pass' : 'fail');
-    verdict.textContent = reussi
-      ? `Réussi : le seuil de ${SEUIL} / ${total} est atteint.`
-      : `Pas encore : il fallait ${SEUIL} / ${total}.`;
-
+    let message = reussi
+      ? `Réussi ! Tu aurais eu ton examen (${SEUIL}/${total} minimum).`
+      : `Il te manque ${manque} point${manque > 1 ? 's' : ''} pour réussir. Continue à réviser.`;
     const best = getBest();
-    $('ex-result-best').textContent = improved
-      ? 'Nouveau meilleur score !'
-      : (best ? `Ton meilleur score : ${best.score} / ${best.total}` : '');
+    if (improved && score > 0) message += ' Nouveau meilleur score !';
+    else if (best) message += ` Ton meilleur : ${best.score} / ${best.total}.`;
+    $('ex-verdict').textContent = message;
 
+    $('ex-score-val').textContent = String(score);
+    $('ex-score-total').textContent = String(total);
+    $('ex-score-box').className = 'exam-result-score ' + (reussi ? 'pass' : 'fail');
+
+    // Grille des numéros
     const grid = $('ex-grid');
     grid.innerHTML = '';
     results.forEach((r, i) => {
-      const b = el('button', 'ex-num ' + (r.ok ? 'ok' : 'ko'), String(i + 1));
+      const cls = !r.answered ? 'unanswered' : (r.ok ? 'correct' : 'wrong');
+      const b = el('button', 'exam-num ' + cls, pad(i + 1));
       b.type = 'button';
-      b.setAttribute('aria-label', `Question ${i + 1} : ${r.ok ? 'correcte' : 'erreur'}`);
+      b.setAttribute('aria-label', `Question ${i + 1} : ${!r.answered ? 'sans réponse' : (r.ok ? 'correcte' : 'erreur')}`);
       b.addEventListener('click', () => showDetail(results, i));
       grid.appendChild(b);
+    });
+
+    // Résultats par thème
+    const stats = {};
+    results.forEach(r => {
+      const fam = familleDe(r.item.q);
+      if (!fam) return;
+      if (!stats[fam]) stats[fam] = { ok: 0, total: 0 };
+      stats[fam].total++;
+      if (r.ok) stats[fam].ok++;
+    });
+    const themes = $('ex-themes');
+    themes.innerHTML = '';
+    const fams = ORDRE_FAM.filter(f => stats[f]);
+    if (!fams.length) {
+      themes.appendChild(el('p', 'ex-no-themes', 'Aucun thème disponible.'));
+    }
+    fams.forEach(fam => {
+      const row = el('div', 'exam-theme fam-' + fam);
+      row.appendChild(el('span', 'exam-theme-badge', fam));
+      row.appendChild(el('span', 'exam-theme-name', (window.VV && VV.FAM_NAMES[fam]) || fam));
+      row.appendChild(el('span', 'exam-theme-score', `${stats[fam].ok}/${stats[fam].total}`));
+      themes.appendChild(row);
     });
 
     showOnly(secResult);
@@ -349,50 +389,59 @@
     const box = $('ex-detail');
     box.innerHTML = '';
 
-    document.querySelectorAll('#ex-grid .ex-num').forEach((b, k) => b.classList.toggle('sel', k === i));
+    document.querySelectorAll('#ex-grid .exam-num').forEach((b, k) => b.classList.toggle('selected', k === i));
 
-    const head = el('div', 'ex-detail-head');
-    head.appendChild(el('strong', null, `Question ${pad(i + 1)}`));
-    head.appendChild(el('span', 'ex-badge ' + (r.ok ? 'ok' : 'ko'), r.ok ? '\u2713 Correct' : '\u2717 Erreur'));
+    const head = el('div', 'exam-detail-head');
+    head.appendChild(el('span', 'exam-detail-num', `Question ${pad(i + 1)}`));
+    head.appendChild(el('span', 'exam-detail-status ' + (r.ok ? 'correct' : 'wrong'),
+      r.ok ? '\u2713 Correct' : '\u2717 Erreur'));
     box.appendChild(head);
 
     if (q.image) {
-      const fig = el('figure', 'ex-figure');
+      const fig = el('div', 'exam-detail-fig');
       buildFigure(fig, q);
       box.appendChild(fig);
     }
-    box.appendChild(el('p', 'ex-detail-q', q.question));
+    box.appendChild(el('div', 'exam-detail-q', q.question));
+
+    const choices = el('div', 'exam-detail-choices');
+    function addChoice(text, cls, tag) {
+      const row = el('div', 'exam-detail-choice ' + cls);
+      if (tag) row.appendChild(el('span', 'exam-detail-tag', tag));
+      row.appendChild(el('span', null, text));
+      choices.appendChild(row);
+    }
 
     if (r.item.kind === 'choix') {
       r.item.choix.forEach((c, k) => {
         const picked = r.set.has(k);
-        let cls = 'ex-choice', tag = '';
-        if (c.correcte && picked)       { cls += ' good';   tag = 'Bonne r\u00e9ponse, coch\u00e9e'; }
-        else if (c.correcte && !picked) { cls += ' missed'; tag = 'Bonne r\u00e9ponse, oubli\u00e9e'; }
-        else if (!c.correcte && picked) { cls += ' bad';    tag = 'Coch\u00e9e \u00e0 tort'; }
-        const row = el('div', cls);
-        row.appendChild(el('span', null, `${LETTERS[k]}. ${c.texte}`));
-        if (tag) row.appendChild(el('span', 'ex-choice-tag', tag));
-        box.appendChild(row);
+        const text = `${LETTERS[k]}. ${c.texte}`;
+        if (c.correcte && picked)       addChoice(text, 'correct', 'Bonne réponse');
+        else if (c.correcte && !picked) addChoice(text, 'missed', 'Oubliée');
+        else if (!c.correcte && picked) addChoice(text, 'wrong', 'Cochée à tort');
+        else                            addChoice(text, 'neutral', '');
       });
     } else {
       q.affirmations.forEach((a, k) => {
         const donne = r.set.has(2 * k) ? 'OUI' : (r.set.has(2 * k + 1) ? 'NON' : null);
         const attendu = a.vrai ? 'OUI' : 'NON';
         const ok = donne === attendu;
-        const row = el('div', 'ex-choice ' + (ok ? 'good' : 'bad'));
-        row.appendChild(el('span', null, a.texte));
-        row.appendChild(el('span', 'ex-choice-tag',
-          ok ? `${attendu} \u2713` : `Ta r\u00e9ponse : ${donne || 'aucune'} \u2014 attendu : ${attendu}`));
-        box.appendChild(row);
+        addChoice(a.texte, ok ? 'correct' : 'wrong',
+          ok ? `${attendu} \u2713` : `Toi : ${donne || 'aucune'} \u2014 attendu : ${attendu}`);
       });
     }
+    box.appendChild(choices);
 
-    if (q.explication) box.appendChild(el('p', 'ex-detail-exp', q.explication));
-    if (q.fiche) {
-      const a = el('a', 'revoir-fiche', 'Revoir la fiche \u2192');
-      a.href = 'fiches.html#' + encodeURIComponent(q.fiche);
-      box.appendChild(a);
+    if (q.explication || (q.fiche && !r.ok)) {
+      const exp = el('div', 'exam-detail-exp');
+      if (q.explication) exp.appendChild(document.createTextNode(q.explication));
+      if (q.fiche && !r.ok) {
+        const a = el('a', 'revoir-fiche', 'Revoir la fiche \u2192');
+        a.href = 'fiches.html#' + encodeURIComponent(q.fiche);
+        exp.appendChild(document.createTextNode(' '));
+        exp.appendChild(a);
+      }
+      box.appendChild(exp);
     }
   }
 
