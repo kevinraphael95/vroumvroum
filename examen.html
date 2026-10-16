@@ -87,28 +87,47 @@
   </div>
 </div>
 
-<!-- ===== RÉSULTAT ===== -->
-<div id="ex-result" class="container" hidden>
-  <div class="ex-result-card">
-    <h2 id="ex-score">Score</h2>
-    <p class="ex-verdict" id="ex-verdict"></p>
-    <p class="ex-best" id="ex-result-best"></p>
-
-    <h3>Correction</h3>
-    <p class="ex-help">Clique sur un numéro pour voir le détail.</p>
-    <div class="ex-grid" id="ex-grid"></div>
-    <div class="ex-detail" id="ex-detail"></div>
-
-    <div class="result-actions">
-      <button type="button" class="btn btn-primary" id="ex-replay">Refaire un examen →</button>
-      <a class="btn btn-outline" href="fiches.html">Revoir les fiches</a>
+<!-- ===== RÉSULTAT (même mise en page que le QCM mode examen) ===== -->
+<div id="ex-result" class="result result-wide" hidden>
+  <div class="exam-result-head">
+    <div class="exam-result-head-text">
+      <h2>Examen blanc terminé</h2>
+      <p id="ex-verdict"></p>
     </div>
+    <div class="exam-result-score" id="ex-score-box">
+      <span class="exam-result-score-value" id="ex-score-val">0</span>
+      <span class="exam-result-score-sep">/</span>
+      <span class="exam-result-score-total" id="ex-score-total">0</span>
+    </div>
+  </div>
+
+  <div class="exam-result-body">
+    <div class="exam-result-col">
+      <div class="exam-result-label">Réponses</div>
+      <div class="exam-numbers" id="ex-grid"></div>
+    </div>
+
+    <div class="exam-result-col exam-result-center">
+      <div class="exam-result-label">Détail de la question</div>
+      <div class="exam-detail" id="ex-detail"></div>
+    </div>
+
+    <div class="exam-result-col exam-result-themes">
+      <div class="exam-result-label">Résultats par thème</div>
+      <div class="exam-themes-list" id="ex-themes"></div>
+    </div>
+  </div>
+
+  <div class="result-actions">
+    <button type="button" class="btn btn-primary" id="ex-replay">Rejouer →</button>
+    <a class="btn btn-outline" href="fiches.html">Revoir les fiches</a>
   </div>
 </div>
 
 <footer>© 2026 VroumVroum — Fiches de révision du Code de la route</footer>
 
 <script src="js/core.js"></script>
+<script src="js/data-fiches.js"></script>
 <script src="js/data-examen.js"></script>
 <script src="js/page-examen.js"></script>
 </body>
