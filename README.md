@@ -6,8 +6,8 @@ Fiches de révision et quiz d'entraînement pour le Code de la route (ETG).
 
 ## Contenu
 
-- **Accueil** : progression globale, fiches terminées, record de série au QCM, parcours par famille.
-- **Fiches** : 31 fiches réparties en 10 familles (circulation, conducteur, route, usagers, notions diverses, premiers secours, véhicule, mécanique, sécurité, environnement). Chaque fiche peut être marquée comme terminée.
+- **Accueil** : progression globale, fiches terminées, records (infini, examen QCM, examen avec images, rapide), parcours par famille.
+- **Fiches** : 46 fiches réparties en 10 familles (circulation, conducteur, route, usagers, notions diverses, premiers secours, véhicule, mécanique, sécurité, environnement). Chaque fiche peut être marquée comme terminée.
 - **QCM** : 3 modes.
   - Rapide : 5 questions, correction immédiate.
   - Examen blanc : 40 questions, 30 min, correction à la fin (seuil de réussite : 35/40).
@@ -106,8 +106,10 @@ Une question est juste si toutes les bonnes réponses sont cochées et aucune ma
 |---|---|
 | `vroum-theme` | `light` ou `dark` |
 | `vroum-fiches-lues` | liste des ids de fiches terminées |
-| `vroum-best-streak` | meilleure série en mode infini |
-| `vroum-examen-best` | meilleur score de l'examen blanc |
+| `vroum-best-infini` | meilleure série en mode infini (remplace l'ancien `vroum-best-streak`, migré automatiquement) |
+| `vroum-best-rapide` | meilleur score du mode rapide |
+| `vroum-best-examen` | meilleur score de l'examen blanc du QCM (40 questions) |
+| `vroum-examen-best` | meilleur score de l'examen avec images (`examen.html`), au format `{score, total}` |
 | `vroum-banque-perso` | questions importées via `import.html` (privées) |
 
 Les données restent dans le navigateur : pas de compte, pas de serveur.
@@ -115,6 +117,10 @@ Les données restent dans le navigateur : pas de compte, pas de serveur.
 ## Clavier (QCM)
 
 `1` à `4` pour répondre, `Entrée` ou `Espace` pour continuer, `Échap` pour quitter.
+
+## Clavier (examen avec images)
+
+`A` à `D` (ou `1` à `4`) pour répondre, `Entrée` pour valider.
 
 ## Sources du contenu
 

@@ -187,6 +187,14 @@
     setText('stat-examen', rExa ? `${rExa} / ${EXAM_COUNT}` : '\u2014');
     setText('stat-rapide', rRap ? `${rRap} / ${RAPIDE_COUNT}` : '\u2014');
 
+    // Examen avec images (examen.html) : record stocké par examen.js
+    try {
+      const b = JSON.parse(storage.get('vroum-examen-best', 'null'));
+      if (b && typeof b.score === 'number' && b.total > 0) {
+        setText('stat-examen-img', `${b.score} / ${b.total}`);
+      }
+    } catch (e) {}
+
     const familles = new Map();
     FICHES.forEach(f => {
       if (!familles.has(f.badge)) familles.set(f.badge, { nom: f.groupe, fiches: [] });

@@ -411,7 +411,7 @@
     if (m >= 0) {
       const btn = document.querySelector(`#ex-answers .ex-ans[data-k="${m}"]`);
       if (btn) select(m);
-    } else if (e.key === 'Enter' && e.target.tagName !== 'BUTTON') {
+    } else if (e.key === 'Enter' && !e.target.matches('#ex-quit, #ex-next')) {
       e.preventDefault();
       next();
     }
