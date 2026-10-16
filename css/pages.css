@@ -744,6 +744,228 @@ html.dark .qcm-chip.streak { color: var(--jaune); }
 .result-actions { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
 
 /* =========================================================
+   EXAMEN BLANC (examen.html) — style Codes Rousseau
+   ========================================================= */
+body.ex-immersive { overflow: hidden; background: #0a0a0a; }
+body.ex-immersive footer { display: none; }
+
+.ex-rules { list-style: none; padding: 0; margin: 0 auto 1.25rem; max-width: 520px; text-align: left; }
+.ex-rules li { padding: 0.5rem 0 0.5rem 1.6rem; position: relative; color: var(--text-soft); }
+.ex-rules li::before { content: "\2713"; position: absolute; left: 0; color: var(--vert); font-weight: 800; }
+.ex-best { font-weight: 700; color: var(--bleu); margin: 0 0 1rem; }
+.ex-warn { background: var(--jaune-soft); color: #422006; border-radius: var(--radius); padding: 0.75rem 1rem; margin: 0 auto 1.25rem; max-width: 520px; font-size: 0.92rem; }
+
+.ex-screen {
+  position: fixed;
+  top: var(--nav-h, 70px);
+  left: 0; right: 0; bottom: 0;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  background: #0a0a0a;
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.ex-media {
+  flex: 0 0 55%;
+  min-height: 0;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.ex-media img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+.ex-media .ex-missing {
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.ex-panel {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: #0a0a0a;
+  border-top: 1px solid #1f1f1f;
+  padding: 1.5rem 4rem 4.5rem 5rem;
+  font-size: clamp(14px, 1.5vw, 21px);
+}
+.ex-panel-main { width: 100%; max-width: 1000px; }
+
+.ex-q {
+  font-weight: 700;
+  font-size: 1.15em;
+  line-height: 1.45;
+  margin: 0 0 1.5rem 0;
+  color: #ffffff;
+  padding-left: 0.5em;
+}
+
+.ex-stmt {
+  font-weight: 700;
+  margin: 0.5em 0 0.3em 0;
+  line-height: 1.4;
+  font-size: 1.05em;
+  color: #ffffff;
+  padding-left: 0.5em;
+}
+
+.ex-answers {
+  margin: 0;
+  padding-left: 2em;
+}
+.ex-ans {
+  display: flex;
+  align-items: baseline;
+  gap: 0;
+  width: 100%;
+  background: none;
+  border: 0;
+  color: #7eb8e8;
+  font: inherit;
+  font-size: 1.05em;
+  line-height: 1.6;
+  padding: 0.65em 0;
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.15s;
+}
+.ex-ans:hover { color: #b9d9f5; }
+.ex-ans:focus-visible { outline: 2px solid #7eb8e8; outline-offset: 4px; }
+
+.ex-ans-text { flex: 0 0 auto; padding-right: 0.4em; }
+
+.ex-dots {
+  flex: 1;
+  min-width: 20px;
+  border-bottom: 2px dotted rgba(126, 184, 232, 0.5);
+  margin: 0 0.5em 0.4em 0.5em;
+  align-self: flex-end;
+}
+
+.ex-key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 1.8em;
+  height: 1.8em;
+  border: 2px solid #e5e7eb;
+  background: #0a0a0a;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.95em;
+  font-family: Arial, Helvetica, sans-serif;
+  border-radius: 2px;
+  margin-right: 1.5em;
+}
+
+.ex-ans.on { color: #ffffff; }
+.ex-ans.on .ex-key {
+  background: #ffffff;
+  color: #0a0a0a;
+  border-color: #ffffff;
+}
+.ex-ans.on .ex-dots {
+  border-bottom-color: rgba(255, 255, 255, 0.7);
+}
+
+.ex-yn {
+  display: flex;
+  gap: 3rem;
+  margin: 0.3em 0 0.8em 0;
+}
+.ex-yn .ex-ans { width: auto; flex: 1 1 0; }
+.ex-yn .ex-ans .ex-dots { min-width: 30px; }
+
+.ex-side {
+  position: absolute;
+  right: 2rem;
+  top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  color: #d1d5db;
+}
+.ex-mode {
+  font-size: 0.85rem;
+  color: #9ca3af;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.ex-ring {
+  position: relative;
+  width: 74px;
+  height: 74px;
+}
+.ex-ring svg { width: 100%; height: 100%; display: block; }
+.ex-ring-bg { fill: none; stroke: #374151; stroke-width: 4; }
+.ex-ring-fg { fill: none; stroke: #e5e7eb; stroke-width: 4; stroke-linecap: round; }
+.ex-ring-cap { fill: #6b7280; }
+.ex-ring.warn .ex-ring-fg { stroke: #ef4444; }
+.ex-secs {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.ex-bar {
+  position: absolute;
+  left: 5rem;
+  right: 2rem;
+  bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+.ex-count strong { color: #d1d5db; font-weight: 700; }
+.ex-bar-btns { display: inline-flex; gap: 0.6rem; }
+.ex-link {
+  background: none;
+  border: 1px solid #374151;
+  color: #9ca3af;
+  border-radius: 6px;
+  padding: 0.5rem 1.1rem;
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.ex-link:hover { border-color: #7eb8e8; color: #ffffff; }
+.ex-link-main {
+  background: #1d4ed8;
+  border-color: #1d4ed8;
+  color: #ffffff;
+  font-weight: 700;
+}
+.ex-link-main:hover { background: #2563eb; border-color: #2563eb; }
+
+@media (max-width: 760px), (max-aspect-ratio: 1/1) {
+  .ex-media { flex-basis: 40%; }
+  .ex-panel { padding: 1rem 1rem 5rem 1rem; font-size: 1rem; }
+  .ex-side { right: 1rem; top: 1rem; }
+  .ex-ring { width: 56px; height: 56px; }
+  .ex-bar { left: 1rem; right: 1rem; bottom: 0.6rem; }
+  .ex-yn { gap: 1.5rem; }
+}
+
+/* =========================================================
    RÉSULTAT EXAMEN — style Codes Rousseau
    ========================================================= */
 .result.result-wide { max-width: 1200px; padding: 2rem 2rem 1.75rem; text-align: left; }
@@ -932,293 +1154,3 @@ html.dark .qcm-chip.streak { color: var(--jaune); }
   .exam-result-body { grid-template-columns: 1fr; gap: 1.5rem; }
   .exam-detail { min-height: 0; }
 }
-
-/* =========================================================
-   EXAMEN BLANC (examen.html) — style Codes Rousseau
-   ========================================================= */
-body.ex-immersive { overflow: hidden; background: #0a0a0a; }
-body.ex-immersive footer { display: none; }
-
-.ex-rules { list-style: none; padding: 0; margin: 0 auto 1.25rem; max-width: 520px; text-align: left; }
-.ex-rules li { padding: 0.5rem 0 0.5rem 1.6rem; position: relative; color: var(--text-soft); }
-.ex-rules li::before { content: "\2713"; position: absolute; left: 0; color: var(--vert); font-weight: 800; }
-.ex-best { font-weight: 700; color: var(--bleu); margin: 0 0 1rem; }
-.ex-warn { background: var(--jaune-soft); color: #422006; border-radius: var(--radius); padding: 0.75rem 1rem; margin: 0 auto 1.25rem; max-width: 520px; font-size: 0.92rem; }
-
-/* ---------- Écran de question ---------- */
-.ex-screen {
-  position: fixed;
-  top: var(--nav-h, 70px);
-  left: 0; right: 0; bottom: 0;
-  z-index: 40;
-  display: flex;
-  flex-direction: column;
-  background: #0a0a0a;
-  color: #fff;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-/* Image en haut (60%) */
-.ex-media {
-  flex: 0 0 45%;
-  min-height: 0;
-  background: #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-.ex-media img {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  display: block;
-}
-.ex-media .ex-missing {
-  color: #6b7280;
-  font-size: 0.9rem;
-}
-
-/* Panneau du bas (40%) */
-.ex-panel {
-  position: relative;
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
-  background: #0a0a0a;
-  border-top: 1px solid #1f1f1f;
-  padding: 1rem 6rem 5rem 4rem;
-  font-size: clamp(14px, 1.6vw, 22px);
-}
-.ex-panel-main { width: 100%; max-width: 900px; }
-
-/* Question */
-.ex-q {
-  font-weight: 700;
-  font-size: 1.15em;
-  line-height: 1.4;
-  margin: 0 0 1.2rem 0;
-  color: #ffffff;
-}
-
-/* Affirmation OUI/NON */
-.ex-stmt {
-  font-weight: 700;
-  margin: 0.5em 0 0.3em 0;
-  line-height: 1.4;
-  font-size: 1.05em;
-  color: #ffffff;
-}
-
-/* Réponses style Codes Rousseau */
-.ex-answers { margin: 0; }
-.ex-ans {
-  display: flex;
-  align-items: baseline;
-  gap: 0;
-  width: 100%;
-  background: none;
-  border: 0;
-  color: #7eb8e8;
-  font: inherit;
-  font-size: 1.05em;
-  line-height: 1.6;
-  padding: 0.4em 0;
-  cursor: pointer;
-  text-align: left;
-  transition: color 0.15s;
-}
-.ex-ans:hover { color: #b9d9f5; }
-.ex-ans:focus-visible { outline: 2px solid #7eb8e8; outline-offset: 4px; }
-
-.ex-ans-text { flex: 0 0 auto; padding-right: 0.4em; }
-
-/* Tirets pointillés */
-.ex-dots {
-  flex: 1;
-  min-width: 20px;
-  border-bottom: 2px dotted rgba(126, 184, 232, 0.5);
-  margin: 0 0.4em 0.35em 0.4em;
-  align-self: flex-end;
-}
-
-/* Carré avec le chiffre 1 2 3 4 */
-.ex-key {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex: 0 0 auto;
-  width: 1.8em;
-  height: 1.8em;
-  border: 2px solid #e5e7eb;
-  background: #0a0a0a;
-  color: #ffffff;
-  font-weight: 700;
-  font-size: 0.95em;
-  font-family: Arial, Helvetica, sans-serif;
-  border-radius: 2px;
-}
-
-/* Sélection */
-.ex-ans.on { color: #ffffff; }
-.ex-ans.on .ex-key {
-  background: #ffffff;
-  color: #0a0a0a;
-  border-color: #ffffff;
-}
-.ex-ans.on .ex-dots {
-  border-bottom-color: rgba(255, 255, 255, 0.7);
-}
-
-/* OUI/NON côte à côte */
-.ex-yn {
-  display: flex;
-  gap: 3rem;
-  margin: 0.3em 0 0.8em 0;
-}
-.ex-yn .ex-ans { width: auto; flex: 1 1 0; }
-.ex-yn .ex-ans .ex-dots { min-width: 30px; }
-
-/* Colonne droite : mode + timer */
-.ex-side {
-  position: absolute;
-  right: 2rem;
-  top: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.6rem;
-  color: #d1d5db;
-}
-.ex-mode {
-  font-size: 0.85rem;
-  color: #9ca3af;
-  font-weight: 500;
-  white-space: nowrap;
-}
-.ex-ring {
-  position: relative;
-  width: 74px;
-  height: 74px;
-}
-.ex-ring svg { width: 100%; height: 100%; display: block; }
-.ex-ring-bg { fill: none; stroke: #374151; stroke-width: 4; }
-.ex-ring-fg { fill: none; stroke: #e5e7eb; stroke-width: 4; stroke-linecap: round; }
-.ex-ring-cap { fill: #6b7280; }
-.ex-ring.warn .ex-ring-fg { stroke: #ef4444; }
-.ex-secs {
-  position: absolute;
-  width: 1px; height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-}
-
-/* Barre du bas */
-.ex-bar {
-  position: absolute;
-  left: 4rem;
-  right: 2rem;
-  bottom: 1rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  font-size: 0.9rem;
-  color: #6b7280;
-}
-.ex-count strong { color: #d1d5db; font-weight: 700; }
-.ex-bar-btns { display: inline-flex; gap: 0.6rem; }
-.ex-link {
-  background: none;
-  border: 1px solid #374151;
-  color: #9ca3af;
-  border-radius: 6px;
-  padding: 0.5rem 1.1rem;
-  font: inherit;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-.ex-link:hover { border-color: #7eb8e8; color: #ffffff; }
-.ex-link-main {
-  background: #1d4ed8;
-  border-color: #1d4ed8;
-  color: #ffffff;
-  font-weight: 700;
-}
-.ex-link-main:hover { background: #2563eb; border-color: #2563eb; }
-
-/* Responsive : petits écrans */
-@media (max-width: 760px), (max-aspect-ratio: 1/1) {
-  .ex-media { flex-basis: 40%; }
-  .ex-panel { padding: 1rem 1rem 5rem 1rem; font-size: 1rem; }
-  .ex-side { right: 1rem; top: 1rem; }
-  .ex-ring { width: 56px; height: 56px; }
-  .ex-bar { left: 1rem; right: 1rem; bottom: 0.6rem; }
-  .ex-yn { gap: 1.5rem; }
-}
-
-/* ---------- Résultat (inchangé) ---------- */
-.ex-figure {
-  margin: 0 0 1.25rem;
-  background: var(--surface-2);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-  text-align: center;
-}
-.ex-figure img { display: block; margin: 0 auto; max-width: 100%; max-height: 300px; height: auto; }
-.ex-missing { padding: 1.5rem; color: var(--text-muted); font-size: 0.9rem; }
-.ex-result-card {
-  max-width: 760px;
-  margin: 0 auto;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 1.75rem;
-  box-shadow: var(--shadow);
-}
-.ex-result-card h2 { margin: 0 0 0.5rem; }
-.ex-verdict { font-weight: 700; margin: 0 0 0.5rem; }
-.ex-verdict.pass { color: var(--vert); }
-.ex-verdict.fail { color: var(--rouge); }
-.ex-help { color: var(--text-muted); font-size: 0.9rem; margin: 0 0 0.5rem; }
-.ex-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(46px, 1fr)); gap: 8px; margin: 0.75rem 0 1.25rem; }
-.ex-num {
-  border: 2px solid var(--border);
-  background: var(--surface);
-  color: var(--text);
-  border-radius: 10px;
-  padding: 0.6rem 0;
-  font-weight: 700;
-  cursor: pointer;
-  font-family: inherit;
-}
-.ex-num.ok { background: var(--vert-soft); border-color: var(--vert); }
-.ex-num.ko { background: var(--rouge-soft); border-color: var(--rouge); }
-.ex-num.sel { box-shadow: 0 0 0 3px var(--bleu); }
-.ex-detail { border-top: 1px solid var(--border); padding-top: 1rem; margin-bottom: 1.5rem; }
-.ex-detail-head { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.75rem; }
-.ex-badge { font-size: 0.8rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 999px; }
-.ex-badge.ok { background: var(--vert-soft); color: var(--vert); }
-.ex-badge.ko { background: var(--rouge-soft); color: var(--rouge); }
-.ex-detail-q { font-weight: 600; margin: 0 0 0.75rem; }
-.ex-choice {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.65rem 0.9rem;
-  margin-bottom: 0.5rem;
-  border: 2px solid var(--border);
-  border-radius: var(--radius);
-}
-.ex-choice.good { border-color: var(--vert); background: var(--vert-soft); }
-.ex-choice.missed { border-color: var(--vert); border-style: dashed; }
-.ex-choice.bad { border-color: var(--rouge); background: var(--rouge-soft); }
-.ex-choice-tag { font-size: 0.78rem; font-weight: 700; white-space: nowrap; color: var(--text-soft); }
-.ex-detail-exp { color: var(--text-soft); margin: 0.75rem 0 0.25rem; }
