@@ -237,7 +237,7 @@ body.ex-immersive footer { display: none; }
   overflow: hidden;
   background: var(--bg);
   border-top: 1px solid var(--border);
-  padding: 1rem 10rem 4rem 2rem;
+  padding: 1rem 10rem 4rem;
   font-size: clamp(13px, 1.3vw, 18px);
   display: flex;
   flex-direction: column;
@@ -245,6 +245,7 @@ body.ex-immersive footer { display: none; }
 .ex-panel-main {
   width: 100%;
   max-width: 720px;
+  margin: 0 auto;
   flex: 1;
   min-height: 0;
   display: flex;
@@ -417,6 +418,14 @@ body.ex-immersive footer { display: none; }
 .exam-detail-choice.wrong .exam-detail-tag { color: var(--rouge); }
 .exam-detail-choice.correct .exam-detail-tag { color: var(--vert); }
 .exam-detail-exp { font-size: 0.83rem; color: var(--text-muted); font-style: italic; line-height: 1.5; padding-top: 0.6rem; border-top: 1px dashed var(--border); margin-top: 0.4rem; }
+.exam-detail-choice.neutral { border-color: var(--border); color: var(--text-soft); }
+.exam-detail-choice.missed { border-color: var(--orange); color: var(--text); }
+.exam-detail-choice.missed .exam-detail-tag { color: var(--orange); }
+.exam-detail-fig { display: flex; justify-content: center; margin-bottom: 1rem; }
+.exam-detail-fig img { max-width: 100%; max-height: 180px; border-radius: 8px; background: var(--surface); }
+.exam-detail-fig .ex-missing { color: var(--text-muted); font-size: 0.85rem; }
+.exam-detail-exp .revoir-fiche { margin-top: 0; }
+.ex-no-themes { color: var(--text-muted); font-size: 0.88rem; text-align: center; margin: 0; }
 .exam-themes-list { display: flex; flex-direction: column; gap: 0.45rem; }
 .exam-theme { display: flex; align-items: center; gap: 0.75rem; padding: 0.6rem 0.8rem; background: var(--surface-2); border-radius: 8px; font-size: 0.88rem; }
 .exam-theme-badge { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Archivo Black', sans-serif; font-size: 0.66rem; color: white; background: var(--fam, var(--bleu)); flex-shrink: 0; }
@@ -425,13 +434,14 @@ body.ex-immersive footer { display: none; }
 
 /* ============ RESPONSIVE ============ */
 @media (max-height: 700px) {
-  .ex-panel { padding: 0.6rem 9rem 3.5rem 1.5rem; font-size: clamp(12px, 1.2vw, 16px); }
+  .ex-panel { padding: 0.6rem 9rem 3.5rem; font-size: clamp(12px, 1.2vw, 16px); }
   .ex-ans { padding: 0.3em 0; }
 }
 
 @media (max-width: 760px), (max-aspect-ratio: 1/1) {
   .ex-screen { grid-template-rows: minmax(0, 1.2fr) minmax(0, 1fr); }
   .ex-panel { padding: 0.6rem 6rem 4rem 1.5rem; font-size: 1rem; }
+  .ex-panel-main { margin: 0; }
   .ex-side { right: 0.8rem; top: 0; bottom: 3rem; width: 60px; }
   .ex-ring { width: 50px; height: 50px; }
   .ex-bar { left: 1rem; right: 1rem; bottom: 0.3rem; }
