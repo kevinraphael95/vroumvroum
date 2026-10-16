@@ -571,7 +571,9 @@ html.dark .qcm-chip.streak { color: var(--jaune); }
 .result p { color: var(--text-soft); margin-bottom: 1.75rem; }
 .result-actions { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
 
-/* ============ EXAMEN BLANC ============ */
+/* =========================================================
+   EXAMEN BLANC (examen.html)
+   ========================================================= */
 body.ex-immersive { overflow: hidden; background: var(--bg); }
 body.ex-immersive footer { display: none; }
 
@@ -779,20 +781,6 @@ body.ex-immersive footer { display: none; }
 }
 .ex-link-main:hover { background: var(--bleu-fill-dark); border-color: var(--bleu-fill-dark); }
 
-@media (max-height: 700px) {
-  .ex-panel { padding: 0.6rem 9rem 3rem 1rem; font-size: clamp(12px, 1.2vw, 16px); }
-  .ex-ans { padding: 0.25em 0; }
-}
-
-@media (max-width: 760px), (max-aspect-ratio: 1/1) {
-  .ex-screen { grid-template-rows: minmax(0, 1.2fr) minmax(0, 1fr); }
-  .ex-panel { padding: 0.6rem 6rem 3.5rem 1rem; font-size: 1rem; }
-  .ex-side { right: 0.8rem; top: 0; bottom: 3rem; width: 60px; }
-  .ex-ring { width: 50px; height: 50px; }
-  .ex-bar { left: 1rem; right: 1rem; bottom: 0.3rem; }
-  .ex-yn { gap: 1.5rem; }
-}
-
 /* ============ RÉSULTAT EXAMEN ============ */
 .result.result-wide { max-width: 1200px; padding: 2rem 2rem 1.75rem; text-align: left; }
 .exam-result-head {
@@ -891,6 +879,21 @@ body.ex-immersive footer { display: none; }
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .exam-theme-score { font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--text); letter-spacing: 0.3px; }
+
+/* ============ RESPONSIVE ============ */
+@media (max-height: 700px) {
+  .ex-panel { padding: 0.6rem 9rem 3rem 1rem; font-size: clamp(12px, 1.2vw, 16px); }
+  .ex-ans { padding: 0.25em 0; }
+}
+
+@media (max-width: 760px), (max-aspect-ratio: 1/1) {
+  .ex-screen { grid-template-rows: minmax(0, 1.2fr) minmax(0, 1fr); }
+  .ex-panel { padding: 0.6rem 6rem 3.5rem 1rem; font-size: 1rem; }
+  .ex-side { right: 0.8rem; top: 0; bottom: 3rem; width: 60px; }
+  .ex-ring { width: 50px; height: 50px; }
+  .ex-bar { left: 1rem; right: 1rem; bottom: 0.3rem; }
+  .ex-yn { gap: 1.5rem; }
+}
 
 @media (max-width: 900px) {
   .dashboard-header { grid-template-columns: 1fr; padding: 1.5rem; text-align: center; }
