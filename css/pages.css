@@ -960,7 +960,7 @@ body.ex-immersive footer { display: none; }
 
 /* Image en haut (60%) */
 .ex-media {
-  flex: 0 0 60%;
+  flex: 0 0 45%;
   min-height: 0;
   background: #000;
   display: flex;
@@ -990,7 +990,7 @@ body.ex-immersive footer { display: none; }
   overflow-x: hidden;
   background: #0a0a0a;
   border-top: 1px solid #1f1f1f;
-  padding: 1.5rem 4rem 4rem 4rem;
+  padding: 1rem 6rem 5rem 4rem;
   font-size: clamp(14px, 1.6vw, 22px);
 }
 .ex-panel-main { width: 100%; max-width: 900px; }
