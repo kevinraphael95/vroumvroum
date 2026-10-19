@@ -206,7 +206,7 @@ body.ex-immersive footer { display: none; }
   left: 0; right: 0; bottom: 0;
   z-index: 40;
   display: grid;
-  grid-template-rows: minmax(0, 3.5fr) minmax(0, 1.5fr); /* Image = 70%, Texte = 30% */
+  grid-template-rows: minmax(0, 4fr) minmax(0, 1fr); /* Image = 80%, Texte = 20% */
   background: var(--bg);
   color: var(--text);
   font-family: Arial, Helvetica, sans-serif;
@@ -234,7 +234,7 @@ body.ex-immersive footer { display: none; }
 .ex-panel {
   position: relative;
   min-height: 0;
-  overflow: hidden;
+  overflow-y: auto; /* Permet de scroller si le texte est trop long */
   background: var(--bg);
   border-top: 1px solid var(--border);
   padding: 1rem 10rem 4rem;
@@ -252,20 +252,20 @@ body.ex-immersive footer { display: none; }
   justify-content: center;
 }
 
-/* On réduit un peu la taille du texte pour qu'il rentre dans les 30% */
+/* On réduit la taille du texte pour qu'il rentre dans les 20% */
 .ex-q { 
   font-weight: 700; 
-  font-size: clamp(12px, 1.5vh, 18px); 
-  line-height: 1.3; 
-  margin: 0 0 0.8em 0; 
+  font-size: clamp(12px, 1.3vh, 16px); 
+  line-height: 1.2; 
+  margin: 0 0 0.5em 0; 
   color: var(--text); 
   padding-left: 0.4em; 
 }
 .ex-stmt { 
   font-weight: 700; 
-  margin: 0.2em 0 0.1em 0; 
-  line-height: 1.3; 
-  font-size: clamp(11px, 1.4vh, 16px); 
+  margin: 0.1em 0 0.1em 0; 
+  line-height: 1.2; 
+  font-size: clamp(11px, 1.2vh, 15px); 
   color: var(--text); 
   padding-left: 0.4em; 
 }
@@ -280,9 +280,9 @@ body.ex-immersive footer { display: none; }
   border: 0;
   color: var(--bleu);
   font: inherit;
-  font-size: clamp(11px, 1.4vh, 16px);
-  line-height: 1.3;
-  padding: 0.3em 0;
+  font-size: clamp(11px, 1.2vh, 15px);
+  line-height: 1.2;
+  padding: 0.2em 0;
   cursor: pointer;
   text-align: left;
   transition: color 0.15s;
@@ -311,7 +311,7 @@ body.ex-immersive footer { display: none; }
 .ex-yn {
   display: flex;
   gap: 2rem;
-  margin: 0.2em 0 0.4em 0;
+  margin: 0.1em 0 0.2em 0;
   max-width: 480px;
 }
 .ex-yn .ex-ans { width: auto; flex: 1 1 0; }
