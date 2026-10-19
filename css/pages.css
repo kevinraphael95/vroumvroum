@@ -244,6 +244,8 @@ body.ex-immersive footer { display: none; }
 }
 .ex-panel-main {
   width: 100%;
+  max-width: 880px;
+  margin: 0 auto;
   flex: 1;
   min-height: 0;
   display: flex;
