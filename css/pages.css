@@ -250,8 +250,9 @@ body.ex-immersive footer { display: none; }
   min-height: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-}
+  justify-content: flex-start;
+  overflow-y: auto;
+}   
 
 .ex-q {
   font-weight: 700;
