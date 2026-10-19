@@ -206,7 +206,7 @@ body.ex-immersive footer { display: none; }
   left: 0; right: 0; bottom: 0;
   z-index: 40;
   display: grid;
-  grid-template-rows: 48vh 1fr;
+  grid-template-rows: minmax(0, 1.3fr) minmax(0, 1fr);
   background: var(--bg);
   color: var(--text);
   font-family: Arial, Helvetica, sans-serif;
@@ -237,34 +237,33 @@ body.ex-immersive footer { display: none; }
   overflow: hidden;
   background: var(--bg);
   border-top: 1px solid var(--border);
-  padding: 1.25rem 2rem 1rem 2rem;
-  font-size: 1rem;
+  padding: 1rem 10rem 4rem;
+  font-size: clamp(13px, 1.3vw, 18px);
   display: flex;
   flex-direction: column;
-}   
+}
 .ex-panel-main {
   width: 100%;
-  max-width: 880px;
+  max-width: 720px;
   margin: 0 auto;
   flex: 1;
   min-height: 0;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  padding-bottom: 0.5rem;
-}   
+  justify-content: center;
+}
 
 .ex-q {
   font-weight: 700;
-  font-size: 1em;
+  font-size: 1.05em;
   line-height: 1.35;
-  margin: 0 0 0.6em 0;
+  margin: 0 0 1em 0;
   color: var(--text);
   padding-left: 0.4em;
 }
 .ex-stmt {
   font-weight: 700;
-  margin: 0.15em 0 0.05em 0;
+  margin: 0.3em 0 0.1em 0;
   line-height: 1.35;
   font-size: 1em;
   color: var(--text);
@@ -274,8 +273,8 @@ body.ex-immersive footer { display: none; }
 .ex-answers { margin: 0; padding-left: 2em; max-width: 640px; }
 .ex-ans {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  align-items: baseline;
+  gap: 0;
   width: 100%;
   background: none;
   border: 0;
@@ -283,25 +282,15 @@ body.ex-immersive footer { display: none; }
   font: inherit;
   font-size: 1em;
   line-height: 1.4;
-  padding: 0.2em 0;
+  padding: 0.4em 0;
   cursor: pointer;
   text-align: left;
   transition: color 0.15s;
 }
 .ex-ans:hover { color: var(--bleu-dark); }
 .ex-ans:focus-visible { outline: 2px solid var(--bleu); outline-offset: 4px; }
-.ex-ans-text {
-  flex: 0 1 auto;
-  padding-right: 0.4em;
-  max-width: calc(100% - 3em);
-}
-.ex-dots {
-  flex: 1;
-  min-width: 10px;
-  border-bottom: 2px dotted var(--border);
-  margin: 0 0.5em 0.35em 0.5em;
-  align-self: flex-end;
-}
+.ex-ans-text { flex: 0 0 auto; padding-right: 0.4em; }
+.ex-dots { flex: 1; min-width: 20px; border-bottom: 2px dotted var(--border); margin: 0 0.5em 0.35em 0.5em; align-self: flex-end; }
 .ex-key {
   display: inline-flex;
   align-items: center;
@@ -322,7 +311,7 @@ body.ex-immersive footer { display: none; }
 .ex-yn {
   display: flex;
   gap: 2rem;
-  margin: 0.1em 0 0.25em 0;
+  margin: 0.2em 0 0.4em 0;
   max-width: 480px;
 }
 .ex-yn .ex-ans { width: auto; flex: 1 1 0; }
@@ -332,7 +321,7 @@ body.ex-immersive footer { display: none; }
   position: absolute;
   right: 1.5rem;
   top: 0;
-  bottom: 1rem;
+  bottom: 3.5rem;
   width: 80px;
   display: flex;
   flex-direction: column;
@@ -357,7 +346,10 @@ body.ex-immersive footer { display: none; }
 .ex-secs { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 .ex-bar {
-  flex-shrink: 0;
+  position: absolute;
+  left: 2rem;
+  right: 1.5rem;
+  bottom: 0.8rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -365,7 +357,6 @@ body.ex-immersive footer { display: none; }
   font-size: 0.85rem;
   color: var(--text-muted);
   padding-top: 0.6rem;
-  margin-top: 0.5rem;
   border-top: 1px solid var(--border);
 }
 .ex-count strong { color: var(--text); font-weight: 700; }
@@ -443,16 +434,17 @@ body.ex-immersive footer { display: none; }
 
 /* ============ RESPONSIVE ============ */
 @media (max-height: 700px) {
-  .ex-panel { padding: 0.6rem 9rem 0.75rem 2rem; font-size: clamp(12px, 1.2vw, 16px); }
-  .ex-ans { padding: 0.2em 0; }
+  .ex-panel { padding: 0.6rem 9rem 3.5rem; font-size: clamp(12px, 1.2vw, 16px); }
+  .ex-ans { padding: 0.3em 0; }
 }
 
 @media (max-width: 760px), (max-aspect-ratio: 1/1) {
   .ex-screen { grid-template-rows: minmax(0, 1.2fr) minmax(0, 1fr); }
-  .ex-panel { padding: 0.6rem 6rem 0.75rem 1.5rem; font-size: 1rem; }
+  .ex-panel { padding: 0.6rem 6rem 4rem 1.5rem; font-size: 1rem; }
   .ex-panel-main { margin: 0; }
-  .ex-side { right: 0.8rem; top: 0; bottom: 0.75rem; width: 60px; }
+  .ex-side { right: 0.8rem; top: 0; bottom: 3rem; width: 60px; }
   .ex-ring { width: 50px; height: 50px; }
+  .ex-bar { left: 1rem; right: 1rem; bottom: 0.3rem; }
   .ex-yn { gap: 1.5rem; max-width: none; }
 }
 
@@ -483,4 +475,4 @@ body.ex-immersive footer { display: none; }
   .exam-result-score-sep, .exam-result-score-total { font-size: 1.2rem; }
   .exam-result-body { grid-template-columns: 1fr; gap: 1.5rem; }
   .exam-detail { min-height: 0; }
-}   
+}
