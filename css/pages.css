@@ -251,7 +251,6 @@ body.ex-immersive footer { display: none; }
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  overflow-y: auto;
   padding-bottom: 0.5rem;
 }
 
