@@ -238,7 +238,7 @@ body.ex-immersive footer { display: none; }
   background: var(--bg);
   border-top: 1px solid var(--border);
   padding: 1rem 10rem 4rem;
-  font-size: clamp(13px, 1.3vw, 18px);
+  font-size: clamp(11px, 1.1vw, 15px);
   display: flex;
   flex-direction: column;
 }
