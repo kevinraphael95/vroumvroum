@@ -206,7 +206,7 @@ body.ex-immersive footer { display: none; }
   left: 0; right: 0; bottom: 0;
   z-index: 40;
   display: grid;
-  grid-template-rows: minmax(0, 1.3fr) minmax(0, 1fr);
+  grid-template-rows: 40vh 1fr; /* Image limitée à 40% de la hauteur, le reste pour le texte */
   background: var(--bg);
   color: var(--text);
   font-family: Arial, Helvetica, sans-serif;
@@ -237,14 +237,14 @@ body.ex-immersive footer { display: none; }
   overflow: hidden;
   background: var(--bg);
   border-top: 1px solid var(--border);
-  padding: 1rem 10rem 4rem;
-  font-size: clamp(11px, 1.1vw, 15px);
+  padding: 1.5rem 6rem 4rem 2rem;
+  font-size: 1.2rem; /* Taille de texte grande et lisible comme à l'examen officiel */
   display: flex;
   flex-direction: column;
 }
 .ex-panel-main {
   width: 100%;
-  max-width: 720px;
+  max-width: 880px; /* Conteneur élargi pour bien étaler les phrases longues */
   margin: 0 auto;
   flex: 1;
   min-height: 0;
