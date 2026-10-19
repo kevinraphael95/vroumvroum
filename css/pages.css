@@ -205,8 +205,8 @@ body.ex-immersive footer { display: none; }
   top: var(--nav-h, 70px);
   left: 0; right: 0; bottom: 0;
   z-index: 40;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: minmax(0, 3.5fr) minmax(0, 1.5fr); /* Image = 70%, Texte = 30% */
   background: var(--bg);
   color: var(--text);
   font-family: Arial, Helvetica, sans-serif;
@@ -214,15 +214,12 @@ body.ex-immersive footer { display: none; }
 }
 
 .ex-media {
-  flex: 0 0 auto; 
-  max-height: 50vh; /* L'image prend 50% de l'écran */
+  min-height: 0;
   background: var(--bg);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  padding: 0.5rem;
-  border-bottom: 1px solid var(--border);
 }
 .ex-media img {
   max-width: 100%;
@@ -235,35 +232,40 @@ body.ex-immersive footer { display: none; }
 .ex-media .ex-missing { color: var(--text-muted); font-size: 0.9rem; }
 
 .ex-panel {
-  flex: 1 1 0;
+  position: relative;
   min-height: 0;
-  overflow-y: auto; /* Permet de scroller si le texte est très long */
+  overflow: hidden;
   background: var(--bg);
-  padding: 1rem 8rem 4rem 1rem;
+  border-top: 1px solid var(--border);
+  padding: 1rem 10rem 4rem;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* Centre le texte dans l'espace restant */
 }
 .ex-panel-main {
   width: 100%;
   max-width: 720px;
   margin: 0 auto;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-/* Le texte s'adapte à la taille de l'écran pour ne jamais déborder */
+/* On réduit un peu la taille du texte pour qu'il rentre dans les 30% */
 .ex-q { 
   font-weight: 700; 
-  font-size: clamp(14px, 1.8vh, 22px); 
-  line-height: 1.35; 
-  margin: 0 0 1em 0; 
+  font-size: clamp(12px, 1.5vh, 18px); 
+  line-height: 1.3; 
+  margin: 0 0 0.8em 0; 
   color: var(--text); 
   padding-left: 0.4em; 
 }
 .ex-stmt { 
   font-weight: 700; 
-  margin: 0.3em 0 0.1em 0; 
-  line-height: 1.35; 
-  font-size: clamp(13px, 1.7vh, 20px); 
+  margin: 0.2em 0 0.1em 0; 
+  line-height: 1.3; 
+  font-size: clamp(11px, 1.4vh, 16px); 
   color: var(--text); 
   padding-left: 0.4em; 
 }
@@ -278,9 +280,9 @@ body.ex-immersive footer { display: none; }
   border: 0;
   color: var(--bleu);
   font: inherit;
-  font-size: clamp(13px, 1.6vh, 20px); /* La taille des réponses s'adapte aussi */
-  line-height: 1.4;
-  padding: 0.4em 0;
+  font-size: clamp(11px, 1.4vh, 16px);
+  line-height: 1.3;
+  padding: 0.3em 0;
   cursor: pointer;
   text-align: left;
   transition: color 0.15s;
@@ -432,12 +434,13 @@ body.ex-immersive footer { display: none; }
 
 /* ============ RESPONSIVE ============ */
 @media (max-height: 700px) {
-  .ex-panel { padding: 0.6rem 9rem 3.5rem 1.5rem; }
+  .ex-panel { padding: 0.6rem 9rem 3.5rem; }
   .ex-ans { padding: 0.3em 0; }
 }
 
 @media (max-width: 760px), (max-aspect-ratio: 1/1) {
-  .ex-panel { padding: 0.6rem 6rem 4rem 1.5rem; }
+  .ex-screen { grid-template-rows: minmax(0, 1.2fr) minmax(0, 1fr); }
+  .ex-panel { padding: 0.6rem 6rem 4rem 1.5rem; font-size: 1rem; }
   .ex-panel-main { margin: 0; }
   .ex-side { right: 0.8rem; top: 0; bottom: 3rem; width: 60px; }
   .ex-ring { width: 50px; height: 50px; }
