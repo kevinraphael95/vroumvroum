@@ -206,7 +206,7 @@ body.ex-immersive footer { display: none; }
   left: 0; right: 0; bottom: 0;
   z-index: 40;
   display: grid;
-  grid-template-rows: minmax(0, 1.3fr) minmax(0, 1fr);
+  grid-template-rows: 45vh 1fr; /* Image fixée à 45% de la hauteur, le reste pour le texte */
   background: var(--bg);
   color: var(--text);
   font-family: Arial, Helvetica, sans-serif;
@@ -237,14 +237,14 @@ body.ex-immersive footer { display: none; }
   overflow: hidden;
   background: var(--bg);
   border-top: 1px solid var(--border);
-  padding: 1rem 10rem 4rem;
-  font-size: clamp(13px, 1.3vw, 18px);
+  padding: 1.25rem 7rem 4rem 2rem;
+  font-size: 1.15rem; /* Taille de police normale et lisible comme à l'examen */
   display: flex;
   flex-direction: column;
 }
 .ex-panel-main {
   width: 100%;
-  max-width: 720px;
+  max-width: 880px;
   margin: 0 auto;
   flex: 1;
   min-height: 0;
