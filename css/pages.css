@@ -215,7 +215,7 @@ body.ex-immersive footer { display: none; }
 
 .ex-media {
   flex: 0 0 auto; 
-  max-height: 40vh; /* On réduit un peu plus la zone d'image pour laisser de la place au texte */
+  max-height: 50vh; /* L'image prend 50% de l'écran */
   background: var(--bg);
   display: flex;
   align-items: center;
@@ -237,12 +237,12 @@ body.ex-immersive footer { display: none; }
 .ex-panel {
   flex: 1 1 0;
   min-height: 0;
+  overflow-y: auto; /* Permet de scroller si le texte est très long */
   background: var(--bg);
   padding: 1rem 8rem 4rem 1rem;
   display: flex;
   flex-direction: column;
-  /* Le texte prend toute la place restante et se centre */
-  justify-content: center; 
+  justify-content: center; /* Centre le texte dans l'espace restant */
 }
 .ex-panel-main {
   width: 100%;
@@ -250,7 +250,7 @@ body.ex-immersive footer { display: none; }
   margin: 0 auto;
 }
 
-/* ICI LA MAGIE : le texte s'adapte à la taille de l'écran pour ne jamais déborder */
+/* Le texte s'adapte à la taille de l'écran pour ne jamais déborder */
 .ex-q { 
   font-weight: 700; 
   font-size: clamp(14px, 1.8vh, 22px); 
