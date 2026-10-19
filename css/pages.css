@@ -244,15 +244,13 @@ body.ex-immersive footer { display: none; }
 }
 .ex-panel-main {
   width: 100%;
-  max-width: 880px;
-  margin: 0 auto;
   flex: 1;
   min-height: 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   padding-bottom: 0.5rem;
-}
+}   
 
 .ex-q {
   font-weight: 700;
