@@ -238,7 +238,7 @@ body.ex-immersive footer { display: none; }
   background: var(--bg);
   border-top: 1px solid var(--border);
   padding: 1.25rem 7rem 1rem 2rem;
-  font-size: 1.15rem;
+  font-size: 1rem;
   display: flex;
   flex-direction: column;
 }
@@ -256,15 +256,15 @@ body.ex-immersive footer { display: none; }
 
 .ex-q {
   font-weight: 700;
-  font-size: 1.05em;
+  font-size: 1em;
   line-height: 1.35;
-  margin: 0 0 1em 0;
+  margin: 0 0 0.6em 0;
   color: var(--text);
   padding-left: 0.4em;
 }
 .ex-stmt {
   font-weight: 700;
-  margin: 0.3em 0 0.1em 0;
+  margin: 0.15em 0 0.05em 0;
   line-height: 1.35;
   font-size: 1em;
   color: var(--text);
@@ -283,7 +283,7 @@ body.ex-immersive footer { display: none; }
   font: inherit;
   font-size: 1em;
   line-height: 1.4;
-  padding: 0.4em 0;
+  padding: 0.2em 0;
   cursor: pointer;
   text-align: left;
   transition: color 0.15s;
@@ -322,7 +322,7 @@ body.ex-immersive footer { display: none; }
 .ex-yn {
   display: flex;
   gap: 2rem;
-  margin: 0.2em 0 0.4em 0;
+  margin: 0.1em 0 0.25em 0;
   max-width: 480px;
 }
 .ex-yn .ex-ans { width: auto; flex: 1 1 0; }
@@ -444,7 +444,7 @@ body.ex-immersive footer { display: none; }
 /* ============ RESPONSIVE ============ */
 @media (max-height: 700px) {
   .ex-panel { padding: 0.6rem 9rem 0.75rem 2rem; font-size: clamp(12px, 1.2vw, 16px); }
-  .ex-ans { padding: 0.3em 0; }
+  .ex-ans { padding: 0.2em 0; }
 }
 
 @media (max-width: 760px), (max-aspect-ratio: 1/1) {
