@@ -232,28 +232,34 @@
   }
 
   function renderQuestion() {
-    const item = items[idx];
-    const q = item.q;
+      const item = items[idx];
+      const q = item.q;
 
-    $('ex-num').textContent = pad(idx + 1);
-    $('ex-total').textContent = ' / ' + pad(items.length);
-    $('ex-question').textContent = q.question;
-    $('ex-mode').textContent = item.multi ? 'Plusieurs réponses' : 'Une réponse';
-    buildFigure($('ex-figure'), q);
+      $('ex-num').textContent = pad(idx + 1);
+      $('ex-total').textContent = ' / ' + pad(items.length);
+    
+      // 1. Afficher uniquement l'intitulé principal de la question dans .ex-q
+      $('ex-question').textContent = q.question;
+    
+      $('ex-mode').textContent = item.multi ? 'Plusieurs réponses' : 'Une réponse';
+      buildFigure($('ex-figure'), q);
 
-    const box = $('ex-answers');
-    box.innerHTML = '';
-    if (item.kind === 'choix') {
-      item.choix.forEach((c, i) => box.appendChild(answerButton(c.texte, i)));
-    } else {
-      q.affirmations.forEach((a, i) => {
-        box.appendChild(el('p', 'ex-stmt', a.texte));
-        const row = el('div', 'ex-yn');
-        row.appendChild(answerButton('OUI', 2 * i));
-        row.appendChild(answerButton('NON', 2 * i + 1));
-        box.appendChild(row);
-      });
-    }
+      const box = $('ex-answers');
+      box.innerHTML = '';
+    
+      if (item.kind === 'choix') {
+        item.choix.forEach((c, i) => box.appendChild(answerButton(c.texte, i)));
+      } else {
+        // 2. Pour les questions de type "oui-non", on affiche chaque sous-affirmation 
+        // proprement dans son bloc .ex-stmt sans la dupliquer dans l'intitulé principal.
+        q.affirmations.forEach((a, i) => {
+          box.appendChild(el('p', 'ex-stmt', a.texte));
+          const row = el('div', 'ex-yn');
+          row.appendChild(answerButton('OUI', 2 * i));
+          row.appendChild(answerButton('NON', 2 * i + 1));
+          box.appendChild(row);
+        });
+      }
 
     $('ex-next').textContent = (idx === items.length - 1) ? 'Terminer' : 'Valider';
     startQTimer(q.duree || CFG.dureeQuestionSec);
