@@ -237,7 +237,7 @@ body.ex-immersive footer { display: none; }
   overflow: hidden;
   background: var(--bg);
   border-top: 1px solid var(--border);
-  padding: 1rem 10rem 4rem;
+  padding: 0.6rem 10rem 4rem;
   font-size: clamp(13px, 1.3vw, 18px);
   display: flex;
   flex-direction: column;
@@ -250,7 +250,7 @@ body.ex-immersive footer { display: none; }
   min-height: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   overflow: hidden;
 }
 
@@ -258,13 +258,13 @@ body.ex-immersive footer { display: none; }
   font-weight: 700;
   font-size: 1.05em;
   line-height: 1.35;
-  margin: 0 0 1em 0;
+  margin: 0 0 0.6em 0;
   color: var(--text);
   padding-left: 0.4em;
 }
 .ex-stmt {
   font-weight: 700;
-  margin: 0.3em 0 0.1em 0;
+  margin: 0.15em 0 0.05em 0;
   line-height: 1.35;
   font-size: 1em;
   color: var(--text);
@@ -274,7 +274,7 @@ body.ex-immersive footer { display: none; }
 .ex-answers { margin: 0; padding-left: 2em; max-width: 640px; }
 .ex-ans {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 0;
   width: 100%;
   background: none;
@@ -283,7 +283,7 @@ body.ex-immersive footer { display: none; }
   font: inherit;
   font-size: 1em;
   line-height: 1.4;
-  padding: 0.4em 0;
+  padding: 0.3em 0;
   cursor: pointer;
   text-align: left;
   transition: color 0.15s;
@@ -312,7 +312,7 @@ body.ex-immersive footer { display: none; }
 .ex-yn {
   display: flex;
   gap: 2rem;
-  margin: 0.2em 0 0.4em 0;
+  margin: 0.1em 0 0.25em 0;
   max-width: 480px;
 }
 .ex-yn .ex-ans { width: auto; flex: 1 1 0; }
@@ -435,13 +435,13 @@ body.ex-immersive footer { display: none; }
 
 /* ============ RESPONSIVE ============ */
 @media (max-height: 700px) {
-  .ex-panel { padding: 0.6rem 9rem 3.5rem; font-size: clamp(12px, 1.2vw, 16px); }
-  .ex-ans { padding: 0.3em 0; }
+  .ex-panel { padding: 0.4rem 9rem 3.5rem; font-size: clamp(12px, 1.2vw, 16px); }
+  .ex-ans { padding: 0.2em 0; }
 }
 
 @media (max-width: 760px), (max-aspect-ratio: 1/1) {
   .ex-screen { grid-template-rows: minmax(0, 1.2fr) minmax(0, 1fr); }
-  .ex-panel { padding: 0.6rem 6rem 4rem 1.5rem; font-size: 1rem; }
+  .ex-panel { padding: 0.4rem 6rem 4rem 1.5rem; font-size: 1rem; }
   .ex-panel-main { margin: 0; }
   .ex-side { right: 0.8rem; top: 0; bottom: 3rem; width: 60px; }
   .ex-ring { width: 50px; height: 50px; }
@@ -476,4 +476,4 @@ body.ex-immersive footer { display: none; }
   .exam-result-score-sep, .exam-result-score-total { font-size: 1.2rem; }
   .exam-result-body { grid-template-columns: 1fr; gap: 1.5rem; }
   .exam-detail { min-height: 0; }
-}
+}   
