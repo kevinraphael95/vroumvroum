@@ -200,21 +200,24 @@ body.ex-immersive footer { display: none; }
 .ex-best { font-weight: 700; color: var(--bleu); margin: 0 0 1rem; }
 .ex-warn { background: var(--jaune-soft); color: #422006; border-radius: var(--radius); padding: 0.75rem 1rem; margin: 0 auto 1.25rem; max-width: 520px; font-size: 0.92rem; }
 
+/* L'ECRAN D'EXAMEN : On utilise flex pour que l'image prenne sa taille et que le texte s'adapte */
 .ex-screen {
   position: fixed;
   top: var(--nav-h, 70px);
   left: 0; right: 0; bottom: 0;
   z-index: 40;
-  display: grid;
-  grid-template-rows: minmax(0, 4fr) minmax(0, 1fr); /* Image = 80%, Texte = 20% */
+  display: flex;
+  flex-direction: column;
   background: var(--bg);
   color: var(--text);
   font-family: Arial, Helvetica, sans-serif;
   overflow: hidden;
 }
 
+/* L'IMAGE : Elle prend toute la place disponible en haut, jusqu'à 75% de l'écran */
 .ex-media {
-  min-height: 0;
+  flex: 0 1 auto;
+  max-height: 75vh; 
   background: var(--bg);
   display: flex;
   align-items: center;
@@ -231,13 +234,14 @@ body.ex-immersive footer { display: none; }
 }
 .ex-media .ex-missing { color: var(--text-muted); font-size: 0.9rem; }
 
+/* LE TEXTE : Il prend le reste de la place, avec un scroll si jamais c'est trop long */
 .ex-panel {
-  position: relative;
+  flex: 1 1 auto;
   min-height: 0;
-  overflow-y: auto; /* Permet de scroller si le texte est trop long */
+  overflow-y: auto;
   background: var(--bg);
   border-top: 1px solid var(--border);
-  padding: 1rem 10rem 4rem;
+  padding: 1rem 8rem 4rem 2rem;
   display: flex;
   flex-direction: column;
 }
@@ -245,27 +249,22 @@ body.ex-immersive footer { display: none; }
   width: 100%;
   max-width: 720px;
   margin: 0 auto;
-  flex: 1;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 }
 
-/* On réduit la taille du texte pour qu'il rentre dans les 20% */
+/* On adapte la taille du texte pour qu'il soit lisible sans prendre trop de place */
 .ex-q { 
   font-weight: 700; 
-  font-size: clamp(12px, 1.3vh, 16px); 
-  line-height: 1.2; 
-  margin: 0 0 0.5em 0; 
+  font-size: clamp(14px, 1.8vh, 20px); 
+  line-height: 1.35; 
+  margin: 0 0 0.8em 0; 
   color: var(--text); 
   padding-left: 0.4em; 
 }
 .ex-stmt { 
   font-weight: 700; 
-  margin: 0.1em 0 0.1em 0; 
-  line-height: 1.2; 
-  font-size: clamp(11px, 1.2vh, 15px); 
+  margin: 0.2em 0 0.1em 0; 
+  line-height: 1.35; 
+  font-size: clamp(13px, 1.7vh, 18px); 
   color: var(--text); 
   padding-left: 0.4em; 
 }
@@ -280,9 +279,9 @@ body.ex-immersive footer { display: none; }
   border: 0;
   color: var(--bleu);
   font: inherit;
-  font-size: clamp(11px, 1.2vh, 15px);
-  line-height: 1.2;
-  padding: 0.2em 0;
+  font-size: clamp(13px, 1.7vh, 18px);
+  line-height: 1.35;
+  padding: 0.3em 0;
   cursor: pointer;
   text-align: left;
   transition: color 0.15s;
@@ -311,7 +310,7 @@ body.ex-immersive footer { display: none; }
 .ex-yn {
   display: flex;
   gap: 2rem;
-  margin: 0.1em 0 0.2em 0;
+  margin: 0.2em 0 0.4em 0;
   max-width: 480px;
 }
 .ex-yn .ex-ans { width: auto; flex: 1 1 0; }
@@ -434,12 +433,11 @@ body.ex-immersive footer { display: none; }
 
 /* ============ RESPONSIVE ============ */
 @media (max-height: 700px) {
-  .ex-panel { padding: 0.6rem 9rem 3.5rem; }
+  .ex-panel { padding: 0.6rem 9rem 3.5rem 1.5rem; }
   .ex-ans { padding: 0.3em 0; }
 }
 
 @media (max-width: 760px), (max-aspect-ratio: 1/1) {
-  .ex-screen { grid-template-rows: minmax(0, 1.2fr) minmax(0, 1fr); }
   .ex-panel { padding: 0.6rem 6rem 4rem 1.5rem; font-size: 1rem; }
   .ex-panel-main { margin: 0; }
   .ex-side { right: 0.8rem; top: 0; bottom: 3rem; width: 60px; }
