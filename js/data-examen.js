@@ -38,10 +38,6 @@
    Correction : une question est juste si TOUTES les réponses sont justes
    (toutes les bonnes cochées et aucune mauvaise ; chaque affirmation
    OUI/NON bien jugée). Pas de réponse = faux.
-
-   LES 10 QUESTIONS CI-DESSOUS SONT DES PLACEHOLDERS : images
-   schématiques dessinées pour l'occasion. Remplace-les par ta base
-   (images dans images/examen/, dont tu as les droits).
    ========================================================= */
 
 const EXAMEN_CONFIG = {
@@ -53,103 +49,337 @@ const EXAMEN_CONFIG = {
 
 const EXAMEN_QUESTIONS = [
 
-  { id: "ex-001", image: "images/examen/q01.svg", alt: "Panneau triangulaire à bordure rouge avec un point d'exclamation",
-    fiche: "signalisation-panneaux",
-    question: "Que signale un panneau de cette forme (triangle à bordure rouge) ?",
+  { id: "A01", image: "images/examen/A01.png", alt: "Parking", fiche: "stationnement",
+    question: "Dans ce parking, le stationnement est :",
     reponses: [
-      { texte: "Un danger", correcte: true },
-      { texte: "Une interdiction", correcte: false },
-      { texte: "Une obligation", correcte: false },
-      { texte: "Une simple indication", correcte: false }
+      { texte: "gratuit", correcte: true },
+      { texte: "payant", correcte: false },
+      { texte: "à durée limitée", correcte: false }
     ],
-    explication: "Les panneaux triangulaires à bordure rouge annoncent un danger." },
+    explication: "Le panneau indique que le stationnement est gratuit à cet endroit." },
 
-  { id: "ex-002", type: "oui-non", image: "images/examen/q02.svg", alt: "Disque rouge avec une barre blanche horizontale",
-    fiche: "signalisation-panneaux",
-    question: "Ce panneau :",
+  { id: "A02", image: "images/examen/A02.png", alt: "Conduite et téléphone", fiche: "conducteur",
+    question: "La lecture d'un SMS ou d'une notification en conduisant multiplie le risque d'accident par :",
+    reponses: [
+      { texte: "5", correcte: false },
+      { texte: "10", correcte: false },
+      { texte: "23", correcte: true }
+    ],
+    explication: "Lire un SMS au volant multiplie par 23 le risque d'accident." },
+
+  { id: "A03", image: "images/examen/A03.png", alt: "Passage à niveau", fiche: "zones-dangereuses",
+    question: "La barrière du passage à niveau est endommagée, j'utilise ce téléphone :",
+    reponses: [
+      { texte: "OUI", correcte: true },
+      { texte: "NON", correcte: false }
+    ],
+    explication: "Oui, il faut utiliser la borne d'appel du passage à niveau pour signaler le problème." },
+
+  { id: "A04", type: "oui-non", image: "images/examen/A04.png", alt: "Véhicule électrique", fiche: "ecomobilite",
+    question: "L'autonomie d'un véhicule électrique varie en fonction :",
     affirmations: [
-      { texte: "interdit d'entrer dans cette voie", vrai: true },
-      { texte: "indique une route prioritaire", vrai: false }
+      { texte: "du style de conduite", vrai: true },
+      { texte: "du niveau de charge de la batterie de traction", vrai: true }
     ],
-    explication: "Le disque rouge à barre blanche est le panneau de sens interdit." },
+    explication: "L'autonomie dépend du style de conduite et du niveau de charge de la batterie." },
 
-  { id: "ex-003", image: "images/examen/q03.svg", alt: "Panneau octogonal rouge STOP",
-    fiche: "panneaux-priorite",
-    question: "Vous arrivez à ce panneau. Que devez-vous faire ?",
-    reponses: [
-      { texte: "M'arrêter complètement à la ligne d'effet", correcte: true },
-      { texte: "Ralentir et m'arrêter seulement si un véhicule arrive", correcte: false },
-      { texte: "Ralentir sans m'arrêter si la route est libre", correcte: false }
-    ],
-    explication: "Le Stop impose un arrêt complet à la ligne d'effet, même si aucun autre véhicule n'est visible." },
-
-  { id: "ex-004", type: "oui-non", image: "images/examen/q04.svg", alt: "Route à double sens avec ligne centrale continue ; voiture bleue derrière un véhicule orange",
-    fiche: "marquage",
-    question: "Vous êtes le véhicule bleu :",
+  { id: "A05", type: "oui-non", image: "images/examen/A05.png", alt: "Dépassement d'un piéton", fiche: "autres-usagers",
+    question: "En dépassant, le conducteur de ce véhicule risque de ne pas détecter le piéton / Le piéton s'assure d'avoir été vu avant de s'engager :",
     affirmations: [
-      { texte: "je peux dépasser le véhicule orange", vrai: false },
-      { texte: "la ligne continue m'interdit de la franchir", vrai: true }
+      { texte: "En dépassant, le conducteur risque de ne pas détecter le piéton", vrai: true },
+      { texte: "Le piéton s'assure d'avoir été vu avant de s'engager", vrai: true }
     ],
-    explication: "La ligne continue interdit de la franchir ou de la chevaucher." },
+    explication: "Le dépassement masque la vue du piéton. Le piéton doit toujours s'assurer d'être vu." },
 
-  { id: "ex-005", image: "images/examen/q05.svg", alt: "Route à double sens avec ligne centrale discontinue ; voiture bleue derrière un véhicule orange",
-    fiche: "croiser-depasser",
-    question: "Vous êtes le véhicule bleu. Pour dépasser le véhicule orange, il faut :",
+  { id: "A06", image: "images/examen/A06.png", alt: "Dégivrage pare-brise", fiche: "conditions-difficiles",
+    question: "Afin de dégivrer le pare-brise, il est préférable :",
     reponses: [
-      { texte: "une visibilité suffisante", correcte: true },
-      { texte: "qu'aucun véhicule n'arrive en face", correcte: true },
-      { texte: "avoir mis mon clignotant", correcte: true },
-      { texte: "avoir klaxonné", correcte: false }
+      { texte: "d'enclencher le désembuage et d'utiliser un grattoir", correcte: true },
+      { texte: "de verser de l'eau chaude", correcte: false }
     ],
-    explication: "Ligne discontinue, visibilité suffisante, aucun véhicule en face et clignotant : ce sont les conditions du dépassement." },
+    explication: "Ne jamais verser d'eau chaude sur un pare-brise gelé (risque de casse)." },
 
-  { id: "ex-006", type: "oui-non", image: "images/examen/q06.svg", alt: "Carrefour sans signalisation ; votre voiture bleue arrive par le bas, une voiture rouge arrive par la droite",
-    fiche: "priorites",
-    question: "Il n'y a aucune signalisation. Vous êtes le véhicule bleu :",
+  { id: "A07", image: "images/examen/A07.png", alt: "Clignotant", fiche: "circuler-communication",
+    question: "Souhaitant s'engager dans la circulation, l'automobiliste a actionné son clignotant gauche au bon moment :",
+    reponses: [
+      { texte: "OUI", correcte: false },
+      { texte: "NON", correcte: true }
+    ],
+    explication: "Le clignotant gauche ne doit pas être actionné trop tôt." },
+
+  { id: "A08", image: "images/examen/A08.png", alt: "Témoin d'alerte", fiche: "voyants",
+    question: "L'allumage de ce témoin m'impose l'arrêt. J'allume les feux de détresse :",
+    reponses: [
+      { texte: "immédiatement", correcte: false },
+      { texte: "après avoir ralenti", correcte: true },
+      { texte: "une fois sur la bande d'arrêt d'urgence", correcte: true }
+    ],
+    explication: "On ralentit d'abord, puis on allume les feux de détresse." },
+
+  { id: "A09", type: "oui-non", image: "images/examen/A09.png", alt: "Virage", fiche: "conditions-difficiles",
+    question: "Ce virage représente une zone de danger potentiel / Je peux y découvrir :",
     affirmations: [
-      { texte: "je dois céder le passage au véhicule rouge", vrai: true },
-      { texte: "je bénéficie de la priorité de passage", vrai: false }
+      { texte: "Ce virage représente une zone de danger potentiel", vrai: true },
+      { texte: "Je peux y découvrir un usager vulnérable", vrai: true }
     ],
-    explication: "Sans signalisation ni marquage, c'est la priorité à droite." },
+    explication: "Dans un virage sans visibilité, on peut découvrir un usager vulnérable." },
 
-  { id: "ex-007", image: "images/examen/q07.svg", alt: "Carrefour à sens giratoire ; votre voiture bleue attend à l'entrée, une voiture rouge circule dans l'anneau",
-    fiche: "giratoire",
-    question: "Vous êtes le véhicule bleu à l'entrée du giratoire :",
-    reponses: [
-      { texte: "je cède le passage au véhicule dans l'anneau", correcte: true },
-      { texte: "je m'engage : j'arrive par la droite", correcte: false },
-      { texte: "je mets mon clignotant à droite et je m'engage", correcte: false }
+  { id: "A10", type: "oui-non", image: "images/examen/A10.png", alt: "Voie de covoiturage", fiche: "circuler-regles",
+    question: "Ce panneau indique une voie réservée / Si je covoiture, je peux emprunter cette voie :",
+    affirmations: [
+      { texte: "Ce panneau indique une voie réservée", vrai: true },
+      { texte: "Si je covoiture, je peux emprunter cette voie", vrai: false }
     ],
-    explication: "Priorité aux véhicules déjà engagés sur l'anneau. Le clignotant à droite se met pour sortir, jamais pour entrer." },
+    explication: "La voie est réservée, le covoiturage n'y est pas forcément autorisé." },
 
-  { id: "ex-008", image: "images/examen/q08.svg", alt: "Deux voitures à la suite sur une route, avec une flèche entre elles",
-    fiche: "vitesse-consequences",
-    question: "Quelle distance de sécurité minimale laisser avec le véhicule qui vous précède ?",
+  { id: "A11", image: "images/examen/A11.png", alt: "Étiquette énergie", fiche: "choisir-vehicule",
+    question: "À l'achat d'un véhicule neuf, une étiquette énergie m'informe :",
     reponses: [
-      { texte: "au moins 2 secondes", correcte: true },
-      { texte: "1 seconde", correcte: false },
-      { texte: "une longueur de voiture", correcte: false }
+      { texte: "de la consommation moyenne en énergie", correcte: true },
+      { texte: "du niveau des émissions de CO2", correcte: true },
+      { texte: "du prix du véhicule", correcte: false }
     ],
-    explication: "Distance de sécurité = règle des 2 secondes. Elle augmente sur route mouillée." },
+    explication: "L'étiquette énergie renseigne sur la consommation et les émissions de CO2." },
 
-  { id: "ex-009", image: "images/examen/q09.svg", alt: "Véhicule arrêté sur la bande d'arrêt d'urgence avec les feux de détresse allumés",
-    fiche: "autoroute",
-    question: "Votre véhicule est en panne sur la bande d'arrêt d'urgence d'une autoroute :",
-    reponses: [
-      { texte: "j'allume mes feux de détresse", correcte: true },
-      { texte: "je mets un gilet de sécurité", correcte: true },
-      { texte: "je me mets avec les passagers derrière la glissière", correcte: true },
-      { texte: "je reste dans le véhicule, ceinture attachée", correcte: false }
+  { id: "A12", type: "oui-non", image: "images/examen/A12.png", alt: "Formation post-permis", fiche: "permis-points",
+    question: "La formation complémentaire post permis permet :",
+    affirmations: [
+      { texte: "de récupérer des points perdus", vrai: false },
+      { texte: "de réduire la durée de la période probatoire", vrai: true }
     ],
-    explication: "En cas de panne sur autoroute : warning, gilet, et se mettre à l'abri derrière la glissière." },
+    explication: "La formation post-permis réduit la période probatoire, mais ne permet pas de récupérer des points." },
 
-  { id: "ex-010", image: "images/examen/q10.svg", alt: "Feu tricolore avec le feu orange allumé",
-    fiche: "feux-agents",
-    question: "Le feu passe à l'orange fixe alors que vous approchez :",
+  { id: "A13", image: "images/examen/A13.png", alt: "Priorité", fiche: "priorites",
+    question: "Le conducteur de ce véhicule désire se garer. Il a la priorité sur le motard :",
     reponses: [
-      { texte: "je m'arrête, sauf si je ne peux plus le faire en sécurité", correcte: true },
-      { texte: "j'accélère pour passer avant le rouge", correcte: false },
-      { texte: "je passe : l'orange autorise toujours le passage", correcte: false }
+      { texte: "OUI", correcte: false },
+      { texte: "NON", correcte: true }
     ],
-    explication: "L'orange fixe impose l'arrêt, sauf si le conducteur ne peut plus s'arrêter dans des conditions de sécurité suffisantes." }
+    explication: "Le motard est déjà sur la chaussée." },
+
+  { id: "A14", type: "oui-non", image: "images/examen/A14.png", alt: "Allure réduite", fiche: "conducteur",
+    question: "Une allure anormalement réduite / J'actionne les feux de détresse :",
+    affirmations: [
+      { texte: "peut surprendre les autres usagers", vrai: true },
+      { texte: "J'actionne les feux de détresse", vrai: true }
+    ],
+    explication: "Une allure anormalement réduite doit être signalée par les feux de détresse." },
+
+  { id: "A15", image: "images/examen/A15.png", alt: "Tourner à gauche", fiche: "priorites",
+    question: "Pour tourner à gauche à cette intersection, je passe :",
+    reponses: [
+      { texte: "avant ce véhicule", correcte: false },
+      { texte: "après ce véhicule", correcte: true }
+    ],
+    explication: "Je cède le passage au véhicule venant en face." },
+
+  { id: "A16", image: "images/examen/A16.png", alt: "Pneus neige", fiche: "equipements",
+    question: "En période hivernale, si mon véhicule n'est pas équipé de 4 pneus neige, j'ai l'obligation d'avoir des chaînes à neige à bord :",
+    reponses: [
+      { texte: "OUI", correcte: true },
+      { texte: "NON", correcte: false }
+    ],
+    explication: "Dans certaines zones montagneuses, les chaînes sont obligatoires." },
+
+  { id: "A17", type: "oui-non", image: "images/examen/A17.png", alt: "ESP", fiche: "securite",
+    question: "L'ESP permet :",
+    affirmations: [
+      { texte: "de passer plus vite en virage", vrai: false },
+      { texte: "de réduire les distances de sécurité", vrai: false }
+    ],
+    explication: "L'ESP est un correcteur de trajectoire, il ne permet pas de rouler plus vite." },
+
+  { id: "A18", type: "oui-non", image: "images/examen/A18.png", alt: "Allure adaptée", fiche: "vitesse-consequences",
+    question: "Mon allure est adaptée à la situation / Je me décale le plus à droite possible :",
+    affirmations: [
+      { texte: "Mon allure est adaptée à la situation", vrai: false },
+      { texte: "Je me décale le plus à droite possible", vrai: true }
+    ],
+    explication: "Il faut adapter sa vitesse et se décaler pour laisser passer." },
+
+  { id: "A19", image: "images/examen/A19.png", alt: "Trappe à carburant", fiche: "mecanique",
+    question: "La trappe à carburant est toujours située à droite :",
+    reponses: [
+      { texte: "OUI", correcte: false },
+      { texte: "NON", correcte: true }
+    ],
+    explication: "La trappe à carburant peut être à gauche ou à droite selon les modèles." },
+
+  { id: "A20", image: "images/examen/A20.png", alt: "Temps de réaction", fiche: "vitesse-consequences",
+    question: "Pour évaluer la distance parcourue pendant le temps de réaction à 50 km/h, il faut multiplier 5 par :",
+    reponses: [
+      { texte: "3", correcte: true },
+      { texte: "5", correcte: false },
+      { texte: "6", correcte: false }
+    ],
+    explication: "Formule : (vitesse / 10) x 3." },
+
+  { id: "A21", image: "images/examen/A21.png", alt: "Signaux sonores", fiche: "zones-dangereuses",
+    question: "Selon la distance avec l'obstacle, les signaux sonores et visuels varient :",
+    reponses: [
+      { texte: "OUI", correcte: true },
+      { texte: "NON", correcte: false }
+    ],
+    explication: "La fréquence des signaux augmente à mesure qu'on s'approche." },
+
+  { id: "A22", image: "images/examen/A22.png", alt: "Tramway", fiche: "priorites",
+    question: "Le tramway venant de passer, le conducteur de cette voiture :",
+    reponses: [
+      { texte: "peut s'engager même si le feu est toujours clignotant", correcte: false },
+      { texte: "doit attendre", correcte: true }
+    ],
+    explication: "Le feu clignotant impose d'attendre." },
+
+  { id: "A23", image: "images/examen/A23.png", alt: "Klaxon", fiche: "circuler-communication",
+    question: "Klaxonner en ville est autorisé :",
+    reponses: [
+      { texte: "pour inciter un conducteur à démarrer plus vite", correcte: false },
+      { texte: "pour empêcher la traversée d'un piéton", correcte: false },
+      { texte: "en cas de danger immédiat", correcte: true },
+      { texte: "avant de dépasser un cycliste", correcte: false }
+    ],
+    explication: "En agglomération, le klaxon est interdit sauf danger immédiat." },
+
+  { id: "A24", image: "images/examen/A24.png", alt: "Cyclistes au feu", fiche: "feux-agents",
+    question: "Les cyclistes peuvent tourner à droite :",
+    reponses: [
+      { texte: "uniquement lorsque le feu est vert", correcte: false },
+      { texte: "même lorsque le feu est rouge", correcte: true }
+    ],
+    explication: "Un panonceau permet aux cyclistes de tourner à droite au feu rouge." },
+
+  { id: "A25", image: "images/examen/A25.png", alt: "Panneau de danger", fiche: "signalisation-risques",
+    question: "Le danger annoncé :",
+    reponses: [
+      { texte: "commence à 150 m", correcte: true },
+      { texte: "commence à 500 m", correcte: false },
+      { texte: "s'étend sur 150 m", correcte: false },
+      { texte: "s'étend sur 500 m", correcte: true }
+    ],
+    explication: "Le panonceau indique un danger qui commence à 150m et s'étend sur 500m." },
+
+  { id: "A26", type: "oui-non", image: "images/examen/A26.png", alt: "Feux de recul", fiche: "autres-usagers",
+    question: "L'allumage des feux de recul est un indicateur du risque de manœuvre / Son conducteur voit très bien le motard arriver :",
+    affirmations: [
+      { texte: "L'allumage des feux de recul est un indicateur du risque de manœuvre", vrai: true },
+      { texte: "Son conducteur voit très bien le motard arriver", vrai: false }
+    ],
+    explication: "Les feux de recul indiquent une manœuvre. Le motard est dans l'angle mort." },
+
+  { id: "A27", type: "oui-non", image: "images/examen/A27.png", alt: "Aide au maintien dans la voie", fiche: "securite",
+    question: "L'aide au maintien dans la voie / permet de conduire sans tenir le volant :",
+    affirmations: [
+      { texte: "fonctionne dans toutes les situations", vrai: false },
+      { texte: "permet de conduire sans tenir le volant", vrai: false }
+    ],
+    explication: "C'est une aide, pas un pilotage automatique." },
+
+  { id: "A28", image: "images/examen/A28.png", alt: "Véhicule bien placé", fiche: "circuler-regles",
+    question: "Dans cette situation, ce véhicule est bien placé :",
+    reponses: [
+      { texte: "OUI", correcte: false },
+      { texte: "NON", correcte: true }
+    ],
+    explication: "Le véhicule n'est pas correctement placé sur la chaussée." },
+
+  { id: "A29", type: "oui-non", image: "images/examen/A29.png", alt: "Trottinette", fiche: "autres-usagers",
+    question: "Utilisateur d'une trottinette non motorisée, cet enfant est assimilé à un piéton / Il doit circuler sur le trottoir :",
+    affirmations: [
+      { texte: "Utilisateur d'une trottinette non motorisée, cet enfant est assimilé à un piéton", vrai: true },
+      { texte: "Il doit circuler sur le trottoir", vrai: true }
+    ],
+    explication: "Une trottinette non motorisée est assimilée à un piéton." },
+
+  { id: "A30", image: "images/examen/A30.png", alt: "Priorité à droite", fiche: "priorites",
+    question: "Dans cette situation, le véhicule A cède le passage au véhicule B :",
+    reponses: [
+      { texte: "OUI", correcte: true },
+      { texte: "NON", correcte: false }
+    ],
+    explication: "Le véhicule B vient de la droite." },
+
+  { id: "A31", image: "images/examen/A31.png", alt: "Disque de stationnement", fiche: "stationnement",
+    question: "Un disque de stationnement est obligatoire pour stationner sur l'emplacement :",
+    reponses: [
+      { texte: "A", correcte: false },
+      { texte: "B", correcte: true }
+    ],
+    explication: "L'emplacement B est en zone bleue." },
+
+  { id: "A32", image: "images/examen/A32.png", alt: "Appel téléphonique", fiche: "conducteur",
+    question: "Pour passer un appel, j'utilise de préférence :",
+    reponses: [
+      { texte: "la numérotation manuelle sur l'écran", correcte: false },
+      { texte: "la commande vocale", correcte: true }
+    ],
+    explication: "La commande vocale permet de garder les mains sur le volant." },
+
+  { id: "A33", image: "images/examen/A33.png", alt: "Distance de sécurité", fiche: "vitesse-consequences",
+    question: "À 130 km/h, sur autoroute, un intervalle de sécurité de 2 secondes correspond à :",
+    reponses: [
+      { texte: "1 trait de la bande d'arrêt d'urgence", correcte: false },
+      { texte: "2 traits de la bande d'arrêt d'urgence", correcte: true },
+      { texte: "3 traits de la bande d'arrêt d'urgence", correcte: false }
+    ],
+    explication: "En respectant 2 secondes, on laisse environ 2 traits." },
+
+  { id: "A34", image: "images/examen/A34.png", alt: "Camion", fiche: "autres-usagers",
+    question: "Pour être vu du conducteur du camion je dois :",
+    reponses: [
+      { texte: "me rapprocher du poids lourd", correcte: false },
+      { texte: "m'éloigner du poids lourd", correcte: true },
+      { texte: "me décaler légèrement sur ma voie", correcte: true }
+    ],
+    explication: "Il faut sortir de l'angle mort du camion." },
+
+  { id: "A35", image: "images/examen/A35.png", alt: "Signalisation marchandises", fiche: "signalisation-panneaux",
+    question: "Cette signalisation concerne les véhicules affectés au transport de marchandises :",
+    reponses: [
+      { texte: "de plus de 3,5 tonnes seulement", correcte: false },
+      { texte: "peu importe leur poids", correcte: true }
+    ],
+    explication: "Le panneau s'applique à tous les véhicules de transport de marchandises." },
+
+  { id: "A36", image: "images/examen/A36.png", alt: "Liquide de refroidissement", fiche: "mecanique",
+    question: "Il est préférable que le niveau de liquide de refroidissement se situe :",
+    reponses: [
+      { texte: "légèrement en-dessous du repère maximum", correcte: true },
+      { texte: "légèrement en-dessous du repère minimum", correcte: false }
+    ],
+    explication: "Le niveau doit être entre le minimum et le maximum." },
+
+  { id: "A37", image: "images/examen/A37.png", alt: "Panne sur autoroute", fiche: "autoroute",
+    question: "Sur autoroute, en cas de panne, j'emmène les passagers :",
+    reponses: [
+      { texte: "derrière la glissière de sécurité", correcte: true },
+      { texte: "devant le véhicule", correcte: false }
+    ],
+    explication: "En cas de panne sur autoroute, il faut se mettre à l'abri." },
+
+  { id: "A38", image: "images/examen/A38.png", alt: "Fatigue au volant", fiche: "etat-physique",
+    question: "Lors d'un long trajet, je limite la fatigue :",
+    reponses: [
+      { texte: "en évitant de consommer un médicament comportant un pictogramme", correcte: true },
+      { texte: "en partant entre 2 h et 4 h du matin", correcte: false },
+      { texte: "en circulant au-dessus des limitations de vitesse", correcte: false },
+      { texte: "en faisant une pause toutes les 2 heures", correcte: true }
+    ],
+    explication: "Éviter les médicaments dangereux et faire des pauses régulières." },
+
+  { id: "A39", image: "images/examen/A39.png", alt: "Véhicule électrique recharge", fiche: "ecomobilite",
+    question: "Avant de faire un long trajet en véhicule électrique, je vérifie la charge de la batterie :",
+    reponses: [
+      { texte: "OUI", correcte: true },
+      { texte: "NON", correcte: false }
+    ],
+    explication: "Il est indispensable de vérifier et planifier ses recharges." },
+
+  { id: "A40", image: "images/examen/A40.png", alt: "Bande cyclable", fiche: "stationnement",
+    question: "Un arrêt sur une bande cyclable :",
+    reponses: [
+      { texte: "peut mettre ce cycliste en danger", correcte: true },
+      { texte: "doit être signalé par des feux de détresse", correcte: false },
+      { texte: "est passible d'une contravention", correcte: true }
+    ],
+    explication: "S'arrêter sur une bande cyclable met les cyclistes en danger et est sanctionné." }
 ];
