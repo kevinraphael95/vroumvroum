@@ -1,12 +1,5 @@
 /* =========================================================
    EXAMEN BLANC (examen.html)
-   - Questions de EXAMEN_QUESTIONS (data-examen.js), 2 types :
-        "choix" (A B C D, une ou plusieurs bonnes réponses)
-        "oui-non" (1 ou 2 affirmations ; OUI = A/C, NON = B/D)
-   - Minuteur rond PAR QUESTION, passage automatique à la suivante
-   - Pas de retour en arrière ; correction détaillée à la fin
-   - Meilleur score : localStorage "vroum-examen-best"
-   Dépend de : core.js (thème, menu) et data-examen.js
    ========================================================= */
 
 (function () {
@@ -59,7 +52,6 @@
     return true;
   }
 
-  /* Hauteur de la barre de navigation : l'écran d'examen se place juste dessous */
   function syncNav() {
     const nav = document.querySelector('nav');
     document.documentElement.style.setProperty('--nav-h', (nav ? nav.offsetHeight : 0) + 'px');
@@ -110,9 +102,6 @@
   const N = Math.min(CFG.nbQuestions, BANK.length);
   const SEUIL = (N === CFG.nbQuestions) ? CFG.seuil : Math.ceil(N * CFG.seuil / CFG.nbQuestions);
 
-  /* Prépare une question : boutons numérotés 0..3 = lettres A..D.
-     choix   : un bouton par réponse (ordre mélangé)
-     oui-non : affirmation i => boutons 2i (OUI) et 2i+1 (NON) */
   function buildItem(q) {
     if (q.type === 'oui-non') {
       const correct = new Set();
@@ -178,7 +167,7 @@
     renderQuestion();
   }
 
-  /* ---------- Minuteur par question ---------- */
+  /* ---------- Minuteur ---------- */
 
   function paintTimer() {
     const left = Math.max(0, (qEnd - Date.now()) / 1000);
@@ -201,7 +190,7 @@
     if (qTimer) { clearInterval(qTimer); qTimer = null; }
   }
 
-  /* ---------- Affichage d'une question ---------- */
+  /* ---------- Affichage ---------- */
 
   function buildFigure(container, q) {
     container.innerHTML = '';
@@ -234,7 +223,7 @@
     const item = items[idx];
     const q = item.q;
 
-    // MODIFICATION : Affichage du numéro et de l'ID de la question (ex: 01 (A01) ou (B12))
+    // Affiche le numéro ET l'ID de la question (ex: 01 (A01) ou 02 (B01))
     $('ex-num').textContent = pad(idx + 1) + (q.id ? ` (${q.id})` : '');
     $('ex-total').textContent = ' / ' + pad(items.length);$('ex-question').textContent = q.question;
     $('ex-mode').textContent = item.multi ? 'Plusieurs réponses' : 'Une réponse';
@@ -272,12 +261,12 @@
     const item = items[idx];
     const set = answers[idx];
     if (item.kind === 'ouinon') {
-      const partner = k ^ 1;                   // OUI <-> NON de la même affirmation
+      const partner = k ^ 1;
       if (set.has(k)) set.delete(k);
       else { set.add(k); set.delete(partner); }
     } else if (!item.multi) {
       if (set.has(k)) set.delete(k);
-      else { set.clear(); set.add(k); }      // "Une réponse" : une seule à la fois
+      else { set.clear(); set.add(k); }
     } else {
       if (set.has(k)) set.delete(k); else set.add(k);
     }
@@ -299,11 +288,10 @@
     showOnly(secIntro);
   }
 
-  /* ---------- Correction (mise en page identique au QCM mode examen) ---------- */
+  /* ---------- Correction ---------- */
 
   const ORDRE_FAM = ['L', 'C', 'R', 'U', 'D', 'A', 'P', 'M', 'S', 'E'];
 
-  /* Famille d'une question d'examen, déduite de sa fiche (data-fiches.js) */
   function familleDe(q) {
     if (typeof FICHES === 'undefined' || !q.fiche) return null;
     const f = FICHES.find(x => x.id === q.fiche);
@@ -340,7 +328,6 @@
     $('ex-score-val').textContent = String(score);
     $('ex-score-total').textContent = String(total);$('ex-score-box').className = 'exam-result-score ' + (reussi ? 'pass' : 'fail');
 
-    // Grille des numéros
     const grid = $('ex-grid');
     grid.innerHTML = '';
     results.forEach((r, i) => {
@@ -352,7 +339,6 @@
       grid.appendChild(b);
     });
 
-    // Résultats par thème
     const stats = {};
     results.forEach(r => {
       const fam = familleDe(r.item.q);
@@ -390,7 +376,6 @@
     document.querySelectorAll('#ex-grid .exam-num').forEach((b, k) => b.classList.toggle('selected', k === i));
 
     const head = el('div', 'exam-detail-head');
-    // MODIFICATION : Affichage de l'ID dans le détail de correction
     head.appendChild(el('span', 'exam-detail-num', `Question ${pad(i + 1)}${q.id ? ` (${q.id})` : ''}`));
     head.appendChild(el('span', 'exam-detail-status ' + (r.ok ? 'correct' : 'wrong'),
       r.ok ? '\u2713 Correct' : '\u2717 Erreur'));
