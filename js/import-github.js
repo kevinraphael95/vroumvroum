@@ -1,99 +1,117 @@
 /* =========================================================
-   IMPORT DEPUIS GITHUB (Détection automatique des séries)
-   - Liste des séries mise en cache (localStorage, 1 h)
-   - index.json (code/questions/index.json) en premier : pas de
-     limite d'API. Sinon API GitHub (60 requêtes/h sans token)
-   - Si tout échoue : réutilise la dernière liste connue
+   IMPORT DEPUIS GITHUB — détection automatique
+   - UNE seule requête (git/trees?recursive=1) liste tout le dépôt :
+     tous les .json de code/questions (peu importe leur nom) et
+     toutes les images de code/images/** (peu importe le dossier).
+   - Résultat mis en cache 1 h dans le localStorage : 0 requête API
+     aux visites suivantes (limite GitHub : 60/h sans token).
+   - Image d'une question = fichier dont le nom (sans extension) = id.
+   - Si l'API est bloquée (403) : cache expiré, sinon repli sur
+     A.json, B.json, C.json… et images/<1re lettre de l'id>/<id>.png
    ========================================================= */
 (function () {
   const USER = 'kevinraphael95';
   const REPO = 'random-useful-stuff';
   const BRANCH = 'main';
 
-  const REPO_API_URL = `https://api.github.com/repos/${USER}/${REPO}/contents/code/questions`;
+  const TREE_URL = `https://api.github.com/repos/${USER}/${REPO}/git/trees/${BRANCH}?recursive=1`;
   const BASE_URL = `https://raw.githubusercontent.com/${USER}/${REPO}/${BRANCH}/code/`;
 
-  const CACHE_KEY = 'vroum-series-cache';
+  const CACHE_KEY = 'vroum-tree-cache';
   const CACHE_TTL = 60 * 60 * 1000; // 1 h
+  const EXT_IMAGES = /\.(png|jpe?g|webp|gif|svg)$/i;
 
   /* ---------- Cache ---------- */
 
   function lireCache(ignorerTTL) {
     try {
       const c = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
-      if (!c || !Array.isArray(c.series) || !c.series.length) return null;
+      if (!c || !Array.isArray(c.series) || !c.series.length || !c.images) return null;
       if (!ignorerTTL && Date.now() - c.date > CACHE_TTL) return null;
-      return c.series;
+      return c;
     } catch (e) { return null; }
   }
 
-  function ecrireCache(series) {
+  function ecrireCache(series, images) {
     try {
-      localStorage.setItem(CACHE_KEY, JSON.stringify({ date: Date.now(), series }));
+      localStorage.setItem(CACHE_KEY, JSON.stringify({ date: Date.now(), series, images }));
     } catch (e) {}
   }
 
-  /* ---------- Sources de la liste des séries ---------- */
+  /* ---------- Détection ---------- */
 
-  function listeViaApiGithub() {
-    return fetch(REPO_API_URL)
-      .then(res => {
-        if (!res.ok) throw new Error('API GitHub ' + res.status);
-        return res.json();
-      })
-      .then(files => {
-        if (!Array.isArray(files)) throw new Error('Réponse API invalide');
-        return files
-          .filter(f => f.type === 'file' && f.name.endsWith('.json'))
-          .map(f => 'questions/' + f.name);
-      });
+  // Une requête : séries (code/questions/*.json) + images (code/images/**)
+  async function detecterViaArbre() {
+    const res = await fetch(TREE_URL);
+    if (!res.ok) throw new Error('API GitHub ' + res.status);
+    const data = await res.json();
+    if (!data || !Array.isArray(data.tree)) throw new Error('Réponse API invalide');
+    if (data.truncated) console.warn('⚠️ Arbre GitHub tronqué : certains fichiers peuvent manquer.');
+
+    const series = [];
+    const images = {}; // id -> chemin relatif à code/
+
+    data.tree.forEach(item => {
+      if (item.type !== 'blob') return;
+      const p = item.path;
+
+      if (/^code\/questions\/[^/]+\.json$/i.test(p)) {
+        const nom = p.split('/').pop();
+        if (nom.toLowerCase() !== 'index.json') series.push(p.slice('code/'.length));
+      } else if (p.startsWith('code/images/') && EXT_IMAGES.test(p)) {
+        const fichier = p.split('/').pop();
+        const id = fichier.replace(EXT_IMAGES, '');
+        images[id] = p.slice('code/'.length);
+      }
+    });
+
+    if (!series.length) throw new Error('Aucune série trouvée');
+    return { series, images };
   }
 
-  // Optionnel : un fichier code/questions/index.json contenant ["serie1.json", ...]
-  function listeViaIndex() {
-    return fetch(BASE_URL + 'questions/index.json')
-      .then(res => {
-        if (!res.ok) throw new Error('index.json ' + res.status);
-        return res.json();
-      })
-      .then(arr => {
-        if (!Array.isArray(arr)) throw new Error('index.json invalide');
-        return arr.map(n => 'questions/' + n);
-      });
+  // Repli sans API : teste A.json, B.json, C.json… jusqu'au premier absent
+  async function detecterParEssai() {
+    const series = [];
+    for (const lettre of 'ABCDEFGHIJKLMNOPQRSTUVWXYZ') {
+      const chemin = `questions/${lettre}.json`;
+      try {
+        const res = await fetch(BASE_URL + chemin, { method: 'HEAD' });
+        if (!res.ok) break;
+      } catch (e) { break; }
+      series.push(chemin);
+    }
+    return { series, images: {} };
   }
 
-  function trouverSeries() {
+  async function detecter() {
     const cache = lireCache(false);
-    if (cache) return Promise.resolve(cache);
+    if (cache) return cache;
 
-    const sources = [listeViaIndex, listeViaApiGithub];
-
-    return sources.reduce(
-      (p, source) => p.catch(() =>
-        source().then(series => {
-          if (!series.length) throw new Error('Liste vide');
-          return series;
-        })
-      ),
-      Promise.reject(new Error('start'))
-    )
-      .then(series => { ecrireCache(series); return series; })
-      .catch(err => {
-        const vieux = lireCache(true); // cache expiré, mieux que rien
-        if (vieux) {
-          console.warn('⚠️ Sources indisponibles, utilisation du cache expiré.', err);
-          return vieux;
-        }
-        throw err;
-      });
+    try {
+      const r = await detecterViaArbre();
+      ecrireCache(r.series, r.images);
+      return r;
+    } catch (err) {
+      const vieux = lireCache(true);
+      if (vieux) {
+        console.warn('⚠️ API indisponible, utilisation du cache expiré.', err);
+        return vieux;
+      }
+      console.warn('⚠️ API indisponible, repli sur A.json, B.json…', err);
+      return detecterParEssai();
+    }
   }
 
   /* ---------- Traduction des questions ---------- */
 
-  function traduireQuestions(data) {
+  function urlImage(id, images) {
+    const chemin = images[id] || `images/${id.charAt(0)}/${id}.png`;
+    return BASE_URL + chemin.split('/').map(encodeURIComponent).join('/');
+  }
+
+  function traduireQuestions(data, images) {
     return data.questions.map(q => {
-      const dossierImage = q.id.charAt(0);
-      const imageURL = `${BASE_URL}images/${dossierImage}/${q.id}.png`;
+      const imageURL = urlImage(q.id, images);
 
       const isOuiNon = q.options && Object.values(q.options).some(opt =>
         opt.includes('OUI') || opt.includes('NON')
@@ -124,29 +142,31 @@
 
   /* ---------- Chargement ---------- */
 
-  trouverSeries()
-    .then(serieFiles => {
-      console.log('📁 Séries détectées :', serieFiles);
+  detecter()
+    .then(({ series, images }) => {
+      console.log('📁 Séries détectées :', series);
+      console.log(`🖼️ ${Object.keys(images).length} images détectées`);
+
       return Promise.all(
-        serieFiles.map(serie =>
-          fetch(BASE_URL + serie).then(res => res.json()).catch(() => null)
+        series.map(chemin =>
+          fetch(BASE_URL + chemin.split('/').map(encodeURIComponent).join('/'))
+            .then(res => res.json())
+            .catch(() => null)
         )
-      );
+      ).then(resultats => ({ resultats, images }));
     })
-    .then(resultats => {
+    .then(({ resultats, images }) => {
       let toutesLesQuestions = [];
 
       resultats.forEach(data => {
-        if (data && data.questions) {
-          toutesLesQuestions = toutesLesQuestions.concat(traduireQuestions(data));
+        if (data && Array.isArray(data.questions)) {
+          toutesLesQuestions = toutesLesQuestions.concat(traduireQuestions(data, images));
         }
       });
 
       if (toutesLesQuestions.length > 0) {
         window.EXAMEN_QUESTIONS = toutesLesQuestions;
         console.log(`✅ ${toutesLesQuestions.length} questions chargées depuis GitHub !`);
-
-        // Déclenche l'initialisation de l'examen une fois les données prêtes
         if (typeof window.initExamen === 'function') {
           window.initExamen();
         }
