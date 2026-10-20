@@ -123,7 +123,10 @@
         for (let i = 0; i < keys.length; i += 2) {
           const keyOui = keys[i];
           const texteOui = q.options[keyOui] || '';
-          const cleanTexte = texteOui.replace(/\s*:\s*OUI$/i, '').replace(/\s*:\s*NON$/i, '');
+          let cleanTexte = texteOui.replace(/\s*:?\s*(OUI|NON)\s*$/i, '').trim();
+          // Option réduite à « OUI » / « NON » : l'affirmation est l'énoncé lui-même
+          // (page-examen.js n'affiche alors pas de doublon)
+          if (!cleanTexte) cleanTexte = q.enonce;
           affirmations.push({
             texte: cleanTexte,
             vrai: q.reponses.includes(keyOui)
