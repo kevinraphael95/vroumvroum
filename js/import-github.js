@@ -5,7 +5,6 @@
   const REPO_API_URL = 'https://api.github.com/repos/kevinraphael95/random-useful-stuff/contents/code/questions';
   const BASE_URL = 'https://raw.githubusercontent.com/kevinraphael95/random-useful-stuff/main/code/';
 
-  // Fonction pour traduire le JSON d'une série
   function traduireQuestions(data) {
     return data.questions.map(q => {
       const dossierImage = q.id.charAt(0); // 'A' pour A01, 'B' pour B01...
@@ -38,7 +37,6 @@
     });
   }
 
-  // 1. On interroge l'API GitHub pour lister automatiquement tous les fichiers du dossier "questions"
   fetch(REPO_API_URL)
     .then(res => res.json())
     .then(files => {
@@ -46,14 +44,13 @@
         throw new Error("Impossible de récupérer la liste des fichiers depuis l'API GitHub.");
       }
 
-      // On filtre pour ne garder que les fichiers JSON (ex: Ajson, Bjson, Cjson...)
+      // Filtre les fichiers se terminant par .json ou json
       const serieFiles = files
-        .filter(file => file.type === 'file' && file.name.endsWith('json'))
+        .filter(file => file.type === 'file' && (file.name.endsWith('.json') || file.name.endsWith('json')))
         .map(file => 'questions/' + file.name);
 
       console.log(`📁 Séries détectées automatiquement sur GitHub :`, serieFiles);
 
-      // 2. On télécharge tous les fichiers détectés en même temps
       return Promise.all(
         serieFiles.map(serie => fetch(BASE_URL + serie).then(res => res.json()).catch(() => null))
       );
