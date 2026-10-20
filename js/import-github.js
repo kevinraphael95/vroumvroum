@@ -26,7 +26,7 @@
             vrai: q.reponses.includes(keyOui)
           });
         }
-        return { id: q.id, type: "oui-non", image: imageURL, alt: q.enonce, question: "", affirmations, fiche: null, explication: "" };
+        return { id: q.id, type: "oui-non", image: imageURL, alt: q.enonce, question: q.enonce, affirmations, fiche: null, explication: "" };
       } else {
         const reponses = Object.keys(q.options).map(lettre => ({
           texte: q.options[lettre],
