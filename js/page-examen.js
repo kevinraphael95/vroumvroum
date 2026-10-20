@@ -419,7 +419,8 @@
       });
     } else {
       q.affirmations.forEach((a, i) => {
-        box.appendChild(el('p', 'ex-stmt', a.texte));
+        // Pas de doublon si l'affirmation est la question elle-même
+        if (a.texte !== q.question) box.appendChild(el('p', 'ex-stmt', a.texte));
 
         const row = el('div', 'ex-yn');
         row.appendChild(answerButton('OUI', 2 * i));
