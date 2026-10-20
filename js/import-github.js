@@ -1,8 +1,8 @@
 /* =========================================================
    IMPORT DEPUIS GITHUB (Détection automatique des séries)
    - Liste des séries mise en cache (localStorage, 1 h)
-   - API GitHub en premier, puis fallback jsDelivr (sans limite
-     de 60 requêtes/h), puis index.json optionnel dans le dépôt
+   - index.json (code/questions/index.json) en premier : pas de
+     limite d'API. Sinon API GitHub (60 requêtes/h sans token)
    - Si tout échoue : réutilise la dernière liste connue
    ========================================================= */
 (function () {
@@ -11,7 +11,6 @@
   const BRANCH = 'main';
 
   const REPO_API_URL = `https://api.github.com/repos/${USER}/${REPO}/contents/code/questions`;
-  const JSDELIVR_LIST_URL = `https://data.jsdelivr.com/v1/packages/gh/${USER}/${REPO}@${BRANCH}?structure=flat`;
   const BASE_URL = `https://raw.githubusercontent.com/${USER}/${REPO}/${BRANCH}/code/`;
 
   const CACHE_KEY = 'vroum-series-cache';
@@ -50,21 +49,6 @@
       });
   }
 
-  function listeViaJsdelivr() {
-    return fetch(JSDELIVR_LIST_URL)
-      .then(res => {
-        if (!res.ok) throw new Error('jsDelivr ' + res.status);
-        return res.json();
-      })
-      .then(data => {
-        if (!data || !Array.isArray(data.files)) throw new Error('Réponse jsDelivr invalide');
-        return data.files
-          .map(f => f.name)
-          .filter(n => /^\/code\/questions\/[^/]+\.json$/.test(n))
-          .map(n => n.replace('/code/', ''));
-      });
-  }
-
   // Optionnel : un fichier code/questions/index.json contenant ["serie1.json", ...]
   function listeViaIndex() {
     return fetch(BASE_URL + 'questions/index.json')
@@ -82,7 +66,7 @@
     const cache = lireCache(false);
     if (cache) return Promise.resolve(cache);
 
-    const sources = [listeViaApiGithub, listeViaJsdelivr, listeViaIndex];
+    const sources = [listeViaIndex, listeViaApiGithub];
 
     return sources.reduce(
       (p, source) => p.catch(() =>
