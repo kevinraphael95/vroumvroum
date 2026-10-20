@@ -1,21 +1,13 @@
 /* =========================================================
-   IMPORT DEPUIS GITHUB (Toutes les séries)
+   IMPORT DEPUIS GITHUB (Détection automatique des séries)
    ========================================================= */
 (function() {
+  const REPO_API_URL = 'https://api.github.com/repos/kevinraphael95/random-useful-stuff/contents/code/questions';
   const BASE_URL = 'https://raw.githubusercontent.com/kevinraphael95/random-useful-stuff/main/code/';
-  
-  // La liste de toutes tes séries sur GitHub
-  const SERIES = [
-    'questions/Ajson',
-    'questions/Bjson', // Ajoute tes autres séries ici
-    // 'questions/Cjson',
-  ];
 
   // Fonction pour traduire le JSON d'une série
   function traduireQuestions(data) {
     return data.questions.map(q => {
-      // On cherche l'image. On suppose que si c'est la série A, c'est dans /images/A/,
-      // si c'est la série B, dans /images/B/, etc.
       const dossierImage = q.id.charAt(0); // 'A' pour A01, 'B' pour B01...
       const imageURL = `${BASE_URL}images/${dossierImage}/${q.id}.png`;
       
@@ -46,26 +38,47 @@
     });
   }
 
-  // On télécharge toutes les séries en même temps
-  Promise.all(
-    SERIES.map(serie => fetch(BASE_URL + serie).then(res => res.json()).catch(() => null))
-  ).then(resultats => {
-    let toutesLesQuestions = [];
-    
-    resultats.forEach(data => {
-      if (data && data.questions) {
-        toutesLesQuestions = toutesLesQuestions.concat(traduireQuestions(data));
+  // 1. On interroge l'API GitHub pour lister automatiquement tous les fichiers du dossier "questions"
+  fetch(REPO_API_URL)
+    .then(res => res.json())
+    .then(files => {
+      if (!Array.isArray(files)) {
+        throw new Error("Impossible de récupérer la liste des fichiers depuis l'API GitHub.");
       }
-    });
 
-    if (toutesLesQuestions.length > 0) {
-      if (typeof EXAMEN_QUESTIONS !== 'undefined') {
-        EXAMEN_QUESTIONS.length = 0;
-        EXAMEN_QUESTIONS.push(...toutesLesQuestions);
-        console.log(`✅ ${toutesLesQuestions.length} questions chargées depuis GitHub !`);
+      // On filtre pour ne garder que les fichiers JSON (ex: Ajson, Bjson, Cjson...)
+      const serieFiles = files
+        .filter(file => file.type === 'file' && file.name.endsWith('json'))
+        .map(file => 'questions/' + file.name);
+
+      console.log(`📁 Séries détectées automatiquement sur GitHub :`, serieFiles);
+
+      // 2. On télécharge tous les fichiers détectés en même temps
+      return Promise.all(
+        serieFiles.map(serie => fetch(BASE_URL + serie).then(res => res.json()).catch(() => null))
+      );
+    })
+    .then(resultats => {
+      if (!resultats) return;
+      let toutesLesQuestions = [];
+      
+      resultats.forEach(data => {
+        if (data && data.questions) {
+          toutesLesQuestions = toutesLesQuestions.concat(traduireQuestions(data));
+        }
+      });
+
+      if (toutesLesQuestions.length > 0) {
+        if (typeof EXAMEN_QUESTIONS !== 'undefined') {
+          EXAMEN_QUESTIONS.length = 0;
+          EXAMEN_QUESTIONS.push(...toutesLesQuestions);
+          console.log(`✅ ${toutesLesQuestions.length} questions chargées et fusionnées automatiquement depuis GitHub !`);
+        }
+      } else {
+        console.warn("⚠️ Aucune question GitHub chargée, on garde les questions de secours.");
       }
-    } else {
-      console.warn("⚠️ Aucune question GitHub chargée, on garde les questions de secours.");
-    }
-  });
+    })
+    .catch(err => {
+      console.error("❌ Erreur lors de la récupération automatique des séries :", err);
+    });
 })();
