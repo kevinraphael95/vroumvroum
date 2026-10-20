@@ -7,7 +7,7 @@
 
   function traduireQuestions(data) {
     return data.questions.map(q => {
-      const dossierImage = q.id.charAt(0); // 'A' pour A01, 'B' pour B01...
+      const dossierImage = q.id.charAt(0);
       const imageURL = `${BASE_URL}images/${dossierImage}/${q.id}.png`;
       
       const isOuiNon = q.options && Object.values(q.options).some(opt => 
@@ -40,16 +40,13 @@
   fetch(REPO_API_URL)
     .then(res => res.json())
     .then(files => {
-      if (!Array.isArray(files)) {
-        throw new Error("Impossible de récupérer la liste des fichiers depuis l'API GitHub.");
-      }
+      if (!Array.isArray(files)) throw new Error("Erreur API GitHub");
 
-      // Filtre les fichiers se terminant par .json ou json
       const serieFiles = files
         .filter(file => file.type === 'file' && (file.name.endsWith('.json') || file.name.endsWith('json')))
         .map(file => 'questions/' + file.name);
 
-      console.log(`📁 Séries détectées automatiquement sur GitHub :`, serieFiles);
+      console.log(`📁 Séries détectées sur GitHub :`, serieFiles);
 
       return Promise.all(
         serieFiles.map(serie => fetch(BASE_URL + serie).then(res => res.json()).catch(() => null))
@@ -66,16 +63,16 @@
       });
 
       if (toutesLesQuestions.length > 0) {
-        if (typeof EXAMEN_QUESTIONS !== 'undefined') {
-          EXAMEN_QUESTIONS.length = 0;
-          EXAMEN_QUESTIONS.push(...toutesLesQuestions);
-          console.log(`✅ ${toutesLesQuestions.length} questions chargées et fusionnées automatiquement depuis GitHub !`);
+        window.EXAMEN_QUESTIONS = toutesLesQuestions;
+        console.log(`✅ ${toutesLesQuestions.length} questions chargées depuis GitHub !`);
+        
+        // Déclenche l'initialisation de l'examen une fois les données prêtes
+        if (typeof window.initExamen === 'function') {
+          window.initExamen();
         }
       } else {
-        console.warn("⚠️ Aucune question GitHub chargée, on garde les questions de secours.");
+        console.warn("⚠️ Aucune question chargée.");
       }
     })
-    .catch(err => {
-      console.error("❌ Erreur lors de la récupération automatique des séries :", err);
-    });
+    .catch(err => console.error("❌ Erreur import GitHub :", err));
 })();
