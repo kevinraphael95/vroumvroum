@@ -679,13 +679,23 @@
         const attendu = a.vrai ? 'OUI' : 'NON';
         const ok = donne === attendu;
 
-        addChoice(
-          a.texte,
-          ok ? 'correct' : 'wrong',
-          ok
-            ? `${attendu} ✓`
-            : `Toi : ${donne || 'aucune'} — attendu : ${attendu}`
-        );
+        if (a.texte === q.question) {
+          // Question oui/non simple : l'énoncé est déjà affiché plus haut,
+          // on montre seulement la réponse donnée.
+          addChoice(
+            donne || 'Aucune réponse',
+            ok ? 'correct' : 'wrong',
+            ok ? 'Bonne réponse' : `Attendu : ${attendu}`
+          );
+        } else {
+          addChoice(
+            a.texte,
+            ok ? 'correct' : 'wrong',
+            ok
+              ? `${attendu} ✓`
+              : `Toi : ${donne || 'aucune'} — attendu : ${attendu}`
+          );
+        }
       });
     }
 
