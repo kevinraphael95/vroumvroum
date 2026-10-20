@@ -102,32 +102,17 @@
   let initialized = false;
 
   function questionValide(q) {
-    if (!q || typeof q.question !== 'string' || !q.question.trim()) {
-      return false;
+      if (!q) return false;
+      if (q.type === 'oui-non') {
+        const a = q.affirmations;
+        return Array.isArray(a) && a.length >= 1 && a.length <= 2 &&
+               a.every(x => x && x.texte && typeof x.vrai === 'boolean');
+      }
+      if (!q.question) return false;
+      const r = q.reponses;
+      return Array.isArray(r) && r.length >= 2 && r.length <= 4 &&
+             r.some(x => x.correcte) && r.every(x => x.texte);
     }
-
-    if (q.type === 'oui-non') {
-      const a = q.affirmations;
-
-      return Array.isArray(a) &&
-        a.length >= 1 &&
-        a.length <= 2 &&
-        a.every(x =>
-          x &&
-          typeof x.texte === 'string' &&
-          x.texte.trim() &&
-          typeof x.vrai === 'boolean'
-        );
-    }
-
-    const r = q.reponses;
-
-    return Array.isArray(r) &&
-      r.length >= 2 &&
-      r.length <= 4 &&
-      r.some(x => x && x.correcte === true) &&
-      r.every(x => x && typeof x.texte === 'string' && x.texte.trim());
-  }
 
   function bankValid() {
     const questions = window.EXAMEN_QUESTIONS;
