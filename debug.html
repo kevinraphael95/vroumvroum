@@ -14,16 +14,16 @@
 <script>try{if(localStorage.getItem("vroum-theme")==="dark")document.documentElement.classList.add("dark")}catch(e){}</script>
 <style>
   .debug-container { max-width: 1200px; margin: 40px auto; padding: 0 20px; font-family: 'Inter', sans-serif; }
-  .debug-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; color: var(--text-main, #0f172a); }
-  .debug-card { background: var(--bg-card, #ffffff); border: 1px solid var(--border, #e2e8f0); border-radius: 12px; padding: 20px; margin-bottom: 20px; display: grid; grid-template-columns: 180px 1fr; gap: 20px; align-items: start; color: var(--text-main, #0f172a); }
-  .debug-card img { width: 100%; height: 110px; object-fit: cover; border-radius: 8px; border: 1px solid #cbd5e1; background: #f8fafc; }
-  .debug-info h3 { margin: 0 0 8px 0; font-size: 16px; color: var(--text-main, #0f172a); }
-  .debug-meta { display: flex; gap: 10px; font-size: 12px; margin-bottom: 10px; color: var(--text-muted, #64748b); }
-  .debug-badge { background: #3b82f6; color: white; padding: 2px 8px; border-radius: 4px; font-weight: 600; }
+  .debug-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; color: var(--text); }
+  .debug-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 20px; display: grid; grid-template-columns: 180px 1fr; gap: 20px; align-items: start; color: var(--text); }
+  .debug-card img { width: 100%; height: 110px; object-fit: cover; border-radius: 8px; border: 1px solid var(--border); background: var(--surface-2); }
+  .debug-info h3 { margin: 0 0 8px 0; font-size: 16px; color: var(--text); }
+  .debug-meta { display: flex; gap: 10px; font-size: 12px; margin-bottom: 10px; color: var(--text-muted); }
+  .debug-badge { background: var(--bleu-fill); color: white; padding: 2px 8px; border-radius: 4px; font-weight: 600; }
   .debug-options, .debug-reponses { font-size: 14px; margin-top: 6px; }
   .debug-options ul { margin: 4px 0 0 16px; padding: 0; }
-  .debug-correct { color: #16a34a; font-weight: 700; }
-  .debug-expl { margin-top: 8px; font-size: 13px; color: var(--text-muted, #64748b); font-style: italic; }
+  .debug-correct { color: var(--vert); font-weight: 700; }
+  .debug-expl { margin-top: 8px; font-size: 13px; color: var(--text-muted); font-style: italic; }
   @media(max-width: 768px) { .debug-card { grid-template-columns: 1fr; } .debug-card img { height: 180px; } }
 </style>
 </head>
