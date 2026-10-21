@@ -22,7 +22,6 @@
   .debug-badge { background: var(--bleu-fill); color: white; padding: 2px 8px; border-radius: 4px; font-weight: 600; }
   .debug-options, .debug-reponses { font-size: 14px; margin-top: 6px; }
   .debug-options ul { margin: 4px 0 0 16px; padding: 0; }
-  .debug-correct { color: var(--vert); font-weight: 700; }
   .debug-expl { margin-top: 8px; font-size: 13px; color: var(--text-muted); font-style: italic; }
   @media(max-width: 768px) { .debug-card { grid-template-columns: 1fr; } .debug-card img { height: 180px; } }
 </style>
@@ -56,7 +55,6 @@
 
 <script src="js/core.js"></script>
 <script src="js/data-fiches.js"></script>
-<!-- On intercepte window.initExamen pour afficher le contenu brut à la place du module d'examen -->
 <script>
   window.initExamen = function() {
     const questions = window.EXAMEN_QUESTIONS || [];
@@ -67,10 +65,9 @@
     questions.forEach((q, index) => {
       let optionsHtml = '';
       if (q.type === 'oui-non' && q.affirmations) {
-        optionsHtml = '<ul>' + q.affirmations.map((aff, i) => `<li>Affirmation ${i+1}: "${aff.texte}" — <strong>${aff.vrai ? 'OUI (Vrai)' : 'NON (Faux)'}</strong></li>`).join('') + '</ul>';
+        optionsHtml = '<ul>' + q.affirmations.map((aff, i) => `<li>Affirmation ${i+1}: "${aff.texte}" — <strong>${aff.vrai ? 'OUI' : 'NON'}</strong></li>`).join('') + '</ul>';
       } else if (q.reponses) {
-        // Mode QCM standard issu de la traduction brute ou objets reponses
-        optionsHtml = '<ul>' + Object.entries(q.reponses).map(([k, v]) => `<li><b>${v.texte}</b> — Correcte: <span class="${v.correcte ? 'debug-correct' : ''}">${v.correcte ? 'OUI' : 'NON'}</span></li>`).join('') + '</ul>';
+        optionsHtml = '<ul>' + Object.entries(q.reponses).map(([k, v]) => `<li><b>${v.texte}</b> — <span>${v.correcte ? 'OUI' : 'NON'}</span></li>`).join('') + '</ul>';
       }
 
       const card = document.createElement('div');
@@ -86,7 +83,7 @@
             <span><b>Fiche :</b> ${q.fiche || 'N/A'}</span>
           </div>
           <h3>${q.question || q.alt}</h3>
-          <div class="debug-options"><b>Options / Évaluations :</b> ${optionsHtml}</div>
+          <div class="debug-options"><b>Options :</b> ${optionsHtml}</div>
           <div class="debug-expl"><b>Explication :</b> ${q.explication || 'Aucune explication'}</div>
         </div>
       `;
