@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renommeur Direct sur PC (C01 - C40)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col antialiased">
+
+    <!-- Header -->
+    <header class="border-b border-slate-800 bg-slate-900/90 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="p-2.5 bg-brand-600/20 text-brand-400 rounded-xl border border-brand-500/30">
+                    <i class="fa-solid fa-folder-gear text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg text-white leading-tight">Renommeur Direct sur PC</h1>
+                    <p class="text-xs text-slate-400">Modifie directement vos fichiers sur le disque dur sans téléchargement</p>
+                </div>
+            </div>
+            <div id="statsBadge" class="hidden sm:flex items-center gap-2 bg-slate-800/80 border border-slate-700/60 px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300">
+                <i class="fa-solid fa-files text-brand-400"></i>
+                <span id="fileCountText">0 fichier(s) détecté(s)</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Left Column: Controls & Renaming Options -->
+        <div class="lg:col-span-5 space-y-6">
+
+            <!-- Folder Selector Card -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl">
+                <h2 class="text-xs font-bold text-slate-300 uppercase tracking-wider mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-folder-open text-brand-400"></i> 1. Choisir le dossier
+                </h2>
+
+                <button id="selectDirBtn" class="w-full bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white font-semibold py-3.5 px-4 rounded-xl text-sm flex items-center justify-center gap-2.5 transition-all duration-150 shadow-md">
+                    <i class="fa-solid fa-folder-tree text-amber-400 text-base"></i>
+                    <span id="selectDirText">Sélectionner le dossier d'images</span>
+                </button>
+
+                <!-- Compatibility Notice -->
+                <div id="apiCheckNotice" class="mt-3 p-3 bg-slate-950/80 border border-slate-800 rounded-xl flex items-start gap-2.5 text-xs text-slate-400">
+                    <i class="fa-solid fa-circle-info text-brand-400 text-sm mt-0.5 shrink-0"></i>
+                    <span>Exécutez dans <strong>Chrome, Edge, Brave ou Opera</strong>. Le navigateur demandera la permission de modifier les fichiers du dossier.</span>
+                </div>
+
+                <!-- Presets -->
+                <div class="mt-4 pt-4 border-t border-slate-800 flex flex-wrap gap-2 items-center">
+                    <span class="text-xs text-slate-400 font-medium">Préréglage :</span>
+                    <button id="presetSerieC" class="px-3 py-1.5 text-xs bg-brand-600/20 text-brand-300 hover:bg-brand-600 hover:text-white border border-brand-500/30 rounded-lg transition-colors font-semibold flex items-center gap-1.5">
+                        <i class="fa-solid fa-bolt"></i> Série C (C01 à C40)
+                    </button>
+                    <button id="presetClean" class="px-2.5 py-1.5 text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition-colors">
+                        Numéros seuls (01, 02)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Renaming Configuration Options -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
+                <h2 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+                    <i class="fa-solid fa-sliders text-brand-400"></i> 2. Règle de nommage
+                </h2>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-medium text-slate-400 mb-1">Préfixe</label>
+                        <input type="text" id="prefixInput" value="C" placeholder="ex: C" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-brand-500 transition-colors font-mono">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-400 mb-1">Suffixe</label>
+                        <input type="text" id="suffixInput" value="" placeholder="ex: _final" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-brand-500 transition-colors font-mono">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-medium text-slate-400 mb-1">Format chiffres</label>
+                        <select id="paddingSelect" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-brand-500 transition-colors">
+                            <option value="1">1, 2, ..., 10, 40</option>
+                            <option value="2" selected>01, 02, ..., 10, 40</option>
+                            <option value="3">001, 002, ..., 040</option>
+                            <option value="4">0001, 0002, ...</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-400 mb-1">Départ à</label>
+                        <input type="number" id="startIndexInput" value="1" min="0" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-brand-500 transition-colors font-mono">
+                    </div>
+                </div>
+
+                <!-- Sorting option -->
+                <div>
+                    <label class="block text-xs font-medium text-slate-400 mb-1">Ordre de tri des capturés</label>
+                    <select id="sortSelect" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-brand-500 transition-colors">
+                        <option value="natural">Ordre naturel Windows (ex: Capture (2994) → (3034))</option>
+                        <option value="alpha">Ordre alphabétique strict</option>
+                        <option value="date">Date de création / modification</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Directly Rename Action Box -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
+                <h2 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+                    <i class="fa-solid fa-play text-emerald-400"></i> 3. Appliquer les modifications
+                </h2>
+
+                <button id="startRenameBtn" disabled class="disabled:opacity-40 disabled:cursor-not-allowed w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3.5 px-4 rounded-xl text-sm flex items-center justify-center gap-2.5 shadow-lg shadow-emerald-900/30 transition-all duration-150">
+                    <i class="fa-solid fa-floppy-disk text-lg"></i>
+                    <span>Renommer directement sur le PC</span>
+                </button>
+
+                <!-- Progress bar -->
+                <div id="progressContainer" class="hidden space-y-2">
+                    <div class="flex justify-between text-xs text-slate-400 font-mono">
+                        <span id="progressText">Progression...</span>
+                        <span id="progressPercent">0%</span>
+                    </div>
+                    <div class="w-full bg-slate-950 rounded-full h-2 overflow-hidden border border-slate-800">
+                        <div id="progressBar" class="bg-emerald-500 h-full w-0 transition-all duration-150"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Right Preview Column -->
+        <div class="lg:col-span-7 flex flex-col">
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl flex-1 flex flex-col">
+                <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
+                    <h2 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-list-check text-brand-400"></i> Liste des fichiers & Statut
+                    </h2>
+                    <span id="folderNameBadge" class="text-xs px-2.5 py-1 bg-slate-800 text-slate-400 border border-slate-700 rounded-lg hidden font-mono truncate max-w-[200px]"></span>
+                </div>
+
+                <!-- Preview Table or Empty State -->
+                <div class="flex-1 overflow-x-auto overflow-y-auto max-h-[620px] border border-slate-800 rounded-xl bg-slate-950/60">
+                    <div id="emptyState" class="h-80 flex flex-col items-center justify-center text-slate-500 p-6 text-center">
+                        <div class="w-16 h-16 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center mb-3 text-slate-600">
+                            <i class="fa-solid fa-folder-open text-3xl"></i>
+                        </div>
+                        <p class="text-sm font-semibold text-slate-300">Aucun dossier sélectionné</p>
+                        <p class="text-xs text-slate-500 max-w-xs mt-1">Cliquez sur « Sélectionner le dossier » pour charger la liste des fichiers à renommer sur votre ordinateur.</p>
+                    </div>
+
+                    <table id="previewTable" class="w-full text-left text-xs text-slate-300 hidden border-collapse">
+                        <thead class="bg-slate-900 sticky top-0 border-b border-slate-800 text-slate-400 uppercase font-medium">
+                            <tr>
+                                <th class="p-3 w-10 text-center">#</th>
+                                <th class="p-3">Nom Actuel</th>
+                                <th class="p-3 w-6 text-center"></th>
+                                <th class="p-3 text-brand-400 font-semibold">Nouveau Nom</th>
+                                <th class="p-3 w-28 text-center">Statut</th>
+                            </tr>
+                        </thead>
+                        <tbody id="previewTbody" class="divide-y divide-slate-800/60 font-mono">
+                            <!-- Rows injected dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Notification Toast -->
+    <div id="notification" class="fixed bottom-5 right-5 bg-slate-900 border border-slate-700 text-slate-100 px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 transition-all duration-300 translate-y-20 opacity-0 z-50">
+        <i id="notifIcon" class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+        <span id="notifMessage" class="text-xs font-medium">Notification</span>
+    </div>
+
+    <script>
+        // State
+        let dirHandle = null;
+        let fileEntries = []; // Array of { handle, file, oldName, newName, status }
+
+        // DOM elements
+        const selectDirBtn = document.getElementById('selectDirBtn');
+        const selectDirText = document.getElementById('selectDirText');
+        const prefixInput = document.getElementById('prefixInput');
+        const suffixInput = document.getElementById('suffixInput');
+        const paddingSelect = document.getElementById('paddingSelect');
+        const startIndexInput = document.getElementById('startIndexInput');
+        const sortSelect = document.getElementById('sortSelect');
+        const startRenameBtn = document.getElementById('startRenameBtn');
+        
+        const previewTbody = document.getElementById('previewTbody');
+        const emptyState = document.getElementById('emptyState');
+        const previewTable = document.getElementById('previewTable');
+        const statsBadge = document.getElementById('statsBadge');
+        const fileCountText = document.getElementById('fileCountText');
+        const folderNameBadge = document.getElementById('folderNameBadge');
+        const apiCheckNotice = document.getElementById('apiCheckNotice');
+
+        const progressContainer = document.getElementById('progressContainer');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        const progressPercent = document.getElementById('progressPercent');
+
+        // Check Web File System Access API support
+        if (!('showDirectoryPicker' in window)) {
+            apiCheckNotice.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-amber-400 text-sm mt-0.5 shrink-0"></i>
+            <span class="text-amber-300">Votre navigateur ne prend pas en compte l'accès direct au système de fichiers. Veuillez utiliser Google Chrome, Microsoft Edge, Brave ou Opera sur ordinateur.</span>`;
+            selectDirBtn.disabled = true;
+            selectDirBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        }
+
+        // Presets
+        document.getElementById('presetSerieC').addEventListener('click', () => {
+            prefixInput.value = 'C';
+            suffixInput.value = '';
+            paddingSelect.value = '2';
+            startIndexInput.value = '1';
+            updateNamesAndPreview();
+            showNotification('Préréglage Série C (C01 - C40) appliqué', 'info');
+        });
+
+        document.getElementById('presetClean').addEventListener('click', () => {
+            prefixInput.value = '';
+            suffixInput.value = '';
+            paddingSelect.value = '2';
+            startIndexInput.value = '1';
+            updateNamesAndPreview();
+        });
+
+        // Event listeners
+        [prefixInput, suffixInput, paddingSelect, startIndexInput].forEach(el => {
+            el.addEventListener('input', updateNamesAndPreview);
+        });
+
+        sortSelect.addEventListener('change', () => {
+            sortFilesList();
+            updateNamesAndPreview();
+        });
+
+        // Directory selection
+        selectDirBtn.addEventListener('click', async () => {
+            try {
+                dirHandle = await window.showDirectoryPicker({ mode: 'readwrite' });
+                selectDirText.textContent = `Dossier: ${dirHandle.name}`;
+                folderNameBadge.textContent = dirHandle.name;
+                folderNameBadge.classList.remove('hidden');
+
+                await loadFilesFromDirectory();
+                showNotification(`Dossier "${dirHandle.name}" chargé avec succès`, 'success');
+            } catch (err) {
+                if (err.name !== 'AbortError') {
+                    console.error(err);
+                    showNotification('Erreur lors de l\'accès au dossier', 'error');
+                }
+            }
+        });
+
+        async function loadFilesFromDirectory() {
+            if (!dirHandle) return;
+
+            fileEntries = [];
+            for await (const entry of dirHandle.values()) {
+                if (entry.kind === 'file' && !entry.name.startsWith('.')) {
+                    const file = await entry.getFile();
+                    fileEntries.push({
+                        handle: entry,
+                        file: file,
+                        oldName: entry.name,
+                        newName: '',
+                        status: 'pending' // 'pending', 'success', 'error'
+                    });
+                }
+            }
+
+            sortFilesList();
+            updateNamesAndPreview();
+        }
+
+        // Natural sort algorithm
+        function sortFilesList() {
+            const mode = sortSelect.value;
+            const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
+
+            fileEntries.sort((a, b) => {
+                if (mode === 'natural') {
+                    return collator.compare(a.oldName, b.oldName);
+                } else if (mode === 'alpha') {
+                    return a.oldName.localeCompare(b.oldName);
+                } else if (mode === 'date') {
+                    return (a.file.lastModified || 0) - (b.file.lastModified || 0);
+                }
+                return 0;
+            });
+        }
+
+        function generateNewName(oldName, index) {
+            const prefix = prefixInput.value;
+            const suffix = suffixInput.value;
+            const padLen = parseInt(paddingSelect.value, 10);
+            const startIdx = parseInt(startIndexInput.value, 10) || 1;
+
+            const num = (index + startIdx).toString().padStart(padLen, '0');
+            const extIdx = oldName.lastIndexOf('.');
+            const ext = extIdx !== -1 ? oldName.substring(extIdx) : '';
+
+            return `${prefix}${num}${suffix}${ext}`;
+        }
+
+        function updateNamesAndPreview() {
+            if (fileEntries.length === 0) {
+                emptyState.classList.remove('hidden');
+                previewTable.classList.add('hidden');
+                statsBadge.classList.add('hidden');
+                startRenameBtn.disabled = true;
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            previewTable.classList.remove('hidden');
+            statsBadge.classList.remove('hidden');
+            fileCountText.textContent = `${fileEntries.length} fichier(s)`;
+            startRenameBtn.disabled = false;
+
+            previewTbody.innerHTML = '';
+
+            fileEntries.forEach((item, idx) => {
+                item.newName = generateNewName(item.oldName, idx);
+
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-slate-800/40 transition-colors';
+                tr.id = `file-row-${idx}`;
+
+                let statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] bg-slate-800 text-slate-400 border border-slate-700">En attente</span>`;
+                if (item.status === 'success') {
+                    statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-bold"><i class="fa-solid fa-check mr-1"></i>Renommé</span>`;
+                } else if (item.status === 'error') {
+                    statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] bg-rose-500/20 text-rose-400 border border-rose-500/30"><i class="fa-solid fa-xmark mr-1"></i>Erreur</span>`;
+                }
+
+                tr.innerHTML = `
+                    <td class="p-3 text-center text-slate-500 font-sans">${idx + 1}</td>
+                    <td class="p-3 text-slate-300 truncate max-w-[180px]" title="${escapeHtml(item.oldName)}">${escapeHtml(item.oldName)}</td>
+                    <td class="p-3 text-center text-slate-600"><i class="fa-solid fa-arrow-right"></i></td>
+                    <td class="p-3 text-brand-400 font-semibold truncate max-w-[180px]" title="${escapeHtml(item.newName)}">${escapeHtml(item.newName)}</td>
+                    <td class="p-3 text-center status-col">${statusBadge}</td>
+                `;
+                previewTbody.appendChild(tr);
+            });
+        }
+
+        // Renaming Execution directly on PC
+        startRenameBtn.addEventListener('click', async () => {
+            if (!dirHandle || fileEntries.length === 0) return;
+
+            // Confirm prompt
+            const confirmRename = confirm(`Êtes-vous sûr de vouloir renommer directement les ${fileEntries.length} fichiers dans le dossier "${dirHandle.name}" ?`);
+            if (!confirmRename) return;
+
+            startRenameBtn.disabled = true;
+            selectDirBtn.disabled = true;
+            progressContainer.classList.remove('hidden');
+
+            let successCount = 0;
+            let errorCount = 0;
+
+            for (let i = 0; i < fileEntries.length; i++) {
+                const item = fileEntries[i];
+
+                // Update UI Progress
+                const percent = Math.round(((i + 1) / fileEntries.length) * 100);
+                progressBar.style.width = `${percent}%`;
+                progressPercent.textContent = `${percent}%`;
+                progressText.textContent = `Renommage de ${i + 1}/${fileEntries.length}...`;
+
+                try {
+                    // Modern File System Access API entry move or copy-delete fallback
+                    if (item.handle.move) {
+                        // Native move method in newer Chromium browsers
+                        await item.handle.move(item.newName);
+                    } else {
+                        // Compatibility fallback: copy to new file and delete old file
+                        const newFileHandle = await dirHandle.getFileHandle(item.newName, { create: true });
+                        const writable = await newFileHandle.createWritable();
+                        await writable.write(item.file);
+                        await writable.close();
+
+                        // Remove old file
+                        await dirHandle.removeEntry(item.oldName);
+                    }
+
+                    item.status = 'success';
+                    item.oldName = item.newName; // Update internal record
+                    successCount++;
+                } catch (err) {
+                    console.error(`Erreur pour ${item.oldName}:`, err);
+                    item.status = 'error';
+                    errorCount++;
+                }
+
+                // Update Row in UI
+                const row = document.getElementById(`file-row-${i}`);
+                if (row) {
+                    const statusCol = row.querySelector('.status-col');
+                    if (item.status === 'success') {
+                        statusCol.innerHTML = `<span class="px-2 py-0.5 rounded-full text-[10px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-bold"><i class="fa-solid fa-check mr-1"></i>Renommé</span>`;
+                    } else {
+                        statusCol.innerHTML = `<span class="px-2 py-0.5 rounded-full text-[10px] bg-rose-500/20 text-rose-400 border border-rose-500/30"><i class="fa-solid fa-xmark mr-1"></i>Erreur</span>`;
+                    }
+                }
+            }
+
+            // Reload entries from folder to ensure sync
+            await loadFilesFromDirectory();
+
+            startRenameBtn.disabled = false;
+            selectDirBtn.disabled = false;
+
+            if (errorCount === 0) {
+                showNotification(`${successCount} fichier(s) renommés directement sur votre PC !`, 'success');
+            } else {
+                showNotification(`${successCount} réussi(s), ${errorCount} erreur(s)`, 'error');
+            }
+        });
+
+        function showNotification(msg, type = 'success') {
+            const notif = document.getElementById('notification');
+            const icon = document.getElementById('notifIcon');
+            const message = document.getElementById('notifMessage');
+
+            message.textContent = msg;
+
+            if (type === 'success') {
+                icon.className = 'fa-solid fa-circle-check text-emerald-400 text-lg';
+            } else if (type === 'info') {
+                icon.className = 'fa-solid fa-circle-info text-brand-400 text-lg';
+            } else {
+                icon.className = 'fa-solid fa-triangle-exclamation text-rose-400 text-lg';
+            }
+
+            notif.classList.remove('translate-y-20', 'opacity-0');
+
+            setTimeout(() => {
+                notif.classList.add('translate-y-20', 'opacity-0');
+            }, 3500);
+        }
+
+        function escapeHtml(text) {
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+    </script>
+</body>
+</html>

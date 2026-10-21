@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batch Crop - Rognage par Lot Direct</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Cropper.js CSS & JS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+    <!-- Google Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+        /* Custom styling for Cropper container */
+        .cropper-container {
+            max-width: 100% !important;
+            max-height: 520px !important;
+        }
+        .cropper-bg {
+            background-image: repeating-linear-gradient(45deg, #1e293b 25%, transparent 25%, transparent 75%, #1e293b 75%, #1e293b), repeating-linear-gradient(45deg, #1e293b 25%, #0f172a 25%, #0f172a 75%, #1e293b 75%, #1e293b);
+            background-position: 0 0, 10px 10px;
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col antialiased">
+
+    <!-- Header -->
+    <header class="border-b border-slate-800 bg-slate-900/90 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="p-2.5 bg-brand-600/20 text-brand-400 rounded-xl border border-brand-500/30">
+                    <i class="fa-solid fa-crop-simple text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg text-white leading-tight">Batch Crop Direct PC</h1>
+                    <p class="text-xs text-slate-400">Roguez toutes vos images au même endroit et enregistrez sur le disque</p>
+                </div>
+            </div>
+            <div id="statsBadge" class="hidden sm:flex items-center gap-2 bg-slate-800/80 border border-slate-700/60 px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300">
+                <i class="fa-solid fa-images text-brand-400"></i>
+                <span id="fileCountText">0 image(s)</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+        <!-- Left Controls & Crop Options -->
+        <div class="lg:col-span-5 space-y-6">
+
+            <!-- Folder / Files Selector -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl">
+                <h2 class="text-xs font-bold text-slate-300 uppercase tracking-wider mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-folder-open text-brand-400"></i> 1. Source des images
+                </h2>
+
+                <div class="space-y-2">
+                    <button id="selectDirBtn" class="w-full bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white font-semibold py-3 px-4 rounded-xl text-sm flex items-center justify-center gap-2.5 transition-all shadow-md">
+                        <i class="fa-solid fa-folder-tree text-amber-400 text-base"></i>
+                        <span id="selectDirText">Sélectionner un dossier local</span>
+                    </button>
+
+                    <div class="relative flex py-1 items-center">
+                        <div class="flex-grow border-t border-slate-800"></div>
+                        <span class="flex-shrink mx-2 text-[10px] text-slate-500 uppercase tracking-widest font-semibold">ou</span>
+                        <div class="flex-grow border-t border-slate-800"></div>
+                    </div>
+
+                    <label class="w-full bg-slate-800/60 hover:bg-slate-800 border border-slate-700/70 text-slate-300 font-medium py-2.5 px-4 rounded-xl text-xs flex items-center justify-center gap-2 cursor-pointer transition-colors">
+                        <i class="fa-solid fa-file-image text-slate-400"></i>
+                        <span>Importer des fichiers d'images</span>
+                        <input type="file" id="fileInput" multiple accept="image/*" class="hidden">
+                    </label>
+                </div>
+
+                <div id="apiNotice" class="mt-3 p-3 bg-slate-950/80 border border-slate-800 rounded-xl flex items-start gap-2 text-xs text-slate-400">
+                    <i class="fa-solid fa-circle-info text-brand-400 text-sm mt-0.5 shrink-0"></i>
+                    <span>La sélection de dossier enregistrera directement les modifications sur votre PC (Chrome/Edge/Brave).</span>
+                </div>
+            </div>
+
+            <!-- Dimensions and Crop Coordinates -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
+                <h2 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+                    <i class="fa-solid fa-sliders text-brand-400"></i> 2. Zone de Rognage (px)
+                </h2>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-medium text-slate-400 mb-1">Position X (gauche)</label>
+                        <input type="number" id="inputX" value="0" min="0" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 font-mono focus:outline-none focus:border-brand-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-400 mb-1">Position Y (haut)</label>
+                        <input type="number" id="inputY" value="0" min="0" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 font-mono focus:outline-none focus:border-brand-500">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-medium text-slate-400 mb-1">Largeur (W)</label>
+                        <input type="number" id="inputW" value="100" min="1" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 font-mono focus:outline-none focus:border-brand-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-400 mb-1">Hauteur (H)</label>
+                        <input type="number" id="inputH" value="100" min="1" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 font-mono focus:outline-none focus:border-brand-500">
+                    </div>
+                </div>
+
+                <div class="pt-2 border-t border-slate-800 flex items-center justify-between">
+                    <span class="text-xs text-slate-400">Image de référence :</span>
+                    <select id="sampleImageSelect" disabled class="bg-slate-950 border border-slate-800 text-xs rounded-lg px-2.5 py-1.5 text-slate-200 focus:outline-none max-w-[200px] truncate">
+                        <option value="">Aucune image</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Execute Batch Crop -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
+                <h2 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+                    <i class="fa-solid fa-play text-emerald-400"></i> 3. Exécuter le Batch Crop
+                </h2>
+
+                <button id="startCropBtn" disabled class="disabled:opacity-40 disabled:cursor-not-allowed w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3.5 px-4 rounded-xl text-sm flex items-center justify-center gap-2.5 shadow-lg shadow-emerald-900/30 transition-all">
+                    <i class="fa-solid fa-scissors text-lg"></i>
+                    <span>Rogner et enregistrer les fichiers</span>
+                </button>
+
+                <!-- Progress Bar -->
+                <div id="progressContainer" class="hidden space-y-2">
+                    <div class="flex justify-between text-xs text-slate-400 font-mono">
+                        <span id="progressText">Traitement...</span>
+                        <span id="progressPercent">0%</span>
+                    </div>
+                    <div class="w-full bg-slate-950 rounded-full h-2.5 overflow-hidden border border-slate-800">
+                        <div id="progressBar" class="bg-emerald-500 h-full w-0 transition-all duration-150"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Right Preview Box -->
+        <div class="lg:col-span-7 flex flex-col space-y-6">
+
+            <!-- Interactive Cropper Container -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl flex flex-col">
+                <div class="flex items-center justify-between mb-3 pb-2 border-b border-slate-800">
+                    <h2 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-vector-square text-brand-400"></i> Définir le cadre de rognage
+                    </h2>
+                    <span class="text-[11px] text-slate-400">Déplacez ou redimensionnez le cadre ci-dessous</span>
+                </div>
+
+                <div class="relative w-full bg-slate-950 rounded-xl border border-slate-800 overflow-hidden flex items-center justify-center min-h-[380px] max-h-[520px]">
+                    <div id="cropPlaceholder" class="text-center p-8 text-slate-500">
+                        <i class="fa-solid fa-image text-4xl mb-3 block text-slate-700"></i>
+                        <p class="text-sm font-medium text-slate-400">Aucune image chargée</p>
+                        <p class="text-xs text-slate-600 mt-1">Sélectionnez un dossier pour ajuster le cadre de découpe sur la première image.</p>
+                    </div>
+                    <img id="cropperImage" class="hidden max-w-full" alt="Image de référence">
+                </div>
+            </div>
+
+            <!-- Processed Files List -->
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl flex-1 flex flex-col">
+                <h2 class="text-xs font-bold text-slate-300 uppercase tracking-wider mb-3 pb-2 border-b border-slate-800 flex items-center gap-2">
+                    <i class="fa-solid fa-list-check text-brand-400"></i> Statut du rognage
+                </h2>
+
+                <div class="flex-1 overflow-y-auto max-h-[220px] border border-slate-800 rounded-xl bg-slate-950/60 p-2">
+                    <ul id="fileStatusList" class="space-y-1.5 text-xs font-mono">
+                        <li class="text-slate-500 text-center py-6 italic font-sans">Les résultats du traitement s'afficheront ici.</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Notification Toast -->
+    <div id="notification" class="fixed bottom-5 right-5 bg-slate-900 border border-slate-700 text-slate-100 px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 transition-all duration-300 translate-y-20 opacity-0 z-50">
+        <i id="notifIcon" class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+        <span id="notifMessage" class="text-xs font-medium">Notification</span>
+    </div>
+
+    <script>
+        // State
+        let dirHandle = null;
+        let imageFiles = []; // { name, file, handle, originalUrl }
+        let cropper = null;
+        let isUpdatingInputsFromCropper = false;
+
+        // Elements
+        const selectDirBtn = document.getElementById('selectDirBtn');
+        const selectDirText = document.getElementById('selectDirText');
+        const fileInput = document.getElementById('fileInput');
+        const sampleImageSelect = document.getElementById('sampleImageSelect');
+        const cropperImage = document.getElementById('cropperImage');
+        const cropPlaceholder = document.getElementById('cropPlaceholder');
+        const startCropBtn = document.getElementById('startCropBtn');
+
+        const inputX = document.getElementById('inputX');
+        const inputY = document.getElementById('inputY');
+        const inputW = document.getElementById('inputW');
+        const inputH = document.getElementById('inputH');
+
+        const fileStatusList = document.getElementById('fileStatusList');
+        const statsBadge = document.getElementById('statsBadge');
+        const fileCountText = document.getElementById('fileCountText');
+
+        const progressContainer = document.getElementById('progressContainer');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        const progressPercent = document.getElementById('progressPercent');
+
+        // Event Listeners for Input boxes
+        [inputX, inputY, inputW, inputH].forEach(input => {
+            input.addEventListener('input', updateCropperFromInputs);
+        });
+
+        // Select Folder via File System Access API
+        selectDirBtn.addEventListener('click', async () => {
+            try {
+                dirHandle = await window.showDirectoryPicker({ mode: 'readwrite' });
+                selectDirText.textContent = `Dossier: ${dirHandle.name}`;
+
+                imageFiles = [];
+                for await (const entry of dirHandle.values()) {
+                    if (entry.kind === 'file' && isImageFile(entry.name)) {
+                        const file = await entry.getFile();
+                        imageFiles.push({
+                            name: entry.name,
+                            file: file,
+                            handle: entry,
+                            url: URL.createObjectURL(file)
+                        });
+                    }
+                }
+
+                // Natural sort
+                const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
+                imageFiles.sort((a, b) => collator.compare(a.name, b.name));
+
+                onImagesLoaded();
+                showNotification(`${imageFiles.length} images trouvées dans le dossier`, 'success');
+            } catch (err) {
+                if (err.name !== 'AbortError') {
+                    console.error(err);
+                    showNotification('Erreur lors de l\'accès au dossier', 'error');
+                }
+            }
+        });
+
+        // Select Files Fallback
+        fileInput.addEventListener('change', (e) => {
+            dirHandle = null;
+            selectDirText.textContent = 'Sélectionner un dossier local';
+
+            const files = Array.from(e.target.files).filter(f => isImageFile(f.name));
+            imageFiles = files.map(file => ({
+                name: file.name,
+                file: file,
+                handle: null,
+                url: URL.createObjectURL(file)
+            }));
+
+            onImagesLoaded();
+            showNotification(`${imageFiles.length} images importées`, 'info');
+        });
+
+        function isImageFile(filename) {
+            return /\.(jpe?g|png|webp|bmp|gif)$/i.test(filename);
+        }
+
+        function onImagesLoaded() {
+            if (imageFiles.length === 0) {
+                showNotification('Aucune image trouvée dans la sélection', 'error');
+                return;
+            }
+
+            statsBadge.classList.remove('hidden');
+            fileCountText.textContent = `${imageFiles.length} image(s)`;
+            startCropBtn.disabled = false;
+
+            // Populate sample selector
+            sampleImageSelect.disabled = false;
+            sampleImageSelect.innerHTML = '';
+            imageFiles.forEach((img, idx) => {
+                const opt = document.createElement('option');
+                opt.value = idx;
+                opt.textContent = img.name;
+                sampleImageSelect.appendChild(opt);
+            });
+
+            // Load first image into cropper
+            loadCropperImage(0);
+        }
+
+        sampleImageSelect.addEventListener('change', (e) => {
+            loadCropperImage(parseInt(e.target.value, 10));
+        });
+
+        function loadCropperImage(index) {
+            const item = imageFiles[index];
+            if (!item) return;
+
+            cropPlaceholder.classList.add('hidden');
+            cropperImage.classList.remove('hidden');
+
+            if (cropper) {
+                cropper.destroy();
+            }
+
+            cropperImage.src = item.url;
+            cropper = new Cropper(cropperImage, {
+                viewMode: 1,
+                autoCropArea: 0.8,
+                responsive: true,
+                zoomable: true,
+                crop(event) {
+                    if (isUpdatingInputsFromCropper) return;
+                    const data = event.detail;
+                    inputX.value = Math.round(data.x);
+                    inputY.value = Math.round(data.y);
+                    inputW.value = Math.round(data.width);
+                    inputH.value = Math.round(data.height);
+                }
+            });
+        }
+
+        function updateCropperFromInputs() {
+            if (!cropper) return;
+            isUpdatingInputsFromCropper = true;
+            cropper.setData({
+                x: parseFloat(inputX.value) || 0,
+                y: parseFloat(inputY.value) || 0,
+                width: parseFloat(inputW.value) || 10,
+                height: parseFloat(inputH.value) || 10
+            });
+            isUpdatingInputsFromCropper = false;
+        }
+
+        // Execute Crop on all files
+        startCropBtn.addEventListener('click', async () => {
+            if (!cropper || imageFiles.length === 0) return;
+
+            const cropData = {
+                x: Math.max(0, parseFloat(inputX.value) || 0),
+                y: Math.max(0, parseFloat(inputY.value) || 0),
+                width: parseFloat(inputW.value) || 10,
+                height: parseFloat(inputH.value) || 10
+            };
+
+            const overwriteMsg = dirHandle 
+                ? `Êtes-vous sûr de vouloir rogner et remplacer les ${imageFiles.length} images dans le dossier "${dirHandle.name}" ?`
+                : `Voulez-vous lancer le rognage des ${imageFiles.length} images ?`;
+
+            if (!confirm(overwriteMsg)) return;
+
+            startCropBtn.disabled = true;
+            selectDirBtn.disabled = true;
+            progressContainer.classList.remove('hidden');
+            fileStatusList.innerHTML = '';
+
+            let successCount = 0;
+
+            for (let i = 0; i < imageFiles.length; i++) {
+                const item = imageFiles[i];
+
+                // Progress update
+                const percent = Math.round(((i + 1) / imageFiles.length) * 100);
+                progressBar.style.width = `${percent}%`;
+                progressPercent.textContent = `${percent}%`;
+                progressText.textContent = `Traitement: ${item.name} (${i + 1}/${imageFiles.length})`;
+
+                try {
+                    const croppedBlob = await cropImageBlob(item.url, cropData, item.file.type || 'image/png');
+
+                    if (dirHandle && item.handle) {
+                        // Directly overwrite file on local disk
+                        const writable = await item.handle.createWritable();
+                        await writable.write(croppedBlob);
+                        await writable.close();
+                    } else {
+                        // Fallback download if files were selected via input file
+                        downloadBlob(croppedBlob, `cropped_${item.name}`);
+                    }
+
+                    appendStatusRow(item.name, true);
+                    successCount++;
+                } catch (err) {
+                    console.error(`Erreur rognage ${item.name}:`, err);
+                    appendStatusRow(item.name, false, err.message);
+                }
+            }
+
+            startCropBtn.disabled = false;
+            selectDirBtn.disabled = false;
+            showNotification(`Rognage terminé : ${successCount}/${imageFiles.length} réussis !`, 'success');
+        });
+
+        // Helper: Canvas cropping
+        function cropImageBlob(imageSrc, crop, mimeType) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = crop.width;
+                    canvas.height = crop.height;
+
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(
+                        img,
+                        crop.x, crop.y, crop.width, crop.height, // Source coordinates
+                        0, 0, crop.width, crop.height            // Destination coordinates
+                    );
+
+                    canvas.toBlob((blob) => {
+                        if (blob) {
+                            resolve(blob);
+                        } else {
+                            reject(new Error("Échec de création du blob image"));
+                        }
+                    }, mimeType, 0.95);
+                };
+                img.onerror = () => reject(new Error("Erreur de chargement de l'image"));
+                img.src = imageSrc;
+            });
+        }
+
+        function appendStatusRow(fileName, success, errorMsg = '') {
+            const li = document.createElement('li');
+            li.className = 'flex items-center justify-between p-2 rounded bg-slate-900 border border-slate-800';
+
+            if (success) {
+                li.innerHTML = `
+                    <span class="truncate max-w-[280px] text-slate-300" title="${escapeHtml(fileName)}">${escapeHtml(fileName)}</span>
+                    <span class="text-emerald-400 font-bold text-[11px]"><i class="fa-solid fa-check mr-1"></i>Rogné</span>
+                `;
+            } else {
+                li.innerHTML = `
+                    <span class="truncate max-w-[280px] text-slate-300" title="${escapeHtml(fileName)}">${escapeHtml(fileName)}</span>
+                    <span class="text-rose-400 font-bold text-[11px]" title="${escapeHtml(errorMsg)}"><i class="fa-solid fa-xmark mr-1"></i>Erreur</span>
+                `;
+            }
+            fileStatusList.appendChild(li);
+            fileStatusList.scrollTop = fileStatusList.scrollHeight;
+        }
+
+        function downloadBlob(blob, filename) {
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(a.href);
+        }
+
+        function showNotification(msg, type = 'success') {
+            const notif = document.getElementById('notification');
+            const icon = document.getElementById('notifIcon');
+            const message = document.getElementById('notifMessage');
+
+            message.textContent = msg;
+
+            if (type === 'success') {
+                icon.className = 'fa-solid fa-circle-check text-emerald-400 text-lg';
+            } else if (type === 'info') {
+                icon.className = 'fa-solid fa-circle-info text-brand-400 text-lg';
+            } else {
+                icon.className = 'fa-solid fa-triangle-exclamation text-rose-400 text-lg';
+            }
+
+            notif.classList.remove('translate-y-20', 'opacity-0');
+
+            setTimeout(() => {
+                notif.classList.add('translate-y-20', 'opacity-0');
+            }, 3500);
+        }
+
+        function escapeHtml(text) {
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+    </script>
+</body>
+</html>
