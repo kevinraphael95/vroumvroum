@@ -735,26 +735,43 @@
   });
 
   document.addEventListener('keydown', e => {
-    if (secQuiz.hidden || !running) return;
-    if (e.ctrlKey || e.metaKey || e.altKey) return;
+      if (secQuiz.hidden || !running) return;
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
 
-    const m = /^[a-dA-D]$/.test(e.key)
-      ? 'abcd'.indexOf(e.key.toLowerCase())
-      : (/^[1-4]$/.test(e.key) ? parseInt(e.key, 10) - 1 : -1);
+      // Gestion de la touche Espace pour valider / passer à la suite
+      if (e.key === ' ' || e.key === 'Spacebar') {
+        e.preventDefault();
+        if (!e.target.matches('#ex-quit, #ex-next')) {
+          next();
+        }
+        return;
+      }
 
-    if (m >= 0) {
-      const btn = document.querySelector(
-        `#ex-answers .ex-ans[data-k="${m}"]`
-      );
-      if (btn) select(m);
-    } else if (
-      e.key === 'Enter' &&
-      !e.target.matches('#ex-quit, #ex-next')
-    ) {
-      e.preventDefault();
-      next();
-    }
-  });
+      // Mappage style gamer : A Z E R (AZERTY) / Q W E R (QWERTY) / 1 2 3 4
+      const keyLower = e.key.toLowerCase();
+      let m = -1;
+
+      if (['a', 'z', 'e', 'r', 'q', 'w'].includes(keyLower)) {
+        // Configuration AZERTY ou QWERTY de type gamer (première ligne de compétences)
+        const mapping = { 'a': 0, 'q': 0, 'z': 1, 'w': 1, 'e': 2, 'r': 3 };
+        m = mapping[keyLower];
+      } else if (/^[1-4]$/.test(e.key)) {
+        m = parseInt(e.key, 10) - 1;
+      }
+
+      if (m >= 0) {
+        const btn = document.querySelector(
+          `#ex-answers .ex-ans[data-k="${m}"]`
+        );
+        if (btn) select(m);
+      } else if (
+        e.key === 'Enter' &&
+        !e.target.matches('#ex-quit, #ex-next')
+      ) {
+        e.preventDefault();
+        next();
+      }
+    });
 
   window.addEventListener('beforeunload', e => {
     if (!running) return;
