@@ -738,7 +738,7 @@
       if (secQuiz.hidden || !running) return;
       if (e.ctrlKey || e.metaKey || e.altKey) return;
 
-      // Gestion de la touche Espace pour valider / passer à la suite
+      // Touche Espace pour valider / passer à la suite
       if (e.key === ' ' || e.key === 'Spacebar') {
         e.preventDefault();
         if (!e.target.matches('#ex-quit, #ex-next')) {
@@ -747,16 +747,25 @@
         return;
       }
 
-      // Mappage style gamer : A Z E R (AZERTY) / Q W E R (QWERTY) / 1 2 3 4
-      const keyLower = e.key.toLowerCase();
       let m = -1;
 
-      if (['a', 'z', 'e', 'r', 'q', 'w'].includes(keyLower)) {
-        // Configuration AZERTY ou QWERTY de type gamer (première ligne de compétences)
-        const mapping = { 'a': 0, 'q': 0, 'z': 1, 'w': 1, 'e': 2, 'r': 3 };
-        m = mapping[keyLower];
-      } else if (/^[1-4]$/.test(e.key)) {
-        m = parseInt(e.key, 10) - 1;
+      // e.Code détecte l'emplacement physique (marche direct sur AZERTY et QWERTY)
+      switch (e.code) {
+        case 'KeyA': // A en AZERTY / Q en QWERTY
+        case 'KeyQ': 
+          m = 0; break;
+        case 'KeyZ': // Z en AZERTY / W en QWERTY
+        case 'KeyW': 
+          m = 1; break;
+        case 'KeyE': // E sur les deux
+          m = 2; break;
+        case 'KeyR': // R sur les deux
+          m = 3; break;
+        default:
+          if (/^[1-4]$/.test(e.key)) {
+            m = parseInt(e.key, 10) - 1;
+          }
+          break;
       }
 
       if (m >= 0) {
