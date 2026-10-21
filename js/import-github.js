@@ -40,7 +40,6 @@
 
   /* ---------- Détection ---------- */
 
-  // Une requête : séries (code/questions/*.json) + images (code/images/**)
   async function detecterViaArbre() {
     const res = await fetch(TREE_URL);
     if (!res.ok) throw new Error('API GitHub ' + res.status);
@@ -49,7 +48,7 @@
     if (data.truncated) console.warn('⚠️ Arbre GitHub tronqué : certains fichiers peuvent manquer.');
 
     const series = [];
-    const images = {}; // id -> chemin relatif à code/
+    const images = {};
 
     data.tree.forEach(item => {
       if (item.type !== 'blob') return;
@@ -69,7 +68,6 @@
     return { series, images };
   }
 
-  // Repli sans API : teste A.json, B.json, C.json… jusqu'au premier absent
   async function detecterParEssai() {
     const series = [];
     for (const lettre of 'ABCDEFGHIJKLMNOPQRSTUVWXYZ') {
@@ -110,11 +108,36 @@
   }
 
   function traduireQuestions(data, images) {
+    if (!data || !Array.isArray(data.questions)) return [];
+
     return data.questions.map(q => {
       const imageURL = urlImage(q.id, images);
+      const enonce = q.enonce || q.question || '';
 
-      const isOuiNon = q.options && Object.values(q.options).some(opt =>
-        opt.includes('OUI') || opt.includes('NON')
+      // Si le fichier JSON est déjà au format natif (contient "question" et des "reponses" ou "affirmations" sous forme d'objets)
+      if (!q.options && (Array.isArray(q.reponses) || Array.isArray(q.affirmations))) {
+        return {
+          id: q.id,
+          type: q.type || (q.affirmations ? 'oui-non' : undefined),
+          image: imageURL,
+          alt: enonce,
+          question: enonce,
+          reponses: q.reponses,
+          affirmations: q.affirmations,
+          fiche: q.fiche || null,
+          theme: q.theme || null,
+          explication: q.explication || ''
+        };
+      }
+
+      // Sécurité si une question n'a pas du tout d'options ni de réponses structurées
+      if (!q.options || typeof q.options !== 'object') {
+        console.warn('⚠️ Question ignorée (format invalide ou manquant) :', q.id);
+        return null;
+      }
+
+      const isOuiNon = Object.values(q.options).some(opt =>
+        typeof opt === 'string' && (opt.includes('OUI') || opt.includes('NON'))
       );
 
       if (isOuiNon) {
@@ -124,23 +147,40 @@
           const keyOui = keys[i];
           const texteOui = q.options[keyOui] || '';
           let cleanTexte = texteOui.replace(/\s*:?\s*(OUI|NON)\s*$/i, '').trim();
-          // Option réduite à « OUI » / « NON » : l'affirmation est l'énoncé lui-même
-          // (page-examen.js n'affiche alors pas de doublon)
-          if (!cleanTexte) cleanTexte = q.enonce;
+          if (!cleanTexte) cleanTexte = enonce;
           affirmations.push({
             texte: cleanTexte,
-            vrai: q.reponses.includes(keyOui)
+            vrai: Array.isArray(q.reponses) && q.reponses.includes(keyOui)
           });
         }
-        return { id: q.id, type: 'oui-non', image: imageURL, alt: q.enonce, question: q.enonce, affirmations, fiche: q.fiche || null, theme: q.theme || null, explication: q.explication || '' };
+        return {
+          id: q.id,
+          type: 'oui-non',
+          image: imageURL,
+          alt: enonce,
+          question: enonce,
+          affirmations,
+          fiche: q.fiche || null,
+          theme: q.theme || null,
+          explication: q.explication || ''
+        };
       } else {
         const reponses = Object.keys(q.options).map(lettre => ({
           texte: q.options[lettre],
-          correcte: q.reponses.includes(lettre)
+          correcte: Array.isArray(q.reponses) && q.reponses.includes(lettre)
         }));
-        return { id: q.id, image: imageURL, alt: q.enonce, question: q.enonce, reponses, fiche: q.fiche || null, theme: q.theme || null, explication: q.explication || '' };
+        return {
+          id: q.id,
+          image: imageURL,
+          alt: enonce,
+          question: enonce,
+          reponses,
+          fiche: q.fiche || null,
+          theme: q.theme || null,
+          explication: q.explication || ''
+        };
       }
-    });
+    }).filter(Boolean); // Retire les éléments nuls (éventuelles erreurs filtrées)
   }
 
   /* ---------- Chargement ---------- */
