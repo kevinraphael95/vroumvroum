@@ -255,10 +255,6 @@
     }
   }
 
-  /*
-   * Appelée lorsque les questions sont disponibles.
-   * Peut aussi être rappelée si la banque est rechargée.
-   */
   function initExamen() {
     BANK = bankValid();
 
@@ -297,7 +293,6 @@
     );
   }
 
-  // L'importateur GitHub appelle cette fonction après le chargement.
   window.initExamen = initExamen;
 
   /* ---------- Démarrage ---------- */
@@ -328,8 +323,7 @@
     const frac = qDur > 0 ? left / qDur : 0;
 
     $('ex-ring-fg').style.strokeDashoffset = String(RING_C * (1 - frac));
-    $('ex-secs').textContent = String(Math.ceil(left));
-    $('ex-ring').classList.toggle('warn', left <= 5);
+    $('ex-secs').textContent = String(Math.ceil(left));$('ex-ring').classList.toggle('warn', left <= 5);
 
     if (left <= 0) next();
   }
@@ -404,8 +398,7 @@
     const q = item.q;
 
     $('ex-num').textContent = pad(idx + 1) + (q.id ? ` (${q.id})` : '');
-    $('ex-total').textContent = ' / ' + pad(items.length);
-    $('ex-question').textContent = q.question;
+    $('ex-total').textContent = ' / ' + pad(items.length);$('ex-question').textContent = q.question;
     $('ex-mode').textContent = item.multi ? 'Plusieurs réponses' : 'Une réponse';
 
     buildFigure($('ex-figure'), q);
@@ -419,7 +412,6 @@
       });
     } else {
       q.affirmations.forEach((a, i) => {
-        // Pas de doublon si l'affirmation est la question elle-même
         if (a.texte !== q.question) box.appendChild(el('p', 'ex-stmt', a.texte));
 
         const row = el('div', 'ex-yn');
@@ -502,7 +494,6 @@
   const ORDRE_FAM = ['L', 'C', 'R', 'U', 'D', 'A', 'P', 'M', 'S', 'E'];
 
   function familleDe(q) {
-    // 1) famille de la fiche liée ; 2) à défaut, la lettre "theme" de la question
     if (q.fiche && typeof window.FICHES !== 'undefined') {
       const f = window.FICHES.find(x => x.id === q.fiche);
       if (f) return f.badge;
@@ -546,8 +537,7 @@
 
     $('ex-verdict').textContent = message;
     $('ex-score-val').textContent = String(score);
-    $('ex-score-total').textContent = String(total);
-    $('ex-score-box').className =
+    $('ex-score-total').textContent = String(total);$('ex-score-box').className =
       'exam-result-score ' + (reussi ? 'pass' : 'fail');
 
     const grid = $('ex-grid');
@@ -682,8 +672,6 @@
         const ok = donne === attendu;
 
         if (a.texte === q.question) {
-          // Question oui/non simple : l'énoncé est déjà affiché plus haut,
-          // on montre seulement la réponse donnée.
           addChoice(
             donne || 'Aucune réponse',
             ok ? 'correct' : 'wrong',
@@ -725,8 +713,7 @@
   /* ---------- Événements ---------- */
 
   $('ex-start').addEventListener('click', start);
-  $('ex-next').addEventListener('click', next);
-  $('ex-quit').addEventListener('click', quit);
+  $('ex-next').addEventListener('click', next);$('ex-quit').addEventListener('click', quit);
 
   $('ex-replay').addEventListener('click', () => {
     if (!initialized || !N) return;
@@ -735,52 +722,44 @@
   });
 
   document.addEventListener('keydown', e => {
-      if (secQuiz.hidden || !running) return;
-      if (e.ctrlKey || e.metaKey || e.altKey) return;
+    if (secQuiz.hidden || !running) return;
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
 
-      // Touche Espace pour valider / passer à la suite
-      if (e.key === ' ' || e.key === 'Spacebar') {
-        e.preventDefault();
-        if (!e.target.matches('#ex-quit, #ex-next')) {
-          next();
-        }
-        return;
-      }
-
-      let m = -1;
-
-      // e.Code détecte l'emplacement physique (marche direct sur AZERTY et QWERTY)
-      switch (e.code) {
-        case 'KeyA': // A en AZERTY / Q en QWERTY
-        case 'KeyQ': 
-          m = 0; break;
-        case 'KeyZ': // Z en AZERTY / W en QWERTY
-        case 'KeyW': 
-          m = 1; break;
-        case 'KeyE': // E sur les deux
-          m = 2; break;
-        case 'KeyR': // R sur les deux
-          m = 3; break;
-        default:
-          if (/^[1-4]$/.test(e.key)) {
-            m = parseInt(e.key, 10) - 1;
-          }
-          break;
-      }
-
-      if (m >= 0) {
-        const btn = document.querySelector(
-          `#ex-answers .ex-ans[data-k="${m}"]`
-        );
-        if (btn) select(m);
-      } else if (
-        e.key === 'Enter' &&
-        !e.target.matches('#ex-quit, #ex-next')
-      ) {
-        e.preventDefault();
+    if (e.key === ' ' || e.key === 'Spacebar') {
+      e.preventDefault();
+      if (!e.target.matches('#ex-quit, #ex-next')) {
         next();
       }
-    });
+      return;
+    }
+
+    const key = e.key.toLowerCase();
+    let m = -1;
+
+    if (['a', 'z', 'e', 'r'].includes(key)) {
+      const azertyKeys = { 'a': 0, 'z': 1, 'e': 2, 'r': 3 };
+      m = azertyKeys[key];
+    } else if (['q', 'w'].includes(key)) {
+      m = key === 'q' ? 0 : 1;
+    } else if (key === 'e' || key === 'r') {
+      m = key === 'e' ? 2 : 3;
+    } else if (/^[1-4]$/.test(e.key)) {
+      m = parseInt(e.key, 10) - 1;
+    }
+
+    if (m >= 0) {
+      const btn = document.querySelector(
+        `#ex-answers .ex-ans[data-k="${m}"]`
+      );
+      if (btn) select(m);
+    } else if (
+      e.key === 'Enter' &&
+      !e.target.matches('#ex-quit, #ex-next')
+    ) {
+      e.preventDefault();
+      next();
+    }
+  });
 
   window.addEventListener('beforeunload', e => {
     if (!running) return;
@@ -793,7 +772,6 @@
   renderIntro();
   showOnly(secIntro);
 
-  // Si les questions sont déjà chargées, initialiser immédiatement.
   if (Array.isArray(window.EXAMEN_QUESTIONS)) {
     initExamen();
   } else {
