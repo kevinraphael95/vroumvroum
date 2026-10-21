@@ -97,9 +97,6 @@
                 <!-- Presets -->
                 <div class="mt-4 pt-4 border-t border-slate-800 flex flex-wrap gap-2 items-center">
                     <span class="text-xs text-slate-400 font-medium">Préréglage :</span>
-                    <button id="presetSerieC" class="px-3 py-1.5 text-xs bg-brand-600/20 text-brand-300 hover:bg-brand-600 hover:text-white border border-brand-500/30 rounded-lg transition-colors font-semibold flex items-center gap-1.5">
-                        <i class="fa-solid fa-bolt"></i> Série C (C01 à C40)
-                    </button>
                     <button id="presetClean" class="px-2.5 py-1.5 text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg transition-colors">
                         Numéros seuls (01, 02)
                     </button>
@@ -115,7 +112,7 @@
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label class="block text-xs font-medium text-slate-400 mb-1">Préfixe</label>
-                        <input type="text" id="prefixInput" value="C" placeholder="ex: C" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-brand-500 transition-colors font-mono">
+                        <input type="text" id="prefixInput" value="" placeholder="ex: C" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-brand-500 transition-colors font-mono">
                     </div>
                     <div>
                         <label class="block text-xs font-medium text-slate-400 mb-1">Suffixe</label>
@@ -258,15 +255,6 @@
         }
 
         // Presets
-        document.getElementById('presetSerieC').addEventListener('click', () => {
-            prefixInput.value = 'C';
-            suffixInput.value = '';
-            paddingSelect.value = '2';
-            startIndexInput.value = '1';
-            updateNamesAndPreview();
-            showNotification('Préréglage Série C (C01 - C40) appliqué', 'info');
-        });
-
         document.getElementById('presetClean').addEventListener('click', () => {
             prefixInput.value = '';
             suffixInput.value = '';
