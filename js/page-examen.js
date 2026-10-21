@@ -502,10 +502,12 @@
   const ORDRE_FAM = ['L', 'C', 'R', 'U', 'D', 'A', 'P', 'M', 'S', 'E'];
 
   function familleDe(q) {
-    if (typeof window.FICHES === 'undefined' || !q.fiche) return null;
-
-    const f = window.FICHES.find(x => x.id === q.fiche);
-    return f ? f.badge : null;
+    // 1) famille de la fiche liée ; 2) à défaut, la lettre "theme" de la question
+    if (q.fiche && typeof window.FICHES !== 'undefined') {
+      const f = window.FICHES.find(x => x.id === q.fiche);
+      if (f) return f.badge;
+    }
+    return ORDRE_FAM.indexOf(q.theme) !== -1 ? q.theme : null;
   }
 
   function finish() {

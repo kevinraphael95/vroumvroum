@@ -132,13 +132,13 @@
             vrai: q.reponses.includes(keyOui)
           });
         }
-        return { id: q.id, type: 'oui-non', image: imageURL, alt: q.enonce, question: q.enonce, affirmations, fiche: null, explication: '' };
+        return { id: q.id, type: 'oui-non', image: imageURL, alt: q.enonce, question: q.enonce, affirmations, fiche: q.fiche || null, theme: q.theme || null, explication: q.explication || '' };
       } else {
         const reponses = Object.keys(q.options).map(lettre => ({
           texte: q.options[lettre],
           correcte: q.reponses.includes(lettre)
         }));
-        return { id: q.id, image: imageURL, alt: q.enonce, question: q.enonce, reponses, fiche: null, explication: '' };
+        return { id: q.id, image: imageURL, alt: q.enonce, question: q.enonce, reponses, fiche: q.fiche || null, theme: q.theme || null, explication: q.explication || '' };
       }
     });
   }
