@@ -822,7 +822,6 @@ const FICHES = [
   /* ============================================================
      FAMILLE A : LES PREMIERS SECOURS
      ============================================================ */
-
   {
     "id": "protection-alerte",
     "groupe": "Les premiers secours",
