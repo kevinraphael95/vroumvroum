@@ -824,41 +824,43 @@ const FICHES = [
      ============================================================ */
 
   {
-    id: "protection-alerte",
-    groupe: "Les premiers secours",
-    sousGroupe: "Protéger et alerter",
-    badge: "A",
-    num: "01",
-    emoji: "🚨",
-    titre: "La protection & l'alerte",
-    type: "list",
-    items: [
-      { label: "La protection",    texte: "Sécuriser la zone : warning, gilet, triangle (30 m, jamais sur autoroute). Se protéger soi-même avant tout." },
-      { label: "Se mettre à l'abri", texte: "Faire sortir les personnes valides du véhicule et les placer à l'abri, derrière la glissière." },
-      { label: "L'alerte",         texte: "Numéros : 112 (UE), 15 (SAMU), 18 (Pompiers), 17 (Police). Donner lieu, nature, nombre de victimes, état." },
-      { label: "Personnes sourdes ou malentendantes", texte: "Le 114 permet d'alerter par SMS." }
+    "id": "protection-alerte",
+    "groupe": "Les premiers secours",
+    "sousGroupe": "Protéger et alerter",
+    "badge": "A",
+    "num": "01",
+    "emoji": "🚨",
+    "titre": "Protéger et Alerter (La méthode P.A.S.)",
+    "type": "list",
+    "items": [
+      { "label": "La règle P.A.S.", "texte": "L'ordre chronologique obligatoire des secours : <strong>P</strong>rotéger, <strong>A</strong>lerter, <strong>S</strong>ecourir. On ne déroge jamais à cet ordre pour ne pas devenir une victime de plus." },
+      { "label": "Arrivée sur les lieux", "texte": "Si les secours sont déjà présents : ne pas s'arrêter. Si l'accident vient de se produire : s'arrêter en sécurité pour intervenir." },
+      { "label": "1. Protéger & Baliser", "texte": "Feux de détresse, gilet jaune avant de sortir du véhicule, triangle à 30 m (sauf autoroute) et évacuation des passagers derrière les glissières." },
+      { "label": "Protéger la nuit", "texte": "Éclairer la zone avec les feux de croisement d'un véhicule non accidenté ou une lampe de poche (mouvements amples)." },
+      { "label": "2. Alerter les secours", "texte": "112 (Europe), 15 (SAMU), 18 (Pompiers), 114 (SMS), eCall (bouton SOS du véhicule) ou bornes orange sur autoroute." },
+      { "label": "Message d'alerte", "texte": "Localisation exacte (voie, sens, point kilométrique), nature de l'accident, nombre et état des victimes. Ne jamais raccrocher le premier." }
     ],
-    astuce: "Protéger, Alerter, Secourir : toujours dans cet ordre. On ne devient pas une deuxième victime."
+    "astuce": "Retiens bien le sigle P.A.S. : Protéger d'abord, Alerter ensuite, Secourir enfin !"
   },
-  /* ⚠ NOUVELLE : à relire */
   {
-    id: "accident-route",
-    groupe: "Les premiers secours",
-    sousGroupe: "Protéger et alerter",
-    badge: "A",
-    num: "02",
-    emoji: "🚗",
-    titre: "L'accident de la route",
-    type: "list",
-    items: [
-      { label: "Victime",               texte: "Ne pas déplacer une victime sauf danger immédiat. Ne pas retirer le casque d'un motard." },
-      { label: "Véhicules accidentés",  texte: "Couper le contact, serrer le frein à main. Ne pas fumer, pas de flamme à proximité." },
-      { label: "Ne rien donner",        texte: "Ni à boire, ni à manger à une victime." },
-      { label: "Rester sur place",      texte: "Parler à la victime, la rassurer, rester avec elle jusqu'à l'arrivée des secours." }
+    "id": "accident-route",
+    "groupe": "Les premiers secours",
+    "sousGroupe": "Protéger et alerter",
+    "badge": "A",
+    "num": "02",
+    "emoji": "🚗",
+    "titre": "Secourir et prise en charge des victimes",
+    "type": "list",
+    "items": [
+      { "label": "3. Secourir (Le 'S' du P.A.S.)", "texte": "Dernière étape du P.A.S. : intervenir uniquement après avoir protégé la zone et alerté les secours. La non-assistance à personne en danger est un délit grave." },
+      { "label": "Aide & Présence", "texte": "Rassurer la victime, lui parler en continu, la couvrir pour éviter le choc thermique et rester avec elle jusqu'à l'arrivée des secours." },
+      { "label": "Victime inconsciente", "texte": "Si elle respire : la placer en Position Latérale de Sécurité (PLS) et surveiller sa respiration jusqu'à l'arrivée des secours." },
+      { "label": "Hémorragie & Arrêt cardiaque", "texte": "Compresser directement la plaie pour stopper un saignement abondant. En cas d'arrêt cardiaque : massage cardiaque (RCP) et défibrillateur (DAE)." },
+      { "label": "Dégagement d'urgence", "texte": "Interdit de déplacer une victime sauf en cas de danger réel, immédiat et incontrôlable (ex: incendie, explosion, noyade)." },
+      { "label": "Interdictions absolues", "texte": "Ne jamais retirer le casque d'un motard (risque de paralysie), ne rien donner à boire ou à manger, interdiction de fumer." }
     ],
-    astuce: "Face à un accident : je m'arrête en sécurité, je protège, j'alerte, puis seulement je secours."
+    "astuce": "Rappelle-toi : on protège, on alerte, puis on secours. Ne tente jamais un geste technique sans formation !"
   },
-  /* ⚠ NOUVELLE : à relire */
   {
     id: "alerte-populations",
     groupe: "Les premiers secours",
