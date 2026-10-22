@@ -817,7 +817,7 @@ const FICHES = [
       { "label": "Annulation du permis", "texte": "Solde de points à zéro, ou décision judiciaire. Re-passage obligatoire après visite médicale et tests psychotechniques." }
     ],
     "astuce": "Le retrait immédiat n'est pas une sanction définitive : c'est une mesure de sécurité en attendant la décision judiciaire. De plus, payer l'amende vaut reconnaissance de l'infraction."
-  }
+  },
 
   /* ============================================================
      FAMILLE A : LES PREMIERS SECOURS
