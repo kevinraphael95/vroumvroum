@@ -798,7 +798,7 @@ const FICHES = [
     "badge": "D",
     "num": "04",
     "emoji": "⚖️",
-    "titre": "Retrait immédiat, contraventions, délits",
+    "titre": "Type d'amende et gravité/montant de la condamnation",
     "type": "list",
     "items": [
       { "label": "Amende forfaitaire", "texte": "Montant standard de base à régler dans le délai légal classique (sous 45 jours, ou 60 jours en ligne)." },
