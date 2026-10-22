@@ -103,7 +103,12 @@
     } else {
       body = `
         <ul class="fiche-list">
-          ${f.items.map(it => `<li><strong>${it.label}</strong> : ${it.texte}</li>`).join('')}
+          ${f.items.map(it => `
+            <li>
+              <strong>${it.label}</strong> : ${it.texte}
+              ${it.image ? `<br><img src="${it.image}" alt="${it.label}" class="fiche-inline-img" style="max-width:100%; height:auto; margin-top:10px; border-radius:6px;">` : ''}
+            </li>
+          `).join('')}
         </ul>`;
     }
 
