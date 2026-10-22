@@ -798,7 +798,7 @@ const FICHES = [
     "badge": "D",
     "num": "04",
     "emoji": "⚖️",
-    "titre": "Type d'amende et gravité/montant de la condamnation",
+    "titre": "Infractions : sanctions, niveaux de gravité et prix des amendes",
     "type": "list",
     "items": [
       { "label": "Amende forfaitaire", "texte": "Montant standard de base à régler dans le délai légal classique (sous 45 jours, ou 60 jours en ligne)." },
@@ -806,18 +806,18 @@ const FICHES = [
       { "label": "Amende majorée", "texte": "Montant augmenté appliqué en cas de retard de paiement (au-delà de 45 jours ou 60 jours en ligne)." },
       { "label": "Amende maximum", "texte": "Plafond légal fixé par le juge en tribunal (ou pour la 5ᵉ classe qui n'a pas de forfait)." },
       { "label": "Délais de paiement", "texte": "<img src='assets/img/fiches/delais-paiement-amendes.png' style='max-width:100%; height:auto; margin:10px 0; border-radius:6px;'>" },
-      { "label": "Retrait immédiat", "texte": "Excès ≥ 40 km/h, alcoolémie, stupéfiants, refus d'obtempérer : permis retiré sur place (suspension à venir)." },
       { "label": "1ʳᵉ classe", "texte": "Le plus léger : stationnement gênant, feux non conformes. Amende forfaitaire : 11 € (majorée : 33 €, max : 38 €)." },
       { "label": "2ᵉ classe", "texte": "Oubli de clignotant, non-présentation du permis/carte grise. Amende forfaitaire : 35 € (minorée : 22 €, majorée : 75 €, max : 150 €)." },
       { "label": "3ᵉ classe", "texte": "Excès de vitesse < 20 km/h (hors agglomération). Amende forfaitaire : 68 € (minorée : 45 €, majorée : 180 €, max : 450 €)." },
       { "label": "4ᵉ classe", "texte": "Excès 20-49 km/h, téléphone en main, refus de priorité, ceinture, ligne continue. Amende forfaitaire : 135 € (minorée : 90 €, majorée : 375 €, max : 750 €)." },
       { "label": "5ᵉ classe", "texte": "Infractions les plus graves : retrait de 6 points, suspension ou annulation possible. Amende max : 1 500 € (3 000 € en cas de récidive). Pas d'amende forfaitaire." },
-      { "label": "Tableau des montants", "texte": "<img src='assets/img/fiches/tableau-montants-amendes.png' style='max-width:100%; height:auto; margin:10px 0; border-radius:6px;'>" },
+      { "label": "Gravité et montant de la condamnation", "texte": "<img src='assets/img/fiches/tableau-montants-amendes.png' style='max-width:100%; height:auto; margin:10px 0; border-radius:6px;'>" },
+      { "label": "Retrait immédiat", "texte": "Excès ≥ 40 km/h, alcoolémie, stupéfiants, refus d'obtempérer : permis retiré sur place (suspension à venir)." },
       { "label": "Délits", "texte": "Alcoolémie ≥ 0,8 g/l, refus d'obtempérer, délit de fuite, conduite malgré suspension. Peine de prison de 2 mois à 10 ans selon la gravité et la récidive." },
       { "label": "Annulation du permis", "texte": "Solde de points à zéro, ou décision judiciaire. Re-passage obligatoire après visite médicale et tests psychotechniques." }
     ],
     "astuce": "Le retrait immédiat n'est pas une sanction définitive : c'est une mesure de sécurité en attendant la décision judiciaire. De plus, payer l'amende vaut reconnaissance de l'infraction."
-  },
+  }
 
   /* ============================================================
      FAMILLE A : LES PREMIERS SECOURS
