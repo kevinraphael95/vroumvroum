@@ -1,0 +1,366 @@
+[
+  {
+    "id": "d-points-01",
+    "fiche": "permis-points",
+    "famille": "D",
+    "categorie": "Permis à points",
+    "question": "Combien de points compte le permis à son obtention ?",
+    "bonne": "6 points",
+    "fausses": [
+      "8 points",
+      "10 points",
+      "12 points"
+    ],
+    "explication": "Le capital initial est de 6 points. Il passe à 12 après 3 ans sans infraction (2 ans en conduite accompagnée)."
+  },
+  {
+    "id": "d-points-02",
+    "fiche": "permis-points",
+    "famille": "D",
+    "categorie": "Permis à points",
+    "question": "Combien de points peut-on récupérer au maximum avec un stage volontaire ?",
+    "bonne": "4 points",
+    "fausses": [
+      "2 points",
+      "6 points",
+      "12 points"
+    ],
+    "explication": "Un stage volontaire permet de récupérer jusqu'à 4 points, dans la limite du plafond."
+  },
+  {
+    "id": "d-documents-01",
+    "fiche": "documents",
+    "famille": "D",
+    "categorie": "Documents",
+    "question": "Depuis avril 2024, comment l'assurance du véhicule est-elle vérifiée lors d'un contrôle ?",
+    "bonne": "Via le Fichier des Véhicules Assurés (FVA)",
+    "fausses": [
+      "Grâce à la carte verte, toujours obligatoire",
+      "Par un certificat à coller sur le pare-brise",
+      "Elle n'est plus contrôlée"
+    ],
+    "explication": "La carte verte n'existe plus : la vérification passe par le FVA. L'assurance reste obligatoire."
+  },
+  {
+    "id": "d-documents-02",
+    "fiche": "documents",
+    "famille": "D",
+    "categorie": "Documents",
+    "question": "Votre permis est perdu ou volé. Combien de temps le récépissé de déclaration est-il valable ?",
+    "bonne": "2 mois",
+    "fausses": [
+      "15 jours",
+      "6 mois",
+      "1 an"
+    ],
+    "explication": "Le récépissé est valable 2 mois, en attendant le nouveau titre."
+  },
+  {
+    "id": "d-documents-t01",
+    "fiche": "documents",
+    "famille": "D",
+    "categorie": "Documents",
+    "question": "Que se passe-t-il si on ne peut pas présenter ses documents immédiatement ?",
+    "bonne": "Amende jusqu'à 38 €, et jusqu'à 750 € sans justification sous 5 jours",
+    "fausses": [
+      "Rien, on a toujours 30 jours",
+      "Amende fixe de 500 €",
+      "Suspension immédiate du permis"
+    ],
+    "explication": "Ne pas présenter immédiatement = amende jusqu'à 38 €. Sans justification sous 5 jours = jusqu'à 750 €."
+  },
+  {
+    "id": "d-documents-t02",
+    "fiche": "documents",
+    "famille": "D",
+    "categorie": "Documents",
+    "question": "Que doit faire un conducteur qui a perdu son permis ?",
+    "bonne": "Présenter le récépissé de déclaration de perte, valable 2 mois",
+    "fausses": [
+      "Rien, il peut conduire sans document",
+      "Payer une amende de 500 €",
+      "Attendre 6 mois"
+    ],
+    "explication": "Le récépissé de déclaration de perte ou de vol remplace le permis pendant 2 mois maximum."
+  },
+  {
+    "id": "d-documents-t03",
+    "fiche": "documents",
+    "famille": "D",
+    "categorie": "Documents",
+    "question": "Le permis de conduire numérique est-il accepté lors d'un contrôle ?",
+    "bonne": "Oui, via l'application France Identité",
+    "fausses": [
+      "Uniquement pour les moins de 25 ans",
+      "Non, seul le format papier est valable",
+      "Uniquement en agglomération"
+    ],
+    "explication": "Le permis numérique via France Identité est accepté, comme l'Attestation de Droits à Conduire Sécurisée (valable 4 mois)."
+  },
+  {
+    "id": "d-documents-t04",
+    "fiche": "documents",
+    "famille": "D",
+    "categorie": "Documents",
+    "question": "Quels documents doit-on présenter lors d'un contrôle routier ?",
+    "bonne": "Permis de conduire et carte grise",
+    "fausses": [
+      "Uniquement la carte grise",
+      "Permis, carte grise et attestation d'assurance",
+      "Uniquement le permis"
+    ],
+    "explication": "Permis et carte grise sont obligatoires. Depuis avril 2024, l'assurance n'est plus à présenter (vérification via le Fichier des Véhicules Assurés)."
+  },
+  {
+    "id": "d-assurance-t01",
+    "fiche": "documents",
+    "famille": "D",
+    "categorie": "Assurance",
+    "question": "Que risque un conducteur qui roule sans assurance ?",
+    "bonne": "Jusqu'à 3 750 € d'amende et confiscation possible du véhicule",
+    "fausses": [
+      "Un simple avertissement",
+      "Rien, c'est une infraction mineure",
+      "Une amende de 135 €"
+    ],
+    "explication": "Le défaut d'assurance est un délit puni de 3 750 € d'amende. Peines complémentaires : suspension, annulation, confiscation du véhicule."
+  },
+  {
+    "id": "d-assurance-t02",
+    "fiche": "documents",
+    "famille": "D",
+    "categorie": "Assurance",
+    "question": "Quelle garantie minimale l'assurance auto doit-elle couvrir ?",
+    "bonne": "La responsabilité civile (dommages causés aux tiers)",
+    "fausses": [
+      "Le bris de glace",
+      "Les dommages au véhicule du conducteur",
+      "Le vol du véhicule"
+    ],
+    "explication": "L'assurance au tiers couvre uniquement les dommages causés aux autres. Le conducteur responsable et son véhicule ne sont pas indemnisés."
+  },
+  {
+    "id": "d-assurance-t03",
+    "fiche": "documents",
+    "famille": "D",
+    "categorie": "Assurance",
+    "question": "Depuis avril 2024, comment vérifie-t-on qu'un véhicule est assuré ?",
+    "bonne": "Via le Fichier des Véhicules Assurés (FVA)",
+    "fausses": [
+      "Avec l'attestation papier obligatoire",
+      "Avec la carte verte sur le pare-brise",
+      "En appelant l'assureur"
+    ],
+    "explication": "La carte verte a été supprimée en avril 2024. La vérification se fait via le Fichier des Véhicules Assurés."
+  },
+  {
+    "id": "d-assurance-t04",
+    "fiche": "documents",
+    "famille": "D",
+    "categorie": "Assurance",
+    "question": "L'assurance auto est-elle obligatoire ?",
+    "bonne": "Oui, pour tout véhicule terrestre à moteur, même s'il ne circule pas",
+    "fausses": [
+      "Non, c'est facultatif",
+      "Non, uniquement si on roule",
+      "Oui, mais uniquement pour les voitures neuves"
+    ],
+    "explication": "Tout véhicule terrestre à moteur doit être assuré, même immobile. Seul un véhicule démonté en est exempté."
+  },
+  {
+    "id": "d-chargement-t01",
+    "fiche": "chargement",
+    "famille": "D",
+    "categorie": "Chargement",
+    "question": "Peut-on transporter un animal non attaché dans l'habitacle ?",
+    "bonne": "Non, il doit être dans un contenant fermé ou attaché",
+    "fausses": [
+      "Seulement sur les courts trajets",
+      "Oui, sur les genoux du passager",
+      "Oui, tant qu'il ne gêne pas"
+    ],
+    "explication": "Un animal doit être transporté dans un contenant fermé ou attaché pour éviter qu'il ne gêne la conduite en cas de manœuvre brusque."
+  },
+  {
+    "id": "d-chargement-t02",
+    "fiche": "chargement",
+    "famille": "D",
+    "categorie": "Chargement",
+    "question": "Si la charge dépasse à l'arrière du véhicule, que faut-il faire ?",
+    "bonne": "Signaler le dépassement avec un dispositif réfléchissant",
+    "fausses": [
+      "Éteindre les feux arrière",
+      "Rien, c'est autorisé",
+      "Rouler plus vite"
+    ],
+    "explication": "Si la charge dépasse du véhicule, un dispositif réfléchissant est obligatoire, et il faut reporter les feux et la plaque si nécessaire."
+  },
+  {
+    "id": "d-chargement-t03",
+    "fiche": "chargement",
+    "famille": "D",
+    "categorie": "Chargement",
+    "question": "Où doit-on placer les objets lourds dans une voiture ?",
+    "bonne": "Dans le coffre, arrimés",
+    "fausses": [
+      "Sur la plage arrière",
+      "Sous les sièges avant",
+      "Sur les genoux des passagers"
+    ],
+    "explication": "Les objets lourds doivent être dans le coffre, arrimés. Sur la plage arrière, ils deviennent des projectiles en cas de freinage."
+  },
+  {
+    "id": "d-chargement-t04",
+    "fiche": "chargement",
+    "famille": "D",
+    "categorie": "Chargement",
+    "question": "Que signifie PTAC ?",
+    "bonne": "Poids Total Autorisé en Charge",
+    "fausses": [
+      "Poids Total Avec Conducteur",
+      "Plan de Transport et d'Accès au Camion",
+      "Pression des Tourtes À Chaud"
+    ],
+    "explication": "Le PTAC est indiqué sur la carte grise. Il ne faut jamais le dépasser."
+  },
+  {
+    "id": "d-chargement-t05",
+    "fiche": "chargement",
+    "famille": "D",
+    "categorie": "Chargement",
+    "question": "Le permis B suffit-il pour tracter une remorque de 500 kg ?",
+    "bonne": "Oui, tant que le PTAC de la remorque ne dépasse pas 750 kg",
+    "fausses": [
+      "Non, il faut obligatoirement le permis BE",
+      "Oui, sans aucune condition",
+      "Non, il faut le permis B96"
+    ],
+    "explication": "Avec le permis B, on peut tracter une remorque dont le PTAC ne dépasse pas 750 kg. Au-delà, permis BE ou B96 selon le poids total."
+  },
+  {
+    "id": "d-permis-a-points-t01",
+    "fiche": "permis-points",
+    "famille": "D",
+    "categorie": "Permis à points",
+    "question": "Au bout de combien de temps un permis sans infraction passe-t-il à 12 points ?",
+    "bonne": "3 ans (2 ans en cas de conduite accompagnée)",
+    "fausses": [
+      "10 ans",
+      "5 ans",
+      "1 an"
+    ],
+    "explication": "Le capital passe à 12 points après 3 ans sans infraction, ou 2 ans en cas de conduite accompagnée."
+  },
+  {
+    "id": "d-permis-a-points-t02",
+    "fiche": "permis-points",
+    "famille": "D",
+    "categorie": "Permis à points",
+    "question": "Combien de points un stage volontaire permet-il de récupérer ?",
+    "bonne": "4 points maximum",
+    "fausses": [
+      "2 points",
+      "6 points",
+      "12 points"
+    ],
+    "explication": "Un stage volontaire de 2 jours permet de récupérer jusqu'à 4 points, dans la limite du plafond."
+  },
+  {
+    "id": "d-permis-a-points-t03",
+    "fiche": "permis-points",
+    "famille": "D",
+    "categorie": "Permis à points",
+    "question": "Certaines infractions de 1ʳᵉ classe enlèvent-elles des points ?",
+    "bonne": "Non, elles entraînent seulement une amende",
+    "fausses": [
+      "Uniquement pour les jeunes conducteurs",
+      "Oui, 2 points",
+      "Oui, toujours 1 point"
+    ],
+    "explication": "Les infractions de 1ʳᵉ classe (stationnement gênant, feux non conformes) entraînent une amende, mais pas de retrait de points."
+  },
+  {
+    "id": "d-permis-a-points-t04",
+    "fiche": "permis-points",
+    "famille": "D",
+    "categorie": "Permis à points",
+    "question": "Que se passe-t-il quand le solde de points arrive à zéro ?",
+    "bonne": "Le permis est invalidé et il faut le repasser après 6 mois (1 an en cas de récidive)",
+    "fausses": [
+      "Une simple amende est appliquée",
+      "Le permis reste valable",
+      "Le permis est suspendu 1 mois"
+    ],
+    "explication": "Solde à zéro = invalidation. Il faut repasser le code et la conduite après 6 mois (1 an en cas de récidive)."
+  },
+  {
+    "id": "d-infractions-t01",
+    "fiche": "infractions",
+    "famille": "D",
+    "categorie": "Infractions",
+    "question": "Que se passe-t-il en cas de retrait immédiat du permis ?",
+    "bonne": "Le permis est retiré sur place et une suspension est prononcée à venir",
+    "fausses": [
+      "Rien, c'est une simple formalité",
+      "Le permis est annulé définitivement",
+      "Le conducteur peut continuer à rouler"
+    ],
+    "explication": "Le retrait immédiat intervient pour les infractions graves (excès ≥ 40 km/h, alcoolémie, stupéfiants). Le permis est retiré sur place."
+  },
+  {
+    "id": "d-infractions-t02",
+    "fiche": "infractions",
+    "famille": "D",
+    "categorie": "Infractions",
+    "question": "Qu'est-ce qu'un délit au Code de la route ?",
+    "bonne": "Une infraction grave, punie de prison et d'une amende élevée",
+    "fausses": [
+      "Une simple contravention de 1ʳᵉ classe",
+      "Une infraction sans conséquence",
+      "Une infraction uniquement administrative"
+    ],
+    "explication": "Le délit est le 2ᵉ niveau de gravité après la contravention. Exemples : alcoolémie ≥ 0,8 g/l, refus d'obtempérer, délit de fuite."
+  },
+  {
+    "id": "d-infractions-t03",
+    "fiche": "infractions",
+    "famille": "D",
+    "categorie": "Infractions",
+    "question": "Que signifie une infraction de 5ᵉ classe ?",
+    "bonne": "Une infraction grave, avec retrait de 6 points et possible suspension",
+    "fausses": [
+      "Une infraction réservée aux poids lourds",
+      "Une infraction uniquement passible d'une amende",
+      "Une simple contravention sans conséquence"
+    ],
+    "explication": "Les infractions de 5ᵉ classe entraînent 6 points de retrait, avec possibilité de suspension ou d'annulation du permis."
+  },
+  {
+    "id": "d-infractions-t04",
+    "fiche": "infractions",
+    "famille": "D",
+    "categorie": "Infractions",
+    "question": "Un excès de vitesse entre 20 et 49 km/h relève de quelle classe ?",
+    "bonne": "4ᵉ classe",
+    "fausses": [
+      "3ᵉ classe",
+      "5ᵉ classe",
+      "2ᵉ classe"
+    ],
+    "explication": "Un excès de vitesse de 20 à 49 km/h relève de la 4ᵉ classe : amende et retrait de points."
+  },
+  {
+    "id": "d-infractions-t05",
+    "fiche": "infractions",
+    "famille": "D",
+    "categorie": "Infractions",
+    "question": "Combien de classes de contraventions existe-t-il pour les infractions au Code de la route ?",
+    "bonne": "5 classes",
+    "fausses": [
+      "6 classes",
+      "3 classes",
+      "4 classes"
+    ],
+    "explication": "Les contraventions sont classées de la 1ʳᵉ à la 5ᵉ classe, par ordre de gravité croissante."
+  }
+]

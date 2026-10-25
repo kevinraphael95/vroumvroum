@@ -1,0 +1,1150 @@
+[
+  {
+    "id": "l-vitesses-01",
+    "fiche": "vitesses",
+    "famille": "L",
+    "categorie": "Vitesse",
+    "question": "Quelle est la vitesse maximale autorisée sur autoroute par temps de pluie pour un conducteur confirmé ?",
+    "bonne": "110 km/h",
+    "fausses": [
+      "100 km/h",
+      "120 km/h",
+      "130 km/h"
+    ],
+    "explication": "Sur autoroute : 130 km/h par temps sec, 110 km/h par temps de pluie."
+  },
+  {
+    "id": "l-vitesses-02",
+    "fiche": "vitesses",
+    "famille": "L",
+    "categorie": "Vitesse",
+    "question": "Vous êtes en permis probatoire et roulez sur autoroute. Quelle est votre vitesse maximale ?",
+    "bonne": "110 km/h",
+    "fausses": [
+      "100 km/h",
+      "120 km/h",
+      "130 km/h"
+    ],
+    "explication": "Pendant la période probatoire, la vitesse est limitée à 110 km/h sur autoroute, quelle que soit la météo."
+  },
+  {
+    "id": "l-vitesses-03",
+    "fiche": "vitesses",
+    "famille": "L",
+    "categorie": "Vitesse",
+    "question": "Le brouillard réduit la visibilité à moins de 50 mètres. Quelle vitesse maximale devez-vous respecter ?",
+    "bonne": "50 km/h, sur tout le réseau, autoroute comprise",
+    "fausses": [
+      "50 km/h, mais seulement en agglomération",
+      "80 km/h hors agglomération",
+      "70 km/h sur autoroute"
+    ],
+    "explication": "Quand la visibilité est inférieure à 50 m, la limite est de 50 km/h sur tout le réseau, même sur autoroute."
+  },
+  {
+    "id": "l-vitesse-conseq-01",
+    "fiche": "vitesse-consequences",
+    "famille": "L",
+    "categorie": "Distances",
+    "question": "À 90 km/h, quelle est la distance parcourue pendant le temps de réaction (1 seconde environ) ?",
+    "bonne": "27 m",
+    "fausses": [
+      "18 m",
+      "40 m",
+      "54 m"
+    ],
+    "explication": "Distance de réaction = (vitesse ÷ 10) × 3, soit 9 × 3 = 27 m à 90 km/h."
+  },
+  {
+    "id": "l-vitesse-conseq-02",
+    "fiche": "vitesse-consequences",
+    "famille": "L",
+    "categorie": "Distances",
+    "question": "À 90 km/h sur route sèche, quelle est la distance d'arrêt approximative ?",
+    "bonne": "70 m environ",
+    "fausses": [
+      "27 m environ",
+      "40 m environ",
+      "107 m environ"
+    ],
+    "explication": "Distance d'arrêt = réaction (27 m) + freinage (≈ 40 m) ≈ 70 m. Les 107 m correspondent à la route mouillée."
+  },
+  {
+    "id": "l-vitesse-conseq-03",
+    "fiche": "vitesse-consequences",
+    "famille": "L",
+    "categorie": "Distances",
+    "question": "Si votre vitesse double, que devient la distance de freinage ?",
+    "bonne": "Elle est multipliée par 4",
+    "fausses": [
+      "Elle est multipliée par 2",
+      "Elle est multipliée par 3",
+      "Elle reste la même"
+    ],
+    "explication": "La distance de freinage est proportionnelle au carré de la vitesse : vitesse × 2, freinage × 4."
+  },
+  {
+    "id": "l-vitesse-conseq-04",
+    "fiche": "vitesse-consequences",
+    "famille": "L",
+    "categorie": "Distances",
+    "question": "Sur route mouillée, comment évolue la distance de freinage par rapport à la route sèche ?",
+    "bonne": "Elle est environ doublée",
+    "fausses": [
+      "Elle augmente d'un quart",
+      "Elle reste identique",
+      "Elle est divisée par deux"
+    ],
+    "explication": "La pluie réduit l'adhérence : la distance de freinage est environ doublée."
+  },
+  {
+    "id": "l-depasser-01",
+    "fiche": "croiser-depasser",
+    "famille": "L",
+    "categorie": "Dépassement",
+    "question": "Hors agglomération, quelle distance latérale minimale devez-vous laisser en dépassant un cycliste ?",
+    "bonne": "1,5 m",
+    "fausses": [
+      "0,5 m",
+      "1 m",
+      "2 m"
+    ],
+    "explication": "1 m en agglomération, 1,5 m hors agglomération."
+  },
+  {
+    "id": "l-depasser-02",
+    "fiche": "croiser-depasser",
+    "famille": "L",
+    "categorie": "Dépassement",
+    "question": "Dans quel cas est-il autorisé de dépasser par la droite ?",
+    "bonne": "Lorsque le véhicule qui précède va tourner à gauche",
+    "fausses": [
+      "Lorsque la voie de gauche est plus lente",
+      "Lorsque vous êtes pressé",
+      "Lorsque le véhicule devant roule trop vite"
+    ],
+    "explication": "On dépasse par la gauche. La droite n'est permise que si le véhicule devant signale qu'il tourne à gauche."
+  },
+  {
+    "id": "l-depasser-03",
+    "fiche": "croiser-depasser",
+    "famille": "L",
+    "categorie": "Dépassement",
+    "question": "Dans laquelle de ces situations le dépassement est-il interdit ?",
+    "bonne": "À l'approche d'un sommet de côte sans visibilité",
+    "fausses": [
+      "Sur ligne discontinue avec bonne visibilité",
+      "Sur une route dégagée avec clignotant allumé",
+      "Sur une voie rapide à deux voies par sens"
+    ],
+    "explication": "Sont interdits : ligne continue, sommet de côte, virage, passage à niveau, intersection."
+  },
+  {
+    "id": "l-stationnement-01",
+    "fiche": "stationnement",
+    "famille": "L",
+    "categorie": "Stationnement",
+    "question": "Vous stationnez en descente. Comment placer les roues avant ?",
+    "bonne": "Braquées vers le trottoir",
+    "fausses": [
+      "Braquées à l'opposé du trottoir",
+      "Laissées droites",
+      "Peu importe si le frein à main est serré"
+    ],
+    "explication": "En descente, on braque vers le trottoir ; en montée, on les éloigne du trottoir. On serre aussi le frein à main et on laisse une vitesse enclenchée."
+  },
+  {
+    "id": "l-stationnement-02",
+    "fiche": "stationnement",
+    "famille": "L",
+    "categorie": "Stationnement",
+    "question": "Quelle est la différence entre l'arrêt et le stationnement ?",
+    "bonne": "L'arrêt est une immobilisation brève, conducteur à bord ; le stationnement est prolongé",
+    "fausses": [
+      "L'arrêt est interdit en agglomération, le stationnement est autorisé",
+      "L'arrêt impose de couper le moteur, pas le stationnement",
+      "Il n'y a aucune différence, les deux termes sont équivalents"
+    ],
+    "explication": "L'arrêt est bref, le conducteur reste à bord. En stationnement, il peut quitter son véhicule."
+  },
+  {
+    "id": "l-priorites-01",
+    "fiche": "priorites",
+    "famille": "L",
+    "categorie": "Priorités",
+    "question": "Un tramway arrive à une intersection. Que dire de sa priorité ?",
+    "bonne": "Il est toujours prioritaire, quelle que soit la signalisation",
+    "fausses": [
+      "Il est soumis à la priorité à droite",
+      "Il est prioritaire seulement s'il y a un feu",
+      "Il doit céder le passage aux voitures"
+    ],
+    "explication": "Le tramway est toujours prioritaire."
+  },
+  {
+    "id": "l-priorites-02",
+    "fiche": "priorites",
+    "famille": "L",
+    "categorie": "Priorités",
+    "question": "Vous arrivez à un Stop et aucun véhicule n'est visible. Que faites-vous ?",
+    "bonne": "Je m'arrête complètement à la ligne d'effet",
+    "fausses": [
+      "Je ralentis simplement",
+      "Je m'arrête seulement si un véhicule arrive",
+      "Je m'arrête après la ligne pour mieux voir"
+    ],
+    "explication": "Le Stop impose un arrêt complet à la ligne d'effet, même sans autre véhicule."
+  },
+  {
+    "id": "l-giratoire-01",
+    "fiche": "giratoire",
+    "famille": "L",
+    "categorie": "Giratoire",
+    "question": "Dans un carrefour à sens giratoire, qui est prioritaire ?",
+    "bonne": "Les véhicules déjà engagés sur l'anneau",
+    "fausses": [
+      "Les véhicules qui entrent",
+      "Le véhicule le plus rapide",
+      "Les véhicules venant de droite à l'entrée"
+    ],
+    "explication": "On cède le passage aux véhicules déjà engagés sur l'anneau."
+  },
+  {
+    "id": "l-giratoire-02",
+    "fiche": "giratoire",
+    "famille": "L",
+    "categorie": "Giratoire",
+    "question": "Quand mettre le clignotant dans un giratoire ?",
+    "bonne": "À droite, avant la sortie que l'on va prendre",
+    "fausses": [
+      "À droite, dès l'entrée",
+      "À gauche, à l'entrée, pour aller tout droit",
+      "On ne met jamais de clignotant"
+    ],
+    "explication": "Clignotant à droite pour sortir, jamais pour entrer."
+  },
+  {
+    "id": "l-signalisation-t01",
+    "fiche": "signalisation-panneaux",
+    "famille": "L",
+    "categorie": "Signalisation",
+    "question": "Que signifie un panneau triangulaire à bordure rouge ?",
+    "bonne": "Panneau de danger",
+    "fausses": [
+      "Panneau d'indication",
+      "Panneau Stop (arrêt obligatoire)",
+      "Panneau d'obligation"
+    ],
+    "explication": "Les panneaux triangulaires à bordure rouge annoncent un danger."
+  },
+  {
+    "id": "l-signalisation-t02",
+    "fiche": "signalisation-panneaux",
+    "famille": "L",
+    "categorie": "Signalisation",
+    "question": "Que signifie un panneau octogonal rouge ?",
+    "bonne": "Panneau Stop (arrêt obligatoire)",
+    "fausses": [
+      "Panneau d'interdiction",
+      "Panneau de danger",
+      "Panneau d'obligation"
+    ],
+    "explication": "Le panneau Stop est le seul panneau octogonal. Il impose un arrêt complet à la ligne d'effet."
+  },
+  {
+    "id": "l-signalisation-t03",
+    "fiche": "signalisation-panneaux",
+    "famille": "L",
+    "categorie": "Signalisation",
+    "question": "Que signifie un panneau rond bleu ?",
+    "bonne": "Panneau d'obligation",
+    "fausses": [
+      "Panneau Stop (arrêt obligatoire)",
+      "Panneau de danger",
+      "Panneau d'indication"
+    ],
+    "explication": "Les panneaux ronds bleus indiquent une obligation."
+  },
+  {
+    "id": "l-signalisation-t04",
+    "fiche": "signalisation-panneaux",
+    "famille": "L",
+    "categorie": "Signalisation",
+    "question": "Que signifie un panneau carré bleu ?",
+    "bonne": "Panneau d'indication",
+    "fausses": [
+      "Panneau d'interdiction",
+      "Panneau d'obligation",
+      "Panneau de danger"
+    ],
+    "explication": "Les panneaux carrés bleus donnent une indication."
+  },
+  {
+    "id": "l-signalisation-t05",
+    "fiche": "signalisation-panneaux",
+    "famille": "L",
+    "categorie": "Signalisation",
+    "question": "Que signifie un panneau rond à bordure rouge ?",
+    "bonne": "Panneau d'interdiction",
+    "fausses": [
+      "Panneau de danger",
+      "Panneau d'obligation",
+      "Panneau Stop (arrêt obligatoire)"
+    ],
+    "explication": "Les panneaux ronds à bordure rouge indiquent une interdiction."
+  },
+  {
+    "id": "l-signalisation-t06",
+    "fiche": "signalisation-panneaux",
+    "famille": "L",
+    "categorie": "Signalisation",
+    "question": "Qu'est-ce qu'un panonceau ?",
+    "bonne": "Un petit panneau rectangulaire placé sous un panneau principal pour en préciser le sens",
+    "fausses": [
+      "Un panneau temporaire de chantier",
+      "Un marquage au sol",
+      "Un panneau publicitaire"
+    ],
+    "explication": "Le panonceau précise la distance, l'étendue, la position, la catégorie d'usagers ou une exception."
+  },
+  {
+    "id": "l-signalisation-t07",
+    "fiche": "signalisation-panneaux",
+    "famille": "L",
+    "categorie": "Signalisation",
+    "question": "Un panneau rond à bordure rouge signifie :",
+    "bonne": "Une interdiction",
+    "fausses": [
+      "Un danger",
+      "Une indication",
+      "Une obligation"
+    ],
+    "explication": "Le rond à bordure rouge indique toujours une interdiction (sens interdit, dépassement interdit, arrêt…)."
+  },
+  {
+    "id": "l-signalisation-t08",
+    "fiche": "signalisation-panneaux",
+    "famille": "L",
+    "categorie": "Signalisation",
+    "question": "Sur une route prioritaire, quel panneau indique que la priorité prend fin ?",
+    "bonne": "Le losange jaune barré d'une bande noire",
+    "fausses": [
+      "Le triangle pointe en bas",
+      "Le losange jaune plein",
+      "Le panneau octogonal"
+    ],
+    "explication": "Le losange jaune indique la priorité. Barré, il signale la fin de priorité et le retour à la priorité à droite."
+  },
+  {
+    "id": "l-signalisation-temporaire-t01",
+    "fiche": "signalisation-temporaire",
+    "famille": "L",
+    "categorie": "Signalisation temporaire",
+    "question": "À quoi sert une borne kilométrique sur autoroute ?",
+    "bonne": "Repérer sa position en cas d'appel aux secours",
+    "fausses": [
+      "Marquer la limite départementale",
+      "Indiquer la vitesse maximale",
+      "Signaler une sortie proche"
+    ],
+    "explication": "La borne d'appel ou le numéro de la borne kilométrique permet aux secours de localiser précisément l'appel."
+  },
+  {
+    "id": "l-signalisation-temporaire-t02",
+    "fiche": "signalisation-temporaire",
+    "famille": "L",
+    "categorie": "Signalisation temporaire",
+    "question": "De quelle couleur sont les panneaux de signalisation temporaire (chantiers) ?",
+    "bonne": "Fond jaune",
+    "fausses": [
+      "Fond vert",
+      "Fond blanc",
+      "Fond bleu"
+    ],
+    "explication": "Les panneaux temporaires ont un fond jaune. Ils sont prioritaires sur la signalisation permanente."
+  },
+  {
+    "id": "l-signalisation-temporaire-t03",
+    "fiche": "signalisation-temporaire",
+    "famille": "L",
+    "categorie": "Signalisation temporaire",
+    "question": "Qui est prioritaire entre un agent de circulation et un feu tricolore ?",
+    "bonne": "L'agent de circulation",
+    "fausses": [
+      "Le feu tricolore",
+      "Le panneau Stop",
+      "Le marquage au sol"
+    ],
+    "explication": "En cas de contradiction, les signes des agents priment toujours sur les feux et les panneaux."
+  },
+  {
+    "id": "l-signalisation-temporaire-t04",
+    "fiche": "signalisation-temporaire",
+    "famille": "L",
+    "categorie": "Signalisation temporaire",
+    "question": "Que signifie un panneau bleu sur autoroute avec un symbole de pompe ?",
+    "bonne": "Station-service à proximité",
+    "fausses": [
+      "Aire de repos obligatoire",
+      "Parking gratuit",
+      "Atelier de réparation"
+    ],
+    "explication": "Sur autoroute, les panneaux bleus indiquent les services : station-service, restaurant, aire de repos."
+  },
+  {
+    "id": "l-marquage-au-sol-t01",
+    "fiche": "marquage",
+    "famille": "L",
+    "categorie": "Marquage au sol",
+    "question": "Que signifie une ligne d'avertissement (3 flèches) sur la chaussée ?",
+    "bonne": "Elle annonce l'approche d'une ligne continue",
+    "fausses": [
+      "Le dépassement n'est toléré que pour un véhicule très lent",
+      "Le dépassement est autorisé",
+      "Il est interdit de la franchir ou de la chevaucher"
+    ],
+    "explication": "La ligne d'avertissement précède une ligne continue et signale qu'il faut se rabattre."
+  },
+  {
+    "id": "l-marquage-au-sol-t02",
+    "fiche": "marquage",
+    "famille": "L",
+    "categorie": "Marquage au sol",
+    "question": "Que signifie une ligne de dissuasion sur la chaussée ?",
+    "bonne": "Le dépassement n'est toléré que pour un véhicule très lent",
+    "fausses": [
+      "Le dépassement est autorisé",
+      "Elle annonce l'approche d'une ligne continue",
+      "Il est interdit de la franchir ou de la chevaucher"
+    ],
+    "explication": "La ligne de dissuasion autorise le dépassement uniquement des véhicules lents."
+  },
+  {
+    "id": "l-marquage-au-sol-t03",
+    "fiche": "marquage",
+    "famille": "L",
+    "categorie": "Marquage au sol",
+    "question": "Que signifie une ligne discontinue sur la chaussée ?",
+    "bonne": "Le dépassement est autorisé",
+    "fausses": [
+      "Il est interdit de la franchir ou de la chevaucher",
+      "Le dépassement n'est toléré que pour un véhicule très lent",
+      "Elle annonce l'approche d'une ligne continue"
+    ],
+    "explication": "La ligne discontinue autorise le franchissement pour dépasser ou changer de voie."
+  },
+  {
+    "id": "l-marquage-au-sol-t04",
+    "fiche": "marquage",
+    "famille": "L",
+    "categorie": "Marquage au sol",
+    "question": "Que signifie une ligne continue sur la chaussée ?",
+    "bonne": "Il est interdit de la franchir ou de la chevaucher",
+    "fausses": [
+      "Le dépassement est autorisé",
+      "Le dépassement n'est toléré que pour un véhicule très lent",
+      "Elle annonce l'approche d'une ligne continue"
+    ],
+    "explication": "La ligne continue interdit le franchissement, sauf dépassement d'un cycliste."
+  },
+  {
+    "id": "l-marquage-au-sol-t05",
+    "fiche": "marquage",
+    "famille": "L",
+    "categorie": "Marquage au sol",
+    "question": "Que signifie une bande d'arrêt d'urgence ?",
+    "bonne": "Elle est réservée aux arrêts d'urgence et véhicules de secours",
+    "fausses": [
+      "Elle sert à dépasser",
+      "Elle est réservée aux bus",
+      "Elle est utilisable pour les pauses"
+    ],
+    "explication": "La bande d'arrêt d'urgence est strictement réservée aux urgences et aux véhicules de secours."
+  },
+  {
+    "id": "l-marquage-au-sol-t06",
+    "fiche": "marquage",
+    "famille": "L",
+    "categorie": "Marquage au sol",
+    "question": "Que doit faire un conducteur à l'approche d'un passage piéton ?",
+    "bonne": "Céder le passage à tout piéton engagé ou manifestant l'intention de traverser",
+    "fausses": [
+      "Accélérer pour passer avant",
+      "Klaxonner pour prévenir le piéton",
+      "S'arrêter uniquement si un piéton est déjà engagé"
+    ],
+    "explication": "On doit céder le passage à tout piéton engagé ou sur le point de s'engager."
+  },
+  {
+    "id": "l-priorites-t01",
+    "fiche": "priorites",
+    "famille": "L",
+    "categorie": "Priorités",
+    "question": "Dans le cas de un carrefour sans signalisation, en agglomération, qui est prioritaire ou que doit faire le conducteur ?",
+    "bonne": "Le véhicule venant de la droite",
+    "fausses": [
+      "Le véhicule doit marquer un arrêt complet",
+      "Les véhicules déjà engagés dans l'anneau",
+      "Ralentir et céder le passage, sans arrêt obligatoire"
+    ],
+    "explication": "Sans signalisation, la priorité à droite s'applique par défaut."
+  },
+  {
+    "id": "l-priorites-t02",
+    "fiche": "priorites",
+    "famille": "L",
+    "categorie": "Priorités",
+    "question": "Dans le cas de un carrefour muni d'un panneau Stop, qui est prioritaire ou que doit faire le conducteur ?",
+    "bonne": "Le véhicule doit marquer un arrêt complet",
+    "fausses": [
+      "Le véhicule venant de la droite",
+      "Ralentir et céder le passage, sans arrêt obligatoire",
+      "Les véhicules déjà engagés dans l'anneau"
+    ],
+    "explication": "Le panneau Stop impose un arrêt complet à la ligne d'effet."
+  },
+  {
+    "id": "l-priorites-t03",
+    "fiche": "priorites",
+    "famille": "L",
+    "categorie": "Priorités",
+    "question": "Dans le cas de un carrefour à sens giratoire (anneau), qui est prioritaire ou que doit faire le conducteur ?",
+    "bonne": "Les véhicules déjà engagés dans l'anneau",
+    "fausses": [
+      "Le véhicule venant de la droite",
+      "Le véhicule doit marquer un arrêt complet",
+      "Ralentir et céder le passage, sans arrêt obligatoire"
+    ],
+    "explication": "Sur un giratoire, les usagers déjà engagés sur l'anneau sont prioritaires."
+  },
+  {
+    "id": "l-priorites-t04",
+    "fiche": "priorites",
+    "famille": "L",
+    "categorie": "Priorités",
+    "question": "Dans le cas de un panneau Cédez-le-passage, qui est prioritaire ou que doit faire le conducteur ?",
+    "bonne": "Ralentir et céder le passage, sans arrêt obligatoire",
+    "fausses": [
+      "Le véhicule venant de la droite",
+      "Le véhicule doit marquer un arrêt complet",
+      "Les véhicules déjà engagés dans l'anneau"
+    ],
+    "explication": "Le cédez-le-passage impose de ralentir voire s'arrêter, mais pas d'arrêt systématique."
+  },
+  {
+    "id": "l-priorites-t05",
+    "fiche": "priorites",
+    "famille": "L",
+    "categorie": "Priorités",
+    "question": "Que faire face à un véhicule d'intérêt général en intervention ?",
+    "bonne": "Le véhicule d'urgence, en se rangeant à droite",
+    "fausses": [
+      "Rien de particulier, on passe normalement",
+      "Accélérer pour passer avant",
+      "Klaxonner et passer"
+    ],
+    "explication": "Les véhicules d'urgence en intervention sont prioritaires : il faut leur faciliter le passage."
+  },
+  {
+    "id": "l-priorites-t06",
+    "fiche": "priorites",
+    "famille": "L",
+    "categorie": "Priorités",
+    "question": "Que faire face à une sortie de parking ?",
+    "bonne": "Céder le passage à tous les véhicules déjà sur la chaussée",
+    "fausses": [
+      "Accélérer pour passer avant",
+      "Klaxonner et passer",
+      "Rien de particulier, on passe normalement"
+    ],
+    "explication": "En sortant d'un parking, on doit céder le passage à tous les usagers de la voie."
+  },
+  {
+    "id": "l-priorites-t07",
+    "fiche": "priorites",
+    "famille": "L",
+    "categorie": "Priorités",
+    "question": "Que faire face à une intersection où un tramway est engagé ?",
+    "bonne": "Le tramway",
+    "fausses": [
+      "Accélérer pour passer avant",
+      "Rien de particulier, on passe normalement",
+      "Klaxonner et passer"
+    ],
+    "explication": "Le tramway est toujours prioritaire, quelle que soit la signalisation."
+  },
+  {
+    "id": "l-priorites-t08",
+    "fiche": "priorites",
+    "famille": "L",
+    "categorie": "Priorités",
+    "question": "Un agent de circulation a le bras levé verticalement. Que signifie ce geste ?",
+    "bonne": "Arrêt pour tous les usagers",
+    "fausses": [
+      "Le feu passe au vert",
+      "Les véhicules peuvent passer",
+      "Rien, l'agent salue"
+    ],
+    "explication": "Le bras levé verticalement signifie 'arrêt pour tous'. Aucun véhicule ne doit avancer."
+  },
+  {
+    "id": "l-priorites-t09",
+    "fiche": "priorites",
+    "famille": "L",
+    "categorie": "Priorités",
+    "question": "Un agent fait un mouvement circulaire de la main. Que signifie ce geste ?",
+    "bonne": "Les véhicules peuvent passer ou accélérer",
+    "fausses": [
+      "Tout le monde s'arrête",
+      "Il y a un danger",
+      "Il faut faire demi-tour"
+    ],
+    "explication": "Le mouvement circulaire de la main signifie 'circulez' ou 'accélérez'."
+  },
+  {
+    "id": "l-priorites-t10",
+    "fiche": "priorites",
+    "famille": "L",
+    "categorie": "Priorités",
+    "question": "Un agent agite un feu rouge de gauche à droite face à vous. Que faire ?",
+    "bonne": "S'arrêter",
+    "fausses": [
+      "Accélérer",
+      "Continuer normalement",
+      "Klaxonner"
+    ],
+    "explication": "Le balancement transversal d'un feu rouge signifie 'arrêtez-vous'."
+  },
+  {
+    "id": "l-priorites-t11",
+    "fiche": "priorites",
+    "famille": "L",
+    "categorie": "Priorités",
+    "question": "Un agent tend le bras horizontalement. Qui doit s'arrêter ?",
+    "bonne": "Les véhicules venant de la direction perpendiculaire au bras",
+    "fausses": [
+      "Uniquement les piétons",
+      "Tous les véhicules",
+      "Les véhicules venant dans la direction du bras"
+    ],
+    "explication": "Le bras tendu horizontalement : les véhicules venant de la direction perpendiculaire au bras s'arrêtent. Ceux venant dans la direction du bras peuvent passer."
+  },
+  {
+    "id": "l-circuler-t01",
+    "fiche": "circuler-regles",
+    "famille": "L",
+    "categorie": "Circuler",
+    "question": "Avant de tourner à droite, que doit-on vérifier en priorité ?",
+    "bonne": "Les piétons qui traversent et les cyclistes sur la piste cyclable",
+    "fausses": [
+      "La pression des pneus",
+      "Le compteur de vitesse",
+      "Le niveau de carburant"
+    ],
+    "explication": "Avant de tourner à droite, on cède le passage aux piétons qui traversent et aux cyclistes sur la piste éventuelle."
+  },
+  {
+    "id": "l-circuler-t02",
+    "fiche": "circuler-regles",
+    "famille": "L",
+    "categorie": "Circuler",
+    "question": "En France, on roule :",
+    "bonne": "À droite, et on dépasse à gauche",
+    "fausses": [
+      "À gauche, et on dépasse à droite",
+      "Peu importe, tant qu'on respecte la limitation",
+      "Au centre de la chaussée"
+    ],
+    "explication": "En France, la circulation se fait à droite et le dépassement à gauche."
+  },
+  {
+    "id": "l-circuler-t03",
+    "fiche": "circuler-regles",
+    "famille": "L",
+    "categorie": "Circuler",
+    "question": "Avant de tourner à gauche, comment se placer ?",
+    "bonne": "Le plus à gauche possible de sa voie, sans empiéter sur la voie opposée",
+    "fausses": [
+      "Au milieu de la chaussée",
+      "Le plus à droite possible",
+      "Sur le trottoir"
+    ],
+    "explication": "Pour tourner à gauche, on se place à gauche de sa voie, on cède le passage aux véhicules venant en face et aux piétons."
+  },
+  {
+    "id": "l-vitesses-t01",
+    "fiche": "vitesses",
+    "famille": "L",
+    "categorie": "Vitesses",
+    "question": "Quelle est la vitesse maximale autorisée hors agglomération (route à double sens sans séparateur), par temps sec ?",
+    "bonne": "80 km/h",
+    "fausses": [
+      "110 km/h",
+      "130 km/h",
+      "50 km/h"
+    ],
+    "explication": "Par temps sec, la limite hors agglomération (route à double sens sans séparateur) est de 80 km/h."
+  },
+  {
+    "id": "l-vitesses-t02",
+    "fiche": "vitesses",
+    "famille": "L",
+    "categorie": "Vitesses",
+    "question": "Quelle est la vitesse maximale autorisée sur autoroute, par temps sec ?",
+    "bonne": "130 km/h",
+    "fausses": [
+      "90 km/h",
+      "50 km/h",
+      "70 km/h"
+    ],
+    "explication": "Par temps sec, la limite sur autoroute est de 130 km/h."
+  },
+  {
+    "id": "l-vitesses-t03",
+    "fiche": "vitesses",
+    "famille": "L",
+    "categorie": "Vitesses",
+    "question": "Quelle est la vitesse maximale autorisée sur autoroute, par temps de pluie ?",
+    "bonne": "110 km/h",
+    "fausses": [
+      "130 km/h",
+      "70 km/h",
+      "90 km/h"
+    ],
+    "explication": "Par temps de pluie, la limite sur autoroute est de 110 km/h."
+  },
+  {
+    "id": "l-vitesses-t04",
+    "fiche": "vitesses",
+    "famille": "L",
+    "categorie": "Vitesses",
+    "question": "Quelle est la vitesse maximale autorisée hors agglomération (route à double sens sans séparateur), par temps de pluie ?",
+    "bonne": "80 km/h",
+    "fausses": [
+      "100 km/h",
+      "110 km/h",
+      "50 km/h"
+    ],
+    "explication": "Par temps de pluie, la limite hors agglomération (route à double sens sans séparateur) est de 80 km/h."
+  },
+  {
+    "id": "l-vitesses-t05",
+    "fiche": "vitesses",
+    "famille": "L",
+    "categorie": "Vitesses",
+    "question": "Quelle est la vitesse maximale autorisée sur voie rapide (2x2 voies séparées), par temps sec ?",
+    "bonne": "110 km/h",
+    "fausses": [
+      "130 km/h",
+      "70 km/h",
+      "50 km/h"
+    ],
+    "explication": "Par temps sec, la limite sur voie rapide (2x2 voies séparées) est de 110 km/h."
+  },
+  {
+    "id": "l-vitesses-t06",
+    "fiche": "vitesses",
+    "famille": "L",
+    "categorie": "Vitesses",
+    "question": "Quelle est la vitesse maximale autorisée en agglomération, par temps sec ?",
+    "bonne": "50 km/h",
+    "fausses": [
+      "70 km/h",
+      "130 km/h",
+      "100 km/h"
+    ],
+    "explication": "Par temps sec, la limite en agglomération est de 50 km/h."
+  },
+  {
+    "id": "l-vitesses-t07",
+    "fiche": "vitesses",
+    "famille": "L",
+    "categorie": "Vitesses",
+    "question": "Quelle est la vitesse maximale autorisée sur voie rapide (2x2 voies séparées), par temps de pluie ?",
+    "bonne": "100 km/h",
+    "fausses": [
+      "70 km/h",
+      "80 km/h",
+      "50 km/h"
+    ],
+    "explication": "Par temps de pluie, la limite sur voie rapide (2x2 voies séparées) est de 100 km/h."
+  },
+  {
+    "id": "l-vitesses-t08",
+    "fiche": "vitesses",
+    "famille": "L",
+    "categorie": "Vitesses",
+    "question": "Quelle est la vitesse maximale autorisée en agglomération, par temps de pluie ?",
+    "bonne": "50 km/h",
+    "fausses": [
+      "70 km/h",
+      "80 km/h",
+      "130 km/h"
+    ],
+    "explication": "Par temps de pluie, la limite en agglomération est de 50 km/h."
+  },
+  {
+    "id": "l-vitesses-t09",
+    "fiche": "vitesses",
+    "famille": "L",
+    "categorie": "Vitesses",
+    "question": "En cas de brouillard avec une visibilité inférieure à 50 m, quelle est la vitesse maximale autorisée ?",
+    "bonne": "50 km/h",
+    "fausses": [
+      "70 km/h",
+      "110 km/h",
+      "90 km/h"
+    ],
+    "explication": "Dès que la visibilité descend sous 50 m, la vitesse est limitée à 50 km/h sur l'ensemble du réseau."
+  },
+  {
+    "id": "l-vitesses-t10",
+    "fiche": "vitesses",
+    "famille": "L",
+    "categorie": "Vitesses",
+    "question": "Un conducteur en période probatoire roule hors agglomération. Quelle vitesse maximale ne doit-il pas dépasser ?",
+    "bonne": "80 km/h",
+    "fausses": [
+      "130 km/h",
+      "90 km/h",
+      "50 km/h"
+    ],
+    "explication": "Pendant la période probatoire, la vitesse maximale est réduite à 80 km/h hors agglomération."
+  },
+  {
+    "id": "l-vitesses-t11",
+    "fiche": "vitesses",
+    "famille": "L",
+    "categorie": "Vitesses",
+    "question": "Un conducteur en période probatoire roule sur voie rapide. Quelle vitesse maximale ne doit-il pas dépasser ?",
+    "bonne": "100 km/h",
+    "fausses": [
+      "130 km/h",
+      "50 km/h",
+      "90 km/h"
+    ],
+    "explication": "Pendant la période probatoire, la vitesse maximale est réduite à 100 km/h sur voie rapide."
+  },
+  {
+    "id": "l-vitesses-t12",
+    "fiche": "vitesses",
+    "famille": "L",
+    "categorie": "Vitesses",
+    "question": "Un conducteur en période probatoire roule sur autoroute. Quelle vitesse maximale ne doit-il pas dépasser ?",
+    "bonne": "110 km/h",
+    "fausses": [
+      "90 km/h",
+      "50 km/h",
+      "130 km/h"
+    ],
+    "explication": "Pendant la période probatoire, la vitesse maximale est réduite à 110 km/h sur autoroute."
+  },
+  {
+    "id": "l-consequences-vitesse-t01",
+    "fiche": "vitesse-consequences",
+    "famille": "L",
+    "categorie": "Conséquences vitesse",
+    "question": "Que se passe-t-il si on double sa vitesse ?",
+    "bonne": "La distance de freinage est multipliée par 4",
+    "fausses": [
+      "Elle ne change pas",
+      "Elle est divisée par 2",
+      "Elle est multipliée par 2"
+    ],
+    "explication": "La distance de freinage augmente avec le carré de la vitesse : en doublant la vitesse, elle est multipliée par 4."
+  },
+  {
+    "id": "l-consequences-vitesse-t02",
+    "fiche": "vitesse-consequences",
+    "famille": "L",
+    "categorie": "Conséquences vitesse",
+    "question": "Un choc à 50 km/h équivaut à une chute de quel étage ?",
+    "bonne": "Du 3ᵉ étage",
+    "fausses": [
+      "Du 1ᵉʳ étage",
+      "Du 6ᵉ étage",
+      "Du 12ᵉ étage"
+    ],
+    "explication": "Un choc à 50 km/h équivaut à une chute du 3ᵉ étage. À 90 km/h : du 12ᵉ étage."
+  },
+  {
+    "id": "l-consequences-vitesse-t03",
+    "fiche": "vitesse-consequences",
+    "famille": "L",
+    "categorie": "Conséquences vitesse",
+    "question": "De quoi est composée la distance d'arrêt ?",
+    "bonne": "Distance de réaction + distance de freinage",
+    "fausses": [
+      "Distance parcourue en 2 secondes",
+      "Distance de réaction uniquement",
+      "Distance de freinage uniquement"
+    ],
+    "explication": "La distance d'arrêt = distance de réaction (environ 1 s) + distance de freinage."
+  },
+  {
+    "id": "l-consequences-vitesse-t04",
+    "fiche": "vitesse-consequences",
+    "famille": "L",
+    "categorie": "Conséquences vitesse",
+    "question": "Combien de temps dure en moyenne le temps de réaction d'un conducteur ?",
+    "bonne": "Environ 1 seconde",
+    "fausses": [
+      "Environ 2 secondes",
+      "Environ 0,2 seconde",
+      "Environ 3 secondes"
+    ],
+    "explication": "Le temps de réaction moyen est d'environ 1 seconde. Il augmente avec la fatigue, l'alcool et la vitesse."
+  },
+  {
+    "id": "l-consequences-vitesse-t05",
+    "fiche": "vitesse-consequences",
+    "famille": "L",
+    "categorie": "Conséquences vitesse",
+    "question": "À 90 km/h, la distance d'arrêt est d'environ :",
+    "bonne": "70 m",
+    "fausses": [
+      "120 m",
+      "28 m",
+      "50 m"
+    ],
+    "explication": "À 90 km/h, il faut environ 70 m pour s'arrêter. À 50 km/h : 28 m. À 130 km/h : 120 m."
+  },
+  {
+    "id": "l-consequences-vitesse-t06",
+    "fiche": "vitesse-consequences",
+    "famille": "L",
+    "categorie": "Conséquences vitesse",
+    "question": "À 50 km/h, la distance de réaction est d'environ :",
+    "bonne": "15 m",
+    "fausses": [
+      "28 m",
+      "50 m",
+      "25 m"
+    ],
+    "explication": "Distance de réaction à 50 km/h = 5 × 3 = 15 m."
+  },
+  {
+    "id": "l-consequences-vitesse-t07",
+    "fiche": "vitesse-consequences",
+    "famille": "L",
+    "categorie": "Conséquences vitesse",
+    "question": "Quelle est la formule approchée de la distance de freinage sur route sèche ?",
+    "bonne": "(vitesse ÷ 10)² ÷ 2",
+    "fausses": [
+      "vitesse × 3",
+      "(vitesse ÷ 10) × 3",
+      "(vitesse ÷ 10) × 6"
+    ],
+    "explication": "Distance de freinage ≈ (vitesse ÷ 10)² ÷ 2. Ex : 90 km/h → 81 ÷ 2 ≈ 40 m. Distance d'arrêt = réaction + freinage ≈ 27 + 40 ≈ 70 m."
+  },
+  {
+    "id": "l-consequences-vitesse-t08",
+    "fiche": "vitesse-consequences",
+    "famille": "L",
+    "categorie": "Conséquences vitesse",
+    "question": "Un conducteur roule à 100 km/h. Quelle est sa distance de sécurité minimale ?",
+    "bonne": "60 m",
+    "fausses": [
+      "100 m",
+      "50 m",
+      "30 m"
+    ],
+    "explication": "Distance de sécurité = distance de réaction × 2 = (100 ÷ 10 × 3) × 2 = 30 × 2 = 60 m."
+  },
+  {
+    "id": "l-consequences-vitesse-t09",
+    "fiche": "vitesse-consequences",
+    "famille": "L",
+    "categorie": "Conséquences vitesse",
+    "question": "Par temps de pluie, la distance de freinage est :",
+    "bonne": "Environ doublée",
+    "fausses": [
+      "Multipliée par 1,5",
+      "Identique",
+      "Divisée par 2"
+    ],
+    "explication": "Sur route mouillée, la distance de freinage double environ."
+  },
+  {
+    "id": "l-consequences-vitesse-t10",
+    "fiche": "vitesse-consequences",
+    "famille": "L",
+    "categorie": "Conséquences vitesse",
+    "question": "À 130 km/h, la distance d'arrêt sur route sèche est d'environ :",
+    "bonne": "120 m",
+    "fausses": [
+      "70 m",
+      "200 m",
+      "170 m"
+    ],
+    "explication": "Réaction : 13 × 3 = 39 m. Freinage : 13² ÷ 2 ≈ 85 m. Arrêt ≈ 120 m."
+  },
+  {
+    "id": "l-consequences-vitesse-t11",
+    "fiche": "vitesse-consequences",
+    "famille": "L",
+    "categorie": "Conséquences vitesse",
+    "question": "Que se passe-t-il pour la distance de freinage si la vitesse est multipliée par 3 ?",
+    "bonne": "Elle est multipliée par 9",
+    "fausses": [
+      "Elle ne change pas",
+      "Par 6",
+      "Par 3"
+    ],
+    "explication": "La distance de freinage est proportionnelle au carré de la vitesse. ×3 en vitesse = ×9 en distance de freinage."
+  },
+  {
+    "id": "l-consequences-vitesse-t12",
+    "fiche": "vitesse-consequences",
+    "famille": "L",
+    "categorie": "Conséquences vitesse",
+    "question": "Quelle est la formule de la distance de réaction (en mètres) ?",
+    "bonne": "(vitesse ÷ 10) × 3",
+    "fausses": [
+      "(vitesse ÷ 10)²",
+      "(vitesse ÷ 10) × 6",
+      "vitesse × 2"
+    ],
+    "explication": "Distance de réaction = (vitesse ÷ 10) × 3. Ex : 90 km/h → 9 × 3 = 27 m. C'est la distance parcourue pendant 1 seconde de réaction."
+  },
+  {
+    "id": "l-consequences-vitesse-t13",
+    "fiche": "vitesse-consequences",
+    "famille": "L",
+    "categorie": "Conséquences vitesse",
+    "question": "Quelle est la formule de la distance de sécurité ?",
+    "bonne": "Distance de réaction × 2 (règle des 2 secondes)",
+    "fausses": [
+      "vitesse × 2",
+      "(vitesse ÷ 10) × 3",
+      "(vitesse ÷ 10)²"
+    ],
+    "explication": "La distance de sécurité = distance de réaction × 2 = environ 2 secondes de parcours. Ex : 90 km/h → 27 × 2 = 54 m."
+  },
+  {
+    "id": "l-depassement-t01",
+    "fiche": "croiser-depasser",
+    "famille": "L",
+    "categorie": "Dépassement",
+    "question": "Un conducteur s'apprête à dépasser un cycliste. Quelle distance latérale minimale doit-il respecter hors agglomération ?",
+    "bonne": "1,5 m",
+    "fausses": [
+      "0,5 m",
+      "1 m",
+      "2 m"
+    ],
+    "explication": "Hors agglomération, la distance latérale minimale pour dépasser un cycliste est de 1,5 m (1 m en ville)."
+  },
+  {
+    "id": "l-depassement-t02",
+    "fiche": "croiser-depasser",
+    "famille": "L",
+    "categorie": "Dépassement",
+    "question": "Dans quel cas le dépassement est-il formellement interdit ?",
+    "bonne": "Au sommet d'une côte et dans un virage sans visibilité",
+    "fausses": [
+      "En agglomération",
+      "Sur une route limitée à 80 km/h",
+      "Sur une route à double sens"
+    ],
+    "explication": "Le dépassement est interdit au sommet d'une côte, dans un virage sans visibilité, sur une ligne continue, à un passage à niveau."
+  },
+  {
+    "id": "l-depassement-t03",
+    "fiche": "croiser-depasser",
+    "famille": "L",
+    "categorie": "Dépassement",
+    "question": "Que faire quand on est dépassé ?",
+    "bonne": "Ne pas accélérer et serrer à droite",
+    "fausses": [
+      "Klaxonner",
+      "Freiner brusquement",
+      "Accélérer pour ne pas gêner"
+    ],
+    "explication": "Quand on est dépassé, il ne faut jamais accélérer. On serre à droite pour faciliter la manœuvre du dépassant."
+  },
+  {
+    "id": "l-depassement-t04",
+    "fiche": "croiser-depasser",
+    "famille": "L",
+    "categorie": "Dépassement",
+    "question": "Vous suivez un bus scolaire à l'arrêt. Que devez-vous faire ?",
+    "bonne": "Ralentir et céder le passage aux piétons",
+    "fausses": [
+      "Klaxonner pour signaler votre présence",
+      "Le dépasser rapidement",
+      "Rester à distance sans ralentir"
+    ],
+    "explication": "Devant un bus scolaire à l'arrêt, il faut ralentir et céder le passage aux enfants qui montent ou descendent."
+  },
+  {
+    "id": "l-depassement-t05",
+    "fiche": "croiser-depasser",
+    "famille": "L",
+    "categorie": "Dépassement",
+    "question": "En montagne, sur une route étroite, qui est prioritaire ?",
+    "bonne": "Le véhicule qui monte",
+    "fausses": [
+      "Le plus gros",
+      "Le plus rapide",
+      "Le véhicule qui descend"
+    ],
+    "explication": "En montagne, le véhicule qui monte est prioritaire. Le descendant doit se ranger pour le laisser passer."
+  },
+  {
+    "id": "l-depassement-t06",
+    "fiche": "croiser-depasser",
+    "famille": "L",
+    "categorie": "Dépassement",
+    "question": "Par quel côté s'effectue un dépassement en règle générale ?",
+    "bonne": "Par la gauche",
+    "fausses": [
+      "Indifféremment",
+      "Par le côté le plus libre",
+      "Par la droite"
+    ],
+    "explication": "Le dépassement s'effectue par la gauche. Par la droite, uniquement si le véhicule devant tourne à gauche."
+  },
+  {
+    "id": "l-stationnement-t01",
+    "fiche": "stationnement",
+    "famille": "L",
+    "categorie": "Stationnement",
+    "question": "En stationnement en descente, comment doit-on braquer les roues ?",
+    "bonne": "Vers le trottoir",
+    "fausses": [
+      "Vers la route",
+      "Droites",
+      "Peu importe"
+    ],
+    "explication": "En descente, on braque les roues vers le trottoir. En montée, on les éloigne du trottoir."
+  },
+  {
+    "id": "l-stationnement-t02",
+    "fiche": "stationnement",
+    "famille": "L",
+    "categorie": "Stationnement",
+    "question": "Qu'est-ce qu'un stationnement en alternance semi-mensuelle ?",
+    "bonne": "Un stationnement unilatéral alterné : du 1 au 15 d'un côté, du 16 à la fin du mois de l'autre",
+    "fausses": [
+      "Un stationnement payant une semaine sur deux",
+      "Un stationnement interdit les jours impairs",
+      "Un stationnement réservé aux riverains"
+    ],
+    "explication": "Le stationnement unilatéral à alternance semi-mensuelle change de côté de la rue au milieu du mois."
+  },
+  {
+    "id": "l-stationnement-t03",
+    "fiche": "stationnement",
+    "famille": "L",
+    "categorie": "Stationnement",
+    "question": "Où le stationnement est-il formellement interdit ?",
+    "bonne": "Sur un passage piéton",
+    "fausses": [
+      "Dans un parking souterrain",
+      "Sur une place marquée au sol",
+      "Dans une rue résidentielle"
+    ],
+    "explication": "Le stationnement est interdit sur les passages piétons, trottoirs, emplacements PMR, arrêts de bus, devant les bouches d'incendie."
+  }
+]

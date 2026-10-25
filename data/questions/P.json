@@ -1,0 +1,72 @@
+[
+  {
+    "id": "p-prendre-quitter-t01",
+    "fiche": "prendre-quitter",
+    "famille": "P",
+    "categorie": "Prendre & quitter",
+    "question": "Comment régler son siège en position de conduite ?",
+    "bonne": "Pouvoir enfoncer les pédales à fond, bras légèrement fléchis sur le volant",
+    "fausses": [
+      "Le plus près possible du volant",
+      "Le plus en arrière possible",
+      "Peu importe, tant qu'on est assis"
+    ],
+    "explication": "Le siège doit permettre d'enfoncer les pédales à fond et d'avoir les bras légèrement fléchis sur le volant."
+  },
+  {
+    "id": "p-prendre-quitter-t02",
+    "fiche": "prendre-quitter",
+    "famille": "P",
+    "categorie": "Prendre & quitter",
+    "question": "Où sortir de son véhicule en cas d'arrêt d'urgence sur autoroute ?",
+    "bonne": "Du côté opposé à la circulation",
+    "fausses": [
+      "Peu importe",
+      "Du côté conducteur",
+      "Par le coffre"
+    ],
+    "explication": "Sur autoroute, on sort du côté opposé au trafic pour se mettre en sécurité derrière la glissière."
+  },
+  {
+    "id": "p-prendre-quitter-t03",
+    "fiche": "prendre-quitter",
+    "famille": "P",
+    "categorie": "Prendre & quitter",
+    "question": "Comment doit-on positionner la sangle basse de la ceinture ?",
+    "bonne": "Sur le bassin, jamais sur le ventre",
+    "fausses": [
+      "Sous le bras",
+      "Sur le ventre",
+      "Dans le dos"
+    ],
+    "explication": "La sangle basse passe sur le bassin, pas sur le ventre. La sangle haute passe sur l'épaule, pas sur le cou."
+  },
+  {
+    "id": "p-prendre-quitter-t04",
+    "fiche": "prendre-quitter",
+    "famille": "P",
+    "categorie": "Prendre & quitter",
+    "question": "Que faire en quittant son véhicule ?",
+    "bonne": "Couper le moteur, serrer le frein à main, retirer la clé et fermer",
+    "fausses": [
+      "Laisser les clés sur le contact",
+      "Laisser une portière ouverte",
+      "Laisser le moteur tourner"
+    ],
+    "explication": "En quittant son véhicule : couper le moteur, serrer le frein à main, retirer la clé, fermer à clé."
+  },
+  {
+    "id": "p-prendre-quitter-t05",
+    "fiche": "prendre-quitter",
+    "famille": "P",
+    "categorie": "Prendre & quitter",
+    "question": "Que faut-il vérifier avant d'ouvrir sa portière ?",
+    "bonne": "Le rétroviseur et l'angle mort, pour éviter les cyclistes et piétons",
+    "fausses": [
+      "Uniquement le rétroviseur extérieur gauche",
+      "Uniquement le rétroviseur intérieur",
+      "Rien, on ouvre directement"
+    ],
+    "explication": "Avant d'ouvrir, il faut vérifier le rétroviseur ET l'angle mort. Un cycliste percuté par une portière = accident grave (emportiérage)."
+  }
+]

@@ -1,0 +1,156 @@
+[
+  {
+    "id": "a-accident-01",
+    "fiche": "accident-route",
+    "famille": "A",
+    "categorie": "Accident",
+    "question": "Un motard accidenté est à terre avec son casque. Que faites-vous ?",
+    "bonne": "Je ne retire pas son casque",
+    "fausses": [
+      "Je retire son casque pour le faire respirer",
+      "Je le relève pour le mettre à l'abri",
+      "Je lui retire son casque et je lui donne à boire"
+    ],
+    "explication": "On ne déplace pas une victime sauf danger immédiat, et on ne retire pas le casque d'un motard."
+  },
+  {
+    "id": "a-accident-02",
+    "fiche": "accident-route",
+    "famille": "A",
+    "categorie": "Accident",
+    "question": "Que doit-on donner à boire ou à manger à une victime d'accident ?",
+    "bonne": "Rien",
+    "fausses": [
+      "De l'eau sucrée",
+      "Une boisson chaude",
+      "De l'eau, en petite quantité"
+    ],
+    "explication": "Ni à boire, ni à manger à une victime."
+  },
+  {
+    "id": "a-secours-01",
+    "fiche": "premiers-secours",
+    "famille": "A",
+    "categorie": "Premiers secours",
+    "question": "Quel est le rythme du massage cardiaque chez un adulte en arrêt cardiaque ?",
+    "bonne": "30 compressions pour 2 insufflations",
+    "fausses": [
+      "15 compressions pour 2 insufflations",
+      "30 compressions pour 5 insufflations",
+      "2 compressions pour 30 insufflations"
+    ],
+    "explication": "Rythme : 30 compressions / 2 insufflations, avec défibrillateur dès que possible."
+  },
+  {
+    "id": "a-secours-02",
+    "fiche": "premiers-secours",
+    "famille": "A",
+    "categorie": "Premiers secours",
+    "question": "Une victime inconsciente respire. Quelle est la bonne conduite ?",
+    "bonne": "La placer en position latérale de sécurité (PLS)",
+    "fausses": [
+      "La laisser sur le dos",
+      "La faire asseoir",
+      "Lui donner à boire"
+    ],
+    "explication": "Victime qui respire : PLS. Victime qui ne respire plus : massage cardiaque + défibrillateur."
+  },
+  {
+    "id": "a-secours-03",
+    "fiche": "premiers-secours",
+    "famille": "A",
+    "categorie": "Premiers secours",
+    "question": "Une victime saigne abondamment et un objet est planté dans la plaie. Que faites-vous ?",
+    "bonne": "Je comprime autour sans retirer l'objet",
+    "fausses": [
+      "Je retire l'objet puis je comprime",
+      "Je pose un garrot immédiatement",
+      "J'attends les secours sans toucher"
+    ],
+    "explication": "On comprime la plaie (gant ou tissu propre) et on ne retire jamais le corps étranger."
+  },
+  {
+    "id": "a-premiers-secours-t01",
+    "fiche": "premiers-secours",
+    "famille": "A",
+    "categorie": "Premiers secours",
+    "question": "Que faire face à une victime inconsciente qui respire ?",
+    "bonne": "La placer en Position Latérale de Sécurité (PLS)",
+    "fausses": [
+      "La redresser assise",
+      "Lui donner à boire",
+      "La laisser sur le dos"
+    ],
+    "explication": "Une victime inconsciente qui respire doit être placée en PLS en attendant les secours."
+  },
+  {
+    "id": "a-premiers-secours-t02",
+    "fiche": "premiers-secours",
+    "famille": "A",
+    "categorie": "Premiers secours",
+    "question": "Quel numéro d'urgence est valable dans toute l'Union européenne ?",
+    "bonne": "112",
+    "fausses": [
+      "18",
+      "911",
+      "15"
+    ],
+    "explication": "Le 112 est le numéro d'urgence européen. En France, 15 (SAMU) et 18 (Pompiers) fonctionnent aussi."
+  },
+  {
+    "id": "a-premiers-secours-t03",
+    "fiche": "premiers-secours",
+    "famille": "A",
+    "categorie": "Premiers secours",
+    "question": "Peut-on retirer le casque d'un motard accidenté ?",
+    "bonne": "Non, sauf si la victime ne respire plus et qu'il faut pratiquer un massage cardiaque",
+    "fausses": [
+      "Oui, si le casque est abîmé",
+      "Oui, toujours",
+      "Oui, si la victime est consciente"
+    ],
+    "explication": "On ne retire jamais le casque d'un motard, sauf nécessité absolue (arrêt cardiaque). On risque d'aggraver une lésion de la colonne."
+  },
+  {
+    "id": "a-premiers-secours-t04",
+    "fiche": "premiers-secours",
+    "famille": "A",
+    "categorie": "Premiers secours",
+    "question": "Que faire face à une victime inconsciente qui ne respire plus ?",
+    "bonne": "Débuter un massage cardiaque + défibrillateur si disponible",
+    "fausses": [
+      "Attendre les secours sans rien faire",
+      "La mettre en PLS",
+      "Lui donner à boire"
+    ],
+    "explication": "Une victime inconsciente qui ne respire plus impose un massage cardiaque immédiat et l'usage d'un défibrillateur si disponible."
+  },
+  {
+    "id": "a-premiers-secours-t05",
+    "fiche": "premiers-secours",
+    "famille": "A",
+    "categorie": "Premiers secours",
+    "question": "Quel est l'ordre correct des actions à mener face à un accident de la route ?",
+    "bonne": "Protéger, Alerter, Secourir",
+    "fausses": [
+      "Secourir, Alerter, Protéger",
+      "Secourir, Protéger, Alerter",
+      "Alerter, Secourir, Protéger"
+    ],
+    "explication": "Protéger la zone, Alerter les secours, puis Secourir si on est formé."
+  },
+  {
+    "id": "a-premiers-secours-t06",
+    "fiche": "premiers-secours",
+    "famille": "A",
+    "categorie": "Premiers secours",
+    "question": "Face à une victime qui saigne abondamment, que faire en priorité ?",
+    "bonne": "Comprimer la plaie avec la main ou un tissu propre",
+    "fausses": [
+      "Attendre les secours",
+      "Donner à boire à la victime",
+      "Retirer le corps étranger planté"
+    ],
+    "explication": "Face à une hémorragie, on comprime la plaie. On ne retire jamais un corps étranger planté."
+  }
+]

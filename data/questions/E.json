@@ -1,0 +1,114 @@
+[
+  {
+    "id": "e-ecomobilite-t01",
+    "fiche": "ecomobilite",
+    "famille": "E",
+    "categorie": "Écomobilité",
+    "question": "Qu'est-ce que l'intermodalité ?",
+    "bonne": "Combiner plusieurs modes de transport pour un même trajet",
+    "fausses": [
+      "Partager un véhicule entre plusieurs propriétaires",
+      "Rouler en marche arrière",
+      "Utiliser uniquement la voiture"
+    ],
+    "explication": "L'intermodalité consiste à combiner plusieurs modes : vélo + train, marche + bus, covoiturage + tram."
+  },
+  {
+    "id": "e-ecomobilite-t02",
+    "fiche": "ecomobilite",
+    "famille": "E",
+    "categorie": "Écomobilité",
+    "question": "Quel mode de déplacement est le plus écologique pour un trajet court ?",
+    "bonne": "La marche ou le vélo",
+    "fausses": [
+      "Le bus",
+      "Le scooter",
+      "La voiture électrique"
+    ],
+    "explication": "Pour les trajets courts, la marche et le vélo sont les modes les plus écologiques : zéro émission."
+  },
+  {
+    "id": "e-ecomobilite-t03",
+    "fiche": "ecomobilite",
+    "famille": "E",
+    "categorie": "Écomobilité",
+    "question": "Pourquoi le covoiturage est-il écologique ?",
+    "bonne": "Il réduit le nombre de voitures en circulation",
+    "fausses": [
+      "Il consomme moins de carburant par personne",
+      "Il évite les péages",
+      "Il permet de rouler plus vite"
+    ],
+    "explication": "Le covoiturage réduit le nombre de véhicules sur la route et donc les émissions de CO2."
+  },
+  {
+    "id": "e-choisir-son-vehicule-t01",
+    "fiche": "choisir-vehicule",
+    "famille": "E",
+    "categorie": "Choisir son véhicule",
+    "question": "À quoi sert la vignette Crit'Air ?",
+    "bonne": "À classer les véhicules selon leurs émissions polluantes",
+    "fausses": [
+      "À payer les péages",
+      "À prouver l'assurance",
+      "À stationner gratuitement"
+    ],
+    "explication": "La vignette Crit'Air classe les véhicules selon leurs émissions. Elle est obligatoire dans certaines ZFE."
+  },
+  {
+    "id": "e-choisir-son-vehicule-t02",
+    "fiche": "choisir-vehicule",
+    "famille": "E",
+    "categorie": "Choisir son véhicule",
+    "question": "Un véhicule plus léger consomme généralement :",
+    "bonne": "Moins",
+    "fausses": [
+      "Cela dépend uniquement du moteur",
+      "Autant",
+      "Plus"
+    ],
+    "explication": "Un véhicule léger a besoin de moins d'énergie pour se déplacer : il consomme moins."
+  },
+  {
+    "id": "e-choisir-son-vehicule-t03",
+    "fiche": "choisir-vehicule",
+    "famille": "E",
+    "categorie": "Choisir son véhicule",
+    "question": "Qu'est-ce que le malus écologique ?",
+    "bonne": "Une taxe qui s'applique aux véhicules les plus polluants",
+    "fausses": [
+      "Une prime pour les véhicules propres",
+      "Un contrôle technique renforcé",
+      "Une assurance obligatoire"
+    ],
+    "explication": "Le malus écologique s'applique à l'achat d'un véhicule neuf émettant trop de CO2."
+  },
+  {
+    "id": "e-choisir-son-vehicule-t04",
+    "fiche": "choisir-vehicule",
+    "famille": "E",
+    "categorie": "Choisir son véhicule",
+    "question": "Que faut-il regarder avant l'achat d'un véhicule, côté environnement ?",
+    "bonne": "La consommation mixte et le rejet de CO2",
+    "fausses": [
+      "Uniquement le prix",
+      "Uniquement la couleur",
+      "Uniquement la marque"
+    ],
+    "explication": "La consommation mixte et le rejet de CO2 sont les deux indicateurs à comparer avant l'achat."
+  },
+  {
+    "id": "e-ecoconduite-t01",
+    "fiche": "ecoconduite",
+    "famille": "E",
+    "categorie": "Écoconduite",
+    "question": "Laquelle de ces pratiques relève de l'écoconduite ?",
+    "bonne": "Couper le moteur à l'arrêt prolongé",
+    "fausses": [
+      "Accélérer fortement puis freiner brusquement",
+      "Rouler avec des pneus sous-gonflés",
+      "Laisser tourner le moteur au ralenti à l'arrêt prolongé"
+    ],
+    "explication": "Couper le moteur au-delà de 30 secondes d'arrêt réduit la consommation et la pollution."
+  }
+]

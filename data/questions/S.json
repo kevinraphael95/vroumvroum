@@ -1,0 +1,184 @@
+[
+  {
+    "id": "s-securite-passager-t01",
+    "fiche": "securite-passager",
+    "famille": "S",
+    "categorie": "Sécurité passager",
+    "question": "Combien de passagers peut-on transporter dans un véhicule ?",
+    "bonne": "Autant que de places indiquées sur la carte grise",
+    "fausses": [
+      "Uniquement 5",
+      "Autant qu'on veut",
+      "Uniquement 4"
+    ],
+    "explication": "Le nombre de passagers est limité aux places indiquées sur la carte grise. Tous doivent être attachés."
+  },
+  {
+    "id": "s-securite-passager-t02",
+    "fiche": "securite-passager",
+    "famille": "S",
+    "categorie": "Sécurité passager",
+    "question": "Peut-on installer un siège bébé dos à la route sur le siège passager avant ?",
+    "bonne": "Oui, mais uniquement si l'airbag passager est désactivé",
+    "fausses": [
+      "Oui, sans condition",
+      "Non, jamais",
+      "Uniquement pour les trajets courts"
+    ],
+    "explication": "Un siège bébé dos à la route ne doit JAMAIS être placé face à un airbag actif : le déploiement tuerait l'enfant. Il faut désactiver l'airbag passager."
+  },
+  {
+    "id": "s-securite-passager-t03",
+    "fiche": "securite-passager",
+    "famille": "S",
+    "categorie": "Sécurité passager",
+    "question": "Le port de la ceinture est-il obligatoire à l'arrière ?",
+    "bonne": "Oui, à toutes les places, à l'avant comme à l'arrière",
+    "fausses": [
+      "Uniquement sur autoroute",
+      "Non, uniquement à l'avant",
+      "Uniquement pour les enfants"
+    ],
+    "explication": "Le port de la ceinture est obligatoire à toutes les places. Un passager non attaché à l'arrière peut tuer le conducteur en cas de choc."
+  },
+  {
+    "id": "s-securite-passager-t04",
+    "fiche": "securite-passager",
+    "famille": "S",
+    "categorie": "Sécurité passager",
+    "question": "Un airbag remplace-t-il la ceinture de sécurité ?",
+    "bonne": "Non, il la complète",
+    "fausses": [
+      "Uniquement pour les enfants",
+      "Oui, à l'avant",
+      "Oui, totalement"
+    ],
+    "explication": "L'airbag est un complément de la ceinture, pas un substitut. Il peut être dangereux si le passager n'est pas attaché."
+  },
+  {
+    "id": "s-securite-passager-t05",
+    "fiche": "securite-passager",
+    "famille": "S",
+    "categorie": "Sécurité passager",
+    "question": "Jusqu'à quel âge un enfant doit-il être installé dans un dispositif de retenue homologué ?",
+    "bonne": "Jusqu'à 10 ans",
+    "fausses": [
+      "Jusqu'à 5 ans",
+      "Jusqu'à 12 ans",
+      "Jusqu'à 15 ans"
+    ],
+    "explication": "Les enfants de moins de 10 ans doivent être installés dans un siège homologué adapté à leur poids et à leur taille."
+  },
+  {
+    "id": "s-securite-passager-t06",
+    "fiche": "securite-passager",
+    "famille": "S",
+    "categorie": "Sécurité passager",
+    "question": "Un enfant de moins de 10 ans peut-il s'installer à l'avant ?",
+    "bonne": "Non, sauf cas particuliers (pas de banquette arrière, ou places arrière déjà occupées par d'autres enfants < 10 ans)",
+    "fausses": [
+      "Non, jamais dans aucun cas",
+      "Oui, si le trajet est court",
+      "Oui, toujours"
+    ],
+    "explication": "Un enfant de moins de 10 ans est interdit à l'avant, sauf si le véhicule n'a pas de banquette arrière, ou si les places arrière sont déjà occupées par d'autres enfants de moins de 10 ans."
+  },
+  {
+    "id": "s-securite-passager-t07",
+    "fiche": "securite-passager",
+    "famille": "S",
+    "categorie": "Sécurité passager",
+    "question": "Vous avez 3 enfants de moins de 10 ans et une voiture 5 places. Où s'installent-ils ?",
+    "bonne": "Deux à l'arrière avec dispositifs de retenue, un à l'avant avec dispositif adapté (cas exceptionnel autorisé)",
+    "fausses": [
+      "Aucun ne peut monter",
+      "Un sur les genoux d'un adulte",
+      "Tous à l'arrière, attachés avec la ceinture"
+    ],
+    "explication": "Si les places arrière sont déjà occupées par 2 enfants < 10 ans, le 3ᵉ peut s'installer à l'avant avec un dispositif de retenue adapté. C'est une exception légale."
+  },
+  {
+    "id": "s-securite-passager-t08",
+    "fiche": "securite-passager",
+    "famille": "S",
+    "categorie": "Sécurité passager",
+    "question": "Un enfant de 8 ans peut-il s'installer à l'avant avec un siège auto adapté ?",
+    "bonne": "Non, sauf cas particuliers prévus par la loi",
+    "fausses": [
+      "Oui, en agglomération uniquement",
+      "Oui, s'il est bien attaché",
+      "Oui, si l'airbag est actif"
+    ],
+    "explication": "La règle est claire : moins de 10 ans = à l'arrière. Sauf cas particuliers (pas de banquette arrière, ou places arrière déjà occupées par des enfants < 10 ans)."
+  },
+  {
+    "id": "s-securite-t01",
+    "fiche": "securite",
+    "famille": "S",
+    "categorie": "Sécurité",
+    "question": "Que permet principalement l'AFU ?",
+    "bonne": "Accentuer la pression de freinage lors d'un freinage brusque",
+    "fausses": [
+      "Stopper le véhicule automatiquement",
+      "Alerter ou corriger la trajectoire en cas de franchissement de ligne sans clignotant",
+      "Corriger la trajectoire en cas de dérapage"
+    ],
+    "explication": "L'AFU détecte un freinage d'urgence et amplifie la pression."
+  },
+  {
+    "id": "s-securite-t02",
+    "fiche": "securite",
+    "famille": "S",
+    "categorie": "Sécurité",
+    "question": "Que permet principalement le freinage automatique d'urgence ?",
+    "bonne": "Détecter un risque de collision et freiner seul si le conducteur ne réagit pas",
+    "fausses": [
+      "Empêcher le blocage des roues pour conserver la maîtrise du volant",
+      "Alerter ou corriger la trajectoire en cas de franchissement de ligne sans clignotant",
+      "Stopper le véhicule automatiquement"
+    ],
+    "explication": "Le freinage automatique d'urgence détecte un obstacle et freine automatiquement si le conducteur ne réagit pas à temps."
+  },
+  {
+    "id": "s-securite-t03",
+    "fiche": "securite",
+    "famille": "S",
+    "categorie": "Sécurité",
+    "question": "Que permet principalement l'ABS ?",
+    "bonne": "Empêcher le blocage des roues pour conserver la maîtrise du volant",
+    "fausses": [
+      "Corriger la trajectoire en cas de dérapage",
+      "Accentuer la pression de freinage lors d'un freinage brusque",
+      "Alerter ou corriger la trajectoire en cas de franchissement de ligne sans clignotant"
+    ],
+    "explication": "L'ABS empêche les roues de se bloquer."
+  },
+  {
+    "id": "s-securite-t04",
+    "fiche": "securite",
+    "famille": "S",
+    "categorie": "Sécurité",
+    "question": "Que permet principalement l'aide au maintien de voie ?",
+    "bonne": "Alerter ou corriger la trajectoire en cas de franchissement de ligne sans clignotant",
+    "fausses": [
+      "Stopper le véhicule automatiquement",
+      "Accentuer la pression de freinage lors d'un freinage brusque",
+      "Corriger la trajectoire en cas de dérapage"
+    ],
+    "explication": "L'aide au maintien de voie alerte ou corrige la trajectoire quand le véhicule franchit une ligne sans clignotant."
+  },
+  {
+    "id": "s-securite-t05",
+    "fiche": "securite",
+    "famille": "S",
+    "categorie": "Sécurité",
+    "question": "Que permet principalement l'ESP ?",
+    "bonne": "Corriger la trajectoire en cas de dérapage",
+    "fausses": [
+      "Détecter un risque de collision et freiner seul si le conducteur ne réagit pas",
+      "Empêcher le blocage des roues pour conserver la maîtrise du volant",
+      "Accentuer la pression de freinage lors d'un freinage brusque"
+    ],
+    "explication": "L'ESP intervient sur les freins et le moteur pour stabiliser la trajectoire."
+  }
+]

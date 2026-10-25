@@ -1,0 +1,268 @@
+[
+  {
+    "id": "c-alcool-01",
+    "fiche": "alcool",
+    "famille": "C",
+    "categorie": "Alcool",
+    "question": "Quel est le taux d'alcool maximal autorisé pour un conducteur confirmé ?",
+    "bonne": "0,5 g/l de sang",
+    "fausses": [
+      "0,2 g/l de sang",
+      "0,8 g/l de sang",
+      "1 g/l de sang"
+    ],
+    "explication": "0,5 g/l de sang (0,25 mg/l d'air expiré) pour un conducteur confirmé."
+  },
+  {
+    "id": "c-alcool-02",
+    "fiche": "alcool",
+    "famille": "C",
+    "categorie": "Alcool",
+    "question": "Quel est le taux d'alcool maximal autorisé pour un titulaire du permis probatoire ?",
+    "bonne": "0,2 g/l de sang",
+    "fausses": [
+      "0 g/l de sang",
+      "0,5 g/l de sang",
+      "0,8 g/l de sang"
+    ],
+    "explication": "En permis probatoire, la limite est abaissée à 0,2 g/l de sang (0,10 mg/l d'air expiré)."
+  },
+  {
+    "id": "c-alcool-03",
+    "fiche": "alcool",
+    "famille": "C",
+    "categorie": "Alcool",
+    "question": "Qu'est-ce qui fait réellement baisser son taux d'alcoolémie ?",
+    "bonne": "Le temps qui passe",
+    "fausses": [
+      "Boire un café fort",
+      "Manger un repas copieux",
+      "Dormir une heure"
+    ],
+    "explication": "Café, repas ou courte sieste ne changent rien : seul le temps élimine l'alcool."
+  },
+  {
+    "id": "c-alcool-04",
+    "fiche": "alcool",
+    "famille": "C",
+    "categorie": "Alcool",
+    "question": "Que risque un conducteur qui refuse de se soumettre au dépistage d'alcoolémie ?",
+    "bonne": "Un délit : jusqu'à 2 ans de prison et 4 500 € d'amende",
+    "fausses": [
+      "Une simple amende de 135 €",
+      "Un avertissement écrit",
+      "Rien, le dépistage est facultatif"
+    ],
+    "explication": "Le refus de dépistage est un délit puni de 2 ans de prison et 4 500 € d'amende."
+  },
+  {
+    "id": "c-communication-t01",
+    "fiche": "circuler-communication",
+    "famille": "C",
+    "categorie": "Communication",
+    "question": "Que signale un appel de phare ?",
+    "bonne": "Un danger, ou (à tort) une autorisation de passer",
+    "fausses": [
+      "Uniquement la priorité à droite",
+      "Uniquement un salut",
+      "Uniquement un contrôle policier"
+    ],
+    "explication": "L'appel de phare signale souvent un danger. Il ne doit pas être interprété comme une autorisation de passer."
+  },
+  {
+    "id": "c-communication-t02",
+    "fiche": "circuler-communication",
+    "famille": "C",
+    "categorie": "Communication",
+    "question": "Quand le clignotant doit-il être activé ?",
+    "bonne": "Avant tout changement de direction ou de voie",
+    "fausses": [
+      "Uniquement en ville",
+      "Au moment même de la manœuvre",
+      "Uniquement de nuit"
+    ],
+    "explication": "Le clignotant doit être activé avant la manœuvre, pour prévenir les autres usagers."
+  },
+  {
+    "id": "c-communication-t03",
+    "fiche": "circuler-communication",
+    "famille": "C",
+    "categorie": "Communication",
+    "question": "Quand faut-il activer les feux de détresse (warning) ?",
+    "bonne": "En cas de panne, de ralentissement brusque ou d'arrêt d'urgence",
+    "fausses": [
+      "Uniquement en cas de brouillard",
+      "Pour prévenir d'un dépassement",
+      "Pour stationner en double file"
+    ],
+    "explication": "Le warning signale un danger immédiat : panne, freinage brusque, dernier de la file en cas de bouchon."
+  },
+  {
+    "id": "c-communication-t04",
+    "fiche": "circuler-communication",
+    "famille": "C",
+    "categorie": "Communication",
+    "question": "Quand peut-on utiliser l'avertisseur sonore ?",
+    "bonne": "Uniquement en cas de danger immédiat",
+    "fausses": [
+      "Pour prévenir d'un dépassement",
+      "En cas de bouchon",
+      "Pour saluer un ami"
+    ],
+    "explication": "L'avertisseur sonore est réservé aux situations d'urgence. En ville, il est interdit sauf danger immédiat."
+  },
+  {
+    "id": "c-conducteur-t01",
+    "fiche": "conducteur",
+    "famille": "C",
+    "categorie": "Conducteur",
+    "question": "À quelle fréquence est-il recommandé de faire une pause sur un long trajet ?",
+    "bonne": "Toutes les 2 heures",
+    "fausses": [
+      "Toutes les 4 heures",
+      "Toutes les 30 minutes",
+      "Uniquement en cas de somnolence"
+    ],
+    "explication": "Une pause de 15-20 minutes toutes les 2 heures est recommandée sur les longs trajets."
+  },
+  {
+    "id": "c-conducteur-t02",
+    "fiche": "conducteur",
+    "famille": "C",
+    "categorie": "Conducteur",
+    "question": "L'usage du téléphone tenu en main au volant est :",
+    "bonne": "Interdit et sanctionné par une amende et un retrait de points",
+    "fausses": [
+      "Autorisé en mode haut-parleur",
+      "Autorisé en agglomération",
+      "Autorisé à l'arrêt à un feu"
+    ],
+    "explication": "Tenir son téléphone au volant est interdit, même à l'arrêt dans un embouteillage. Amende 135 € et -3 points."
+  },
+  {
+    "id": "c-conducteur-t03",
+    "fiche": "conducteur",
+    "famille": "C",
+    "categorie": "Conducteur",
+    "question": "Quelle est la distance de sécurité minimale à respecter avec le véhicule devant ?",
+    "bonne": "Environ 2 secondes",
+    "fausses": [
+      "Environ 10 mètres",
+      "Environ 5 secondes",
+      "Environ 1 seconde"
+    ],
+    "explication": "On garde au moins 2 secondes avec le véhicule devant. Plus si les conditions sont mauvaises."
+  },
+  {
+    "id": "c-conducteur-t04",
+    "fiche": "conducteur",
+    "famille": "C",
+    "categorie": "Conducteur",
+    "question": "À quel moment de la journée la vigilance est-elle naturellement la plus basse ?",
+    "bonne": "Entre 2 h et 5 h du matin",
+    "fausses": [
+      "Entre 8 h et 10 h",
+      "Entre 17 h et 19 h",
+      "Entre 11 h et 13 h"
+    ],
+    "explication": "La vigilance baisse naturellement entre 2 h et 5 h du matin, et entre 13 h et 15 h."
+  },
+  {
+    "id": "c-conducteur-t05",
+    "fiche": "conducteur",
+    "famille": "C",
+    "categorie": "Conducteur",
+    "question": "Quel est le principal risque lié à la fatigue au volant ?",
+    "bonne": "La baisse de vigilance et les micro-sommeils",
+    "fausses": [
+      "La surchauffe du moteur",
+      "La décharge de la batterie",
+      "L'usure des pneus"
+    ],
+    "explication": "La fatigue entraîne une baisse de vigilance et des micro-sommeils, responsables de nombreux accidents."
+  },
+  {
+    "id": "c-alcool-stupefiants-t01",
+    "fiche": "alcool",
+    "famille": "C",
+    "categorie": "Alcool & stupéfiants",
+    "question": "Quel est le taux d'alcoolémie maximal autorisé pour un conducteur titulaire du permis depuis plus de 3 ans ?",
+    "bonne": "0,5 g/l de sang (0,25 mg/l d'air expiré)",
+    "fausses": [
+      "0 g/l de sang, tolérance zéro",
+      "0,8 g/l de sang",
+      "0,2 g/l de sang (0,10 mg/l d'air expiré)"
+    ],
+    "explication": "Le taux légal maximal est de 0,5 g/l de sang (0,25 mg/l d'air expiré) pour un conducteur titulaire du permis depuis plus de 3 ans."
+  },
+  {
+    "id": "c-alcool-stupefiants-t02",
+    "fiche": "alcool",
+    "famille": "C",
+    "categorie": "Alcool & stupéfiants",
+    "question": "Quel est le taux d'alcoolémie maximal autorisé pour un conducteur en période probatoire ?",
+    "bonne": "0,2 g/l de sang (0,10 mg/l d'air expiré)",
+    "fausses": [
+      "0,8 g/l de sang",
+      "0 g/l de sang, tolérance zéro",
+      "0,5 g/l de sang (0,25 mg/l d'air expiré)"
+    ],
+    "explication": "Le taux légal maximal est de 0,2 g/l de sang (0,10 mg/l d'air expiré) pour un conducteur en période probatoire."
+  },
+  {
+    "id": "c-alcool-stupefiants-t03",
+    "fiche": "alcool",
+    "famille": "C",
+    "categorie": "Alcool & stupéfiants",
+    "question": "Boire un café fait-il baisser l'alcoolémie ?",
+    "bonne": "Non, seul le temps compte",
+    "fausses": [
+      "Oui, si on boit beaucoup d'eau",
+      "Oui, si on mange en même temps",
+      "Oui, ça accélère l'élimination"
+    ],
+    "explication": "Boire un café, dormir ou manger ne fait pas baisser l'alcoolémie. Seul le temps compte (environ 0,10 à 0,15 g/l éliminé par heure)."
+  },
+  {
+    "id": "c-alcool-stupefiants-t04",
+    "fiche": "alcool",
+    "famille": "C",
+    "categorie": "Alcool & stupéfiants",
+    "question": "Que risque un conducteur qui refuse un dépistage d'alcoolémie ?",
+    "bonne": "Jusqu'à 2 ans de prison et 4 500 € d'amende",
+    "fausses": [
+      "Rien, c'est un droit",
+      "Une amende de 35 € seulement",
+      "Un simple avertissement"
+    ],
+    "explication": "Le refus de dépistage est un délit puni de 2 ans d'emprisonnement et 4 500 € d'amende."
+  },
+  {
+    "id": "c-alcool-stupefiants-t05",
+    "fiche": "alcool",
+    "famille": "C",
+    "categorie": "Alcool & stupéfiants",
+    "question": "Quelle sanction pour un taux d'alcoolémie compris entre 0,5 et 0,8 g/l ?",
+    "bonne": "Contravention de 4ᵉ classe : 135 € d'amende et -6 points",
+    "fausses": [
+      "Un délit puni de 2 ans de prison",
+      "Une amende de 35 € sans retrait de points",
+      "Un simple avertissement"
+    ],
+    "explication": "Entre 0,5 et 0,8 g/l, c'est une contravention de 4ᵉ classe (135 €, -6 points). À partir de 0,8 g/l, c'est un délit."
+  },
+  {
+    "id": "c-alcool-stupefiants-t06",
+    "fiche": "alcool",
+    "famille": "C",
+    "categorie": "Alcool & stupéfiants",
+    "question": "Qu'est-ce que la polyconsommation ?",
+    "bonne": "La prise combinée de plusieurs substances (alcool, drogues, médicaments) aux effets multipliés",
+    "fausses": [
+      "Consommer de l'alcool à plusieurs personnes",
+      "Mélanger alcool et boissons énergisantes",
+      "Boire plusieurs verres d'alcool différents"
+    ],
+    "explication": "La polyconsommation désigne la prise combinée de plusieurs substances incompatibles : les effets sont multipliés et le danger maximal."
+  }
+]

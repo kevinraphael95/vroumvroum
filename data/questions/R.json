@@ -1,0 +1,310 @@
+[
+  {
+    "id": "r-conditions-01",
+    "fiche": "conditions-difficiles",
+    "famille": "R",
+    "categorie": "Conditions difficiles",
+    "question": "Par temps de brouillard épais, quels feux utiliser ?",
+    "bonne": "Les feux de croisement et les feux de brouillard avant",
+    "fausses": [
+      "Les feux de route",
+      "Uniquement les feux de position",
+      "Les feux de route et le warning"
+    ],
+    "explication": "En brouillard : croisement + brouillard avant. Jamais les feux de route, qui éblouissent par réflexion."
+  },
+  {
+    "id": "r-conditions-02",
+    "fiche": "conditions-difficiles",
+    "famille": "R",
+    "categorie": "Conditions difficiles",
+    "question": "Vous aquaplanez. Quelle est la bonne réaction ?",
+    "bonne": "Relâcher l'accélérateur et tenir fermement le volant",
+    "fausses": [
+      "Freiner fort",
+      "Donner un coup de volant",
+      "Accélérer pour retrouver l'adhérence"
+    ],
+    "explication": "Relâcher l'accélérateur, tenir le volant droit et ne pas freiner brusquement."
+  },
+  {
+    "id": "r-conditions-03",
+    "fiche": "conditions-difficiles",
+    "famille": "R",
+    "categorie": "Conditions difficiles",
+    "question": "Un panneau impose les chaînes à neige dans une zone enneigée. Que devez-vous faire ?",
+    "bonne": "Équiper mon véhicule de chaînes à neige",
+    "fausses": [
+      "Simplement ralentir",
+      "Allumer les feux de brouillard",
+      "Dégonfler légèrement les pneus"
+    ],
+    "explication": "Sur neige, l'adhérence est réduite : conduire en douceur, et chaînes obligatoires dans la zone signalée."
+  },
+  {
+    "id": "r-autoroute-01",
+    "fiche": "autoroute",
+    "famille": "R",
+    "categorie": "Autoroute",
+    "question": "À quoi est réservée la bande d'arrêt d'urgence sur autoroute ?",
+    "bonne": "Aux arrêts d'urgence et aux véhicules de secours",
+    "fausses": [
+      "Au dépassement en cas de bouchon",
+      "À une courte pause pour téléphoner",
+      "Aux véhicules lents"
+    ],
+    "explication": "La bande d'arrêt d'urgence n'est jamais une voie de circulation."
+  },
+  {
+    "id": "r-autoroute-02",
+    "fiche": "autoroute",
+    "famille": "R",
+    "categorie": "Autoroute",
+    "question": "Quelle fréquence de pause est recommandée sur un long trajet autoroutier ?",
+    "bonne": "Une pause toutes les 2 heures",
+    "fausses": [
+      "Une pause toutes les 30 minutes",
+      "Une pause toutes les 4 heures",
+      "Aucune pause si on se sent bien"
+    ],
+    "explication": "Faire une pause toutes les 2 heures limite la somnolence."
+  },
+  {
+    "id": "r-conduite-difficile-t01",
+    "fiche": "conditions-difficiles",
+    "famille": "R",
+    "categorie": "Conduite difficile",
+    "question": "Quelle est la vitesse maximale en cas de brouillard avec visibilité inférieure à 50 m ?",
+    "bonne": "50 km/h",
+    "fausses": [
+      "110 km/h",
+      "80 km/h",
+      "70 km/h"
+    ],
+    "explication": "Dès que la visibilité descend sous 50 m, la vitesse est limitée à 50 km/h sur tout le réseau."
+  },
+  {
+    "id": "r-conduite-difficile-t02",
+    "fiche": "conditions-difficiles",
+    "famille": "R",
+    "categorie": "Conduite difficile",
+    "question": "En cas d'éblouissement par le soleil, que faire ?",
+    "bonne": "Ralentir et utiliser le pare-soleil",
+    "fausses": [
+      "Accélérer pour sortir vite de la zone",
+      "Mettre les feux de route",
+      "Fermer les yeux quelques secondes"
+    ],
+    "explication": "En cas d'éblouissement, on ralentit et on utilise le pare-soleil. Le pare-brise doit être propre à l'intérieur comme à l'extérieur."
+  },
+  {
+    "id": "r-conduite-difficile-t03",
+    "fiche": "conditions-difficiles",
+    "famille": "R",
+    "categorie": "Conduite difficile",
+    "question": "Quels feux utiliser en cas de brouillard ?",
+    "bonne": "Feux de croisement + feux de brouillard avant",
+    "fausses": [
+      "Feux de position uniquement",
+      "Feux de route",
+      "Feux de détresse"
+    ],
+    "explication": "En cas de brouillard, on utilise les feux de croisement et les feux de brouillard avant. Les feux de route éblouissent et se réfléchissent dans le brouillard."
+  },
+  {
+    "id": "r-conduite-difficile-t04",
+    "fiche": "conditions-difficiles",
+    "famille": "R",
+    "categorie": "Conduite difficile",
+    "question": "Que faire en cas de vent latéral violent ?",
+    "bonne": "Tenir fermement le volant et réduire la vitesse",
+    "fausses": [
+      "Ouvrir les vitres",
+      "Klaxonner",
+      "Accélérer pour stabiliser le véhicule"
+    ],
+    "explication": "Le vent latéral peut déporter le véhicule, surtout à la sortie d'un tunnel ou sur un pont. Tenir le volant et ralentir."
+  },
+  {
+    "id": "r-conduite-difficile-t05",
+    "fiche": "conditions-difficiles",
+    "famille": "R",
+    "categorie": "Conduite difficile",
+    "question": "Qu'est-ce que l'aquaplanage ?",
+    "bonne": "Une perte de contact des pneus avec la route, due à une pellicule d'eau",
+    "fausses": [
+      "Un excès de vitesse sous la pluie",
+      "Un défaut d'essuie-glaces",
+      "Une projection d'eau sur le pare-brise"
+    ],
+    "explication": "L'aquaplanage survient quand les pneus ne peuvent plus évacuer l'eau. Il faut relâcher l'accélérateur et tenir le volant, sans freiner brusquement."
+  },
+  {
+    "id": "r-conduite-difficile-t06",
+    "fiche": "conditions-difficiles",
+    "famille": "R",
+    "categorie": "Conduite difficile",
+    "question": "Comment conduire sur une chaussée verglacée ?",
+    "bonne": "En douceur, sans freinage brusque ni accélération vive",
+    "fausses": [
+      "En accélérant fort pour garder l'adhérence",
+      "En freinant brusquement aux virages",
+      "En roulant au pas uniquement"
+    ],
+    "explication": "Sur le verglas, toute manœuvre brusque fait perdre l'adhérence. Il faut conduire en douceur et anticiper."
+  },
+  {
+    "id": "r-autoroute-t01",
+    "fiche": "autoroute",
+    "famille": "R",
+    "categorie": "Autoroute",
+    "question": "Un conducteur rate sa sortie d'autoroute. Que doit-il faire ?",
+    "bonne": "Continuer jusqu'à la prochaine sortie",
+    "fausses": [
+      "Faire demi-tour au prochain refuge",
+      "S'arrêter et attendre",
+      "Reculer sur la bande d'arrêt d'urgence"
+    ],
+    "explication": "Sur autoroute, le demi-tour et la marche arrière sont interdits : il faut continuer jusqu'à la prochaine sortie."
+  },
+  {
+    "id": "r-autoroute-t02",
+    "fiche": "autoroute",
+    "famille": "R",
+    "categorie": "Autoroute",
+    "question": "À quoi sert la bande d'arrêt d'urgence ?",
+    "bonne": "Aux arrêts d'urgence et véhicules de secours",
+    "fausses": [
+      "À rouler en cas de bouchon",
+      "Aux pauses rapides",
+      "À dépasser par la droite"
+    ],
+    "explication": "La bande d'arrêt d'urgence est strictement réservée aux urgences et aux véhicules de secours."
+  },
+  {
+    "id": "r-autoroute-t03",
+    "fiche": "autoroute",
+    "famille": "R",
+    "categorie": "Autoroute",
+    "question": "Sur autoroute, tous les combien trouve-t-on une borne d'appel d'urgence ?",
+    "bonne": "Tous les 2 km environ",
+    "fausses": [
+      "Tous les 500 m",
+      "Tous les 10 km",
+      "Uniquement aux péages"
+    ],
+    "explication": "Les bornes d'appel d'urgence sont disposées tous les 2 km environ sur le réseau autoroutier."
+  },
+  {
+    "id": "r-autoroute-t04",
+    "fiche": "autoroute",
+    "famille": "R",
+    "categorie": "Autoroute",
+    "question": "Quelle est la vitesse maximale sur autoroute par temps de pluie ?",
+    "bonne": "110 km/h",
+    "fausses": [
+      "130 km/h",
+      "120 km/h",
+      "100 km/h"
+    ],
+    "explication": "Par temps de pluie, la vitesse sur autoroute passe de 130 à 110 km/h."
+  },
+  {
+    "id": "r-autoroute-t05",
+    "fiche": "autoroute",
+    "famille": "R",
+    "categorie": "Autoroute",
+    "question": "Comment s'insère-t-on sur l'autoroute ?",
+    "bonne": "En cédant le passage aux véhicules déjà engagés",
+    "fausses": [
+      "En s'arrêtant en bout de voie d'accélération",
+      "En forçant le passage",
+      "En priorité, en klaxonnant"
+    ],
+    "explication": "On utilise la voie d'accélération pour atteindre la vitesse du flux, puis on cède le passage aux véhicules déjà engagés."
+  },
+  {
+    "id": "r-zones-dangereuses-t01",
+    "fiche": "zones-dangereuses",
+    "famille": "R",
+    "categorie": "Zones dangereuses",
+    "question": "À l'approche d'un passage à niveau, que doit-on faire ?",
+    "bonne": "Ralentir, vérifier et ne jamais s'engager si un train approche",
+    "fausses": [
+      "Accélérer pour passer vite",
+      "S'arrêter obligatoirement sur les rails",
+      "Klaxonner"
+    ],
+    "explication": "Devant un passage à niveau, on ralentit, on vérifie, et on ne s'engage jamais si un train approche. Ne jamais s'arrêter sur les rails."
+  },
+  {
+    "id": "r-zones-dangereuses-t02",
+    "fiche": "zones-dangereuses",
+    "famille": "R",
+    "categorie": "Zones dangereuses",
+    "question": "Avant d'entrer dans un tunnel, que faut-il faire ?",
+    "bonne": "Allumer les feux de croisement",
+    "fausses": [
+      "Klaxonner",
+      "Ralentir à 30 km/h",
+      "Allumer les feux de route"
+    ],
+    "explication": "Dans un tunnel, les feux de croisement sont obligatoires, de jour comme de nuit."
+  },
+  {
+    "id": "r-zones-dangereuses-t03",
+    "fiche": "zones-dangereuses",
+    "famille": "R",
+    "categorie": "Zones dangereuses",
+    "question": "En cas d'incendie dans un tunnel, que faire ?",
+    "bonne": "Couper le moteur, laisser la clé sur le contact et gagner une issue de secours",
+    "fausses": [
+      "Continuer à rouler",
+      "Attendre dans le véhicule",
+      "Faire demi-tour"
+    ],
+    "explication": "En cas d'incendie dans un tunnel : couper le moteur, laisser la clé sur le contact, et gagner à pied une issue de secours."
+  },
+  {
+    "id": "r-zones-dangereuses-t04",
+    "fiche": "zones-dangereuses",
+    "famille": "R",
+    "categorie": "Zones dangereuses",
+    "question": "Dans une zone de rencontre, la vitesse est limitée à :",
+    "bonne": "20 km/h",
+    "fausses": [
+      "10 km/h",
+      "50 km/h",
+      "30 km/h"
+    ],
+    "explication": "Dans une zone de rencontre, la vitesse est limitée à 20 km/h et les piétons sont prioritaires sur toute la chaussée."
+  },
+  {
+    "id": "r-zones-dangereuses-t05",
+    "fiche": "zones-dangereuses",
+    "famille": "R",
+    "categorie": "Zones dangereuses",
+    "question": "Devant un chantier routier, que doit-on faire ?",
+    "bonne": "Ralentir et respecter la signalisation temporaire (fond jaune)",
+    "fausses": [
+      "Faire demi-tour",
+      "Accélérer pour passer vite",
+      "Klaxonner pour prévenir les ouvriers"
+    ],
+    "explication": "Devant un chantier, on ralentit et on respecte la signalisation temporaire. Les ouvriers sont prioritaires."
+  },
+  {
+    "id": "r-zones-dangereuses-t06",
+    "fiche": "zones-dangereuses",
+    "famille": "R",
+    "categorie": "Zones dangereuses",
+    "question": "Dans une aire piétonne, la vitesse maximale est :",
+    "bonne": "Le pas",
+    "fausses": [
+      "20 km/h",
+      "30 km/h",
+      "50 km/h"
+    ],
+    "explication": "Dans une aire piétonne, on circule au pas et les piétons sont absolument prioritaires."
+  }
+]

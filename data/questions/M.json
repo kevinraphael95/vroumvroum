@@ -1,0 +1,279 @@
+[
+  {
+    "id": "m-mecanique-t01",
+    "fiche": "mecanique",
+    "famille": "M",
+    "categorie": "Mécanique",
+    "question": "Quelle est la profondeur minimale légale des rainures d'un pneumatique ?",
+    "bonne": "1,6 mm",
+    "fausses": [
+      "2,0 mm",
+      "1,0 mm",
+      "3,0 mm"
+    ],
+    "explication": "Le témoin d'usure indique la limite légale fixée à 1,6 mm."
+  },
+  {
+    "id": "m-mecanique-t02",
+    "fiche": "mecanique",
+    "famille": "M",
+    "categorie": "Mécanique",
+    "question": "Quand doit être effectué le tout premier Contrôle Technique d'un véhicule neuf ?",
+    "bonne": "Dans les 6 mois précédant son 4ᵉ anniversaire",
+    "fausses": [
+      "Tous les ans dès la première année",
+      "Au bout de 2 ans",
+      "À la date exacte de ses 5 ans"
+    ],
+    "explication": "Le premier CT a lieu dans les 6 mois précédant le 4ᵉ anniversaire de la première immatriculation."
+  },
+  {
+    "id": "m-mecanique-t03",
+    "fiche": "mecanique",
+    "famille": "M",
+    "categorie": "Mécanique",
+    "question": "À quelle fréquence doit être effectué le Contrôle Technique après le premier passage ?",
+    "bonne": "Tous les 2 ans",
+    "fausses": [
+      "Tous les 5 ans",
+      "Tous les 3 ans",
+      "Tous les ans"
+    ],
+    "explication": "Après le premier CT (dans les 6 mois avant le 4ᵉ anniversaire), le contrôle est à refaire tous les 2 ans."
+  },
+  {
+    "id": "m-mecanique-t04",
+    "fiche": "mecanique",
+    "famille": "M",
+    "categorie": "Mécanique",
+    "question": "Comment vérifier le liquide de refroidissement ?",
+    "bonne": "Il se vérifie moteur froid, jamais à chaud",
+    "fausses": [
+      "Uniquement en concession",
+      "Moteur chaud et en marche",
+      "Jamais, c'est inutile"
+    ],
+    "explication": "Le liquide de refroidissement se vérifie moteur froid, sinon risque de brûlure."
+  },
+  {
+    "id": "m-mecanique-t05",
+    "fiche": "mecanique",
+    "famille": "M",
+    "categorie": "Mécanique",
+    "question": "Comment vérifier l'huile moteur ?",
+    "bonne": "Elle se vérifie moteur froid, véhicule à plat, avec la jauge",
+    "fausses": [
+      "Uniquement en concession",
+      "Jamais, c'est inutile",
+      "Moteur chaud et en marche"
+    ],
+    "explication": "L'huile moteur se vérifie moteur froid, véhicule à plat, à l'aide de la jauge."
+  },
+  {
+    "id": "m-mecanique-t06",
+    "fiche": "mecanique",
+    "famille": "M",
+    "categorie": "Mécanique",
+    "question": "Comment vérifier le liquide de frein ?",
+    "bonne": "Il doit être vérifié régulièrement, une baisse anormale signale une fuite",
+    "fausses": [
+      "Uniquement en concession",
+      "Jamais, c'est inutile",
+      "Moteur chaud et en marche"
+    ],
+    "explication": "Le niveau de liquide de frein doit être vérifié régulièrement ; une baisse anormale signale une fuite."
+  },
+  {
+    "id": "m-voyants-t01",
+    "fiche": "voyants",
+    "famille": "M",
+    "categorie": "Voyants",
+    "question": "Que signifie un voyant vert ou bleu allumé sur le tableau de bord ?",
+    "bonne": "Une information (feux, équipement actif)",
+    "fausses": [
+      "Une alarme : s'arrêter dès que possible en sécurité",
+      "Une alerte : à vérifier rapidement"
+    ],
+    "explication": "Les voyants verts et bleus indiquent qu'un équipement est actif : aucune urgence."
+  },
+  {
+    "id": "m-voyants-t02",
+    "fiche": "voyants",
+    "famille": "M",
+    "categorie": "Voyants",
+    "question": "Que signifie un voyant orange allumé sur le tableau de bord ?",
+    "bonne": "Une alerte : à vérifier rapidement",
+    "fausses": [
+      "Une alarme : s'arrêter dès que possible en sécurité",
+      "Une information (feux, équipement actif)"
+    ],
+    "explication": "Un voyant orange signale une anomalie à faire vérifier rapidement, sans urgence absolue."
+  },
+  {
+    "id": "m-voyants-t03",
+    "fiche": "voyants",
+    "famille": "M",
+    "categorie": "Voyants",
+    "question": "Que signifie un voyant rouge allumé sur le tableau de bord ?",
+    "bonne": "Une alarme : s'arrêter dès que possible en sécurité",
+    "fausses": [
+      "Une information (feux, équipement actif)",
+      "Une alerte : à vérifier rapidement"
+    ],
+    "explication": "Un voyant rouge signale une urgence : il faut s'arrêter dès que possible en sécurité."
+  },
+  {
+    "id": "m-voyants-t04",
+    "fiche": "voyants",
+    "famille": "M",
+    "categorie": "Voyants",
+    "question": "Le voyant AdBlue s'allume. Que se passe-t-il si on ignore ?",
+    "bonne": "Le véhicule refusera de démarrer",
+    "fausses": [
+      "Le moteur surchauffe",
+      "Les freins ne fonctionnent plus",
+      "Rien, c'est purement indicatif"
+    ],
+    "explication": "Si l'AdBlue n'est pas rechargé, le véhicule refusera de démarrer."
+  },
+  {
+    "id": "m-voyants-t05",
+    "fiche": "voyants",
+    "famille": "M",
+    "categorie": "Voyants",
+    "question": "Le voyant rouge de pression d'huile s'allume moteur tournant. Que faire ?",
+    "bonne": "S'arrêter immédiatement et couper le moteur",
+    "fausses": [
+      "Attendre le prochain contrôle technique",
+      "Continuer normalement",
+      "Ajouter de l'huile moteur en marche"
+    ],
+    "explication": "Un voyant de pression d'huile allumé en rouge impose un arrêt immédiat : risque de casse moteur."
+  },
+  {
+    "id": "m-voyants-t06",
+    "fiche": "voyants",
+    "famille": "M",
+    "categorie": "Voyants",
+    "question": "Le voyant orange moteur s'allume. Que faire ?",
+    "bonne": "Faire diagnostiquer le véhicule rapidement en garage",
+    "fausses": [
+      "Couper le moteur et appeler une dépanneuse",
+      "Continuer sans s'inquiéter",
+      "S'arrêter immédiatement"
+    ],
+    "explication": "Un voyant moteur orange signale une anomalie à faire diagnostiquer rapidement."
+  },
+  {
+    "id": "m-voyants-t07",
+    "fiche": "voyants",
+    "famille": "M",
+    "categorie": "Voyants",
+    "question": "Un voyant rouge de température moteur s'allume. Que faire ?",
+    "bonne": "S'arrêter immédiatement et laisser refroidir",
+    "fausses": [
+      "Accélérer pour refroidir le moteur",
+      "Ouvrir le bocal de refroidissement à chaud",
+      "Continuer à rouler doucement"
+    ],
+    "explication": "Une surchauffe moteur impose un arrêt immédiat. Ne jamais ouvrir le bocal à chaud (risque de brûlure)."
+  },
+  {
+    "id": "m-eclairage-t01",
+    "fiche": "eclairage",
+    "famille": "M",
+    "categorie": "Éclairage",
+    "question": "Quand utiliser les feux de brouillard arrière ?",
+    "bonne": "Uniquement en cas de brouillard ou de neige",
+    "fausses": [
+      "En cas de vent fort",
+      "La nuit en agglomération",
+      "Sous la pluie"
+    ],
+    "explication": "Les feux de brouillard arrière sont éblouissants : ils sont réservés au brouillard et à la neige, jamais à la pluie."
+  },
+  {
+    "id": "m-eclairage-t02",
+    "fiche": "eclairage",
+    "famille": "M",
+    "categorie": "Éclairage",
+    "question": "Quand peut-on utiliser les feux de route ?",
+    "bonne": "La nuit, hors agglomération, sans gêner les autres usagers",
+    "fausses": [
+      "En cas de brouillard",
+      "En agglomération, la nuit",
+      "Sous la pluie"
+    ],
+    "explication": "Les feux de route s'utilisent la nuit, hors agglomération, à condition de ne pas éblouir les autres usagers."
+  },
+  {
+    "id": "m-eclairage-t03",
+    "fiche": "eclairage",
+    "famille": "M",
+    "categorie": "Éclairage",
+    "question": "Quand les feux de croisement sont-ils obligatoires ?",
+    "bonne": "La nuit, sous la pluie, dans les tunnels, par visibilité réduite",
+    "fausses": [
+      "Uniquement en agglomération",
+      "Uniquement la nuit hors agglomération",
+      "Uniquement en cas de brouillard"
+    ],
+    "explication": "Les feux de croisement sont obligatoires dès que la visibilité est réduite : nuit, pluie, tunnel."
+  },
+  {
+    "id": "m-equipements-t01",
+    "fiche": "entretien",
+    "famille": "M",
+    "categorie": "Équipements",
+    "question": "Quand doit-on enfiler le gilet haute visibilité ?",
+    "bonne": "Avant de sortir du véhicule en cas d'arrêt d'urgence",
+    "fausses": [
+      "À l'intérieur du véhicule",
+      "En cas de contrôle policier",
+      "Uniquement la nuit"
+    ],
+    "explication": "Le gilet doit être enfilé AVANT de sortir du véhicule, pour être visible dès la descente."
+  },
+  {
+    "id": "m-equipements-t02",
+    "fiche": "entretien",
+    "famille": "M",
+    "categorie": "Équipements",
+    "question": "Où doit-on placer le triangle de présignalisation ?",
+    "bonne": "30 m avant le véhicule, hors autoroute",
+    "fausses": [
+      "À 5 m du véhicule",
+      "Juste derrière le véhicule",
+      "Sur le toit du véhicule"
+    ],
+    "explication": "Le triangle doit être placé environ 30 m avant le véhicule, pour prévenir les autres usagers. Sur autoroute, on ne place pas de triangle : on rejoint le refuge."
+  },
+  {
+    "id": "m-equipements-t03",
+    "fiche": "entretien",
+    "famille": "M",
+    "categorie": "Équipements",
+    "question": "Que doit-on vérifier sur ses pneumatiques ?",
+    "bonne": "La profondeur des rainures et la pression",
+    "fausses": [
+      "Uniquement la couleur",
+      "Uniquement la marque",
+      "Rien, tant qu'ils ne crèvent pas"
+    ],
+    "explication": "La profondeur minimale est de 1,6 mm. La pression doit être vérifiée régulièrement (sous-gonflage = surconsommation et risque d'éclatement)."
+  },
+  {
+    "id": "m-equipements-t04",
+    "fiche": "entretien",
+    "famille": "M",
+    "categorie": "Équipements",
+    "question": "Quel est le seul élément NON obligatoire parmi ceux-ci ?",
+    "bonne": "L'éthylotest",
+    "fausses": [
+      "Le gilet haute visibilité",
+      "Le triangle",
+      "Les plaques d'immatriculation"
+    ],
+    "explication": "L'éthylotest est recommandé, mais pas obligatoire à bord."
+  }
+]

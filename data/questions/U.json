@@ -1,0 +1,156 @@
+[
+  {
+    "id": "u-autres-usagers-t01",
+    "fiche": "autres-usagers",
+    "famille": "U",
+    "categorie": "Autres usagers",
+    "question": "Quelle distance latérale minimale faut-il respecter en dépassant un cycliste en agglomération ?",
+    "bonne": "1 m",
+    "fausses": [
+      "2 m",
+      "0,5 m",
+      "1,5 m"
+    ],
+    "explication": "En agglomération, 1 m minimum. Hors agglomération, 1,5 m."
+  },
+  {
+    "id": "u-autres-usagers-t02",
+    "fiche": "autres-usagers",
+    "famille": "U",
+    "categorie": "Autres usagers",
+    "question": "Qu'est-ce qu'un convoi exceptionnel ?",
+    "bonne": "Un transport de charges très volumineuses, prioritaire aux croisements",
+    "fausses": [
+      "Un véhicule de secours",
+      "Un camion de livraison",
+      "Un convoi de plusieurs voitures"
+    ],
+    "explication": "Les convois exceptionnels sont prioritaires aux croisements. Longs et lents, il ne faut pas s'engager à l'intersection devant eux."
+  },
+  {
+    "id": "u-autres-usagers-t03",
+    "fiche": "autres-usagers",
+    "famille": "U",
+    "categorie": "Autres usagers",
+    "question": "Un bus quitte son arrêt en agglomération. Que faire ?",
+    "bonne": "Le laisser passer",
+    "fausses": [
+      "Le dépasser rapidement",
+      "Klaxonner",
+      "Rien, je suis prioritaire"
+    ],
+    "explication": "En agglomération, les bus qui quittent leur arrêt sont prioritaires."
+  },
+  {
+    "id": "u-autres-usagers-t04",
+    "fiche": "autres-usagers",
+    "famille": "U",
+    "categorie": "Autres usagers",
+    "question": "Qui doit-on laisser passer à un passage piéton ?",
+    "bonne": "Tout piéton engagé ou qui manifeste l'intention de traverser",
+    "fausses": [
+      "Aucun, le conducteur est prioritaire",
+      "Uniquement les piétons déjà au milieu de la chaussée",
+      "Uniquement les enfants"
+    ],
+    "explication": "Le piéton est prioritaire au passage piéton, sauf face au tramway."
+  },
+  {
+    "id": "u-autres-usagers-t05",
+    "fiche": "autres-usagers",
+    "famille": "U",
+    "categorie": "Autres usagers",
+    "question": "Face à un véhicule prioritaire en intervention, que faire ?",
+    "bonne": "Se ranger à droite pour faciliter son passage",
+    "fausses": [
+      "Klaxonner",
+      "Accélérer pour le suivre",
+      "S'arrêter au milieu de la voie"
+    ],
+    "explication": "Il faut faciliter le passage des véhicules d'urgence : se ranger à droite, s'arrêter si nécessaire."
+  },
+  {
+    "id": "u-autres-usagers-t06",
+    "fiche": "autres-usagers",
+    "famille": "U",
+    "categorie": "Autres usagers",
+    "question": "Les trottinettes électriques (EDPM) peuvent circuler :",
+    "bonne": "Sur les pistes cyclables, ou sur la chaussée limitée à 50 km/h",
+    "fausses": [
+      "Sur les trottoirs",
+      "Uniquement dans les parcs",
+      "Sur les autoroutes"
+    ],
+    "explication": "Les EDPM sont interdits sur les trottoirs. Ils circulent sur piste cyclable ou, à défaut, sur la chaussée limitée à 50 km/h."
+  },
+  {
+    "id": "u-autres-usagers-t07",
+    "fiche": "autres-usagers",
+    "famille": "U",
+    "categorie": "Autres usagers",
+    "question": "Pourquoi faut-il se méfier des angles morts des poids lourds ?",
+    "bonne": "Le conducteur ne voit pas les véhicules qui s'y trouvent",
+    "fausses": [
+      "Ils roulent trop vite",
+      "Ils changent souvent de voie",
+      "Ils freinent mal"
+    ],
+    "explication": "Les poids lourds ont des angles morts très larges. Il ne faut jamais rester à côté ou juste derrière eux."
+  },
+  {
+    "id": "u-autres-usagers-t08",
+    "fiche": "autres-usagers",
+    "famille": "U",
+    "categorie": "Autres usagers",
+    "question": "Qu'est-ce qu'un véhicule prioritaire au sens du Code de la route ?",
+    "bonne": "Un véhicule avec gyrophare et sirène (police, pompiers, SAMU) qui a la priorité absolue",
+    "fausses": [
+      "Un bus en agglomération",
+      "Un camion de livraison",
+      "Un véhicule qui roule vite"
+    ],
+    "explication": "Les véhicules prioritaires (art. R415-1) ont gyrophare + sirène. Je dois les laisser passer, me ranger à droite, m'arrêter si nécessaire."
+  },
+  {
+    "id": "u-autres-usagers-t09",
+    "fiche": "autres-usagers",
+    "famille": "U",
+    "categorie": "Autres usagers",
+    "question": "Un véhicule à 'facilités de passage' (ambulance privée, dépanneuse) :",
+    "bonne": "N'a pas de priorité, je dois juste lui faciliter le passage",
+    "fausses": [
+      "A la priorité absolue",
+      "Ne peut pas circuler sur la voie publique",
+      "Doit s'arrêter à tous les carrefours"
+    ],
+    "explication": "Les véhicules à facilités de passage (art. R415-2) n'ont PAS de priorité. Je facilite leur passage, sans obligation d'arrêt."
+  },
+  {
+    "id": "u-autres-usagers-t10",
+    "fiche": "autres-usagers",
+    "famille": "U",
+    "categorie": "Autres usagers",
+    "question": "Face à un véhicule de police avec sirène et gyrophare en intervention, que faire ?",
+    "bonne": "Me ranger à droite et m'arrêter si nécessaire pour le laisser passer",
+    "fausses": [
+      "Klaxonner",
+      "Accélérer pour ne pas le gêner",
+      "Le suivre de près"
+    ],
+    "explication": "Le véhicule prioritaire en intervention (gyrophare + sirène) doit être laissé passer. Je me range à droite, je m'arrête si nécessaire."
+  },
+  {
+    "id": "u-autres-usagers-t11",
+    "fiche": "autres-usagers",
+    "famille": "U",
+    "categorie": "Autres usagers",
+    "question": "Face à une ambulance privée sans sirène ni gyrophare, que dois-je faire ?",
+    "bonne": "Circuler normalement, aucune obligation particulière",
+    "fausses": [
+      "M'arrêter immédiatement",
+      "Klaxonner",
+      "Me ranger à droite"
+    ],
+    "explication": "Sans sirène ni gyrophare en fonctionnement, l'ambulance privée n'a aucune priorité. Je circule normalement."
+  }
+]
