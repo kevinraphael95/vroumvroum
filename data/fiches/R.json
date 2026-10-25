@@ -1,0 +1,121 @@
+[
+  {
+    "id": "conditions-difficiles",
+    "groupe": "La route",
+    "sousGroupe": "Conduire dans des conditions difficiles",
+    "badge": "R",
+    "num": "01",
+    "emoji": "🌧️",
+    "titre": "Nuit, pluie, brouillard, neige, verglas, vent, soleil",
+    "type": "list",
+    "items": [
+      {
+        "label": "Nuit",
+        "texte": "Champ visuel réduit, distance de perception limitée. Feux de croisement en ville éclairée ou en croisant, feux de route hors zone éclairée (voir la fiche M03). Réduire la vitesse."
+      },
+      {
+        "label": "Pluie",
+        "texte": "Distance de freinage augmentée, risque d'aquaplanage. Réduire la vitesse, augmenter les distances."
+      },
+      {
+        "label": "Brouillard",
+        "texte": "Visibilité < 50 m : 50 km/h. Feux de croisement + brouillard avant. Jamais les feux de route."
+      },
+      {
+        "label": "Neige",
+        "texte": "Adhérence réduite. Conduire en douceur. Chaînes obligatoires en zone signalée (panneau B26)."
+      },
+      {
+        "label": "Verglas",
+        "texte": "Attention aux ponts, sorties de tunnel et zones ombragées. Aucune manœuvre brusque."
+      },
+      {
+        "label": "Vent",
+        "texte": "Peut déporter le véhicule, surtout à la sortie d'un tunnel ou sur un pont. Tenir fermement le volant."
+      },
+      {
+        "label": "Soleil",
+        "texte": "Éblouissement. Utiliser le pare-soleil, garder le pare-brise propre, ralentir si nécessaire."
+      },
+      {
+        "label": "Aquaplanage",
+        "texte": "Perte de contact des pneus avec la route. Relâcher l'accélérateur, tenir le volant, ne pas freiner brusquement."
+      }
+    ],
+    "astuce": "Par conditions difficiles, la règle d'or est toujours la même : ralentir et augmenter les distances de sécurité."
+  },
+  {
+    "id": "autoroute",
+    "groupe": "La route",
+    "sousGroupe": "Conduire sur autoroute",
+    "badge": "R",
+    "num": "02",
+    "emoji": "🛤️",
+    "titre": "Autoroute : signalisation, règles, comportements",
+    "type": "list",
+    "items": [
+      {
+        "label": "Signalisation",
+        "texte": "Panneaux bleus. Bornes d'appel tous les 2 km. Voies d'arrêt d'urgence régulières."
+      },
+      {
+        "label": "Règles de circulation",
+        "texte": "Rouler à droite, dépasser à gauche. Demi-tour et marche arrière interdits."
+      },
+      {
+        "label": "Vitesse",
+        "texte": "130 km/h (110 par temps de pluie). Probatoire : 110 km/h."
+      },
+      {
+        "label": "Distance de sécurité",
+        "texte": "2 secondes minimum avec le véhicule devant. Plus si pluie."
+      },
+      {
+        "label": "Dépassements",
+        "texte": "Par la gauche uniquement. Ne pas rester sur la voie du milieu."
+      },
+      {
+        "label": "Bande d'arrêt d'urgence",
+        "texte": "Réservée aux urgences et véhicules de secours."
+      },
+      {
+        "label": "Insertion",
+        "texte": "Voie d'accélération pour atteindre la vitesse du flux, puis céder le passage."
+      },
+      {
+        "label": "Comportements",
+        "texte": "Pause toutes les 2 heures. En cas de panne : warning, gilet, se réfugier derrière la glissière."
+      }
+    ],
+    "astuce": "Sur autoroute, la bande d'arrêt d'urgence n'est JAMAIS une voie de circulation."
+  },
+  {
+    "id": "zones-dangereuses",
+    "groupe": "La route",
+    "sousGroupe": "La traversée de zones dangereuses",
+    "badge": "R",
+    "num": "03",
+    "emoji": "⚠️",
+    "titre": "Chantiers, tunnels, passages à niveau, tramways",
+    "type": "list",
+    "items": [
+      {
+        "label": "Chantiers routiers",
+        "texte": "Ralentir, respecter la signalisation temporaire (fond jaune). Ouvriers prioritaires."
+      },
+      {
+        "label": "Tunnels",
+        "texte": "Allumer les feux de croisement. Respecter les distances. En cas d'incendie : couper le moteur et gagner une issue de secours."
+      },
+      {
+        "label": "Passages à niveau",
+        "texte": "Ralentir, vérifier, ne jamais s'engager si un train approche. Ne jamais s'arrêter sur les rails."
+      },
+      {
+        "label": "Tramways",
+        "texte": "Toujours prioritaires, même sur les piétons. Ne jamais stationner sur les rails."
+      }
+    ],
+    "astuce": "Dans une zone dangereuse, la vitesse n'est jamais ta priorité : c'est la visibilité et l'anticipation."
+  }
+]

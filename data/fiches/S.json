@@ -1,0 +1,105 @@
+[
+  {
+    "id": "securite-passager",
+    "groupe": "La sécurité du passager et du véhicule",
+    "sousGroupe": "L'installation sécurisée des passagers adultes",
+    "badge": "S",
+    "num": "01",
+    "emoji": "🧍",
+    "titre": "Passagers adultes : ceinture & airbags",
+    "type": "list",
+    "items": [
+      {
+        "label": "La ceinture",
+        "texte": "Obligatoire à toutes les places, avant comme arrière. Le conducteur est responsable du port pour les moins de 18 ans."
+      },
+      {
+        "label": "Coussins gonflables (airbags)",
+        "texte": "Complément de la ceinture, pas un substitut. Ne pas approcher le visage du volant ou de la planche de bord."
+      },
+      {
+        "label": "Chargement",
+        "texte": "Objets lourds dans le coffre, arrimés. Ne rien poser sur la plage arrière (projectiles en cas de freinage)."
+      },
+      {
+        "label": "Passagers",
+        "texte": "Nombre limité aux places de la carte grise. Tous doivent être attachés."
+      }
+    ],
+    "astuce": "Un passager non attaché à l'arrière peut tuer le conducteur en cas de choc frontal : il est projeté vers l'avant."
+  },
+  {
+    "id": "securite-enfant",
+    "groupe": "La sécurité du passager et du véhicule",
+    "sousGroupe": "L'installation sécurisée des enfants",
+    "badge": "S",
+    "num": "02",
+    "emoji": "👶",
+    "titre": "Enfants : sièges homologués & système de sécurité",
+    "type": "list",
+    "items": [
+      {
+        "label": "Sièges homologués",
+        "texte": "Enfants < 10 ans : dispositif de retenue homologué obligatoire, adapté au poids et à la taille."
+      },
+      {
+        "label": "Interdiction à l'avant",
+        "texte": "Enfant de moins de 10 ans : INTERDIT à l'avant, sauf si le véhicule n'a pas de banquette arrière, ou si les places arrière sont déjà occupées par d'autres enfants de moins de 10 ans, ou si le siège dos-route est installé avec airbag passager désactivé."
+      },
+      {
+        "label": "Homologation",
+        "texte": "Vérifier l'étiquette d'homologation sur le siège (norme européenne)."
+      },
+      {
+        "label": "Système de sécurité enfant",
+        "texte": "Siège bébé dos à la route : JAMAIS sur le siège passager avant avec airbag actif. Désactiver l'airbag passager."
+      },
+      {
+        "label": "Installation",
+        "texte": "Siège bien fixé, harnais ajusté sans jeu. Jamais d'enfant sur les genoux d'un adulte."
+      }
+    ],
+    "astuce": "Règle simple : moins de 10 ans → à l'arrière, dans un siège adapté. Dos à la route à l'avant → airbag passager obligatoirement désactivé."
+  },
+  {
+    "id": "securite",
+    "groupe": "La sécurité du passager et du véhicule",
+    "sousGroupe": "Les nouvelles aides technologiques",
+    "badge": "S",
+    "num": "03",
+    "emoji": "⚙️",
+    "titre": "Aides au freinage, à la tenue de route & à la conduite",
+    "type": "list",
+    "items": [
+      {
+        "label": "ABS (aide au freinage)",
+        "texte": "Empêche le blocage des roues : garder le contrôle du volant au freinage."
+      },
+      {
+        "label": "AFU (aide au freinage)",
+        "texte": "Amplifie la pression de freinage lors d'un freinage d'urgence."
+      },
+      {
+        "label": "Freinage automatique d'urgence",
+        "texte": "Détecte un risque de collision et freine seul si le conducteur ne réagit pas."
+      },
+      {
+        "label": "ESP (tenue de route)",
+        "texte": "Corrige la trajectoire en cas de dérapage (agit sur freins + moteur)."
+      },
+      {
+        "label": "Aide au maintien de voie",
+        "texte": "Alerte ou corrige la trajectoire si le véhicule franchit une ligne sans clignotant."
+      },
+      {
+        "label": "Régulateur / limiteur",
+        "texte": "Maintient une vitesse constante. Le régulateur ne freine pas seul en descente."
+      },
+      {
+        "label": "Aide au stationnement",
+        "texte": "Radars et caméras : complètent la vision mais ne remplacent pas le conducteur."
+      }
+    ],
+    "astuce": "Les ADAS assistent, mais ne pilotent pas : la responsabilité reste toujours celle du conducteur."
+  }
+]

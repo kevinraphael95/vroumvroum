@@ -1,0 +1,80 @@
+[
+  {
+    "id": "prendre-quitter",
+    "groupe": "Prendre et quitter son véhicule",
+    "sousGroupe": "S'installer au poste de conduite",
+    "badge": "P",
+    "num": "01",
+    "emoji": "💺",
+    "titre": "S'installer au poste de conduite",
+    "type": "list",
+    "items": [
+      {
+        "label": "Être à l'aise",
+        "texte": "Vêtements amples, chaussures adaptées (pas de talons hauts ni de tongs). Rien ne doit gêner les pédales, le volant ou les commandes."
+      },
+      {
+        "label": "Distance au pédalier",
+        "texte": "Pédale enfoncée à fond, la jambe reste légèrement fléchie. Les pieds appuient sans effort excessif."
+      },
+      {
+        "label": "Hauteur du siège",
+        "texte": "Bien voir la route et tout le tableau de bord. Fesses au fond du siège, dos plaqué contre le dossier."
+      },
+      {
+        "label": "Inclinaison du dossier",
+        "texte": "Dossier peu incliné, dos bien soutenu : pas de tension dans le cou ni les épaules."
+      },
+      {
+        "label": "Position des mains",
+        "texte": "Tenir le volant souplement, à « 9 h 15 » ou « 10 h 10 », sans crispation. Jamais les mains ni les pouces à l'intérieur du volant (danger en cas de déclenchement de l'airbag)."
+      },
+      {
+        "label": "Réglage du volant",
+        "texte": "En hauteur et en profondeur : tout le tableau de bord reste visible et les bras restent légèrement fléchis."
+      },
+      {
+        "label": "Appuie-tête",
+        "texte": "Haut de l'appuie-tête à hauteur du sommet de la tête (protège la nuque en cas de choc arrière). S'il n'y a pas de passager arrière, abaisser les appuie-tête arrière pour mieux voir."
+      },
+      {
+        "label": "Position des pieds",
+        "texte": "Pied droit : talon au sol, seule la pointe du pied passe de l'accélérateur au frein. Pied gauche : embrayage, puis repos sur le repose-pied."
+      },
+      {
+        "label": "Rétroviseurs",
+        "texte": "Réglés une fois bien assis, pour réduire les angles morts. Position « nuit » du rétroviseur intérieur contre l'éblouissement. Les angles morts restent à contrôler en tournant la tête."
+      },
+      {
+        "label": "Ceinture",
+        "texte": "Sangle à plat, bien tendue, jamais vrillée. Sangle haute au milieu de l'épaule, pas sur le cou. Sangle basse sur le bassin, jamais sur le ventre."
+      }
+    ],
+    "astuce": "Les réglages se font à l'arrêt, avant de démarrer : jamais en roulant."
+  },
+  {
+    "id": "entrer-sortir",
+    "groupe": "Prendre et quitter son véhicule",
+    "sousGroupe": "Entrer et sortir du véhicule",
+    "badge": "P",
+    "num": "02",
+    "emoji": "🚪",
+    "titre": "Entrer et sortir du véhicule",
+    "type": "list",
+    "items": [
+      {
+        "label": "Avant de partir",
+        "texte": "Vérifier l'absence d'obstacle, attacher tout le monde, ajuster les réglages, démarrer en douceur."
+      },
+      {
+        "label": "Entrer et sortir",
+        "texte": "Ouvrir avec prudence : rétroviseur + angle mort. Emportiérage = accident grave avec cyclistes."
+      },
+      {
+        "label": "Précautions avant de quitter",
+        "texte": "Couper le moteur, serrer le frein à main, retirer la clé, fermer. Sur autoroute : sortir côté opposé au trafic."
+      }
+    ],
+    "astuce": "Un cycliste percuté par une portière ouverte = un accident grave. Toujours regarder avant d'ouvrir."
+  }
+]

@@ -4,7 +4,7 @@
    Utilise : FICHES (data-fiches.js), window.VV (core.js)
    ========================================================= */
 
-(function renderFiches() {
+window.fichesPretes.then(function renderFiches() {
   const listeBox = document.getElementById('fiches-liste');
   const detailBox = document.getElementById('fiche-detail');
   const groupesBox = document.getElementById('fiches-groupes');
@@ -188,4 +188,4 @@
 
   window.addEventListener('hashchange', route);
   route();
-})();
+}).catch(() => {});

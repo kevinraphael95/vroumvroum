@@ -1558,8 +1558,14 @@ function generateOneQuestion(excludeCategory, seenQuestions) {
     ids.add(b.id);
     if (!b.fausses || b.fausses.length !== 3) console.warn('[VroumVroum] 3 fausses réponses attendues :', b.id);
     if (b.fausses && b.fausses.includes(b.bonne)) console.warn('[VroumVroum] bonne réponse dans les fausses :', b.id);
-    if (typeof FICHES !== 'undefined' && !FICHES.some(f => f.id === b.fiche)) {
-      console.warn('[VroumVroum] fiche introuvable :', b.fiche, 'dans', b.id);
-    }
   });
+  // Les fiches se chargent en asynchrone : on vérifie quand elles sont prêtes
+  (window.fichesPretes || Promise.resolve()).then(() => {
+    if (typeof FICHES === 'undefined' || !FICHES.length) return;
+    BANQUE.forEach(b => {
+      if (!FICHES.some(f => f.id === b.fiche)) {
+        console.warn('[VroumVroum] fiche introuvable :', b.fiche, 'dans', b.id);
+      }
+    });
+  }).catch(() => {});
 })();

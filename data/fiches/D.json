@@ -1,0 +1,190 @@
+[
+  {
+    "id": "documents",
+    "groupe": "Les notions diverses",
+    "sousGroupe": "Les documents administratifs",
+    "badge": "D",
+    "num": "01",
+    "emoji": "📄",
+    "titre": "Documents obligatoires, facultatifs & assurance",
+    "type": "list",
+    "items": [
+      {
+        "label": "Documents obligatoires",
+        "texte": "Carte grise, permis de conduire. <strong>Assurance : plus obligatoire à présenter</strong> depuis avril 2024 (vérification via FVA)."
+      },
+      {
+        "label": "Permis numérique",
+        "texte": "Accepté via l'application France Identité, comme l'Attestation de Droits à Conduire Sécurisée (4 mois)."
+      },
+      {
+        "label": "Perte ou vol du permis",
+        "texte": "Récépissé de déclaration valable 2 mois, en attendant le nouveau titre."
+      },
+      {
+        "label": "Documents facultatifs",
+        "texte": "Constat amiable, carte de groupe sanguin, attestation d'assurance (utile en cas de litige)."
+      },
+      {
+        "label": "Assurance obligatoire",
+        "texte": "Tout véhicule terrestre à moteur, même immobile. Le défaut est un délit (3 750 € d'amende, confiscation possible)."
+      },
+      {
+        "label": "Garantie minimale",
+        "texte": "Responsabilité civile (dommages causés aux tiers). Le conducteur responsable n'est pas indemnisé."
+      },
+      {
+        "label": "Non-présentation",
+        "texte": "Amende jusqu'à 38 €, portée à 750 € sans justification sous 5 jours."
+      }
+    ],
+    "astuce": "Depuis avril 2024, la carte verte n'existe plus. La vérification d'assurance passe par le Fichier des Véhicules Assurés (FVA)."
+  },
+  {
+    "id": "chargement",
+    "groupe": "Les notions diverses",
+    "sousGroupe": "Le chargement",
+    "badge": "D",
+    "num": "02",
+    "emoji": "📦",
+    "titre": "Bagages, objets encombrants, remorques, animaux",
+    "type": "list",
+    "items": [
+      {
+        "label": "Bagages",
+        "texte": "Ne jamais dépasser le PTAC (poids total autorisé en charge). Charger lourd au fond du coffre."
+      },
+      {
+        "label": "Objets encombrants",
+        "texte": "Arrimés obligatoirement. Si la charge dépasse, dispositif réfléchissant obligatoire."
+      },
+      {
+        "label": "Remorques & caravanes",
+        "texte": "Permis B suffit si PTAC remorque ≤ 750 kg. Au-delà : permis BE ou B96 selon le poids total."
+      },
+      {
+        "label": "Tracter une remorque",
+        "texte": "Adapter sa conduite : freinage plus long, virages plus larges, vitesse réduite."
+      },
+      {
+        "label": "Transport des passagers",
+        "texte": "Limité au nombre de places de la carte grise. Tous doivent être attachés."
+      },
+      {
+        "label": "Animaux",
+        "texte": "Transportés dans un contenant fermé ou attachés. Ne jamais laisser un animal divaguer dans l'habitacle."
+      }
+    ],
+    "astuce": "Une surcharge augmente la distance de freinage, use les pneus et peut entraîner une amende et l'immobilisation du véhicule."
+  },
+  {
+    "id": "permis-points",
+    "groupe": "Les notions diverses",
+    "sousGroupe": "Le permis à points",
+    "badge": "D",
+    "num": "03",
+    "emoji": "🎫",
+    "titre": "Capital, perte, reconstitution, invalidation",
+    "type": "list",
+    "items": [
+      {
+        "label": "Capital initial",
+        "texte": "6 points à l'obtention du permis. Passe à <strong>12 points</strong> après 3 ans sans infraction (2 ans en cas de conduite accompagnée)."
+      },
+      {
+        "label": "Permis probatoire",
+        "texte": "3 ans (2 ans avec conduite accompagnée). Pendant cette période : 6 points max, vitesse réduite, taux d'alcool abaissé."
+      },
+      {
+        "label": "Parcours vers 12 points",
+        "texte": "+2 points par an sans infraction. +3 par an en probatoire avec conduite accompagnée."
+      },
+      {
+        "label": "Perte de points",
+        "texte": "De 1 à 6 points selon la gravité. Retrait effectif une fois l'infraction payée ou jugée."
+      },
+      {
+        "label": "Reconstitution du capital",
+        "texte": "Stage volontaire : +4 points maximum dans la limite du plafond. Stage de 2 jours, payant."
+      },
+      {
+        "label": "Invalidation",
+        "texte": "Solde à zéro : permis invalidé. Re-passage du code et de la conduite après 6 mois (1 an en cas de récidive)."
+      },
+      {
+        "label": "Consultation",
+        "texte": "Solde consultable sur Télépoints avec son numéro de dossier."
+      }
+    ],
+    "astuce": "Les points ne disparaissent pas tout seuls : il faut soit attendre 2 ans sans infraction, soit faire un stage volontaire."
+  },
+  {
+    "id": "infractions",
+    "groupe": "Les notions diverses",
+    "sousGroupe": "Les infractions",
+    "badge": "D",
+    "num": "04",
+    "emoji": "⚖️",
+    "titre": "Infractions : sanctions, niveaux de gravité et prix des amendes",
+    "type": "list",
+    "items": [
+      {
+        "label": "Amende forfaitaire",
+        "texte": "Montant standard de base à régler dans le délai légal classique (sous 45 jours, ou 60 jours en ligne)."
+      },
+      {
+        "label": "Amende minorée",
+        "texte": "Tarif réduit accordé en cas de paiement rapide (sous 15 jours, ou 30 jours en ligne)."
+      },
+      {
+        "label": "Amende majorée",
+        "texte": "Montant augmenté appliqué en cas de retard de paiement (au-delà de 45 jours ou 60 jours en ligne)."
+      },
+      {
+        "label": "Amende maximum",
+        "texte": "Plafond légal fixé par le juge en tribunal (ou pour la 5ᵉ classe qui n'a pas de forfait)."
+      },
+      {
+        "label": "Délais de paiement",
+        "texte": "<img src='assets/img/fiches/delais-paiement-amendes.png' style='max-width:100%; height:auto; margin:10px 0; border-radius:6px;'>"
+      },
+      {
+        "label": "1ʳᵉ classe",
+        "texte": "Le plus léger : stationnement gênant, feux non conformes. Amende forfaitaire : 11 € (majorée : 33 €, max : 38 €)."
+      },
+      {
+        "label": "2ᵉ classe",
+        "texte": "Oubli de clignotant, non-présentation du permis/carte grise. Amende forfaitaire : 35 € (minorée : 22 €, majorée : 75 €, max : 150 €)."
+      },
+      {
+        "label": "3ᵉ classe",
+        "texte": "Excès de vitesse < 20 km/h (hors agglomération). Amende forfaitaire : 68 € (minorée : 45 €, majorée : 180 €, max : 450 €)."
+      },
+      {
+        "label": "4ᵉ classe",
+        "texte": "Excès 20-49 km/h, téléphone en main, refus de priorité, ceinture, ligne continue. Amende forfaitaire : 135 € (minorée : 90 €, majorée : 375 €, max : 750 €)."
+      },
+      {
+        "label": "5ᵉ classe",
+        "texte": "Infractions les plus graves : retrait de 6 points, suspension ou annulation possible. Amende max : 1 500 € (3 000 € en cas de récidive). Pas d'amende forfaitaire."
+      },
+      {
+        "label": "Gravité et montant de la condamnation",
+        "texte": "<img src='assets/img/fiches/tableau-montants-amendes.png' style='max-width:100%; height:auto; margin:10px 0; border-radius:6px;'>"
+      },
+      {
+        "label": "Retrait immédiat",
+        "texte": "Excès ≥ 40 km/h, alcoolémie, stupéfiants, refus d'obtempérer : permis retiré sur place (suspension à venir)."
+      },
+      {
+        "label": "Délits",
+        "texte": "Alcoolémie ≥ 0,8 g/l, refus d'obtempérer, délit de fuite, conduite malgré suspension. Peine de prison de 2 mois à 10 ans selon la gravité et la récidive."
+      },
+      {
+        "label": "Annulation du permis",
+        "texte": "Solde de points à zéro, ou décision judiciaire. Re-passage obligatoire après visite médicale et tests psychotechniques."
+      }
+    ],
+    "astuce": "Le retrait immédiat n'est pas une sanction définitive : c'est une mesure de sécurité en attendant la décision judiciaire. De plus, payer l'amende vaut reconnaissance de l'infraction."
+  }
+]

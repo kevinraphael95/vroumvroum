@@ -1,0 +1,88 @@
+[
+  {
+    "id": "partage-rue",
+    "groupe": "Les autres usagers",
+    "sousGroupe": "Le partage de la rue",
+    "badge": "U",
+    "num": "01",
+    "emoji": "🏘️",
+    "titre": "Une nouvelle organisation de l'espace public",
+    "type": "list",
+    "items": [
+      {
+        "label": "Zone 30",
+        "texte": "Vitesse limitée à 30 km/h. Souvent en double sens cyclable."
+      },
+      {
+        "label": "Zone de rencontre",
+        "texte": "Vitesse limitée à 20 km/h. Priorité aux piétons sur toute la chaussée."
+      },
+      {
+        "label": "Aire piétonne",
+        "texte": "Vitesse au pas. Priorité absolue aux piétons. Accès réglementé."
+      },
+      {
+        "label": "Double sens cyclable",
+        "texte": "Dans certaines rues à sens unique, les cyclistes peuvent circuler à contresens : vigilance aux croisements et sorties."
+      },
+      {
+        "label": "Sas vélo",
+        "texte": "Zone devant le feu réservée aux cyclistes : s'arrêter avant, derrière la ligne, sans l'occuper."
+      }
+    ],
+    "astuce": "Plus l'espace est partagé, plus on roule lentement : 30, 20, puis au pas."
+  },
+  {
+    "id": "autres-usagers",
+    "groupe": "Les autres usagers",
+    "sousGroupe": "Les spécificités des autres usagers",
+    "badge": "U",
+    "num": "02",
+    "emoji": "🤝",
+    "titre": "Piétons, cyclistes, deux-roues, véhicules spéciaux, bus",
+    "type": "list",
+    "items": [
+      {
+        "label": "Piétons",
+        "texte": "Prioritaires sur un passage piéton et quand ils sont engagés sur la chaussée (sauf face au tramway). Céder le passage à tout piéton engagé ou manifestant l'intention de traverser."
+      },
+      {
+        "label": "Cyclistes",
+        "texte": "1 m de distance en ville, 1,5 m hors agglomération. Imprévisibles : redoubler de vigilance."
+      },
+      {
+        "label": "EDPM (trottinettes)",
+        "texte": "Interdits sur les trottoirs. Sur piste cyclable, ou sur la chaussée si limitée à 50 km/h."
+      },
+      {
+        "label": "Deux-roues motorisés",
+        "texte": "Peu visibles (angles morts), souvent rapides. Conduite inter-files autorisée dans certains départements."
+      },
+      {
+        "label": "Véhicules prioritaires (art. R415-1)",
+        "texte": "Police, pompiers, SAMU, SMUR, douanes : gyrophare + sirène. Priorité absolue, je dois les laisser passer, me ranger à droite, m'arrêter si nécessaire."
+      },
+      {
+        "label": "Véhicules à facilités de passage (art. R415-2)",
+        "texte": "Ambulances privées, dépanneuses, service hivernal. Ils n'ont PAS de priorité : je dois juste leur faciliter le passage sans m'arrêter obligatoirement."
+      },
+      {
+        "label": "Convois exceptionnels",
+        "texte": "Prioritaires aux croisements. Longs et lents : ne pas s'engager à l'intersection. Souvent précédés d'un véhicule de guidage."
+      },
+      {
+        "label": "Véhicules encombrants",
+        "texte": "Bus, camions, bennes : angles morts importants, distances de freinage plus longues."
+      },
+      {
+        "label": "Véhicules lents",
+        "texte": "Collecte de déchets, entretien de voirie. S'arrêtent souvent, travailleurs piétons autour."
+      },
+      {
+        "label": "Bus & autocars",
+        "texte": "Prioritaires en ville quand ils quittent leur arrêt. Attention aux passagers qui peuvent surgir."
+      }
+    ],
+    "astuce": "Distinction clé : véhicule prioritaire (avec sirène) = je m'arrête pour le laisser passer. Véhicule à facilités de passage = je facilite simplement, sans obligation d'arrêt."
+  }
+]

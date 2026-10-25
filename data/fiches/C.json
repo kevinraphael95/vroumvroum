@@ -1,0 +1,203 @@
+[
+  {
+    "id": "conducteur",
+    "groupe": "Le conducteur",
+    "sousGroupe": "Conduire",
+    "badge": "C",
+    "num": "01",
+    "emoji": "🧠",
+    "titre": "Conduire : vue, stratégie, intervalles",
+    "type": "list",
+    "items": [
+      {
+        "label": "Qu'est-ce que conduire ?",
+        "texte": "Prendre des informations (surtout par la vue), les analyser, décider, puis agir. En boucle, en permanence."
+      },
+      {
+        "label": "Exploration visuelle",
+        "texte": "Regarder loin, balayer la route, anticiper les dangers. Le regard doit précéder le véhicule."
+      },
+      {
+        "label": "Stratégie de conduite",
+        "texte": "Anticiper, adapter sa vitesse, maintenir une distance de sécurité suffisante."
+      },
+      {
+        "label": "Situations à risque",
+        "texte": "Intersections, virages, sorties de parking, abords d'écoles : redoubler de vigilance."
+      },
+      {
+        "label": "Pour soi et pour les autres",
+        "texte": "Respecter les règles, anticiper le comportement des autres, protéger les usagers les plus vulnérables."
+      },
+      {
+        "label": "Intervalles de sécurité",
+        "texte": "Au moins 2 secondes avec le véhicule devant. Plus si conditions difficiles. Garder aussi de l'espace sur les côtés."
+      },
+      {
+        "label": "S'arrêter à temps",
+        "texte": "Distance d'arrêt = distance de réaction + distance de freinage. Garder un intervalle qui permet de s'arrêter."
+      },
+      {
+        "label": "Temps de réaction",
+        "texte": "Environ 1 seconde. Augmente avec la fatigue, l'alcool et la vitesse."
+      }
+    ],
+    "astuce": "Bien conduire, c'est d'abord bien regarder. 90 % des informations passent par les yeux."
+  },
+  {
+    "id": "circuler-communication",
+    "groupe": "Le conducteur",
+    "sousGroupe": "Conduire",
+    "badge": "C",
+    "num": "02",
+    "emoji": "👋",
+    "titre": "Communiquer avec les autres",
+    "type": "list",
+    "items": [
+      {
+        "label": "Clignotant",
+        "texte": "Obligatoire avant tout changement de direction ou de voie, et en sortie de giratoire."
+      },
+      {
+        "label": "Appel de phare",
+        "texte": "Signale un danger, ou autorise (à tort) à passer. À utiliser avec discernement."
+      },
+      {
+        "label": "Avertisseur sonore",
+        "texte": "Réservé aux situations d'urgence. Interdit en agglomération, sauf danger immédiat."
+      },
+      {
+        "label": "Warning",
+        "texte": "Signale un danger, un ralentissement brusque ou un arrêt d'urgence."
+      },
+      {
+        "label": "Signes cyclistes",
+        "texte": "Bras tendu = changement de direction. Bras levé = arrêt. Mouvements bas-haut = ralentir."
+      },
+      {
+        "label": "Courtoisie",
+        "texte": "Remercier d'un geste, faciliter les insertions. La courtoisie, c'est aussi de la sécurité."
+      }
+    ],
+    "astuce": "Bien communiquer, c'est éviter les malentendus. Le clignotant oublié ou le warning non allumé sont responsables de beaucoup d'accidents."
+  },
+  {
+    "id": "physique-vue-ouie",
+    "groupe": "Le conducteur",
+    "sousGroupe": "Être en état de conduire",
+    "badge": "C",
+    "num": "03",
+    "emoji": "👁️",
+    "titre": "État physique, vue et ouïe",
+    "type": "list",
+    "items": [
+      {
+        "label": "État physique",
+        "texte": "Avant de partir : forme, douleurs, maladie, blessure, traitement. En cas de doute, ne pas conduire."
+      },
+      {
+        "label": "Aptitude médicale",
+        "texte": "Certaines pathologies et traitements imposent une visite médicale régulière."
+      },
+      {
+        "label": "Champ visuel",
+        "texte": "Champ visuel réduit de nuit (120°). Acuité visuelle minimale requise pour le permis."
+      },
+      {
+        "label": "Lunettes / lentilles",
+        "texte": "Si le permis porte la mention de correction visuelle, le port est obligatoire en conduisant."
+      },
+      {
+        "label": "Éblouissement",
+        "texte": "Détourner le regard vers le bord droit de la chaussée, ralentir. La vue met du temps à se rétablir."
+      },
+      {
+        "label": "L'ouïe",
+        "texte": "Entendre klaxons et sirènes est indispensable. Fenêtres fermées et volume fort réduisent la perception."
+      },
+      {
+        "label": "Écouteurs, casque",
+        "texte": "Interdits au volant : 135 € d'amende et -3 points."
+      }
+    ],
+    "astuce": "La conduite repose sur la vue et l'ouïe : si l'un des deux est diminué, on adapte sa vitesse, ou on ne prend pas la route."
+  },
+  {
+    "id": "alcool",
+    "groupe": "Le conducteur",
+    "sousGroupe": "Être en état de conduire",
+    "badge": "C",
+    "num": "04",
+    "emoji": "🍷",
+    "titre": "Alcool, drogues, médicaments",
+    "type": "list",
+    "items": [
+      {
+        "label": "Conducteur confirmé",
+        "texte": "Max <strong>0,5 g/l</strong> de sang (0,25 mg/l d'air expiré)."
+      },
+      {
+        "label": "Permis probatoire",
+        "texte": "Max <strong>0,2 g/l</strong> de sang (0,10 mg/l d'air expiré)."
+      },
+      {
+        "label": "Stupéfiants",
+        "texte": "Tolérance zéro. Dépistage salivaire autorisé."
+      },
+      {
+        "label": "Médicaments",
+        "texte": "Certains altèrent la conduite : respecter les pictogrammes de la notice."
+      },
+      {
+        "label": "Polyconsommation",
+        "texte": "Alcool + drogues + médicaments : effets multipliés, danger maximal."
+      },
+      {
+        "label": "Refus de dépistage",
+        "texte": "Délit : jusqu'à 2 ans de prison et 4 500 € d'amende."
+      },
+      {
+        "label": "Entre 0,5 et 0,8 g/l",
+        "texte": "Contravention de 4ᵉ classe : 135 € d'amende et -6 points."
+      },
+      {
+        "label": "À partir de 0,8 g/l",
+        "texte": "Délit (état d'ivresse) : jusqu'à 2 ans de prison et 4 500 € d'amende, -6 points."
+      }
+    ],
+    "astuce": "Boire un café, dormir ou manger ne fait pas baisser l'alcoolémie : seul le temps compte."
+  },
+  {
+    "id": "etat-physique",
+    "groupe": "Le conducteur",
+    "sousGroupe": "Être en état de conduire",
+    "badge": "C",
+    "num": "05",
+    "emoji": "😴",
+    "titre": "Vigilance, somnolence, état psychologique",
+    "type": "list",
+    "items": [
+      {
+        "label": "Fatigue",
+        "texte": "Pause de 15-20 min toutes les 2 heures. Signes : paupières lourdes, bâillements, perte de concentration."
+      },
+      {
+        "label": "Somnolence",
+        "texte": "Si les signes apparaissent : s'arrêter dès que possible. Une micro-sieste de 15 min est plus efficace qu'un café."
+      },
+      {
+        "label": "Vigilance",
+        "texte": "Baisse naturelle entre 2 h et 5 h du matin et entre 13 h et 15 h. Redoubler de prudence."
+      },
+      {
+        "label": "État psychologique",
+        "texte": "Stress, colère, euphorie : altèrent le jugement et augmentent la prise de risque."
+      },
+      {
+        "label": "Alcool & fatigue",
+        "texte": "Effets cumulatifs : à éviter absolument."
+      }
+    ],
+    "astuce": "La fatigue tue plus que l'alcool sur la route. Une pause de 15-20 min toutes les 2 h sauve des vies."
+  }
+]

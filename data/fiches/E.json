@@ -1,0 +1,117 @@
+[
+  {
+    "id": "ecomobilite",
+    "groupe": "L'environnement",
+    "sousGroupe": "Choisir l'écomobilité",
+    "badge": "E",
+    "num": "01",
+    "emoji": "🚶",
+    "titre": "Se déplacer autrement",
+    "type": "list",
+    "items": [
+      {
+        "label": "En se déplaçant à pied",
+        "texte": "Zéro émission. À privilégier pour les trajets courts (< 2 km)."
+      },
+      {
+        "label": "À vélo",
+        "texte": "Zéro émission. Aide électrique possible. Pistes cyclables à utiliser."
+      },
+      {
+        "label": "En bus",
+        "texte": "Transport en commun : un bus plein pollue beaucoup moins par personne qu'une voiture."
+      },
+      {
+        "label": "En pratiquant l'intermodalité",
+        "texte": "Combiner plusieurs modes : vélo + train, marche + bus, covoiturage + tram."
+      },
+      {
+        "label": "Modes alternatifs",
+        "texte": "Covoiturage, autopartage, transports en commun : réduire le nombre de véhicules."
+      },
+      {
+        "label": "Impact",
+        "texte": "Un trajet en voiture = en moyenne 100 à 150 g de CO2 par km et par personne."
+      }
+    ],
+    "astuce": "Le véhicule le plus écologique reste celui qu'on n'utilise pas."
+  },
+  {
+    "id": "choisir-vehicule",
+    "groupe": "L'environnement",
+    "sousGroupe": "Choisir son véhicule",
+    "badge": "E",
+    "num": "02",
+    "emoji": "🚗",
+    "titre": "Un achat éco-responsable",
+    "type": "list",
+    "items": [
+      {
+        "label": "Énergie",
+        "texte": "Essence, diesel, hybride, électrique : choisir selon l'usage (ville, route, longs trajets)."
+      },
+      {
+        "label": "Bonus / malus",
+        "texte": "Le malus s'applique aux véhicules les plus polluants. Le bonus favorise les véhicules propres."
+      },
+      {
+        "label": "Vignette Crit'Air",
+        "texte": "Obligatoire dans certaines zones (ZFE). Classe selon les émissions polluantes."
+      },
+      {
+        "label": "Consommation",
+        "texte": "Regarder la consommation mixte et le rejet de CO2 avant l'achat. Une voiture plus légère consomme moins."
+      },
+      {
+        "label": "Entretien",
+        "texte": "Un véhicule bien entretenu consomme moins et pollue moins. Contrôle technique à jour."
+      },
+      {
+        "label": "Taille adaptée",
+        "texte": "Choisir un véhicule adapté à ses besoins réels : un petit gabarit suffit souvent en ville."
+      }
+    ],
+    "astuce": "Avant l'achat, comparer consommation et émissions : un véhicule plus sobre coûte moins cher à l'usage."
+  },
+  {
+    "id": "ecoconduite",
+    "groupe": "L'environnement",
+    "sousGroupe": "Être éco-conducteur",
+    "badge": "E",
+    "num": "03",
+    "emoji": "🌱",
+    "titre": "L'éco-conduite",
+    "type": "list",
+    "items": [
+      {
+        "label": "Anticipation",
+        "texte": "Lever le pied tôt plutôt que freiner au dernier moment."
+      },
+      {
+        "label": "Rapports",
+        "texte": "Passer les vitesses tôt, sans monter dans les tours."
+      },
+      {
+        "label": "Arrêt prolongé",
+        "texte": "Couper le moteur au-delà de 30 secondes d'arrêt."
+      },
+      {
+        "label": "Pneumatiques",
+        "texte": "Vérifier régulièrement la pression (sous-gonflage = surconsommation)."
+      },
+      {
+        "label": "Climatisation",
+        "texte": "À utiliser avec parcimonie : +10 à +20 % de consommation."
+      },
+      {
+        "label": "Entretien",
+        "texte": "Un moteur bien entretenu consomme moins."
+      },
+      {
+        "label": "Chargement",
+        "texte": "Éviter les charges inutiles. Un coffre de toit augmente la consommation."
+      }
+    ],
+    "astuce": "L'éco-conduite, c'est aussi de la sécurité : anticiper = freiner moins = conduire plus cool."
+  }
+]

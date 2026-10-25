@@ -1,7 +1,7 @@
 /* =========================================================
    dashboard.js — Accueil (index.html)
    DOIT ÊTRE CHARGÉ APRÈS : core.js, data-fiches.js
-   Utilise : FICHES (data-fiches.js), VV (core.js)
+   Utilise : FICHES + fichesPretes (data-fiches.js), VV (core.js)
    ========================================================= */
 
 (function () {
@@ -92,6 +92,10 @@
     });
   }
 
-  document.addEventListener('DOMContentLoaded', renderDashboard);
+  const domPret = new Promise(res => {
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', res);
+    else res();
+  });
+  Promise.all([domPret, window.fichesPretes]).then(renderDashboard).catch(() => {});
 
 })();

@@ -1,0 +1,632 @@
+[
+  {
+    "id": "signalisation-panneaux",
+    "groupe": "La circulation routière",
+    "sousGroupe": "La signalisation routière",
+    "badge": "L",
+    "num": "01",
+    "emoji": "🚸",
+    "titre": "Les panneaux",
+    "type": "list",
+    "items": [
+      {
+        "label": "Triangle bordure rouge",
+        "texte": "Panneau de danger. Annonce un danger à venir (virage, chaussée glissante, priorité…)."
+      },
+      {
+        "label": "Rond bordure rouge",
+        "texte": "Panneau d'interdiction (sens interdit, dépassement interdit, arrêt…)."
+      },
+      {
+        "label": "Rond bleu",
+        "texte": "Panneau d'obligation (sens obligatoire, piste cyclable…)."
+      },
+      {
+        "label": "Carré bleu",
+        "texte": "Panneau d'indication (parking, hôpital, aire de repos…)."
+      },
+      {
+        "label": "Panneau de priorité",
+        "texte": "Carré jaune posé sur la pointe : positionne la voie par rapport aux autres."
+      },
+      {
+        "label": "Panneau d'agglomération",
+        "texte": "Entrée / sortie d'agglomération : applique les règles urbaines (50 km/h)."
+      },
+      {
+        "label": "Octogonal rouge",
+        "texte": "Stop. Seul panneau octogonal du code."
+      }
+    ],
+    "astuce": "La forme et la couleur comptent plus que le dessin : rond à bordure rouge = toujours une interdiction."
+  },
+  {
+    "id": "signalisation-risques",
+    "groupe": "La circulation routière",
+    "sousGroupe": "La signalisation routière",
+    "badge": "L",
+    "num": "02",
+    "emoji": "⚠️",
+    "titre": "Quelques risques à connaître",
+    "type": "list",
+    "items": [
+      {
+        "label": "Panneaux de danger",
+        "texte": "Triangle à bordure rouge, placé avant le danger. Un panonceau peut préciser la distance ou l'étendue du danger."
+      },
+      {
+        "label": "Panonceaux",
+        "texte": "Petits panneaux rectangulaires placés sous un panneau principal. Précisent distance (M1), étendue (M2), position (M3), catégorie d'usagers (M4), ou exceptions (M9)."
+      },
+      {
+        "label": "Chaussée glissante",
+        "texte": "Pluie, verglas, feuilles, gravillons : ralentir, éviter freinages et mouvements de volant brusques."
+      },
+      {
+        "label": "Virages & descentes dangereuses",
+        "texte": "Ralentir avant le virage, pas dedans. En descente, rétrograder pour garder le frein moteur."
+      },
+      {
+        "label": "Piétons, enfants, cyclistes",
+        "texte": "Abords d'écoles, passages piétons, débouchés de cyclistes : lever le pied, redoubler de vigilance."
+      },
+      {
+        "label": "Animaux",
+        "texte": "Passage d'animaux domestiques ou sauvages, surtout à l'aube et au crépuscule : ralentir, être prêt à s'arrêter."
+      },
+      {
+        "label": "Chaussée rétrécie ou déformée",
+        "texte": "Rétrécissement, dos d'âne, cassis : réduire la vitesse et croiser avec prudence."
+      },
+      {
+        "label": "Autres dangers",
+        "texte": "Le point d'exclamation signale un danger non couvert par un autre panneau, précisé par le panonceau."
+      }
+    ],
+    "astuce": "Un triangle rouge n'interdit rien : il prévient. C'est à moi d'adapter ma vitesse."
+  },
+  {
+    "id": "signalisation-temporaire",
+    "groupe": "La circulation routière",
+    "sousGroupe": "La signalisation routière",
+    "badge": "L",
+    "num": "03",
+    "emoji": "🚧",
+    "titre": "La signalisation temporaire",
+    "type": "list",
+    "items": [
+      {
+        "label": "Signalisation temporaire",
+        "texte": "Fond jaune, chantiers et déviations. Prioritaire sur la signalisation permanente."
+      },
+      {
+        "label": "Déviations",
+        "texte": "Suivre les panneaux jaunes d'itinéraire jusqu'à retrouver la route normale."
+      },
+      {
+        "label": "Balisage",
+        "texte": "Cônes, barrières, feux de chantier : respecter le balisage et ralentir."
+      },
+      {
+        "label": "Personnel de chantier",
+        "texte": "Présence possible d'ouvriers à proximité de la chaussée : vigilance et vitesse réduite."
+      }
+    ],
+    "astuce": "Un panneau jaune de chantier l'emporte toujours sur un panneau permanent contradictoire."
+  },
+  {
+    "id": "panneaux-direction",
+    "groupe": "La circulation routière",
+    "sousGroupe": "La signalisation routière",
+    "badge": "L",
+    "num": "04",
+    "emoji": "🧭",
+    "titre": "Les panneaux de direction",
+    "type": "list",
+    "items": [
+      {
+        "label": "Couleur selon la route",
+        "texte": "Forme et couleur selon le type de route (autoroute = bleu, route nationale = vert, locale = blanc)."
+      },
+      {
+        "label": "Présignalisation",
+        "texte": "Annonce une sortie ou un carrefour à l'avance, pour se placer dans la bonne voie."
+      },
+      {
+        "label": "Direction",
+        "texte": "Posés au carrefour : indiquent les destinations selon les directions."
+      },
+      {
+        "label": "Confirmation",
+        "texte": "Après le carrefour : confirment que l'on est sur la bonne route."
+      },
+      {
+        "label": "Position",
+        "texte": "Indiquent le nom d'un lieu (ville, rivière…) ou d'une agglomération."
+      },
+      {
+        "label": "Bornes kilométriques",
+        "texte": "Indiquent la distance restante sur la route (blanches pour les routes, bleues pour les autoroutes)."
+      }
+    ],
+    "astuce": "Lire les panneaux de direction à l'avance : on se place tôt, on évite les changements de voie de dernière minute."
+  },
+  {
+    "id": "marquage",
+    "groupe": "La circulation routière",
+    "sousGroupe": "La signalisation routière",
+    "badge": "L",
+    "num": "05",
+    "emoji": "🛣️",
+    "titre": "Le marquage au sol",
+    "type": "list",
+    "items": [
+      {
+        "label": "Ligne continue",
+        "texte": "Interdiction de franchir ou chevaucher (sauf dépassement d'un cycliste)."
+      },
+      {
+        "label": "Ligne discontinue",
+        "texte": "Dépassement et changement de voie autorisés."
+      },
+      {
+        "label": "Ligne d'avertissement",
+        "texte": "Annonce l'approche d'une ligne continue (3 flèches)."
+      },
+      {
+        "label": "Ligne de dissuasion",
+        "texte": "Dépassement toléré uniquement pour véhicules très lents (< 60 km/h)."
+      },
+      {
+        "label": "Bande d'arrêt d'urgence",
+        "texte": "Réservée aux arrêts d'urgence et véhicules de secours."
+      },
+      {
+        "label": "Passage piéton",
+        "texte": "Céder le passage à tout piéton engagé ou manifestant l'intention de traverser."
+      },
+      {
+        "label": "Lignes d'arrêt",
+        "texte": "Trait épais continu en travers de la voie : arrêt obligatoire."
+      }
+    ],
+    "astuce": "Une ligne continue s'interrompt à une intersection : on peut y tourner, mais pas dépasser."
+  },
+  {
+    "id": "priorites",
+    "groupe": "La circulation routière",
+    "sousGroupe": "Les intersections",
+    "badge": "L",
+    "num": "06",
+    "emoji": "🛑",
+    "titre": "Aborder une intersection",
+    "type": "list",
+    "items": [
+      {
+        "label": "Priorité à droite",
+        "texte": "Règle par défaut, sans signalisation ni marquage au sol."
+      },
+      {
+        "label": "Cédez-le-passage",
+        "texte": "Ralentir, et s'arrêter si nécessaire. Pas d'arrêt obligatoire."
+      },
+      {
+        "label": "Stop",
+        "texte": "Arrêt complet obligatoire à la ligne d'effet, même sans autre véhicule."
+      },
+      {
+        "label": "Giratoire",
+        "texte": "Priorité aux véhicules déjà engagés sur l'anneau."
+      },
+      {
+        "label": "Tramway",
+        "texte": "Toujours prioritaire, quelle que soit la signalisation."
+      },
+      {
+        "label": "Véhicules d'urgence",
+        "texte": "Prioritaires en intervention. Se ranger à droite pour faciliter le passage."
+      },
+      {
+        "label": "Sortie de parking",
+        "texte": "Céder le passage à tous les usagers déjà sur la chaussée."
+      }
+    ],
+    "astuce": "Ne jamais s'engager dans un carrefour si on risque d'y rester bloqué, même en étant prioritaire."
+  },
+  {
+    "id": "panneaux-priorite",
+    "groupe": "La circulation routière",
+    "sousGroupe": "Les intersections",
+    "badge": "L",
+    "num": "07",
+    "emoji": "🔶",
+    "titre": "Les panneaux de priorité",
+    "type": "list",
+    "items": [
+      {
+        "label": "Cédez-le-passage",
+        "texte": "Triangle pointe en bas, bordure rouge : ralentir et s'arrêter si nécessaire pour laisser passer."
+      },
+      {
+        "label": "Stop",
+        "texte": "Octogone rouge : arrêt complet à la ligne d'effet (ou, à défaut, au plus près de l'intersection)."
+      },
+      {
+        "label": "Route à caractère prioritaire",
+        "texte": "Carré jaune sur la pointe (losange) : j'ai la priorité jusqu'au panneau de fin de priorité."
+      },
+      {
+        "label": "Fin de priorité",
+        "texte": "Le même losange, barré : retour à la règle de priorité à droite."
+      },
+      {
+        "label": "Panneaux d'approche",
+        "texte": "Annoncent à l'avance un Stop ou un Cédez-le-passage : se préparer à ralentir."
+      },
+      {
+        "label": "Hiérarchie",
+        "texte": "Un panneau Stop ou Cédez-le-passage l'emporte sur la priorité à droite."
+      }
+    ],
+    "astuce": "Losange jaune = je suis prioritaire. Losange barré = je ne le suis plus."
+  },
+  {
+    "id": "intersections-complexes",
+    "groupe": "La circulation routière",
+    "sousGroupe": "Les intersections",
+    "badge": "L",
+    "num": "08",
+    "emoji": "🔀",
+    "titre": "Intersections complexes, agglomération, voie d'accélération",
+    "type": "list",
+    "items": [
+      {
+        "label": "En agglomération",
+        "texte": "Entre le panneau d'entrée et celui de sortie : 50 km/h sauf indication contraire. La priorité à droite s'applique sans signalisation contraire."
+      },
+      {
+        "label": "Intersections en T, en Y, en croix",
+        "texte": "Même méthode partout : repérer panneaux et marquages, sinon appliquer la priorité à droite."
+      },
+      {
+        "label": "Plusieurs voies de circulation",
+        "texte": "Se placer dans la bonne file à l'avance, en suivant les flèches de sélection au sol."
+      },
+      {
+        "label": "Voie d'accélération",
+        "texte": "Utiliser toute la voie pour atteindre la vitesse du flux, clignotant, puis s'insérer en cédant le passage."
+      },
+      {
+        "label": "Voie de décélération",
+        "texte": "Quitter la voie principale tôt, clignotant, et ralentir sur la voie de décélération (pas avant)."
+      }
+    ],
+    "astuce": "Devant une intersection compliquée, une seule méthode : panneaux d'abord, marquage ensuite, priorité à droite en dernier."
+  },
+  {
+    "id": "giratoire",
+    "groupe": "La circulation routière",
+    "sousGroupe": "Les intersections",
+    "badge": "L",
+    "num": "09",
+    "emoji": "🔄",
+    "titre": "Les carrefours à sens giratoire",
+    "type": "list",
+    "items": [
+      {
+        "label": "Entrée",
+        "texte": "Céder le passage aux véhicules déjà engagés sur l'anneau (panneau Cédez-le-passage). Pas de clignotant à l'entrée."
+      },
+      {
+        "label": "Sens de circulation",
+        "texte": "On tourne autour de l'îlot central en le laissant sur sa gauche."
+      },
+      {
+        "label": "Priorité",
+        "texte": "Priorité aux véhicules déjà engagés sur l'anneau."
+      },
+      {
+        "label": "Choix de la voie",
+        "texte": "Voie de droite pour sortir tôt. Voie de gauche pour les sorties plus lointaines, en se rabattant à temps."
+      },
+      {
+        "label": "Sortie",
+        "texte": "Clignotant à droite avant la sortie. Céder le passage aux piétons sur le passage piéton de sortie."
+      },
+      {
+        "label": "Usagers vulnérables",
+        "texte": "Cyclistes et deux-roues : redoubler de vigilance, surtout aux changements de file."
+      }
+    ],
+    "astuce": "Clignotant à droite pour sortir, jamais pour entrer."
+  },
+  {
+    "id": "feux-agents",
+    "groupe": "La circulation routière",
+    "sousGroupe": "Les intersections",
+    "badge": "L",
+    "num": "10",
+    "emoji": "🚦",
+    "titre": "Les feux, combinaison feux + panneaux, signes des agents",
+    "type": "list",
+    "items": [
+      {
+        "label": "Feux tricolores",
+        "texte": "Vert je passe, orange je m'arrête (sauf si l'arrêt est dangereux), rouge je m'arrête derrière la ligne."
+      },
+      {
+        "label": "Rouge clignotant",
+        "texte": "Arrêt, puis céder le passage."
+      },
+      {
+        "label": "Orange clignotant",
+        "texte": "Prudence : appliquer les règles de priorité (panneaux ou priorité à droite)."
+      },
+      {
+        "label": "Flèche verte clignotante",
+        "texte": "Autorise la direction indiquée, mais en cédant le passage aux autres usagers."
+      },
+      {
+        "label": "Panonceau pour cyclistes",
+        "texte": "Au feu rouge, les cyclistes peuvent passer dans le sens indiqué, en cédant le passage."
+      },
+      {
+        "label": "Feux en panne ou éteints",
+        "texte": "Appliquer la signalisation de priorité présente, sinon la priorité à droite."
+      },
+      {
+        "label": "Combinaison feux + panneaux",
+        "texte": "Ordre de priorité : agents, puis feux, puis panneaux, puis marquage, puis règles générales."
+      },
+      {
+        "label": "Agent : bras levé vertical",
+        "texte": "Signifie 'arrêt pour tous les usagers'. Aucun véhicule ne doit avancer."
+      },
+      {
+        "label": "Agent : bras tendu horizontal",
+        "texte": "Les véhicules venant de la direction perpendiculaire au bras doivent s'arrêter. Ceux venant de la direction du bras peuvent passer."
+      },
+      {
+        "label": "Agent : balancement transversal",
+        "texte": "Un agent agite son bras ou un feu rouge de gauche à droite face à moi : je m'arrête."
+      },
+      {
+        "label": "Agent : mouvement circulaire",
+        "texte": "Un agent fait un mouvement circulaire de la main : les véhicules peuvent passer ou accélérer."
+      }
+    ],
+    "astuce": "En cas de contradiction entre un agent et un feu, c'est toujours l'agent qui prime."
+  },
+  {
+    "id": "circuler-regles",
+    "groupe": "La circulation routière",
+    "sousGroupe": "Circuler",
+    "badge": "L",
+    "num": "11",
+    "emoji": "↔️",
+    "titre": "Règles générales & changements de direction",
+    "type": "list",
+    "items": [
+      {
+        "label": "Tenir sa droite",
+        "texte": "Règle par défaut. On roule à droite, on dépasse à gauche."
+      },
+      {
+        "label": "Changement de direction",
+        "texte": "Clignotant AVANT la manœuvre, vérifier rétroviseurs et angle mort."
+      },
+      {
+        "label": "Tourner à droite",
+        "texte": "Serrer à droite, céder le passage aux piétons qui traversent, ne pas empiéter sur la voie de gauche."
+      },
+      {
+        "label": "Tourner à gauche",
+        "texte": "Se placer à gauche de la voie, céder le passage aux véhicules venant en face et aux piétons."
+      }
+    ],
+    "astuce": "On regarde, on clignote, on vérifie l'angle mort, et seulement après on tourne."
+  },
+  {
+    "id": "vitesses",
+    "groupe": "La circulation routière",
+    "sousGroupe": "La vitesse",
+    "badge": "L",
+    "num": "12",
+    "emoji": "⚡",
+    "titre": "Limitations de vitesse",
+    "type": "table",
+    "colonnes": [
+      "Situation",
+      "Temps sec",
+      "Pluie",
+      "Probatoire"
+    ],
+    "lignes": [
+      {
+        "label": "Agglomération",
+        "sec": "50 km/h",
+        "pluie": "50 km/h",
+        "probatoire": "50 km/h"
+      },
+      {
+        "label": "Hors agglomération",
+        "sec": "80 km/h",
+        "pluie": "80 km/h",
+        "probatoire": "80 km/h"
+      },
+      {
+        "label": "Voie rapide (2×2 voies)",
+        "sec": "110 km/h",
+        "pluie": "100 km/h",
+        "probatoire": "100 km/h"
+      },
+      {
+        "label": "Autoroute",
+        "sec": "130 km/h",
+        "pluie": "110 km/h",
+        "probatoire": "110 km/h"
+      }
+    ],
+    "astuce": "Brouillard (visibilité < 50 m) : 50 km/h sur tout le réseau, même autoroute."
+  },
+  {
+    "id": "vitesse-consequences",
+    "groupe": "La circulation routière",
+    "sousGroupe": "La vitesse",
+    "badge": "L",
+    "num": "13",
+    "emoji": "💥",
+    "titre": "Ajustement, conséquences & contrôle des vitesses",
+    "type": "list",
+    "items": [
+      {
+        "label": "Distance de réaction",
+        "texte": "= (vitesse ÷ 10) × 3 mètres. Correspond à 1 seconde de temps de réaction. Ex : 90 km/h → 9 × 3 = 27 m."
+      },
+      {
+        "label": "Distance de sécurité",
+        "texte": "= distance de réaction × 2 (règle des 2 secondes). Ex : 90 km/h → 27 × 2 = 54 m."
+      },
+      {
+        "label": "Distance de freinage (sec)",
+        "texte": "≈ (vitesse ÷ 10)² ÷ 2. Ex : 90 km/h → 81 ÷ 2 ≈ 40 m."
+      },
+      {
+        "label": "Distance d'arrêt (sec)",
+        "texte": "= distance de réaction + distance de freinage. Ex : 90 km/h → 27 + 40 ≈ 70 m. À 130 km/h : ≈ 120 m."
+      },
+      {
+        "label": "Sur route mouillée",
+        "texte": "La distance de freinage est environ doublée. Ex : 90 km/h → 27 + 80 ≈ 107 m d'arrêt."
+      },
+      {
+        "label": "Doublement de vitesse",
+        "texte": "Si la vitesse double, la distance de freinage est multipliée par 4 (proportionnelle au carré de la vitesse)."
+      },
+      {
+        "label": "Choc à 50 km/h",
+        "texte": "Équivalent d'une chute du 3ᵉ étage. À 90 km/h : du 12ᵉ étage."
+      },
+      {
+        "label": "Ajustement",
+        "texte": "Adapter sa vitesse aux conditions : pluie, brouillard, trafic, visibilité."
+      },
+      {
+        "label": "Contrôles",
+        "texte": "Radars fixes, mobiles, embarqués, tronçons. Excès = amende + retrait de points."
+      },
+      {
+        "label": "Excès et sanction",
+        "texte": "< 20 km/h : -1 pt (68 € si limite > 50, 135 € si ≤ 50). 20-29 : -2 pts. 30-39 : -3 pts. 40-49 : -4 pts. ≥ 50 : -6 pts, 5ᵉ classe (délit en cas de récidive)."
+      }
+    ],
+    "astuce": "Réaction = (v÷10)×3. Freinage = (v÷10)²÷2. Arrêt = réaction + freinage. Sur sol mouillé, le freinage double."
+  },
+  {
+    "id": "se-croiser",
+    "groupe": "La circulation routière",
+    "sousGroupe": "Croiser et dépasser",
+    "badge": "L",
+    "num": "14",
+    "emoji": "↕️",
+    "titre": "Se croiser & croisements difficiles",
+    "type": "list",
+    "items": [
+      {
+        "label": "Se croiser",
+        "texte": "Chacun garde sa droite. Sur route étroite, ralentir et serrer à droite."
+      },
+      {
+        "label": "Obstacle sur ma voie",
+        "texte": "Celui dont la voie est encombrée cède le passage au véhicule venant en face."
+      },
+      {
+        "label": "Panneaux de passage",
+        "texte": "Un panneau peut donner la priorité à l'un des deux sens, l'autre doit alors céder."
+      },
+      {
+        "label": "Croisements difficiles",
+        "texte": "En montagne, priorité au véhicule qui monte. Le descendant se range."
+      }
+    ],
+    "astuce": "Quand on est gêné, on ralentit et on laisse passer : c'est toujours plus rapide qu'un accrochage."
+  },
+  {
+    "id": "croiser-depasser",
+    "groupe": "La circulation routière",
+    "sousGroupe": "Croiser et dépasser",
+    "badge": "L",
+    "num": "15",
+    "emoji": "↗️",
+    "titre": "Dépasser & être dépassé",
+    "type": "list",
+    "items": [
+      {
+        "label": "Dépassement",
+        "texte": "Par la gauche. À droite uniquement si le véhicule devant tourne à gauche."
+      },
+      {
+        "label": "Conditions pour dépasser",
+        "texte": "Ligne discontinue, visibilité suffisante, aucun véhicule en face, clignotant."
+      },
+      {
+        "label": "Dépassements difficiles",
+        "texte": "Véhicule long ou lent : prévoir une distance plus grande. Jamais sans visibilité."
+      },
+      {
+        "label": "Dépasser en sécurité",
+        "texte": "Rétroviseur, clignotant, angle mort, accélérer franchement, se rabattre avec clignotant quand on voit le véhicule dépassé dans le rétroviseur."
+      },
+      {
+        "label": "Cyclistes",
+        "texte": "1 m en agglomération, 1,5 m hors agglomération."
+      },
+      {
+        "label": "Interdictions",
+        "texte": "Ligne continue, sommet de côte, virage, passage à niveau, intersection."
+      },
+      {
+        "label": "Être dépassé",
+        "texte": "Ne pas accélérer. Serrer à droite pour faciliter le dépassement."
+      }
+    ],
+    "astuce": "En cas de doute, on ne dépasse pas. Un dépassement raté peut coûter très cher."
+  },
+  {
+    "id": "stationnement",
+    "groupe": "La circulation routière",
+    "sousGroupe": "Stationner ou s'arrêter",
+    "badge": "L",
+    "num": "16",
+    "emoji": "🅿️",
+    "titre": "Arrêt & stationnement",
+    "type": "list",
+    "items": [
+      {
+        "label": "Arrêt",
+        "texte": "Immobilisation brève, conducteur à bord, moteur pouvant rester allumé."
+      },
+      {
+        "label": "Stationnement",
+        "texte": "Immobilisation prolongée, conducteur peut quitter le véhicule."
+      },
+      {
+        "label": "Stationnement interdit",
+        "texte": "Trottoir, passage piéton, arrêt de bus, emplacement PMR, devant une bouche d'incendie."
+      },
+      {
+        "label": "En pente",
+        "texte": "Serrer le frein à main, laisser une vitesse enclenchée, braquer les roues vers le trottoir."
+      },
+      {
+        "label": "Zone bleue",
+        "texte": "Stationnement à durée limitée, contrôlé par disque."
+      },
+      {
+        "label": "Alternance semi-mensuelle",
+        "texte": "Stationnement unilatéral alterné : du 1 au 15 d'un côté, du 16 à la fin du mois de l'autre."
+      }
+    ],
+    "astuce": "En descente, on braque les roues vers le trottoir ; en montée, on les éloigne du trottoir."
+  }
+]

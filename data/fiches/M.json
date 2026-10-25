@@ -1,0 +1,182 @@
+[
+  {
+    "id": "mecanique",
+    "groupe": "La mécanique et les équipements",
+    "sousGroupe": "Le fonctionnement",
+    "badge": "M",
+    "num": "01",
+    "emoji": "🔧",
+    "titre": "Vue d'ensemble",
+    "type": "list",
+    "items": [
+      {
+        "label": "Moteur",
+        "texte": "Produit l'énergie qui fait avancer le véhicule."
+      },
+      {
+        "label": "Boîte de vitesses",
+        "texte": "Adapte la puissance du moteur à la vitesse, et la transmet aux roues."
+      },
+      {
+        "label": "Freins",
+        "texte": "Ralentissent et immobilisent le véhicule."
+      },
+      {
+        "label": "Direction",
+        "texte": "Oriente les roues avant, donc la trajectoire."
+      },
+      {
+        "label": "Suspension",
+        "texte": "Amortit les chocs et maintient le contact des pneus avec la route."
+      },
+      {
+        "label": "Échappement",
+        "texte": "Évacue les gaz brûlés et limite la pollution (catalyseur, filtre à particules)."
+      }
+    ],
+    "astuce": "Connaître le rôle de chaque organe aide à comprendre un voyant ou un bruit anormal."
+  },
+  {
+    "id": "voyants",
+    "groupe": "La mécanique et les équipements",
+    "sousGroupe": "Le fonctionnement",
+    "badge": "M",
+    "num": "02",
+    "emoji": "🚨",
+    "titre": "Le tableau de bord & ses voyants",
+    "type": "list",
+    "items": [
+      {
+        "label": "Code couleur",
+        "texte": "Rouge = alarme (arrêt immédiat). Orange = alerte (vérification rapide). Vert/bleu = info (équipement actif)."
+      },
+      {
+        "label": "Voyant moteur (orange)",
+        "texte": "Augmentation de la pollution. Diagnostic à faire rapidement en garage."
+      },
+      {
+        "label": "Pression d'huile (rouge)",
+        "texte": "S'arrêter immédiatement, couper le moteur, vérifier le niveau. Risque de casse moteur."
+      },
+      {
+        "label": "Température moteur (rouge)",
+        "texte": "Moteur en surchauffe : arrêt immédiat. Ne jamais ouvrir le bocal à chaud."
+      },
+      {
+        "label": "Batterie (rouge)",
+        "texte": "Circuit de charge défaillant (alternateur, régulateur). Risque de panne rapide."
+      },
+      {
+        "label": "Frein à main / liquide de frein",
+        "texte": "Frein à main serré, ou baisse de pression dans le circuit de freinage."
+      },
+      {
+        "label": "ABS / ESP (orange)",
+        "texte": "Système défaillant : prudence au freinage ou au dérapage. Vérification à faire."
+      },
+      {
+        "label": "Ceinture / portière / capot",
+        "texte": "Sécurité passive : mettre la ceinture, fermer portières, capot, coffre."
+      },
+      {
+        "label": "AdBlue",
+        "texte": "Niveau bas : refaire le plein rapidement, sinon le véhicule refusera de démarrer."
+      }
+    ],
+    "astuce": "Plusieurs voyants s'allument brièvement au démarrage : c'est normal. Un voyant rouge qui reste allumé moteur tournant n'est jamais un détail : on s'arrête en sécurité et on vérifie."
+  },
+  {
+    "id": "eclairage",
+    "groupe": "La mécanique et les équipements",
+    "sousGroupe": "Le fonctionnement",
+    "badge": "M",
+    "num": "03",
+    "emoji": "💡",
+    "titre": "L'éclairage : position, croisement, route, brouillard",
+    "type": "list",
+    "items": [
+      {
+        "label": "Feux de position (veilleuses)",
+        "texte": "Avant et arrière, visibles à 150 m (rouges à l'arrière). Servent à être vu plus qu'à éclairer."
+      },
+      {
+        "label": "Usage des feux de position",
+        "texte": "Seuls, rarement : quasi uniquement en ville avec une bonne visibilité. Les feux de croisement restent préférables (ils éclairent la chaussée)."
+      },
+      {
+        "label": "Feux de croisement (codes)",
+        "texte": "À l'avant, portée de 30 m minimum. Servent à mieux voir ET à être vu."
+      },
+      {
+        "label": "Usage des feux de croisement",
+        "texte": "Quand on croise, suit de près ou dépasse un véhicule. En agglomération éclairée. Indispensables par pluie, neige ou brouillard."
+      },
+      {
+        "label": "Réglage de hauteur",
+        "texte": "Molette dans l'habitacle, à ajuster véhicule chargé pour ne pas éblouir. Automatique avec la technologie LED."
+      },
+      {
+        "label": "Faisceau asymétrique",
+        "texte": "Le feu de croisement gauche est orienté plus bas que le droit : c'est normal, pour ne pas éblouir en double sens."
+      },
+      {
+        "label": "Feux de route (plein phares)",
+        "texte": "Portée de 100 m minimum. Excellente perception de la route la nuit. Peuvent être automatiques ou adaptatifs (suivent la trajectoire, s'éteignent si risque d'éblouir)."
+      },
+      {
+        "label": "Usage des feux de route",
+        "texte": "Obligatoires la nuit, en ville ou à la campagne, quand la chaussée n'est pas éclairée. Repasser en croisement dès qu'on croise, suit de près ou dépasse un véhicule."
+      },
+      {
+        "label": "Feux de brouillard avant",
+        "texte": "Faisceau large, au ras du sol, visibles à moyenne distance. En complément des feux de croisement par forte pluie, neige ou brouillard. Utilisables avec les feux de route sur route étroite et sinueuse."
+      },
+      {
+        "label": "Feux de brouillard arrière",
+        "texte": "Très éblouissants, servent à être vu de derrière. Uniquement par brouillard ou neige dense. À éteindre dès que les conditions redeviennent normales."
+      }
+    ],
+    "astuce": "Croisement = voir et être vu. Route = voir loin, seulement quand personne n'est à éblouir. Brouillard = conditions dégradées uniquement, et on éteint après."
+  },
+  {
+    "id": "entretien",
+    "groupe": "La mécanique et les équipements",
+    "sousGroupe": "L'entretien et le dépannage",
+    "badge": "M",
+    "num": "04",
+    "emoji": "🧰",
+    "titre": "Entretien, pneus, surveillance du conducteur",
+    "type": "list",
+    "items": [
+      {
+        "label": "Les visites techniques",
+        "texte": "Premier CT : dans les <strong>6 mois</strong> précédant le 4ᵉ anniversaire. Ensuite tous les 2 ans."
+      },
+      {
+        "label": "Les pneus",
+        "texte": "Profondeur minimale : 1,6 mm. Pression vérifiée à froid, une fois par mois environ."
+      },
+      {
+        "label": "Pression des pneus",
+        "texte": "Sous-gonflage : surconsommation, usure, risque d'éclatement. Sur-gonflage : tenue de route dégradée."
+      },
+      {
+        "label": "La surveillance du conducteur",
+        "texte": "Rétroviseurs, essuie-glaces, éclairage, klaxon, feux stop : à vérifier régulièrement."
+      },
+      {
+        "label": "Niveaux",
+        "texte": "Huile, liquide de frein, refroidissement, lave-glace : à vérifier moteur froid et véhicule à plat."
+      },
+      {
+        "label": "Gilet & triangle",
+        "texte": "Obligatoires à bord. Gilet à enfiler AVANT de sortir. Triangle à 30 m, jamais sur autoroute."
+      },
+      {
+        "label": "Équipements obligatoires",
+        "texte": "Éclairage complet, plaques d'immatriculation, rétroviseurs, pare-brise et vitres non obstrués."
+      }
+    ],
+    "astuce": "Un constat amiable, une roue de secours ou un éthylotest ne sont pas obligatoires, mais fortement recommandés."
+  }
+]
