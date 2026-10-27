@@ -286,12 +286,29 @@
             input.addEventListener('input', updateCropperFromInputs);
         });
 
+        // Libère les URLs d'aperçu de la sélection précédente
+        function libererImages() {
+            imageFiles.forEach(i => { try { URL.revokeObjectURL(i.url); } catch (e) {} });
+        }
+
+        // Formats que le canvas sait réellement encoder (GIF/BMP : non)
+        const MIMES_ENCODABLES = ['image/png', 'image/jpeg', 'image/webp'];
+        const MIME_PAR_EXT = { png: 'image/png', jpg: 'image/jpeg', jpeg: 'image/jpeg', webp: 'image/webp', gif: 'image/gif', bmp: 'image/bmp' };
+
+        function mimeDe(item) {
+            const t = (item.file.type || '').toLowerCase();
+            if (t) return t;
+            const ext = item.name.split('.').pop().toLowerCase();
+            return MIME_PAR_EXT[ext] || 'image/png';
+        }
+
         // Select Folder via File System Access API
         selectDirBtn.addEventListener('click', async () => {
             try {
                 dirHandle = await window.showDirectoryPicker({ mode: 'readwrite' });
                 selectDirText.textContent = `Dossier: ${dirHandle.name}`;
 
+                libererImages();
                 imageFiles = [];
                 for await (const entry of dirHandle.values()) {
                     if (entry.kind === 'file' && isImageFile(entry.name)) {
@@ -324,6 +341,7 @@
             dirHandle = null;
             selectDirText.textContent = 'Sélectionner un dossier local';
 
+            libererImages();
             const files = Array.from(e.target.files).filter(f => isImageFile(f.name));
             imageFiles = files.map(file => ({
                 name: file.name,
@@ -442,14 +460,14 @@
             if (!cropper || imageFiles.length === 0) return;
 
             const cropData = {
-                x: Math.max(0, parseFloat(inputX.value) || 0),
-                y: Math.max(0, parseFloat(inputY.value) || 0),
-                width: parseFloat(inputW.value) || 10,
-                height: parseFloat(inputH.value) || 10
+                x: Math.max(0, Math.round(parseFloat(inputX.value) || 0)),
+                y: Math.max(0, Math.round(parseFloat(inputY.value) || 0)),
+                width: Math.max(1, Math.round(parseFloat(inputW.value) || 10)),
+                height: Math.max(1, Math.round(parseFloat(inputH.value) || 10))
             };
 
             const overwriteMsg = dirHandle 
-                ? `Êtes-vous sûr de vouloir rogner et remplacer les ${imageFiles.length} images dans le dossier "${dirHandle.name}" ?`
+                ? `Rogner et REMPLACER les ${imageFiles.length} images du dossier "${dirHandle.name}" ? Les originaux seront écrasés sans sauvegarde (GIF/BMP : une copie .png est créée et l'original est conservé).`
                 : `Voulez-vous lancer le rognage des ${imageFiles.length} images ?`;
 
             const confirmed = await showConfirmDialog(overwriteMsg);
@@ -472,21 +490,44 @@
                 progressText.textContent = `Traitement: ${item.name} (${i + 1}/${imageFiles.length})`;
 
                 try {
-                    const croppedBlob = await cropImageBlob(item.url, cropData, item.file.type || 'image/png');
+                    const mimeOrig = mimeDe(item);
+                    const mimeSortie = MIMES_ENCODABLES.includes(mimeOrig) ? mimeOrig : 'image/png';
+                    const croppedBlob = await cropImageBlob(item.url, cropData, mimeSortie);
+                    // Le navigateur a-t-il vraiment produit le format voulu ? (sinon : on n'écrase pas)
+                    const memeFormat = croppedBlob.type === mimeOrig;
+                    let note = '';
 
                     if (dirHandle && item.handle) {
-                        // Directly overwrite file on local disk
-                        const writable = await item.handle.createWritable();
-                        await writable.write(croppedBlob);
-                        await writable.close();
+                        if (memeFormat) {
+                            // Même format : on remplace le fichier d'origine
+                            const writable = await item.handle.createWritable();
+                            await writable.write(croppedBlob);
+                            await writable.close();
+
+                            // Rafraîchit la copie en mémoire pour refléter le disque
+                            const fresh = await item.handle.getFile();
+                            try { URL.revokeObjectURL(item.url); } catch (e) {}
+                            item.file = fresh;
+                            item.url = URL.createObjectURL(fresh);
+                        } else {
+                            // Format non encodable (GIF/BMP...) : copie PNG, original conservé
+                            const ext = croppedBlob.type === 'image/jpeg' ? 'jpg' : (croppedBlob.type.split('/')[1] || 'png');
+                            const base = item.name.replace(/\.[^.]+$/, '');
+                            const newHandle = await dirHandle.getFileHandle(`${base}_rogne.${ext}`, { create: true });
+                            const writable = await newHandle.createWritable();
+                            await writable.write(croppedBlob);
+                            await writable.close();
+                            note = `copie .${ext}`;
+                        }
                     } else {
                         // Fallback download if files were selected via input file
                         // FIX: On ajoute l'index pour éviter que le navigateur ne demande de remplacer le fichier à chaque fois
                         const safeName = `cropped_${String(i + 1).padStart(3, '0')}_${item.name}`;
                         downloadBlob(croppedBlob, safeName);
+                        await new Promise(r => setTimeout(r, 250)); // évite de saturer les téléchargements
                     }
 
-                    appendStatusRow(item.name, true);
+                    appendStatusRow(item.name, true, '', note);
                     successCount++;
                 } catch (err) {
                     console.error(`Erreur rognage ${item.name}:`, err);
@@ -496,6 +537,7 @@
 
             startCropBtn.disabled = false;
             selectDirBtn.disabled = false;
+            if (dirHandle) loadCropperImage(parseInt(sampleImageSelect.value, 10) || 0);
             showNotification(`Rognage terminé : ${successCount}/${imageFiles.length} réussis !`, 'success');
         });
 
@@ -505,11 +547,20 @@
                 const img = new Image();
                 img.crossOrigin = 'anonymous';
                 img.onload = () => {
+                    const w = img.naturalWidth, h = img.naturalHeight;
+                    if (crop.x + crop.width > w || crop.y + crop.height > h) {
+                        reject(new Error(`Image trop petite (${w}×${h}) pour ce rognage`));
+                        return;
+                    }
                     const canvas = document.createElement('canvas');
                     canvas.width = crop.width;
                     canvas.height = crop.height;
 
                     const ctx = canvas.getContext('2d');
+                    if (mimeType === 'image/jpeg') {
+                        ctx.fillStyle = '#ffffff';
+                        ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    }
                     ctx.drawImage(
                         img,
                         crop.x, crop.y, crop.width, crop.height, // Source coordinates
@@ -529,14 +580,14 @@
             });
         }
 
-        function appendStatusRow(fileName, success, errorMsg = '') {
+        function appendStatusRow(fileName, success, errorMsg = '', note = '') {
             const li = document.createElement('li');
             li.className = 'flex items-center justify-between p-2 rounded bg-slate-900 border border-slate-800';
 
             if (success) {
                 li.innerHTML = `
                     <span class="truncate max-w-[280px] text-slate-300" title="${escapeHtml(fileName)}">${escapeHtml(fileName)}</span>
-                    <span class="text-emerald-400 font-bold text-[11px]"><i class="fa-solid fa-check mr-1"></i>Rogné</span>
+                    <span class="text-emerald-400 font-bold text-[11px]"><i class="fa-solid fa-check mr-1"></i>Rogné${note ? ' (' + escapeHtml(note) + ')' : ''}</span>
                 `;
             } else {
                 li.innerHTML = `
@@ -553,7 +604,7 @@
             a.href = URL.createObjectURL(blob);
             a.download = filename;
             a.click();
-            URL.revokeObjectURL(a.href);
+            setTimeout(() => URL.revokeObjectURL(a.href), 15000);
         }
 
         function showNotification(msg, type = 'success') {

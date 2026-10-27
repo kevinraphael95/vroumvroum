@@ -510,15 +510,25 @@
 
             previewTbody.innerHTML = '';
 
+            // 1) Calcul des nouveaux noms
             filteredEntries.forEach((item, idx) => {
                 item.newName = generateNewName(item.oldName, idx);
+            });
 
+            // 2) Détection des problèmes (doublons, noms invalides, fichiers déjà présents)
+            const problemes = detecterProblemes();
+
+            // 3) Affichage
+            filteredEntries.forEach((item, idx) => {
                 const tr = document.createElement('tr');
                 tr.className = 'hover:bg-slate-800/40 transition-colors';
                 tr.id = `file-row-${idx}`;
 
+                const pb = problemes.get(idx);
                 let statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] bg-slate-800 text-slate-400 border border-slate-700">En attente</span>`;
-                if (item.status === 'success') {
+                if (pb) {
+                    statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] bg-rose-500/20 text-rose-400 border border-rose-500/30 font-bold" title="${escapeHtml(pb)}"><i class="fa-solid fa-triangle-exclamation mr-1"></i>${escapeHtml(pb)}</span>`;
+                } else if (item.status === 'success') {
                     statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-bold"><i class="fa-solid fa-check mr-1"></i>Renommé</span>`;
                 } else if (item.status === 'error') {
                     statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] bg-rose-500/20 text-rose-400 border border-rose-500/30"><i class="fa-solid fa-xmark mr-1"></i>Erreur</span>`;
@@ -528,11 +538,55 @@
                     <td class="p-3 text-center text-slate-500 font-sans">${idx + (parseInt(startIndexInput.value, 10) || 0)}</td>
                     <td class="p-3 text-slate-300 truncate max-w-[180px]" title="${escapeHtml(item.oldName)}">${escapeHtml(item.oldName)}</td>
                     <td class="p-3 text-center text-slate-600"><i class="fa-solid fa-arrow-right"></i></td>
-                    <td class="p-3 text-brand-400 font-semibold truncate max-w-[180px]" title="${escapeHtml(item.newName)}">${escapeHtml(item.newName)}</td>
+                    <td class="p-3 ${pb ? 'text-rose-400' : 'text-brand-400'} font-semibold truncate max-w-[180px]" title="${escapeHtml(item.newName)}">${escapeHtml(item.newName)}</td>
                     <td class="p-3 text-center status-col">${statusBadge}</td>
                 `;
                 previewTbody.appendChild(tr);
             });
+
+            // 4) Blocage du renommage s'il y a un problème
+            if (problemes.size > 0) {
+                fileCountText.textContent = `${filteredEntries.length} fichier(s) — ${problemes.size} conflit(s)`;
+                startRenameBtn.disabled = true;
+                startRenameBtn.title = 'Corrige les conflits (lignes en rouge) avant de renommer';
+            } else {
+                startRenameBtn.title = '';
+            }
+        }
+
+        // Noms interdits par Windows / invalides pour un fichier
+        function nomInvalide(nom) {
+            if (!nom || !nom.trim()) return 'Nom vide';
+            if (/[\\/:*?"<>|\u0000-\u001f]/.test(nom)) return 'Caractère interdit';
+            if (/[. ]$/.test(nom)) return 'Finit par . ou espace';
+            if (nom.length > 255) return 'Nom trop long';
+            return '';
+        }
+
+        // Renvoie Map(index → message) pour chaque ligne en conflit
+        function detecterProblemes() {
+            const problemes = new Map();
+            const vus = new Map(); // nom (minuscules) → premier index
+            const dansLot = new Set(filteredEntries.map(e => e.oldName));
+            const horsLot = new Set(
+                rawFiles.filter(r => !dansLot.has(r.oldName)).map(r => r.oldName.toLowerCase())
+            );
+
+            filteredEntries.forEach((item, idx) => {
+                const inv = nomInvalide(item.newName);
+                if (inv) { problemes.set(idx, inv); return; }
+
+                const cle = item.newName.toLowerCase();
+                if (vus.has(cle)) {
+                    problemes.set(idx, 'Doublon');
+                    if (!problemes.has(vus.get(cle))) problemes.set(vus.get(cle), 'Doublon');
+                } else {
+                    vus.set(cle, idx);
+                }
+
+                if (horsLot.has(cle)) problemes.set(idx, 'Existe déjà');
+            });
+            return problemes;
         }
 
         // Custom Confirmation Dialog
@@ -564,9 +618,51 @@
             });
         }
 
-        // Renaming Execution directly on PC
+        // Le fichier/dossier existe-t-il déjà dans le dossier choisi ?
+        async function existeDeja(nom) {
+            try {
+                await dirHandle.getFileHandle(nom);
+                return true;
+            } catch (e) {
+                return e.name !== 'NotFoundError'; // dossier du même nom, etc. → on considère que ça existe
+            }
+        }
+
+        // Renomme un fichier SANS jamais écraser quoi que ce soit. Renvoie le handle à jour.
+        async function renommerFichier(handle, ancienNom, nouveauNom) {
+            if (ancienNom === nouveauNom) return handle;
+            if (await existeDeja(nouveauNom)) {
+                throw new Error(`"${nouveauNom}" existe déjà`);
+            }
+
+            if (typeof handle.move === 'function') {
+                try {
+                    await handle.move(nouveauNom);
+                    return handle;
+                } catch (e) {
+                    // move() non pris en charge sur ce dossier : repli copie + suppression
+                }
+            }
+
+            const file = await handle.getFile(); // lecture fraîche
+            const nouveau = await dirHandle.getFileHandle(nouveauNom, { create: true });
+            const writable = await nouveau.createWritable();
+            await writable.write(file);
+            await writable.close();
+            await dirHandle.removeEntry(ancienNom);
+            return nouveau;
+        }
+
+        // Renaming Execution directly on PC (en 2 passes pour éviter les écrasements)
         startRenameBtn.addEventListener('click', async () => {
             if (!dirHandle || filteredEntries.length === 0) return;
+
+            // Sécurité : on revérifie les conflits juste avant d'agir
+            if (detecterProblemes().size > 0) {
+                showNotification('Des conflits de noms empêchent le renommage', 'error');
+                updateNamesAndPreview();
+                return;
+            }
 
             const confirmRename = await showConfirmDialog(`Êtes-vous sûr de vouloir renommer directement les ${filteredEntries.length} fichiers sélectionnés dans le dossier "${dirHandle.name}" ?`);
             if (!confirmRename) return;
@@ -577,50 +673,93 @@
 
             let successCount = 0;
             let errorCount = 0;
+            const total = filteredEntries.length;
+            const anciensNoms = new Set(filteredEntries.map(e => e.oldName.toLowerCase()));
+            const pasAFaire = [];   // inchangés
+            const enAttente = [];   // passés par un nom temporaire (pass 2)
+            const run = Date.now().toString(36);
+            let fait = 0;
 
-            for (let i = 0; i < filteredEntries.length; i++) {
-                const item = filteredEntries[i];
-
-                // Update UI Progress
-                const percent = Math.round(((i + 1) / filteredEntries.length) * 100);
+            function progression(texte) {
+                const percent = Math.round((fait / (total * 2)) * 100);
                 progressBar.style.width = `${percent}%`;
                 progressPercent.textContent = `${percent}%`;
-                progressText.textContent = `Renommage de ${i + 1}/${filteredEntries.length}...`;
+                progressText.textContent = texte;
+            }
+
+            function marquerLigne(i, ok, message) {
+                const row = document.getElementById(`file-row-${i}`);
+                const statusCol = row && row.querySelector('.status-col');
+                if (!statusCol) return;
+                statusCol.innerHTML = ok
+                    ? `<span class="px-2 py-0.5 rounded-full text-[10px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-bold"><i class="fa-solid fa-check mr-1"></i>Renommé</span>`
+                    : `<span class="px-2 py-0.5 rounded-full text-[10px] bg-rose-500/20 text-rose-400 border border-rose-500/30" title="${escapeHtml(message || '')}"><i class="fa-solid fa-xmark mr-1"></i>Erreur</span>`;
+            }
+
+            // ---- Passe 1 : renommage direct si possible, sinon nom temporaire ----
+            for (let i = 0; i < total; i++) {
+                const item = filteredEntries[i];
+                fait++;
+                progression(`Passe 1/2 : ${i + 1}/${total}`);
+
+                if (item.oldName === item.newName) {
+                    item.status = 'success';
+                    pasAFaire.push(i);
+                    successCount++;
+                    marquerLigne(i, true);
+                    continue;
+                }
 
                 try {
-                    // Modern File System Access API entry move or copy-delete fallback
-                    if (item.handle.move) {
-                        await item.handle.move(item.newName);
+                    const besoinTemp = anciensNoms.has(item.newName.toLowerCase());
+                    if (besoinTemp) {
+                        const tmp = `__vv_tmp_${run}_${i}`;
+                        item.handle = await renommerFichier(item.handle, item.oldName, tmp);
+                        item.nomActuel = tmp;
+                        enAttente.push(i);
                     } else {
-                        const newFileHandle = await dirHandle.getFileHandle(item.newName, { create: true });
-                        const writable = await newFileHandle.createWritable();
-                        await writable.write(item.file);
-                        await writable.close();
-
-                        // Remove old file
-                        await dirHandle.removeEntry(item.oldName);
+                        item.handle = await renommerFichier(item.handle, item.oldName, item.newName);
+                        item.nomActuel = item.newName;
+                        item.status = 'success';
+                        successCount++;
+                        marquerLigne(i, true);
                     }
-
-                    item.status = 'success';
-                    item.oldName = item.newName; // Update record
-                    successCount++;
                 } catch (err) {
                     console.error(`Erreur pour ${item.oldName}:`, err);
                     item.status = 'error';
                     errorCount++;
-                }
-
-                // Update Row in UI
-                const row = document.getElementById(`file-row-${i}`);
-                if (row) {
-                    const statusCol = row.querySelector('.status-col');
-                    if (item.status === 'success') {
-                        statusCol.innerHTML = `<span class="px-2 py-0.5 rounded-full text-[10px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-bold"><i class="fa-solid fa-check mr-1"></i>Renommé</span>`;
-                    } else {
-                        statusCol.innerHTML = `<span class="px-2 py-0.5 rounded-full text-[10px] bg-rose-500/20 text-rose-400 border border-rose-500/30"><i class="fa-solid fa-xmark mr-1"></i>Erreur</span>`;
-                    }
+                    marquerLigne(i, false, err.message);
                 }
             }
+
+            // ---- Passe 2 : noms temporaires → noms définitifs ----
+            for (let k = 0; k < enAttente.length; k++) {
+                const i = enAttente[k];
+                const item = filteredEntries[i];
+                fait = total + k + 1;
+                progression(`Passe 2/2 : ${k + 1}/${enAttente.length}`);
+
+                try {
+                    item.handle = await renommerFichier(item.handle, item.nomActuel, item.newName);
+                    item.status = 'success';
+                    successCount++;
+                    marquerLigne(i, true);
+                } catch (err) {
+                    console.error(`Erreur pour ${item.oldName}:`, err);
+                    // Retour au nom d'origine pour ne rien laisser en "__vv_tmp_"
+                    try {
+                        item.handle = await renommerFichier(item.handle, item.nomActuel, item.oldName);
+                    } catch (e2) {
+                        console.error(`Impossible de restaurer ${item.oldName} (reste : ${item.nomActuel})`, e2);
+                    }
+                    item.status = 'error';
+                    errorCount++;
+                    marquerLigne(i, false, err.message);
+                }
+            }
+
+            progressBar.style.width = '100%';
+            progressPercent.textContent = '100%';
 
             // Reload entries from folder to ensure sync
             await loadFilesFromDirectory();
