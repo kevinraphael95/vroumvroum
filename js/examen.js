@@ -304,7 +304,8 @@
     const frac = qDur > 0 ? left / qDur : 0;
 
     $('ex-ring-fg').style.strokeDashoffset = String(RING_C * (1 - frac));
-    $('ex-secs').textContent = String(Math.ceil(left));$('ex-ring').classList.toggle('warn', left <= 5);
+    $('ex-secs').textContent = String(Math.ceil(left));
+    $('ex-ring').classList.toggle('warn', left <= 5);
 
     if (left <= 0) next();
   }
@@ -379,7 +380,8 @@
     const q = item.q;
 
     $('ex-num').textContent = pad(idx + 1);
-    $('ex-total').textContent = ' / ' + pad(items.length);$('ex-question').textContent = q.question;
+    $('ex-total').textContent = ' / ' + pad(items.length);
+    $('ex-question').textContent = q.question;
     $('ex-mode').textContent = item.multi ? 'Plusieurs réponses' : 'Une réponse';
 
     buildFigure($('ex-figure'), q);
@@ -462,10 +464,21 @@
   }
 
   function quit() {
-    if (!confirm('Quitter l’examen ? Ta progression sera perdue.')) return;
+    if (!running) return;
+
+    // On fige le minuteur pendant la boîte de dialogue
+    const restantMs = Math.max(0, qEnd - Date.now());
+    stopQTimer();
+
+    if (!confirm('Quitter l’examen ? Ta progression sera perdue.')) {
+      // Reprise avec le temps qu'il restait
+      qEnd = Date.now() + restantMs;
+      qTimer = setInterval(paintTimer, 100);
+      paintTimer();
+      return;
+    }
 
     running = false;
-    stopQTimer();
     renderIntro();
     showOnly(secIntro);
   }
@@ -518,7 +531,8 @@
 
     $('ex-verdict').textContent = message;
     $('ex-score-val').textContent = String(score);
-    $('ex-score-total').textContent = String(total);$('ex-score-box').className =
+    $('ex-score-total').textContent = String(total);
+    $('ex-score-box').className =
       'exam-result-score ' + (reussi ? 'pass' : 'fail');
 
     const grid = $('ex-grid');
@@ -694,7 +708,8 @@
   /* ---------- Événements ---------- */
 
   $('ex-start').addEventListener('click', start);
-  $('ex-next').addEventListener('click', next);$('ex-quit').addEventListener('click', quit);
+  $('ex-next').addEventListener('click', next);
+  $('ex-quit').addEventListener('click', quit);
 
   $('ex-replay').addEventListener('click', () => {
     if (!initialized || !N) return;
@@ -705,14 +720,7 @@
   document.addEventListener('keydown', e => {
     if (secQuiz.hidden || !running) return;
     if (e.ctrlKey || e.metaKey || e.altKey) return;
-
-    if (e.key === ' ' || e.key === 'Spacebar') {
-      e.preventDefault();
-      if (!e.target.matches('#ex-quit, #ex-next')) {
-        next();
-      }
-      return;
-    }
+    if (e.repeat) return; // touche maintenue : on ignore
 
     // Touches : 1-4, ou A Z E R (AZERTY) / Q W E R (QWERTY) = réponses 1 à 4
     const KEYS = { '1': 0, '2': 1, '3': 2, '4': 3, a: 0, z: 1, e: 2, r: 3, q: 0, w: 1 };
@@ -742,5 +750,8 @@
 
   renderIntro();
   showOnly(secIntro);
-  window.examenPret.then(initExamen).catch(initExamen);
+  const fichesOk = window.fichesPretes
+    ? window.fichesPretes.catch(() => null)
+    : Promise.resolve();
+  Promise.all([window.examenPret, fichesOk]).then(initExamen).catch(initExamen);
 })();

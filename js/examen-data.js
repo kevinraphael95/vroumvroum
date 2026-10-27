@@ -63,7 +63,14 @@
       } else if (p.startsWith('code/images/') && EXT_IMAGES.test(p)) {
         const fichier = p.split('/').pop();
         const id = fichier.replace(EXT_IMAGES, '');
-        images[id] = p.slice('code/'.length);
+        const chemin = p.slice('code/'.length);
+        if (images[id]) {
+          // Collision : on garde celui du dossier <1re lettre de l'id>/ s'il existe
+          console.warn('⚠️ Image en double pour', id, ':', images[id], '/', chemin);
+          const dossier = '/' + id.charAt(0) + '/';
+          if (!chemin.includes(dossier) || images[id].includes(dossier)) return;
+        }
+        images[id] = chemin;
       }
     });
 
@@ -106,6 +113,7 @@
   /* ---------- Traduction des questions ---------- */
 
   function urlImage(id, images) {
+    if (!id) return null;
     const chemin = images[id] || `images/${id.charAt(0)}/${id}.png`;
     return BASE_URL + chemin.split('/').map(encodeURIComponent).join('/');
   }
@@ -140,7 +148,7 @@
       }
 
       const isOuiNon = Object.values(q.options).some(opt =>
-        typeof opt === 'string' && (opt.includes('OUI') || opt.includes('NON'))
+        typeof opt === 'string' && /^(OUI|NON)\b|\b(OUI|NON)\s*$/.test(opt.trim())
       );
 
       if (isOuiNon) {
