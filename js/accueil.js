@@ -77,7 +77,7 @@
     setText('stat-fiches', `${done} / ${total}`);
 
     const best = VV.getExamBest();
-    setText('stat-examen', best ? `${best.score} / ${best.total}` : '\u2014');
+    setText('stat-examen-img', best ? `${best.score} / ${best.total}` : '\u2014');
 
     renderFamilles();
   }

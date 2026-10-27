@@ -473,6 +473,7 @@ body.ex-immersive footer { display: none; }
 .ex-rules li::before { content: "\2713"; position: absolute; left: 0; color: var(--vert); font-weight: 800; }
 .ex-best { font-weight: 700; color: var(--bleu); margin: 0 0 1rem; }
 .ex-warn { background: var(--jaune-soft); color: #422006; border-radius: var(--radius); padding: 0.75rem 1rem; margin: 0 auto 1.25rem; max-width: 520px; font-size: 0.92rem; }
+html.dark .ex-warn { color: var(--jaune); }
 
 .ex-screen {
   position: fixed;
