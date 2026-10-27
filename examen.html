@@ -5,14 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#2563eb">
 <title>Examen blanc - VroumVroum</title>
-<meta name="description" content="Examen blanc du Code de la route avec images : 40 questions chronométrées, correction à la fin.">
-<meta name="robots" content="noindex, nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/base.css">
-<link rel="stylesheet" href="css/pages.css?v=5">
-<script>try{if(localStorage.getItem("vroum-theme")==="dark")document.documentElement.classList.add("dark")}catch(e){}</script>
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
@@ -23,7 +19,6 @@
       <ul class="nav-links" id="nav-links">
         <li><a href="index.html">Accueil</a></li>
         <li><a href="fiches.html">Fiches</a></li>
-        <li><a href="qcm.html">QCM</a></li>
         <li><a href="examen.html" class="active">Examen</a></li>
       </ul>
       <button class="theme-toggle" onclick="toggleTheme()" aria-label="Changer de thème"></button>
@@ -50,20 +45,17 @@
   </p>
 </div>
 
-<!-- ===== QUESTION (plein écran, style examen réel) ===== -->
+<!-- ===== QUESTION (plein écran) ===== -->
 <div id="ex-quiz" class="ex-screen" hidden>
 
-  <!-- Zone image (en haut) -->
   <div class="ex-media" id="ex-figure"></div>
 
-  <!-- Zone question + réponses (en bas) -->
   <div class="ex-panel">
     <div class="ex-panel-main">
       <p class="ex-q" id="ex-question"></p>
       <div class="ex-answers" id="ex-answers"></div>
     </div>
 
-    <!-- Colonne droite : mode + timer -->
     <div class="ex-side">
       <span class="ex-mode" id="ex-mode"></span>
       <div class="ex-ring" id="ex-ring">
@@ -76,7 +68,6 @@
       </div>
     </div>
 
-    <!-- Barre du bas : numéro + boutons -->
     <div class="ex-bar">
       <span class="ex-count">Question <strong id="ex-num">01</strong><span id="ex-total"></span></span>
       <span class="ex-bar-btns">
@@ -87,7 +78,7 @@
   </div>
 </div>
 
-<!-- ===== RÉSULTAT (même mise en page que le QCM mode examen) ===== -->
+<!-- ===== RÉSULTAT ===== -->
 <div id="ex-result" class="result result-wide" hidden>
   <div class="exam-result-head">
     <div class="exam-result-head-text">
@@ -127,8 +118,7 @@
 <footer>© 2026 VroumVroum — Fiches de révision du Code de la route</footer>
 
 <script src="js/core.js"></script>
-<script src="js/data-fiches.js"></script>
-<script src="js/import-github.js"></script>
-<script src="js/page-examen.js"></script>
+<script src="js/examen-data.js"></script>
+<script src="js/examen.js"></script>
 </body>
 </html>

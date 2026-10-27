@@ -1,27 +1,22 @@
 /* =========================================================
-   dashboard.js — Accueil (index.html)
-   DOIT ÊTRE CHARGÉ APRÈS : core.js, data-fiches.js
-   Utilise : FICHES + fichesPretes (data-fiches.js), VV (core.js)
+   accueil.js — Page d'accueil (index.html)
+   À charger APRÈS : core.js, fiches-data.js
    ========================================================= */
 
 (function () {
   'use strict';
+
+  const VV = window.VV;
 
   function setText(id, value) {
     const el = document.getElementById(id);
     if (el) el.textContent = value;
   }
 
-  function renderDashboard() {
-    const grid = document.getElementById('modules-grid');
-    if (!grid || typeof FICHES === 'undefined') return;
-
-    const VV = window.VV;
-    const total = FICHES.length;
-    const done = VV.countLues(FICHES);
+  /* Anneau de progression + message */
+  function renderProgression(done, total) {
     const pct = total ? Math.round((done / total) * 100) : 0;
 
-    // Anneau de progression
     const CIRC = 339.292;
     const ring = document.getElementById('ring-fg');
     if (ring) {
@@ -32,43 +27,24 @@
     }
     setText('dash-pct', pct + '%');
 
-    // Message d'accueil
-    const msg = document.getElementById('dash-msg');
-    if (msg) {
-      if (done === 0) {
-        msg.textContent = 'Tu n\u2019as pas encore commenc\u00e9. Ouvre ta premi\u00e8re fiche !';
-      } else if (done === total) {
-        msg.textContent = 'Toutes les fiches sont termin\u00e9es. Passe \u00e0 l\u2019examen blanc !';
-      } else {
-        msg.textContent = `Tu es \u00e0 ${pct} % de progression. Continue comme \u00e7a !`;
-      }
-    }
+    let msg;
+    if (done === 0) msg = 'Tu n\u2019as pas encore commenc\u00e9. Ouvre ta premi\u00e8re fiche !';
+    else if (done === total) msg = 'Toutes les fiches sont termin\u00e9es. Passe \u00e0 l\u2019examen blanc !';
+    else msg = `Tu es \u00e0 ${pct} % de progression. Continue comme \u00e7a !`;
+    setText('dash-msg', msg);
+  }
 
-    // Statistiques
-    setText('stat-fiches', `${done} / ${total}`);
-    const rInf = VV.getBest('infini');
-    const rExa = VV.getBest('examen');
-    const rRap = VV.getBest('rapide');
-    setText('stat-infini', rInf);
-    setText('stat-examen', rExa ? `${rExa} / 40` : '\u2014');
-    setText('stat-rapide', rRap ? `${rRap} / 5` : '\u2014');
+  /* Cartes des 10 familles */
+  function renderFamilles() {
+    const grid = document.getElementById('modules-grid');
+    if (!grid) return;
 
-    // Examen avec images (examen.html) : record stocké par page-examen.js
-    try {
-      const b = JSON.parse(VV.storage.get('vroum-examen-best', 'null'));
-      if (b && typeof b.score === 'number' && b.total > 0) {
-        setText('stat-examen-img', `${b.score} / ${b.total}`);
-      }
-    } catch (e) {}
-
-    // Regroupement des fiches par famille
     const familles = new Map();
     FICHES.forEach(f => {
       if (!familles.has(f.badge)) familles.set(f.badge, { nom: f.groupe, fiches: [] });
       familles.get(f.badge).fiches.push(f);
     });
 
-    // Rendu des cartes
     grid.innerHTML = '';
     familles.forEach((fam, badge) => {
       const n = fam.fiches.length;
@@ -92,10 +68,24 @@
     });
   }
 
+  function render() {
+    if (typeof FICHES === 'undefined') return;
+    const total = FICHES.length;
+    const done = VV.countLues(FICHES);
+
+    renderProgression(done, total);
+    setText('stat-fiches', `${done} / ${total}`);
+
+    const best = VV.getExamBest();
+    setText('stat-examen', best ? `${best.score} / ${best.total}` : '\u2014');
+
+    renderFamilles();
+  }
+
   const domPret = new Promise(res => {
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', res);
     else res();
   });
-  Promise.all([domPret, window.fichesPretes]).then(renderDashboard).catch(() => {});
+  Promise.all([domPret, window.fichesPretes]).then(render).catch(() => {});
 
 })();

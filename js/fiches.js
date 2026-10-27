@@ -1,7 +1,7 @@
 /* =========================================================
-   page-fiches.js — Liste + détail des fiches (fiches.html)
-   DOIT ÊTRE CHARGÉ APRÈS : core.js, data-fiches.js
-   Utilise : FICHES (data-fiches.js), window.VV (core.js)
+   fiches.js — Liste + détail des fiches (fiches.html)
+   À charger APRÈS : core.js, fiches-data.js
+   Utilise : FICHES (fiches-data.js), window.VV (core.js)
    ========================================================= */
 
 window.fichesPretes.then(function renderFiches() {

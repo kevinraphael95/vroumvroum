@@ -9,10 +9,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/base.css">
-<link rel="stylesheet" href="css/pages.css?v=4">
-<script>try{if(localStorage.getItem("vroum-theme")==="dark")document.documentElement.classList.add("dark")}catch(e){}</script>
+<link rel="stylesheet" href="css/style.css">
 <style>
+  /* Styles spécifiques à la page de debug */
   .debug-container { max-width: 1200px; margin: 40px auto; padding: 0 20px; font-family: 'Inter', sans-serif; }
   .debug-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; color: var(--text); }
   .debug-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 20px; display: grid; grid-template-columns: 180px 1fr; gap: 20px; align-items: start; color: var(--text); }
@@ -35,10 +34,13 @@
       <ul class="nav-links" id="nav-links">
         <li><a href="index.html">Accueil</a></li>
         <li><a href="fiches.html">Fiches</a></li>
-        <li><a href="qcm.html">QCM</a></li>
         <li><a href="examen.html">Examen</a></li>
       </ul>
       <button class="theme-toggle" onclick="toggleTheme()" aria-label="Changer de thème"></button>
+      <button class="nav-burger" id="nav-burger" onclick="toggleMenu()"
+              aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-links">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </div>
 </nav>
@@ -53,27 +55,39 @@
 
 <footer>© 2026 VroumVroum — Fiches de révision du Code de la route</footer>
 
+<!-- Charge le core pour le thème et le menu -->
 <script src="js/core.js"></script>
+<!-- Charge le nouveau script de données d'examen -->
+<script src="js/examen-data.js"></script>
 <script>
-  window.initExamen = function() {
-    const questions = window.EXAMEN_QUESTIONS || [];
+  // On attend que les questions soient chargées via la promesse globale
+  window.examenPret.then(function(questions) {
     document.getElementById('debug-counter').textContent = `${questions.length} questions chargées`;
     const container = document.getElementById('debug-list');
     container.innerHTML = '';
 
-    questions.forEach((q, index) => {
+    if (questions.length === 0) {
+      container.innerHTML = '<p style="text-align:center; padding: 20px; color: var(--text-muted);">Aucune question chargée (vérifie la console pour les erreurs).</p>';
+      return;
+    }
+
+    questions.forEach((q) => {
       let optionsHtml = '';
+      
+      // Gestion des questions Oui/Non
       if (q.type === 'oui-non' && q.affirmations) {
         optionsHtml = '<ul>' + q.affirmations.map((aff, i) => `<li>Affirmation ${i+1}: "${aff.texte}" — <strong>${aff.vrai ? 'OUI' : 'NON'}</strong></li>`).join('') + '</ul>';
-      } else if (q.reponses) {
-        optionsHtml = '<ul>' + Object.entries(q.reponses).map(([k, v]) => `<li><b>${v.texte}</b> — <span>${v.correcte ? 'OUI' : 'NON'}</span></li>`).join('') + '</ul>';
+      } 
+      // Gestion des QCM classiques
+      else if (q.reponses) {
+        optionsHtml = '<ul>' + q.reponses.map((rep, i) => `<li><b>${rep.texte}</b> — <span>${rep.correcte ? 'OUI' : 'NON'}</span></li>`).join('') + '</ul>';
       }
 
       const card = document.createElement('div');
       card.className = 'debug-card';
       card.innerHTML = `
         <div>
-          <img src="${q.image}" alt="${q.alt || 'Image question'}" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'><rect width=\'100%\' height=\'100%\' fill=\'%23f1f5f9\'/><text x=\'50%\' y=\'50%\' dominant-baseline=\'middle\' text-anchor=\'middle\' fill=\'%2394a3b8\' font-size=\'12\'>Pas d\'image</text></svg>'">
+          <img src="${q.image}" alt="${q.alt || 'Image question'}" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'100\\' height=\\'100\\'><rect width=\\'100%\\' height=\\'100%\\' fill=\\'%23f1f5f9\\'/><text x=\\'50%\\' y=\\'50%\\' dominant-baseline=\\'middle\\' text-anchor=\\'middle\\' fill=\\'%2394a3b8\\' font-size=\\'12\\'>Pas d\\'image</text></svg>'">
         </div>
         <div class="debug-info">
           <div class="debug-meta">
@@ -88,8 +102,10 @@
       `;
       container.appendChild(card);
     });
-  };
+  }).catch(function(err) {
+    document.getElementById('debug-counter').textContent = "Erreur de chargement";
+    document.getElementById('debug-list').innerHTML = `<p style="text-align:center; padding: 20px; color: red;">Erreur : ${err.message}</p>`;
+  });
 </script>
-<script src="js/import-github.js"></script>
 </body>
 </html>

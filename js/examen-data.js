@@ -1,5 +1,8 @@
 /* =========================================================
-   IMPORT DEPUIS GITHUB — détection automatique
+   examen-data.js — Chargement des questions de l'examen (GitHub)
+   Expose : window.examenPret (Promise → tableau de questions)
+            window.EXAMEN_QUESTIONS (même tableau)
+   Détection automatique
    - UNE seule requête (git/trees?recursive=1) liste tout le dépôt :
      tous les .json de code/questions (peu importe leur nom) et
      toutes les images de code/images/** (peu importe le dossier).
@@ -185,7 +188,7 @@
 
   /* ---------- Chargement ---------- */
 
-  detecter()
+  window.examenPret = detecter()
     .then(({ series, images }) => {
       console.log('📁 Séries détectées :', series);
       console.log(`🖼️ ${Object.keys(images).length} images détectées`);
@@ -199,23 +202,22 @@
       ).then(resultats => ({ resultats, images }));
     })
     .then(({ resultats, images }) => {
-      let toutesLesQuestions = [];
-
+      const questions = [];
       resultats.forEach(data => {
         if (data && Array.isArray(data.questions)) {
-          toutesLesQuestions = toutesLesQuestions.concat(traduireQuestions(data, images));
+          questions.push(...traduireQuestions(data, images));
         }
       });
 
-      if (toutesLesQuestions.length > 0) {
-        window.EXAMEN_QUESTIONS = toutesLesQuestions;
-        console.log(`✅ ${toutesLesQuestions.length} questions chargées depuis GitHub !`);
-        if (typeof window.initExamen === 'function') {
-          window.initExamen();
-        }
-      } else {
-        console.warn('⚠️ Aucune question chargée.');
-      }
+      window.EXAMEN_QUESTIONS = questions;
+      console.log(questions.length
+        ? `✅ ${questions.length} questions chargées depuis GitHub !`
+        : '⚠️ Aucune question chargée.');
+      return questions;
     })
-    .catch(err => console.error('❌ Erreur import GitHub :', err));
+    .catch(err => {
+      console.error('❌ Erreur import GitHub :', err);
+      window.EXAMEN_QUESTIONS = [];
+      return [];
+    });
 })();

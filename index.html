@@ -4,17 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#2563eb">
-<title>VroumVroum Bitches</title>
+<title>VroumVroum</title>
 <meta name="description" content="VroumVroum - Fiches de révision et quiz d'entraînement pour réussir ton Code de la route. Préparation ETG 2026.">
-<meta property="og:title" content="VroumVroum - Réussis ton code">
-<meta property="og:description" content="Fiches synthétiques et quiz d'entraînement pour le Code de la route.">
-<meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/base.css">
-<link rel="stylesheet" href="css/pages.css">
-<script>try{if(localStorage.getItem("vroum-theme")==="dark")document.documentElement.classList.add("dark")}catch(e){}</script>
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
@@ -25,7 +20,6 @@
       <ul class="nav-links" id="nav-links">
         <li><a href="index.html" class="active">Accueil</a></li>
         <li><a href="fiches.html">Fiches</a></li>
-        <li><a href="qcm.html">QCM</a></li>
         <li><a href="examen.html">Examen</a></li>
       </ul>
       <button class="theme-toggle" onclick="toggleTheme()" aria-label="Changer de thème"></button>
@@ -62,32 +56,11 @@
         <div class="stat-label">Fiches terminées</div>
       </div>
     </a>
-    <a href="qcm.html" class="stat-card">
-      <div class="stat-icon infini">♾️</div>
-      <div>
-        <div class="stat-value" id="stat-infini">0</div>
-        <div class="stat-label">Record en mode infini</div>
-      </div>
-    </a>
-    <a href="qcm.html" class="stat-card">
-      <div class="stat-icon examen">📝</div>
-      <div>
-        <div class="stat-value" id="stat-examen">—</div>
-        <div class="stat-label">Meilleur examen QCM</div>
-      </div>
-    </a>
     <a href="examen.html" class="stat-card">
       <div class="stat-icon examen">🖼️</div>
       <div>
         <div class="stat-value" id="stat-examen-img">—</div>
         <div class="stat-label">Meilleur examen avec images</div>
-      </div>
-    </a>
-    <a href="qcm.html" class="stat-card">
-      <div class="stat-icon rapide">⚡</div>
-      <div>
-        <div class="stat-value" id="stat-rapide">—</div>
-        <div class="stat-label">Meilleur score rapide</div>
       </div>
     </a>
   </div>
@@ -107,7 +80,6 @@
 <footer>© 2026 VroumVroum — Fiches de révision du Code de la route</footer>
 
 <script src="js/core.js"></script>
-<script src="js/data-fiches.js"></script>
-<script src="js/dashboard.js"></script>
+<script src="js/accueil.js"></script>
 </body>
 </html>

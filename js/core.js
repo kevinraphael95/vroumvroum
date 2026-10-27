@@ -1,9 +1,8 @@
 /* =========================================================
    core.js — Code partagé par toutes les pages
-   DOIT ÊTRE CHARGÉ EN PREMIER, avant tout autre script JS.
-   Contient : storage, thème, menu, progression, records,
-              constantes de familles.
-   Expose l'objet global window.VV.
+   À charger EN PREMIER. Expose l'objet global window.VV.
+   Contient : stockage, thème, menu, fiches terminées,
+              record de l'examen, noms des familles.
    ========================================================= */
 
 (function () {
@@ -18,9 +17,6 @@
     },
     set(key, value) {
       try { localStorage.setItem(key, value); } catch (e) {}
-    },
-    del(key) {
-      try { localStorage.removeItem(key); } catch (e) {}
     }
   };
 
@@ -44,7 +40,7 @@
   applyTheme(storage.get('vroum-theme') === 'dark');
 
 
-  /* ============ 3. PROGRESSION DES FICHES ============ */
+  /* ============ 3. FICHES TERMINÉES ============ */
 
   const LUES_KEY = 'vroum-fiches-lues';
 
@@ -57,20 +53,15 @@
     }
   }
 
-  function saveLues(set) {
-    storage.set(LUES_KEY, JSON.stringify([...set]));
-  }
-
   function isLue(id) {
     return getLues().has(id);
   }
 
   function toggleLue(id) {
     const set = getLues();
-    const nowDone = !set.has(id);
-    if (nowDone) set.add(id); else set.delete(id);
-    saveLues(set);
-    return nowDone;
+    if (set.has(id)) set.delete(id); else set.add(id);
+    storage.set(LUES_KEY, JSON.stringify([...set]));
+    return set.has(id);
   }
 
   function countLues(fiches) {
@@ -79,47 +70,30 @@
   }
 
 
-  /* ============ 4. RECORDS PAR MODE ============ */
+  /* ============ 4. RECORD DE L'EXAMEN ============ */
 
-  const RECORD_KEYS = {
-    infini: 'vroum-best-infini',
-    rapide: 'vroum-best-rapide',
-    examen: 'vroum-best-examen'
-  };
+  const EXAM_KEY = 'vroum-examen-best';
 
-  (function migrerAncienRecord() {
-    const old = storage.get('vroum-best-streak');
-    if (old !== null && storage.get(RECORD_KEYS.infini) === null) {
-      storage.set(RECORD_KEYS.infini, old);
+  function getExamBest() {
+    try {
+      const b = JSON.parse(storage.get(EXAM_KEY, 'null'));
+      return b && typeof b.score === 'number' && b.total > 0 ? b : null;
+    } catch (e) {
+      return null;
     }
-  })();
-
-  function getBest(m) {
-    return parseInt(storage.get(RECORD_KEYS[m], '0'), 10) || 0;
   }
 
-  function saveBest(m, value) {
-    if (value > getBest(m)) storage.set(RECORD_KEYS[m], String(value));
+  /* Enregistre le score s'il bat le record (en proportion). Renvoie true si record battu. */
+  function saveExamBest(score, total) {
+    if (!total) return false;
+    const prev = getExamBest();
+    if (prev && prev.score / prev.total >= score / total) return false;
+    storage.set(EXAM_KEY, JSON.stringify({ score, total }));
+    return true;
   }
 
 
-  /* ============ 5. CONSTANTES DES FAMILLES ============ */
-
-  const CAT_TO_FAM = {
-    "Signalisation": "L", "Signalisation temporaire": "L", "Marquage au sol": "L",
-    "Priorités": "L", "Circuler": "L", "Vitesses": "L",
-    "Conséquences vitesse": "L", "Dépassement": "L", "Stationnement": "L",
-    "Conducteur": "C", "Communication": "C", "Alcool & stupéfiants": "C",
-    "Conduite difficile": "R", "Autoroute": "R", "Zones dangereuses": "R",
-    "Autres usagers": "U",
-    "Documents": "D", "Assurance": "D", "Chargement": "D",
-    "Permis à points": "D", "Infractions": "D",
-    "Premiers secours": "A",
-    "Prendre & quitter": "P",
-    "Mécanique": "M", "Voyants": "M", "Éclairage": "M", "Équipements": "M",
-    "Sécurité passager": "S", "Sécurité": "S",
-    "Écomobilité": "E", "Choisir son véhicule": "E", "Écoconduite": "E"
-  };
+  /* ============ 5. FAMILLES ============ */
 
   const FAM_NAMES = {
     L: "La circulation routière",
@@ -143,61 +117,40 @@
 
   /* ============ 6. MENU BURGER ============ */
 
+  function setMenu(open) {
+    const burger = document.getElementById('nav-burger');
+    const links = document.getElementById('nav-links');
+    if (!burger || !links) return;
+    links.classList.toggle('open', open);
+    burger.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? 'Fermer le menu' : 'Ouvrir le menu');
+  }
+
   function toggleMenu() {
-    const burger = document.getElementById('nav-burger');
     const links = document.getElementById('nav-links');
-    if (!burger || !links) return;
-
-    const isOpen = links.classList.toggle('open');
-    burger.classList.toggle('open', isOpen);
-    burger.setAttribute('aria-expanded', String(isOpen));
-    burger.setAttribute('aria-label', isOpen ? 'Fermer le menu' : 'Ouvrir le menu');
+    if (links) setMenu(!links.classList.contains('open'));
   }
 
-  function closeMenu() {
-    const burger = document.getElementById('nav-burger');
-    const links = document.getElementById('nav-links');
-    if (!burger || !links) return;
-
-    links.classList.remove('open');
-    burger.classList.remove('open');
-    burger.setAttribute('aria-expanded', 'false');
-    burger.setAttribute('aria-label', 'Ouvrir le menu');
-  }
-
-  // Fermer au clic sur un lien
-  document.addEventListener('click', (e) => {
-    if (e.target.closest('#nav-links a')) closeMenu();
-  });
-
-  // Fermer au clic en dehors de la navbar
+  // Fermer : clic sur un lien, clic en dehors de la barre, touche Échap
   document.addEventListener('click', (e) => {
     const nav = document.querySelector('.nav-inner');
-    if (nav && !nav.contains(e.target)) closeMenu();
+    if (e.target.closest('#nav-links a') || (nav && !nav.contains(e.target))) setMenu(false);
   });
-
-  // Fermer avec Échap
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeMenu();
+    if (e.key === 'Escape') setMenu(false);
   });
 
 
-  /* ============ 7. EXPORTS GLOBAUX ============ */
+  /* ============ 7. EXPORTS ============ */
 
   window.VV = {
-    // storage
     storage,
-    // thème
-    toggleTheme,
-    applyTheme,
-    // progression
+    applyTheme, toggleTheme,
     isLue, toggleLue, countLues, getLues,
-    // records
-    getBest, saveBest,
-    // menu
-    toggleMenu, closeMenu,
-    // constantes
-    CAT_TO_FAM, FAM_NAMES, FAMILLE_ICONES
+    getExamBest, saveExamBest,
+    toggleMenu,
+    FAM_NAMES, FAMILLE_ICONES
   };
 
   window.toggleTheme = toggleTheme;

@@ -227,10 +227,28 @@
         <span id="notifMessage" class="text-xs font-medium">Notification</span>
     </div>
 
+    <!-- Custom Dialog Modal -->
+    <div id="customModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4">
+            <h3 class="text-base font-bold text-white flex items-center gap-2">
+                <i class="fa-solid fa-circle-question text-amber-400"></i> Confirmation
+            </h3>
+            <p id="modalMessage" class="text-xs text-slate-300 leading-relaxed"></p>
+            <div class="flex justify-end gap-3 pt-2">
+                <button id="modalCancelBtn" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold rounded-xl transition-colors">
+                    Annuler
+                </button>
+                <button id="modalConfirmBtn" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold rounded-xl shadow-lg transition-colors">
+                    Confirmer
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // State
         let dirHandle = null;
-        let imageFiles = []; // { name, file, handle, originalUrl }
+        let imageFiles = []; // { name, file, handle, url }
         let cropper = null;
         let isUpdatingInputsFromCropper = false;
 
@@ -256,6 +274,12 @@
         const progressBar = document.getElementById('progressBar');
         const progressText = document.getElementById('progressText');
         const progressPercent = document.getElementById('progressPercent');
+
+        // Modal Elements
+        const customModal = document.getElementById('customModal');
+        const modalMessage = document.getElementById('modalMessage');
+        const modalCancelBtn = document.getElementById('modalCancelBtn');
+        const modalConfirmBtn = document.getElementById('modalConfirmBtn');
 
         // Event Listeners for Input boxes
         [inputX, inputY, inputW, inputH].forEach(input => {
@@ -384,6 +408,35 @@
             isUpdatingInputsFromCropper = false;
         }
 
+        // Custom Confirmation Dialog
+        function showConfirmDialog(message) {
+            return new Promise((resolve) => {
+                modalMessage.textContent = message;
+                customModal.classList.remove('hidden');
+                customModal.classList.add('flex');
+
+                const handleConfirm = () => {
+                    cleanup();
+                    resolve(true);
+                };
+
+                const handleCancel = () => {
+                    cleanup();
+                    resolve(false);
+                };
+
+                const cleanup = () => {
+                    customModal.classList.add('hidden');
+                    customModal.classList.remove('flex');
+                    modalConfirmBtn.removeEventListener('click', handleConfirm);
+                    modalCancelBtn.removeEventListener('click', handleCancel);
+                };
+
+                modalConfirmBtn.addEventListener('click', handleConfirm);
+                modalCancelBtn.addEventListener('click', handleCancel);
+            });
+        }
+
         // Execute Crop on all files
         startCropBtn.addEventListener('click', async () => {
             if (!cropper || imageFiles.length === 0) return;
@@ -399,7 +452,8 @@
                 ? `Êtes-vous sûr de vouloir rogner et remplacer les ${imageFiles.length} images dans le dossier "${dirHandle.name}" ?`
                 : `Voulez-vous lancer le rognage des ${imageFiles.length} images ?`;
 
-            if (!confirm(overwriteMsg)) return;
+            const confirmed = await showConfirmDialog(overwriteMsg);
+            if (!confirmed) return;
 
             startCropBtn.disabled = true;
             selectDirBtn.disabled = true;
@@ -427,7 +481,9 @@
                         await writable.close();
                     } else {
                         // Fallback download if files were selected via input file
-                        downloadBlob(croppedBlob, `cropped_${item.name}`);
+                        // FIX: On ajoute l'index pour éviter que le navigateur ne demande de remplacer le fichier à chaque fois
+                        const safeName = `cropped_${String(i + 1).padStart(3, '0')}_${item.name}`;
+                        downloadBlob(croppedBlob, safeName);
                     }
 
                     appendStatusRow(item.name, true);

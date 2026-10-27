@@ -1,12 +1,14 @@
 /* =========================================================
-   EXAMEN BLANC (examen.html)
+   examen.js — Examen blanc avec images (examen.html)
+   À charger APRÈS : core.js, fiches-data.js, examen-data.js
+   Utilise : window.VV, window.examenPret, window.FICHES
    ========================================================= */
 
 (function () {
   'use strict';
 
   const $ = id => document.getElementById(id);
-  const BEST_KEY = 'vroum-examen-best';
+  const VV = window.VV;
   const LETTERS = ['A', 'B', 'C', 'D'];
   const RING_R = 30;
   const RING_C = 2 * Math.PI * RING_R;
@@ -47,27 +49,8 @@
     return true;
   }
 
-  function getBest() {
-    try {
-      const b = JSON.parse(localStorage.getItem(BEST_KEY));
-      return b && typeof b.score === 'number' && b.total > 0 ? b : null;
-    } catch (e) {
-      return null;
-    }
-  }
-
-  function saveBest(score, total) {
-    if (!total) return false;
-
-    const prev = getBest();
-    if (prev && prev.score / prev.total >= score / total) return false;
-
-    try {
-      localStorage.setItem(BEST_KEY, JSON.stringify({ score, total }));
-    } catch (e) {}
-
-    return true;
-  }
+  const getBest = () => VV.getExamBest();
+  const saveBest = (score, total) => VV.saveExamBest(score, total);
 
   function syncNav() {
     const nav = document.querySelector('nav');
@@ -293,8 +276,6 @@
     );
   }
 
-  window.initExamen = initExamen;
-
   /* ---------- Démarrage ---------- */
 
   function start() {
@@ -397,7 +378,7 @@
 
     const q = item.q;
 
-    $('ex-num').textContent = pad(idx + 1) + (q.id ? ` (${q.id})` : '');
+    $('ex-num').textContent = pad(idx + 1);
     $('ex-total').textContent = ' / ' + pad(items.length);$('ex-question').textContent = q.question;
     $('ex-mode').textContent = item.multi ? 'Plusieurs réponses' : 'Une réponse';
 
@@ -733,19 +714,9 @@
       return;
     }
 
-    const key = e.key.toLowerCase();
-    let m = -1;
-
-    if (['a', 'z', 'e', 'r'].includes(key)) {
-      const azertyKeys = { 'a': 0, 'z': 1, 'e': 2, 'r': 3 };
-      m = azertyKeys[key];
-    } else if (['q', 'w'].includes(key)) {
-      m = key === 'q' ? 0 : 1;
-    } else if (key === 'e' || key === 'r') {
-      m = key === 'e' ? 2 : 3;
-    } else if (/^[1-4]$/.test(e.key)) {
-      m = parseInt(e.key, 10) - 1;
-    }
+    // Touches : 1-4, ou A Z E R (AZERTY) / Q W E R (QWERTY) = réponses 1 à 4
+    const KEYS = { '1': 0, '2': 1, '3': 2, '4': 3, a: 0, z: 1, e: 2, r: 3, q: 0, w: 1 };
+    const m = KEYS[e.key.toLowerCase()] ?? -1;
 
     if (m >= 0) {
       const btn = document.querySelector(
@@ -771,16 +742,5 @@
 
   renderIntro();
   showOnly(secIntro);
-
-  if (Array.isArray(window.EXAMEN_QUESTIONS)) {
-    initExamen();
-  } else {
-    $('ex-start').disabled = true;
-    const warn = $('ex-warn');
-
-    if (warn) {
-      warn.hidden = false;
-      warn.textContent = 'Chargement des questions…';
-    }
-  }
+  window.examenPret.then(initExamen).catch(initExamen);
 })();

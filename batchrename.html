@@ -34,20 +34,10 @@
         }
     </script>
     <style>
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0f172a;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #334155;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #475569;
-        }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col antialiased">
@@ -454,7 +444,7 @@
             const suffix = suffixInput.value;
             const template = templateInput.value;
             const padLen = parseInt(paddingSelect.value, 10);
-            const startIdx = parseInt(startIndexInput.value, 10) || 0; // Starts from 0 or custom
+            const startIdx = parseInt(startIndexInput.value, 10) || 0;
 
             const extIdx = oldName.lastIndexOf('.');
             const nameWithoutExt = extIdx !== -1 ? oldName.substring(0, extIdx) : oldName;
