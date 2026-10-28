@@ -3,30 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Batch Rename Studio</title>
-    <!-- Tailwind CSS -->
+    <title>Batch Rename Studio — Universal</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Font Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
                         brand: {
-                            50: '#eef2ff',
-                            100: '#e0e7ff',
-                            500: '#6366f1',
-                            600: '#4f46e5',
-                            700: '#4338ca',
-                            900: '#312e81',
+                            50:'#eef2ff',100:'#e0e7ff',400:'#818cf8',500:'#6366f1',
+                            600:'#4f46e5',700:'#4338ca',900:'#312e81'
                         }
                     }
                 }
@@ -38,772 +30,1100 @@
         ::-webkit-scrollbar-track { background: #0f172a; }
         ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #475569; }
+        html:not(.dark) ::-webkit-scrollbar-track { background: #f1f5f9; }
+        html:not(.dark) ::-webkit-scrollbar-thumb { background: #cbd5e1; }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col antialiased">
+<body class="bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans min-h-screen flex flex-col antialiased transition-colors">
 
     <!-- Header -->
-    <header class="border-b border-slate-800 bg-slate-900/90 backdrop-blur sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="p-2.5 bg-brand-600/20 text-brand-400 rounded-xl border border-brand-500/30">
+    <header class="border-b border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3 min-w-0">
+                <div class="p-2.5 bg-brand-600/20 text-brand-600 dark:text-brand-400 rounded-xl border border-brand-500/30">
                     <i class="fa-solid fa-folder-gear text-xl"></i>
                 </div>
-                <div>
-                    <h1 class="font-bold text-lg text-white leading-tight">Batch Rename Studio</h1>
-                    <p class="text-xs text-slate-400">Renommer et organiser n'importe quel type de fichier</p>
+                <div class="min-w-0">
+                    <h1 class="font-bold text-lg leading-tight truncate">Batch Rename Studio <span class="text-[10px] align-top bg-brand-500/20 text-brand-400 px-1.5 py-0.5 rounded ml-1">v2</span></h1>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 truncate">Renommage universel — Chrome, Edge, Firefox, Safari</p>
                 </div>
             </div>
-            <div id="statsBadge" class="hidden sm:flex items-center gap-2 bg-slate-800/80 border border-slate-700/60 px-3 py-1.5 rounded-lg text-xs font-medium text-slate-300">
-                <i class="fa-solid fa-files text-brand-400"></i>
-                <span id="fileCountText">0 fichier(s) détecté(s)</span>
+            <div class="flex items-center gap-2">
+                <div id="statsBadge" class="hidden sm:flex items-center gap-2 bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-slate-300">
+                    <i class="fa-solid fa-files text-brand-500"></i>
+                    <span id="fileCountText">0 fichier(s)</span>
+                </div>
+                <button id="themeToggle" title="Thème" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+                    <i id="themeIcon" class="fa-solid fa-sun text-amber-400"></i>
+                </button>
             </div>
         </div>
     </header>
 
-    <!-- Main Content -->
     <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 grid grid-cols-1 lg:grid-cols-12 gap-6">
 
-        <!-- Left Column: Controls & Options -->
-        <div class="lg:col-span-5 space-y-6">
+        <!-- LEFT -->
+        <div class="lg:col-span-5 space-y-5">
 
-            <!-- Folder Selector & Filter Card -->
-            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl">
-                <h2 class="text-xs font-bold text-slate-300 uppercase tracking-wider mb-3 flex items-center gap-2">
-                    <i class="fa-solid fa-folder-open text-brand-400"></i> 1. Choisir le dossier & Filtre
+            <!-- 1. Source -->
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm">
+                <h2 class="text-xs font-bold text-slate-500 dark:text-slate-300 uppercase tracking-wider mb-3 flex items-center gap-2">
+                    <i class="fa-solid fa-folder-open text-brand-500"></i> 1. Source
                 </h2>
 
-                <button id="selectDirBtn" class="w-full bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white font-semibold py-3.5 px-4 rounded-xl text-sm flex items-center justify-center gap-2.5 transition-all duration-150 shadow-md">
-                    <i class="fa-solid fa-folder-tree text-amber-400 text-base"></i>
-                    <span id="selectDirText">Sélectionner un dossier</span>
-                </button>
-
-                <!-- Filter Extension Option -->
-                <div class="mt-4 pt-3 border-t border-slate-800/80">
-                    <label class="block text-xs font-medium text-slate-400 mb-1">Filtrer par type de fichier</label>
-                    <select id="filterTypeSelect" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-brand-500 transition-colors">
-                        <option value="all">Tous les fichiers (*.*)</option>
-                        <option value="images">Images (.png, .jpg, .jpeg, .webp, .gif)</option>
-                        <option value="data">Données & BDD (.cdb, .json, .xml, .csv, .sql)</option>
-                        <option value="code">Code & Scripts (.js, .py, .lua, .html, .css)</option>
-                        <option value="docs">Documents (.pdf, .txt, .docx, .xlsx)</option>
-                        <option value="custom">Extension personnalisée...</option>
-                    </select>
-
-                    <div id="customExtContainer" class="hidden mt-2">
-                        <input type="text" id="customExtInput" placeholder="ex: cdb, png, txt (séparés par des virgules)" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-1.5 text-xs text-slate-100 font-mono focus:outline-none focus:border-brand-500">
-                    </div>
+                <div id="fsApiPanel">
+                    <button id="selectDirBtn" class="w-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-semibold py-3.5 px-4 rounded-xl text-sm flex items-center justify-center gap-2.5 transition-all">
+                        <i class="fa-solid fa-folder-tree text-amber-500"></i>
+                        <span id="selectDirText">Sélectionner un dossier</span>
+                    </button>
+                    <label class="flex items-center gap-2 mt-2 text-[11px] text-slate-500 cursor-pointer select-none">
+                        <input type="checkbox" id="recursiveToggle" class="accent-brand-500">
+                        Inclure les sous-dossiers (récursif)
+                    </label>
                 </div>
 
-                <!-- Compatibility Notice -->
-                <div id="apiCheckNotice" class="mt-3 p-3 bg-slate-950/80 border border-slate-800 rounded-xl flex items-start gap-2.5 text-xs text-slate-400">
-                    <i class="fa-solid fa-circle-info text-brand-400 text-sm mt-0.5 shrink-0"></i>
-                    <span>Exécutez dans <strong>Chrome, Edge, Brave ou Opera</strong> pour renommer directement les fichiers.</span>
+                <div id="fallbackPanel" class="hidden">
+                    <input type="file" id="fallbackInput" webkitdirectory directory multiple class="hidden">
+                    <button id="fallbackBtn" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-semibold py-3.5 px-4 rounded-xl text-sm flex items-center justify-center gap-2.5 transition-all">
+                        <i class="fa-solid fa-upload"></i>
+                        Importer des fichiers (mode ZIP)
+                    </button>
+                    <p class="text-[11px] text-slate-500 mt-2">
+                        Votre navigateur ne permet pas l'accès direct. Les fichiers renommés seront téléchargés dans un <code class="text-brand-400">.zip</code>.
+                    </p>
+                </div>
+
+                <div id="apiCheckNotice" class="mt-3 hidden p-3 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/50 rounded-xl flex items-start gap-2 text-xs text-amber-700 dark:text-amber-300">
+                    <i class="fa-solid fa-triangle-exclamation mt-0.5 shrink-0"></i>
+                    <span>Mode compatibilité activé (ZIP). Pour un renommage direct, utilisez Chrome / Edge / Brave / Opera.</span>
+                </div>
+
+                <div class="mt-4 pt-3 border-t border-slate-200 dark:border-slate-800/80 space-y-2">
+                    <label class="block text-xs font-medium text-slate-500 dark:text-slate-400">Filtrer les fichiers</label>
+                    <select id="filterMode" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-800 dark:text-slate-200 focus:outline-none focus:border-brand-500">
+                        <option value="all">Tous les fichiers</option>
+                        <option value="images">Images</option>
+                        <option value="data">Données (.cdb, .json, .xml, .csv, .sql…)</option>
+                        <option value="code">Code & scripts</option>
+                        <option value="docs">Documents</option>
+                        <option value="custom">Extensions personnalisées…</option>
+                        <option value="regex">Motif regex sur le nom</option>
+                        <option value="size">Par taille (Ko)</option>
+                    </select>
+
+                    <input type="text" id="customExtInput" placeholder="ex: cdb, png, txt" class="hidden w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-1.5 text-xs font-mono focus:outline-none focus:border-brand-500">
+                    <input type="text" id="filterRegexInput" placeholder="ex: ^IMG_\d+" class="hidden w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-1.5 text-xs font-mono focus:outline-none focus:border-brand-500">
+
+                    <div id="sizeFilterRow" class="hidden grid grid-cols-2 gap-2">
+                        <input type="number" id="minSizeInput" placeholder="Min Ko" class="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-1.5 text-xs font-mono focus:outline-none focus:border-brand-500">
+                        <input type="number" id="maxSizeInput" placeholder="Max Ko" class="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-1.5 text-xs font-mono focus:outline-none focus:border-brand-500">
+                    </div>
                 </div>
             </div>
 
-            <!-- Renaming Configuration Options -->
-            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
+            <!-- 2. Modèle -->
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm space-y-4">
                 <div class="flex items-center justify-between">
-                    <h2 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
-                        <i class="fa-solid fa-sliders text-brand-400"></i> 2. Modèle & Format
+                    <h2 class="text-xs font-bold text-slate-500 dark:text-slate-300 uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-sliders text-brand-500"></i> 2. Modèle
                     </h2>
-                    <!-- Quick Preset Badges -->
                     <div class="flex items-center gap-1">
-                        <button id="presetStartZero" class="text-[10px] px-2 py-1 bg-slate-800 hover:bg-slate-700 text-brand-300 rounded border border-slate-700 transition-colors">
-                            Départ à 0
+                        <button id="savePresetBtn" title="Sauvegarder le preset" class="text-[10px] px-2 py-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-brand-600 dark:text-brand-300 rounded border border-slate-200 dark:border-slate-700">
+                            <i class="fa-solid fa-floppy-disk"></i>
                         </button>
-                        <button id="presetStartOne" class="text-[10px] px-2 py-1 bg-slate-800 hover:bg-slate-700 text-brand-300 rounded border border-slate-700 transition-colors">
-                            Départ à 1
+                        <button id="loadPresetBtn" title="Charger le preset" class="text-[10px] px-2 py-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-brand-600 dark:text-brand-300 rounded border border-slate-200 dark:border-slate-700">
+                            <i class="fa-solid fa-folder-open"></i>
                         </button>
                     </div>
                 </div>
 
-                <!-- Template Input -->
                 <div>
                     <div class="flex justify-between items-center mb-1">
-                        <label class="block text-xs font-medium text-slate-400">Nom de base / Modèle</label>
-                        <span class="text-[10px] text-slate-500">Tags: <code class="text-brand-400">{num}</code>, <code class="text-brand-400">{name}</code></span>
+                        <label class="text-xs font-medium text-slate-500 dark:text-slate-400">Modèle de nom</label>
+                        <button id="toggleTagsHelp" class="text-[10px] text-brand-500 hover:underline">Tags ▾</button>
                     </div>
-                    <input type="text" id="templateInput" value="{prefix}{num}{suffix}" placeholder="ex: carte_{num} ou {prefix}{name}" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-brand-500 transition-colors font-mono">
-                    <p class="text-[10px] text-slate-500 mt-1">Laissez vide pour conserver le nom original ou utilisez <code class="text-brand-400">{num}</code> pour placer la numérotation.</p>
+                    <input type="text" id="templateInput" value="{prefix}{num}{suffix}" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-2 text-sm font-mono focus:outline-none focus:border-brand-500">
+
+                    <div id="tagsHelp" class="hidden mt-2 p-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-[10px] font-mono text-slate-500 grid grid-cols-2 gap-1">
+                        <span><code class="text-brand-500">{num}</code> numéro</span>
+                        <span><code class="text-brand-500">{num:3}</code> num sur 3</span>
+                        <span><code class="text-brand-500">{name}</code> nom actuel</span>
+                        <span><code class="text-brand-500">{ext}</code> extension</span>
+                        <span><code class="text-brand-500">{parent}</code> dossier</span>
+                        <span><code class="text-brand-500">{date}</code> AAAAMMJJ</span>
+                        <span><code class="text-brand-500">{time}</code> HHMMSS</span>
+                        <span><code class="text-brand-500">{random}</code> aléatoire</span>
+                        <span><code class="text-brand-500">{upper}</code> MAJ</span>
+                        <span><code class="text-brand-500">{lower}</code> min</span>
+                        <span><code class="text-brand-500">{index}</code> index</span>
+                        <span><code class="text-brand-500">{size}</code> taille</span>
+                    </div>
                 </div>
 
-                <!-- Prefix & Suffix -->
+                <div class="pt-3 border-t border-slate-200 dark:border-slate-800/60">
+                    <label class="text-xs font-medium text-slate-500 dark:text-slate-400">Rechercher & Remplacer</label>
+                    <div class="grid grid-cols-[1fr_1fr_auto] gap-2 mt-1">
+                        <input id="findInput" placeholder="Chercher" class="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg px-2 py-1.5 text-xs font-mono focus:outline-none focus:border-brand-500">
+                        <input id="replaceInput" placeholder="Remplacer" class="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg px-2 py-1.5 text-xs font-mono focus:outline-none focus:border-brand-500">
+                        <label class="flex items-center gap-1 text-[10px] text-slate-500 px-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg cursor-pointer">
+                            <input type="checkbox" id="useRegexReplace" class="accent-brand-500"> regex
+                        </label>
+                    </div>
+                </div>
+
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-xs font-medium text-slate-400 mb-1">Préfixe</label>
-                        <input type="text" id="prefixInput" value="" placeholder="ex: CARD_" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-brand-500 transition-colors font-mono">
+                        <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Préfixe</label>
+                        <input type="text" id="prefixInput" placeholder="ex: CARD_" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-2 text-sm font-mono focus:outline-none focus:border-brand-500">
                     </div>
                     <div>
-                        <label class="block text-xs font-medium text-slate-400 mb-1">Suffixe</label>
-                        <input type="text" id="suffixInput" value="" placeholder="ex: _v1" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-brand-500 transition-colors font-mono">
+                        <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Suffixe</label>
+                        <input type="text" id="suffixInput" placeholder="ex: _v1" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-2 text-sm font-mono focus:outline-none focus:border-brand-500">
                     </div>
                 </div>
 
-                <!-- Padding & Start Number -->
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block text-xs font-medium text-slate-400 mb-1">Format des chiffres</label>
-                        <select id="paddingSelect" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-brand-500 transition-colors font-mono">
-                            <option value="1">1 chiffre (0, 1, 2...)</option>
-                            <option value="2" selected>2 chiffres (00, 01, 02...)</option>
-                            <option value="3">3 chiffres (000, 001, 002...)</option>
-                            <option value="4">4 chiffres (0000, 0001...)</option>
+                        <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Format chiffres</label>
+                        <select id="paddingSelect" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-2 text-sm font-mono focus:outline-none focus:border-brand-500">
+                            <option value="1">1 (0,1,2)</option>
+                            <option value="2" selected>2 (00,01,02)</option>
+                            <option value="3">3 (000,001)</option>
+                            <option value="4">4 (0000,0001)</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-medium text-slate-400 mb-1">Départ à (Min: 0)</label>
-                        <input type="number" id="startIndexInput" value="0" min="0" step="1" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-brand-500 transition-colors font-mono">
+                        <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Départ à</label>
+                        <input type="number" id="startIndexInput" value="0" min="0" step="1" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-2 text-sm font-mono focus:outline-none focus:border-brand-500">
                     </div>
                 </div>
 
-                <!-- Transformation Options -->
-                <div class="grid grid-cols-2 gap-3 pt-2 border-t border-slate-800/60">
+                <div class="grid grid-cols-2 gap-3 pt-2 border-t border-slate-200 dark:border-slate-800/60">
                     <div>
-                        <label class="block text-xs font-medium text-slate-400 mb-1">Casse du texte</label>
-                        <select id="caseSelect" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-brand-500 transition-colors">
-                            <option value="keep">Conserver telle quelle</option>
-                            <option value="lower">minuscules (lower)</option>
-                            <option value="upper">MAJUSCULES (UPPER)</option>
-                            <option value="title">Première Lettre Majuscule</option>
+                        <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Casse</label>
+                        <select id="caseSelect" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-brand-500">
+                            <option value="keep">Conserver</option>
+                            <option value="lower">minuscules</option>
+                            <option value="upper">MAJUSCULES</option>
+                            <option value="title">Title Case</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-xs font-medium text-slate-400 mb-1">Espaces & Caractères</label>
-                        <select id="spaceSelect" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-brand-500 transition-colors">
-                            <option value="keep">Ne pas modifier</option>
-                            <option value="underscore">Remplacer espaces par _</option>
-                            <option value="hyphen">Remplacer espaces par -</option>
-                            <option value="remove">Supprimer tous les espaces</option>
+                        <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Espaces</label>
+                        <select id="spaceSelect" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-brand-500">
+                            <option value="keep">Conserver</option>
+                            <option value="underscore">→ _</option>
+                            <option value="hyphen">→ -</option>
+                            <option value="remove">Supprimer</option>
                         </select>
                     </div>
                 </div>
 
-                <!-- Sorting option -->
-                <div>
-                    <label class="block text-xs font-medium text-slate-400 mb-1">Ordre de tri des fichiers</label>
-                    <select id="sortSelect" class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-brand-500 transition-colors">
-                        <option value="natural">Ordre naturel Windows / Numérique (ex: file2 < file10)</option>
-                        <option value="alpha">Ordre alphabétique strict</option>
-                        <option value="date">Date de dernière modification</option>
+                <div class="flex gap-2">
+                    <select id="sortSelect" class="flex-1 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-brand-500">
+                        <option value="natural">Naturel</option>
+                        <option value="alpha">Alphabétique</option>
+                        <option value="date">Date modif.</option>
+                        <option value="size">Taille</option>
+                        <option value="ext">Extension</option>
                     </select>
+                    <button id="sortDirBtn" class="px-3 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700" title="Inverser l'ordre">
+                        <i id="sortDirIcon" class="fa-solid fa-arrow-down-a-z text-xs"></i>
+                    </button>
                 </div>
             </div>
 
-            <!-- Action Box -->
-            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
-                <h2 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
-                    <i class="fa-solid fa-play text-emerald-400"></i> 3. Appliquer les modifications
+            <!-- 3. Action -->
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm space-y-4">
+                <h2 class="text-xs font-bold text-slate-500 dark:text-slate-300 uppercase tracking-wider flex items-center gap-2">
+                    <i class="fa-solid fa-play text-emerald-500"></i> 3. Appliquer
                 </h2>
 
-                <button id="startRenameBtn" disabled class="disabled:opacity-40 disabled:cursor-not-allowed w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3.5 px-4 rounded-xl text-sm flex items-center justify-center gap-2.5 shadow-lg shadow-emerald-900/30 transition-all duration-150">
+                <button id="startRenameBtn" disabled class="disabled:opacity-40 disabled:cursor-not-allowed w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3.5 px-4 rounded-xl text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-900/20 transition-all">
                     <i class="fa-solid fa-floppy-disk text-lg"></i>
-                    <span>Renommer les fichiers</span>
+                    <span id="actionLabel">Renommer les fichiers</span>
                 </button>
 
-                <!-- Progress bar -->
                 <div id="progressContainer" class="hidden space-y-2">
-                    <div class="flex justify-between text-xs text-slate-400 font-mono">
-                        <span id="progressText">Progression...</span>
+                    <div class="flex justify-between text-xs text-slate-500 dark:text-slate-400 font-mono">
+                        <span id="progressText">Progression…</span>
                         <span id="progressPercent">0%</span>
                     </div>
-                    <div class="w-full bg-slate-950 rounded-full h-2 overflow-hidden border border-slate-800">
+                    <div class="w-full bg-slate-100 dark:bg-slate-950 rounded-full h-2 overflow-hidden border border-slate-200 dark:border-slate-800">
                         <div id="progressBar" class="bg-emerald-500 h-full w-0 transition-all duration-150"></div>
                     </div>
                 </div>
-            </div>
 
+                <button id="resetBtn" class="hidden w-full text-xs text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 py-1">
+                    <i class="fa-solid fa-rotate-left mr-1"></i> Rouvrir un autre dossier
+                </button>
+            </div>
         </div>
 
-        <!-- Right Preview Column -->
+        <!-- RIGHT -->
         <div class="lg:col-span-7 flex flex-col">
-            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl flex-1 flex flex-col">
-                <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
-                    <h2 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
-                        <i class="fa-solid fa-list-check text-brand-400"></i> Aperçu dynamique
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm flex-1 flex flex-col">
+                <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-200 dark:border-slate-800">
+                    <h2 class="text-xs font-bold text-slate-500 dark:text-slate-300 uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-list-check text-brand-500"></i> Aperçu dynamique
                     </h2>
-                    <span id="folderNameBadge" class="text-xs px-2.5 py-1 bg-slate-800 text-slate-400 border border-slate-700 rounded-lg hidden font-mono truncate max-w-[200px]"></span>
+                    <span id="folderNameBadge" class="text-xs px-2.5 py-1 bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700 rounded-lg hidden font-mono truncate max-w-[200px]"></span>
                 </div>
 
-                <!-- Preview Table or Empty State -->
-                <div class="flex-1 overflow-x-auto overflow-y-auto max-h-[620px] border border-slate-800 rounded-xl bg-slate-950/60">
-                    <div id="emptyState" class="h-80 flex flex-col items-center justify-center text-slate-500 p-6 text-center">
-                        <div class="w-16 h-16 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center mb-3 text-slate-600">
+                <div class="flex-1 overflow-auto max-h-[640px] border border-slate-200 dark:border-slate-800 rounded-xl bg-slate-50 dark:bg-slate-950/60">
+                    <div id="emptyState" class="h-80 flex flex-col items-center justify-center text-slate-400 p-6 text-center">
+                        <div class="w-16 h-16 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center mb-3">
                             <i class="fa-solid fa-folder-open text-3xl"></i>
                         </div>
-                        <p class="text-sm font-semibold text-slate-300">Aucun dossier sélectionné</p>
-                        <p class="text-xs text-slate-500 max-w-xs mt-1">Sélectionnez un dossier pour afficher la liste et personnaliser le nommage.</p>
+                        <p class="text-sm font-semibold">Aucun fichier</p>
+                        <p class="text-xs mt-1 max-w-xs">Sélectionnez un dossier (ou importez) pour voir l'aperçu.</p>
                     </div>
 
-                    <table id="previewTable" class="w-full text-left text-xs text-slate-300 hidden border-collapse">
-                        <thead class="bg-slate-900 sticky top-0 border-b border-slate-800 text-slate-400 uppercase font-medium z-10">
+                    <table id="previewTable" class="w-full text-left text-xs hidden border-collapse">
+                        <thead class="bg-slate-100 dark:bg-slate-900 sticky top-0 border-b border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 uppercase font-medium z-10">
                             <tr>
                                 <th class="p-3 w-10 text-center">#</th>
-                                <th class="p-3">Nom Actuel</th>
-                                <th class="p-3 w-6 text-center"></th>
-                                <th class="p-3 text-brand-400 font-semibold">Nouveau Nom</th>
+                                <th class="p-3">Nom actuel</th>
+                                <th class="p-3 w-6"></th>
+                                <th class="p-3 text-brand-500 font-semibold">Nouveau</th>
                                 <th class="p-3 w-28 text-center">Statut</th>
                             </tr>
                         </thead>
-                        <tbody id="previewTbody" class="divide-y divide-slate-800/60 font-mono">
-                            <!-- Rows injected dynamically -->
-                        </tbody>
+                        <tbody id="previewTbody" class="divide-y divide-slate-200 dark:divide-slate-800/60 font-mono"></tbody>
                     </table>
                 </div>
+                <p id="truncateNotice" class="hidden mt-2 text-[11px] text-slate-500 text-center italic"></p>
             </div>
         </div>
-
     </main>
 
-    <!-- Notification Toast -->
-    <div id="notification" class="fixed bottom-5 right-5 bg-slate-900 border border-slate-700 text-slate-100 px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 transition-all duration-300 translate-y-20 opacity-0 z-50">
-        <i id="notifIcon" class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
+    <div id="notification" class="fixed bottom-5 right-5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3 transition-all duration-300 translate-y-20 opacity-0 z-50">
+        <i id="notifIcon" class="fa-solid fa-circle-check text-emerald-500 text-lg"></i>
         <span id="notifMessage" class="text-xs font-medium">Notification</span>
     </div>
 
-    <!-- Custom Dialog Modal replacing default alert/confirm -->
     <div id="customModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4">
-            <h3 id="modalTitle" class="text-base font-bold text-white flex items-center gap-2">
-                <i class="fa-solid fa-circle-question text-amber-400"></i> Confirmation
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4">
+            <h3 class="text-base font-bold flex items-center gap-2">
+                <i class="fa-solid fa-circle-question text-amber-500"></i> Confirmation
             </h3>
-            <p id="modalMessage" class="text-xs text-slate-300 leading-relaxed"></p>
+            <p id="modalMessage" class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed"></p>
             <div class="flex justify-end gap-3 pt-2">
-                <button id="modalCancelBtn" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold rounded-xl transition-colors">
-                    Annuler
-                </button>
-                <button id="modalConfirmBtn" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold rounded-xl shadow-lg transition-colors">
-                    Confirmer
-                </button>
+                <button id="modalCancelBtn" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs font-semibold rounded-xl">Annuler</button>
+                <button id="modalConfirmBtn" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold rounded-xl shadow-lg">Confirmer</button>
             </div>
         </div>
     </div>
 
     <script>
-        // State Variables
-        let dirHandle = null;
-        let rawFiles = []; // All raw file items from folder
-        let filteredEntries = []; // Filtered and sorted file entries
+    /* ============================================================
+       State
+    ============================================================ */
+    const state = {
+        dirHandle: null,
+        rawFiles: [],
+        filteredEntries: [],
+        mode: 'fs',
+        sortDir: 1,
+        running: false,
+    };
 
-        // DOM elements
-        const selectDirBtn = document.getElementById('selectDirBtn');
-        const selectDirText = document.getElementById('selectDirText');
-        const templateInput = document.getElementById('templateInput');
-        const prefixInput = document.getElementById('prefixInput');
-        const suffixInput = document.getElementById('suffixInput');
-        const paddingSelect = document.getElementById('paddingSelect');
-        const startIndexInput = document.getElementById('startIndexInput');
-        const caseSelect = document.getElementById('caseSelect');
-        const spaceSelect = document.getElementById('spaceSelect');
-        const sortSelect = document.getElementById('sortSelect');
-        const filterTypeSelect = document.getElementById('filterTypeSelect');
-        const customExtContainer = document.getElementById('customExtContainer');
-        const customExtInput = document.getElementById('customExtInput');
-        const startRenameBtn = document.getElementById('startRenameBtn');
-        
-        const previewTbody = document.getElementById('previewTbody');
-        const emptyState = document.getElementById('emptyState');
-        const previewTable = document.getElementById('previewTable');
-        const statsBadge = document.getElementById('statsBadge');
-        const fileCountText = document.getElementById('fileCountText');
-        const folderNameBadge = document.getElementById('folderNameBadge');
-        const apiCheckNotice = document.getElementById('apiCheckNotice');
+    const MAX_PREVIEW = 250;
+    const hasFS = 'showDirectoryPicker' in window;
 
-        const progressContainer = document.getElementById('progressContainer');
-        const progressBar = document.getElementById('progressBar');
-        const progressText = document.getElementById('progressText');
-        const progressPercent = document.getElementById('progressPercent');
+    /* ============================================================
+       DOM
+    ============================================================ */
+    const $ = (id) => document.getElementById(id);
+    const el = {
+        selectDirBtn: $('selectDirBtn'),
+        selectDirText: $('selectDirText'),
+        fallbackBtn: $('fallbackBtn'),
+        fallbackInput: $('fallbackInput'),
+        fsApiPanel: $('fsApiPanel'),
+        fallbackPanel: $('fallbackPanel'),
+        apiCheckNotice: $('apiCheckNotice'),
+        recursiveToggle: $('recursiveToggle'),
 
-        // Modal Elements
-        const customModal = document.getElementById('customModal');
-        const modalMessage = document.getElementById('modalMessage');
-        const modalCancelBtn = document.getElementById('modalCancelBtn');
-        const modalConfirmBtn = document.getElementById('modalConfirmBtn');
+        templateInput: $('templateInput'),
+        prefixInput: $('prefixInput'),
+        suffixInput: $('suffixInput'),
+        paddingSelect: $('paddingSelect'),
+        startIndexInput: $('startIndexInput'),
+        caseSelect: $('caseSelect'),
+        spaceSelect: $('spaceSelect'),
+        sortSelect: $('sortSelect'),
+        sortDirBtn: $('sortDirBtn'),
+        sortDirIcon: $('sortDirIcon'),
 
-        // Check Web File System Access API support
-        if (!('showDirectoryPicker' in window)) {
-            apiCheckNotice.innerHTML = `<i class="fa-solid fa-triangle-exclamation text-amber-400 text-sm mt-0.5 shrink-0"></i>
-            <span class="text-amber-300">Votre navigateur ne prend pas en compte l'accès direct au système de fichiers. Veuillez utiliser Google Chrome, Microsoft Edge, Brave ou Opera sur ordinateur.</span>`;
-            selectDirBtn.disabled = true;
-            selectDirBtn.classList.add('opacity-50', 'cursor-not-allowed');
-        }
+        filterMode: $('filterMode'),
+        customExtInput: $('customExtInput'),
+        filterRegexInput: $('filterRegexInput'),
+        sizeFilterRow: $('sizeFilterRow'),
+        minSizeInput: $('minSizeInput'),
+        maxSizeInput: $('maxSizeInput'),
 
-        // Quick Preset Listeners
-        document.getElementById('presetStartZero').addEventListener('click', () => {
-            startIndexInput.value = '0';
+        findInput: $('findInput'),
+        replaceInput: $('replaceInput'),
+        useRegexReplace: $('useRegexReplace'),
+
+        startRenameBtn: $('startRenameBtn'),
+        actionLabel: $('actionLabel'),
+        resetBtn: $('resetBtn'),
+
+        previewTbody: $('previewTbody'),
+        emptyState: $('emptyState'),
+        previewTable: $('previewTable'),
+        statsBadge: $('statsBadge'),
+        fileCountText: $('fileCountText'),
+        folderNameBadge: $('folderNameBadge'),
+        truncateNotice: $('truncateNotice'),
+
+        progressContainer: $('progressContainer'),
+        progressBar: $('progressBar'),
+        progressText: $('progressText'),
+        progressPercent: $('progressPercent'),
+
+        customModal: $('customModal'),
+        modalMessage: $('modalMessage'),
+        modalCancelBtn: $('modalCancelBtn'),
+        modalConfirmBtn: $('modalConfirmBtn'),
+    };
+
+    /* ============================================================
+       Theme
+    ============================================================ */
+    (function initTheme() {
+        const saved = localStorage.getItem('brs_theme');
+        const isDark = saved ? saved === 'dark' : true;
+        document.documentElement.classList.toggle('dark', isDark);
+        updateThemeIcon(isDark);
+        $('themeToggle').addEventListener('click', () => {
+            const dark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('brs_theme', dark ? 'dark' : 'light');
+            updateThemeIcon(dark);
+        });
+    })();
+    function updateThemeIcon(isDark) {
+        $('themeIcon').className = isDark
+            ? 'fa-solid fa-sun text-amber-400'
+            : 'fa-solid fa-moon text-slate-600';
+    }
+
+    /* ============================================================
+       Mode detection
+    ============================================================ */
+    if (!hasFS) {
+        state.mode = 'zip';
+        el.fsApiPanel.classList.add('hidden');
+        el.fallbackPanel.classList.remove('hidden');
+        el.apiCheckNotice.classList.remove('hidden');
+        el.actionLabel.textContent = 'Télécharger le ZIP renommé';
+    }
+
+    /* ============================================================
+       Input listeners
+    ============================================================ */
+    [el.templateInput, el.prefixInput, el.suffixInput, el.paddingSelect,
+     el.startIndexInput, el.caseSelect, el.spaceSelect,
+     el.findInput, el.replaceInput].forEach(inp => {
+        if (inp) inp.addEventListener('input', updateNamesAndPreview);
+    });
+    el.useRegexReplace.addEventListener('change', updateNamesAndPreview);
+
+    $('toggleTagsHelp').addEventListener('click', () => {
+        $('tagsHelp').classList.toggle('hidden');
+    });
+
+    el.sortDirBtn.addEventListener('click', () => {
+        state.sortDir *= -1;
+        el.sortDirIcon.className = state.sortDir === 1
+            ? 'fa-solid fa-arrow-down-a-z text-xs'
+            : 'fa-solid fa-arrow-up-a-z text-xs';
+        applyFiltersAndSort();
+    });
+    el.sortSelect.addEventListener('change', applyFiltersAndSort);
+
+    el.filterMode.addEventListener('change', () => {
+        const v = el.filterMode.value;
+        el.customExtInput.classList.toggle('hidden', v !== 'custom');
+        el.filterRegexInput.classList.toggle('hidden', v !== 'regex');
+        el.sizeFilterRow.classList.toggle('hidden', v !== 'size');
+        applyFiltersAndSort();
+    });
+    [el.customExtInput, el.filterRegexInput, el.minSizeInput, el.maxSizeInput]
+        .forEach(i => i.addEventListener('input', applyFiltersAndSort));
+
+    /* ============================================================
+       Presets
+    ============================================================ */
+    $('savePresetBtn').addEventListener('click', () => {
+        const preset = {
+            template: el.templateInput.value,
+            prefix: el.prefixInput.value,
+            suffix: el.suffixInput.value,
+            padding: el.paddingSelect.value,
+            startIndex: el.startIndexInput.value,
+            caseMode: el.caseSelect.value,
+            spaceMode: el.spaceSelect.value,
+            find: el.findInput.value,
+            replace: el.replaceInput.value,
+            useRegex: el.useRegexReplace.checked,
+        };
+        localStorage.setItem('brs_preset', JSON.stringify(preset));
+        showNotification('Preset sauvegardé', 'success');
+    });
+
+    $('loadPresetBtn').addEventListener('click', () => {
+        const raw = localStorage.getItem('brs_preset');
+        if (!raw) return showNotification('Aucun preset sauvegardé', 'error');
+        try {
+            const p = JSON.parse(raw);
+            if (p.template != null) el.templateInput.value = p.template;
+            if (p.prefix != null) el.prefixInput.value = p.prefix;
+            if (p.suffix != null) el.suffixInput.value = p.suffix;
+            if (p.padding != null) el.paddingSelect.value = p.padding;
+            if (p.startIndex != null) el.startIndexInput.value = p.startIndex;
+            if (p.caseMode != null) el.caseSelect.value = p.caseMode;
+            if (p.spaceMode != null) el.spaceSelect.value = p.spaceMode;
+            if (p.find != null) el.findInput.value = p.find;
+            if (p.replace != null) el.replaceInput.value = p.replace;
+            if (p.useRegex != null) el.useRegexReplace.checked = p.useRegex;
             updateNamesAndPreview();
-        });
-
-        document.getElementById('presetStartOne').addEventListener('click', () => {
-            startIndexInput.value = '1';
-            updateNamesAndPreview();
-        });
-
-        // Filter Handlers
-        filterTypeSelect.addEventListener('change', () => {
-            if (filterTypeSelect.value === 'custom') {
-                customExtContainer.classList.remove('hidden');
-            } else {
-                customExtContainer.classList.add('hidden');
-            }
-            applyFiltersAndSort();
-        });
-
-        customExtInput.addEventListener('input', applyFiltersAndSort);
-
-        // Input Listeners
-        [templateInput, prefixInput, suffixInput, paddingSelect, startIndexInput, caseSelect, spaceSelect].forEach(el => {
-            el.addEventListener('input', updateNamesAndPreview);
-        });
-
-        sortSelect.addEventListener('change', () => {
-            applyFiltersAndSort();
-        });
-
-        // Directory selection
-        selectDirBtn.addEventListener('click', async () => {
-            try {
-                dirHandle = await window.showDirectoryPicker({ mode: 'readwrite' });
-                selectDirText.textContent = `Dossier: ${dirHandle.name}`;
-                folderNameBadge.textContent = dirHandle.name;
-                folderNameBadge.classList.remove('hidden');
-
-                await loadFilesFromDirectory();
-                showNotification(`Dossier "${dirHandle.name}" chargé avec succès`, 'success');
-            } catch (err) {
-                if (err.name !== 'AbortError') {
-                    console.error(err);
-                    showNotification('Erreur lors de l\'accès au dossier', 'error');
-                }
-            }
-        });
-
-        async function loadFilesFromDirectory() {
-            if (!dirHandle) return;
-
-            rawFiles = [];
-            for await (const entry of dirHandle.values()) {
-                if (entry.kind === 'file' && !entry.name.startsWith('.')) {
-                    const file = await entry.getFile();
-                    rawFiles.push({
-                        handle: entry,
-                        file: file,
-                        oldName: entry.name,
-                        newName: '',
-                        status: 'pending' // 'pending', 'success', 'error'
-                    });
-                }
-            }
-
-            applyFiltersAndSort();
+            showNotification('Preset chargé', 'success');
+        } catch {
+            showNotification('Preset invalide', 'error');
         }
+    });
 
-        function applyFiltersAndSort() {
-            const filterType = filterTypeSelect.value;
-            let extensions = [];
-
-            if (filterType === 'images') extensions = ['png', 'jpg', 'jpeg', 'webp', 'gif', 'svg', 'bmp'];
-            else if (filterType === 'data') extensions = ['cdb', 'json', 'xml', 'csv', 'sql', 'db'];
-            else if (filterType === 'code') extensions = ['js', 'py', 'html', 'css', 'ts', 'cpp', 'c', 'cs', 'lua'];
-            else if (filterType === 'docs') extensions = ['pdf', 'txt', 'docx', 'xlsx', 'pptx'];
-            else if (filterType === 'custom') {
-                extensions = customExtInput.value
-                    .split(',')
-                    .map(e => e.trim().toLowerCase().replace(/^\./, ''))
-                    .filter(e => e.length > 0);
-            }
-
-            // Filter raw files
-            filteredEntries = rawFiles.filter(item => {
-                if (filterType === 'all') return true;
-                const ext = item.oldName.split('.').pop().toLowerCase();
-                return extensions.includes(ext);
-            });
-
-            // Sort files
-            const mode = sortSelect.value;
-            const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
-
-            filteredEntries.sort((a, b) => {
-                if (mode === 'natural') {
-                    return collator.compare(a.oldName, b.oldName);
-                } else if (mode === 'alpha') {
-                    return a.oldName.localeCompare(b.oldName);
-                } else if (mode === 'date') {
-                    return (a.file.lastModified || 0) - (b.file.lastModified || 0);
-                }
-                return 0;
-            });
-
-            updateNamesAndPreview();
-        }
-
-        function generateNewName(oldName, index) {
-            const prefix = prefixInput.value;
-            const suffix = suffixInput.value;
-            const template = templateInput.value;
-            const padLen = parseInt(paddingSelect.value, 10);
-            const startIdx = parseInt(startIndexInput.value, 10) || 0;
-
-            const extIdx = oldName.lastIndexOf('.');
-            const nameWithoutExt = extIdx !== -1 ? oldName.substring(0, extIdx) : oldName;
-            const ext = extIdx !== -1 ? oldName.substring(extIdx) : '';
-
-            // Formatting Number
-            const numVal = index + startIdx;
-            const formattedNum = numVal.toString().padStart(padLen, '0');
-
-            // Apply transformations on base name
-            let processedBaseName = nameWithoutExt;
-
-            // Space transformation
-            const spaceMode = spaceSelect.value;
-            if (spaceMode === 'underscore') processedBaseName = processedBaseName.replace(/\s+/g, '_');
-            else if (spaceMode === 'hyphen') processedBaseName = processedBaseName.replace(/\s+/g, '-');
-            else if (spaceMode === 'remove') processedBaseName = processedBaseName.replace(/\s+/g, '');
-
-            // Case transformation
-            const caseMode = caseSelect.value;
-            if (caseMode === 'lower') processedBaseName = processedBaseName.toLowerCase();
-            else if (caseMode === 'upper') processedBaseName = processedBaseName.toUpperCase();
-            else if (caseMode === 'title') {
-                processedBaseName = processedBaseName.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
-            }
-
-            // Process Template tags
-            let resultName = template;
-            if (!resultName) {
-                resultName = `{prefix}${processedBaseName}{suffix}`;
-            }
-
-            resultName = resultName.replace(/{prefix}/g, prefix);
-            resultName = resultName.replace(/{suffix}/g, suffix);
-            resultName = resultName.replace(/{num}/g, formattedNum);
-            resultName = resultName.replace(/{name}/g, processedBaseName);
-
-            // Ensure prefix and suffix are attached if not using explicit tags in simple mode
-            if (!template.includes('{prefix}') && prefix && !resultName.startsWith(prefix)) {
-                resultName = prefix + resultName;
-            }
-            if (!template.includes('{suffix}') && suffix && !resultName.endsWith(suffix)) {
-                resultName = resultName + suffix;
-            }
-
-            return `${resultName}${ext}`;
-        }
-
-        function updateNamesAndPreview() {
-            if (filteredEntries.length === 0) {
-                emptyState.classList.remove('hidden');
-                previewTable.classList.add('hidden');
-                statsBadge.classList.add('hidden');
-                startRenameBtn.disabled = true;
-                return;
-            }
-
-            emptyState.classList.add('hidden');
-            previewTable.classList.remove('hidden');
-            statsBadge.classList.remove('hidden');
-            fileCountText.textContent = `${filteredEntries.length} fichier(s)`;
-            startRenameBtn.disabled = false;
-
-            previewTbody.innerHTML = '';
-
-            // 1) Calcul des nouveaux noms
-            filteredEntries.forEach((item, idx) => {
-                item.newName = generateNewName(item.oldName, idx);
-            });
-
-            // 2) Détection des problèmes (doublons, noms invalides, fichiers déjà présents)
-            const problemes = detecterProblemes();
-
-            // 3) Affichage
-            filteredEntries.forEach((item, idx) => {
-                const tr = document.createElement('tr');
-                tr.className = 'hover:bg-slate-800/40 transition-colors';
-                tr.id = `file-row-${idx}`;
-
-                const pb = problemes.get(idx);
-                let statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] bg-slate-800 text-slate-400 border border-slate-700">En attente</span>`;
-                if (pb) {
-                    statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] bg-rose-500/20 text-rose-400 border border-rose-500/30 font-bold" title="${escapeHtml(pb)}"><i class="fa-solid fa-triangle-exclamation mr-1"></i>${escapeHtml(pb)}</span>`;
-                } else if (item.status === 'success') {
-                    statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-bold"><i class="fa-solid fa-check mr-1"></i>Renommé</span>`;
-                } else if (item.status === 'error') {
-                    statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] bg-rose-500/20 text-rose-400 border border-rose-500/30"><i class="fa-solid fa-xmark mr-1"></i>Erreur</span>`;
-                }
-
-                tr.innerHTML = `
-                    <td class="p-3 text-center text-slate-500 font-sans">${idx + (parseInt(startIndexInput.value, 10) || 0)}</td>
-                    <td class="p-3 text-slate-300 truncate max-w-[180px]" title="${escapeHtml(item.oldName)}">${escapeHtml(item.oldName)}</td>
-                    <td class="p-3 text-center text-slate-600"><i class="fa-solid fa-arrow-right"></i></td>
-                    <td class="p-3 ${pb ? 'text-rose-400' : 'text-brand-400'} font-semibold truncate max-w-[180px]" title="${escapeHtml(item.newName)}">${escapeHtml(item.newName)}</td>
-                    <td class="p-3 text-center status-col">${statusBadge}</td>
-                `;
-                previewTbody.appendChild(tr);
-            });
-
-            // 4) Blocage du renommage s'il y a un problème
-            if (problemes.size > 0) {
-                fileCountText.textContent = `${filteredEntries.length} fichier(s) — ${problemes.size} conflit(s)`;
-                startRenameBtn.disabled = true;
-                startRenameBtn.title = 'Corrige les conflits (lignes en rouge) avant de renommer';
-            } else {
-                startRenameBtn.title = '';
-            }
-        }
-
-        // Noms interdits par Windows / invalides pour un fichier
-        function nomInvalide(nom) {
-            if (!nom || !nom.trim()) return 'Nom vide';
-            if (/[\\/:*?"<>|\u0000-\u001f]/.test(nom)) return 'Caractère interdit';
-            if (/[. ]$/.test(nom)) return 'Finit par . ou espace';
-            if (nom.length > 255) return 'Nom trop long';
-            return '';
-        }
-
-        // Renvoie Map(index → message) pour chaque ligne en conflit
-        function detecterProblemes() {
-            const problemes = new Map();
-            const vus = new Map(); // nom (minuscules) → premier index
-            const dansLot = new Set(filteredEntries.map(e => e.oldName));
-            const horsLot = new Set(
-                rawFiles.filter(r => !dansLot.has(r.oldName)).map(r => r.oldName.toLowerCase())
-            );
-
-            filteredEntries.forEach((item, idx) => {
-                const inv = nomInvalide(item.newName);
-                if (inv) { problemes.set(idx, inv); return; }
-
-                const cle = item.newName.toLowerCase();
-                if (vus.has(cle)) {
-                    problemes.set(idx, 'Doublon');
-                    if (!problemes.has(vus.get(cle))) problemes.set(vus.get(cle), 'Doublon');
-                } else {
-                    vus.set(cle, idx);
-                }
-
-                if (horsLot.has(cle)) problemes.set(idx, 'Existe déjà');
-            });
-            return problemes;
-        }
-
-        // Custom Confirmation Dialog
-        function showConfirmDialog(message) {
-            return new Promise((resolve) => {
-                modalMessage.textContent = message;
-                customModal.classList.remove('hidden');
-                customModal.classList.add('flex');
-
-                const handleConfirm = () => {
-                    cleanup();
-                    resolve(true);
-                };
-
-                const handleCancel = () => {
-                    cleanup();
-                    resolve(false);
-                };
-
-                const cleanup = () => {
-                    customModal.classList.add('hidden');
-                    customModal.classList.remove('flex');
-                    modalConfirmBtn.removeEventListener('click', handleConfirm);
-                    modalCancelBtn.removeEventListener('click', handleCancel);
-                };
-
-                modalConfirmBtn.addEventListener('click', handleConfirm);
-                modalCancelBtn.addEventListener('click', handleCancel);
-            });
-        }
-
-        // Le fichier/dossier existe-t-il déjà dans le dossier choisi ?
-        async function existeDeja(nom) {
-            try {
-                await dirHandle.getFileHandle(nom);
-                return true;
-            } catch (e) {
-                return e.name !== 'NotFoundError'; // dossier du même nom, etc. → on considère que ça existe
-            }
-        }
-
-        // Renomme un fichier SANS jamais écraser quoi que ce soit. Renvoie le handle à jour.
-        async function renommerFichier(handle, ancienNom, nouveauNom) {
-            if (ancienNom === nouveauNom) return handle;
-            if (await existeDeja(nouveauNom)) {
-                throw new Error(`"${nouveauNom}" existe déjà`);
-            }
-
-            if (typeof handle.move === 'function') {
-                try {
-                    await handle.move(nouveauNom);
-                    return handle;
-                } catch (e) {
-                    // move() non pris en charge sur ce dossier : repli copie + suppression
-                }
-            }
-
-            const file = await handle.getFile(); // lecture fraîche
-            const nouveau = await dirHandle.getFileHandle(nouveauNom, { create: true });
-            const writable = await nouveau.createWritable();
-            await writable.write(file);
-            await writable.close();
-            await dirHandle.removeEntry(ancienNom);
-            return nouveau;
-        }
-
-        // Renaming Execution directly on PC (en 2 passes pour éviter les écrasements)
-        startRenameBtn.addEventListener('click', async () => {
-            if (!dirHandle || filteredEntries.length === 0) return;
-
-            // Sécurité : on revérifie les conflits juste avant d'agir
-            if (detecterProblemes().size > 0) {
-                showNotification('Des conflits de noms empêchent le renommage', 'error');
-                updateNamesAndPreview();
-                return;
-            }
-
-            const confirmRename = await showConfirmDialog(`Êtes-vous sûr de vouloir renommer directement les ${filteredEntries.length} fichiers sélectionnés dans le dossier "${dirHandle.name}" ?`);
-            if (!confirmRename) return;
-
-            startRenameBtn.disabled = true;
-            selectDirBtn.disabled = true;
-            progressContainer.classList.remove('hidden');
-
-            let successCount = 0;
-            let errorCount = 0;
-            const total = filteredEntries.length;
-            const anciensNoms = new Set(filteredEntries.map(e => e.oldName.toLowerCase()));
-            const pasAFaire = [];   // inchangés
-            const enAttente = [];   // passés par un nom temporaire (pass 2)
-            const run = Date.now().toString(36);
-            let fait = 0;
-
-            function progression(texte) {
-                const percent = Math.round((fait / (total * 2)) * 100);
-                progressBar.style.width = `${percent}%`;
-                progressPercent.textContent = `${percent}%`;
-                progressText.textContent = texte;
-            }
-
-            function marquerLigne(i, ok, message) {
-                const row = document.getElementById(`file-row-${i}`);
-                const statusCol = row && row.querySelector('.status-col');
-                if (!statusCol) return;
-                statusCol.innerHTML = ok
-                    ? `<span class="px-2 py-0.5 rounded-full text-[10px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-bold"><i class="fa-solid fa-check mr-1"></i>Renommé</span>`
-                    : `<span class="px-2 py-0.5 rounded-full text-[10px] bg-rose-500/20 text-rose-400 border border-rose-500/30" title="${escapeHtml(message || '')}"><i class="fa-solid fa-xmark mr-1"></i>Erreur</span>`;
-            }
-
-            // ---- Passe 1 : renommage direct si possible, sinon nom temporaire ----
-            for (let i = 0; i < total; i++) {
-                const item = filteredEntries[i];
-                fait++;
-                progression(`Passe 1/2 : ${i + 1}/${total}`);
-
-                if (item.oldName === item.newName) {
-                    item.status = 'success';
-                    pasAFaire.push(i);
-                    successCount++;
-                    marquerLigne(i, true);
-                    continue;
-                }
-
-                try {
-                    const besoinTemp = anciensNoms.has(item.newName.toLowerCase());
-                    if (besoinTemp) {
-                        const tmp = `__vv_tmp_${run}_${i}`;
-                        item.handle = await renommerFichier(item.handle, item.oldName, tmp);
-                        item.nomActuel = tmp;
-                        enAttente.push(i);
-                    } else {
-                        item.handle = await renommerFichier(item.handle, item.oldName, item.newName);
-                        item.nomActuel = item.newName;
-                        item.status = 'success';
-                        successCount++;
-                        marquerLigne(i, true);
-                    }
-                } catch (err) {
-                    console.error(`Erreur pour ${item.oldName}:`, err);
-                    item.status = 'error';
-                    errorCount++;
-                    marquerLigne(i, false, err.message);
-                }
-            }
-
-            // ---- Passe 2 : noms temporaires → noms définitifs ----
-            for (let k = 0; k < enAttente.length; k++) {
-                const i = enAttente[k];
-                const item = filteredEntries[i];
-                fait = total + k + 1;
-                progression(`Passe 2/2 : ${k + 1}/${enAttente.length}`);
-
-                try {
-                    item.handle = await renommerFichier(item.handle, item.nomActuel, item.newName);
-                    item.status = 'success';
-                    successCount++;
-                    marquerLigne(i, true);
-                } catch (err) {
-                    console.error(`Erreur pour ${item.oldName}:`, err);
-                    // Retour au nom d'origine pour ne rien laisser en "__vv_tmp_"
-                    try {
-                        item.handle = await renommerFichier(item.handle, item.nomActuel, item.oldName);
-                    } catch (e2) {
-                        console.error(`Impossible de restaurer ${item.oldName} (reste : ${item.nomActuel})`, e2);
-                    }
-                    item.status = 'error';
-                    errorCount++;
-                    marquerLigne(i, false, err.message);
-                }
-            }
-
-            progressBar.style.width = '100%';
-            progressPercent.textContent = '100%';
-
-            // Reload entries from folder to ensure sync
+    /* ============================================================
+       Directory picking
+    ============================================================ */
+    el.selectDirBtn.addEventListener('click', async () => {
+        try {
+            state.dirHandle = await window.showDirectoryPicker({ mode: 'readwrite' });
+            el.selectDirText.textContent = `📁 ${state.dirHandle.name}`;
+            el.folderNameBadge.textContent = state.dirHandle.name;
+            el.folderNameBadge.classList.remove('hidden');
+            el.resetBtn.classList.remove('hidden');
             await loadFilesFromDirectory();
-
-            startRenameBtn.disabled = false;
-            selectDirBtn.disabled = false;
-
-            if (errorCount === 0) {
-                showNotification(`${successCount} fichier(s) renommés avec succès !`, 'success');
-            } else {
-                showNotification(`${successCount} réussi(s), ${errorCount} erreur(s)`, 'error');
+            showNotification(`Dossier « ${state.dirHandle.name} » chargé`, 'success');
+        } catch (err) {
+            if (err.name !== 'AbortError') {
+                console.error(err);
+                showNotification('Erreur d\'accès au dossier', 'error');
             }
+        }
+    });
+
+    el.recursiveToggle.addEventListener('change', () => {
+        if (state.dirHandle) loadFilesFromDirectory();
+    });
+
+    el.resetBtn.addEventListener('click', () => {
+        state.dirHandle = null;
+        state.rawFiles = [];
+        state.filteredEntries = [];
+        el.selectDirText.textContent = 'Sélectionner un dossier';
+        el.folderNameBadge.classList.add('hidden');
+        el.resetBtn.classList.add('hidden');
+        updateNamesAndPreview();
+    });
+
+    el.fallbackBtn.addEventListener('click', () => el.fallbackInput.click());
+    el.fallbackInput.addEventListener('change', (e) => {
+        state.rawFiles = Array.from(e.target.files).map(f => ({
+            handle: null,
+            file: f,
+            oldName: f.name,
+            newName: '',
+            status: 'pending',
+            path: f.webkitRelativePath || f.name,
+        }));
+        el.folderNameBadge.textContent = `${state.rawFiles.length} fichiers importés`;
+        el.folderNameBadge.classList.remove('hidden');
+        el.resetBtn.classList.remove('hidden');
+        applyFiltersAndSort();
+    });
+
+    async function* walkDir(dir, path = '') {
+        for await (const entry of dir.values()) {
+            if (entry.kind === 'file' && !entry.name.startsWith('.')) {
+                yield { handle: entry, path };
+            } else if (entry.kind === 'directory' && el.recursiveToggle.checked) {
+                yield* walkDir(entry, path + entry.name + '/');
+            }
+        }
+    }
+
+    async function loadFilesFromDirectory() {
+        if (!state.dirHandle) return;
+        state.rawFiles = [];
+        for await (const { handle, path } of walkDir(state.dirHandle)) {
+            const file = await handle.getFile();
+            state.rawFiles.push({
+                handle, file,
+                oldName: handle.name,
+                newName: '',
+                status: 'pending',
+                path: path + handle.name,
+            });
+        }
+        applyFiltersAndSort();
+    }
+
+    /* ============================================================
+       Filtering + sorting
+    ============================================================ */
+    function getExtensionsFromMode(mode) {
+        switch (mode) {
+            case 'images': return ['png','jpg','jpeg','webp','gif','svg','bmp','tiff','heic'];
+            case 'data':   return ['cdb','json','xml','csv','sql','db','yaml','yml','parquet'];
+            case 'code':   return ['js','ts','py','html','css','lua','c','cpp','cs','rs','go','java','php','rb','sh'];
+            case 'docs':   return ['pdf','txt','docx','doc','xlsx','xls','pptx','ppt','odt','md','rtf'];
+            default: return [];
+        }
+    }
+
+    function compileFilter() {
+        const mode = el.filterMode.value;
+        if (mode === 'all') return () => true;
+
+        if (mode === 'custom') {
+            const exts = el.customExtInput.value.split(',')
+                .map(e => e.trim().toLowerCase().replace(/^\./, ''))
+                .filter(Boolean);
+            return (item) => {
+                const ext = item.oldName.split('.').pop().toLowerCase();
+                return exts.includes(ext);
+            };
+        }
+
+        if (mode === 'regex') {
+            try {
+                const re = new RegExp(el.filterRegexInput.value);
+                return (item) => re.test(item.oldName);
+            } catch { return () => false; }
+        }
+
+        if (mode === 'size') {
+            const min = (parseFloat(el.minSizeInput.value) || 0) * 1024;
+            const max = (parseFloat(el.maxSizeInput.value) || Infinity) * 1024;
+            return (item) => item.file.size >= min && item.file.size <= max;
+        }
+
+        const exts = getExtensionsFromMode(mode);
+        return (item) => {
+            const ext = item.oldName.split('.').pop().toLowerCase();
+            return exts.includes(ext);
+        };
+    }
+
+    function applyFiltersAndSort() {
+        const pred = compileFilter();
+        state.filteredEntries = state.rawFiles.filter(pred);
+
+        const collator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
+        const mode = el.sortSelect.value;
+        const dir = state.sortDir;
+
+        state.filteredEntries.sort((a, b) => {
+            let r = 0;
+            if (mode === 'natural') r = collator.compare(a.oldName, b.oldName);
+            else if (mode === 'alpha') r = a.oldName.localeCompare(b.oldName);
+            else if (mode === 'date') r = (a.file.lastModified || 0) - (b.file.lastModified || 0);
+            else if (mode === 'size') r = a.file.size - b.file.size;
+            else if (mode === 'ext') {
+                const ea = a.oldName.split('.').pop().toLowerCase();
+                const eb = b.oldName.split('.').pop().toLowerCase();
+                r = ea.localeCompare(eb) || collator.compare(a.oldName, b.oldName);
+            }
+            return r * dir;
         });
 
-        function showNotification(msg, type = 'success') {
-            const notif = document.getElementById('notification');
-            const icon = document.getElementById('notifIcon');
-            const message = document.getElementById('notifMessage');
+        updateNamesAndPreview();
+    }
 
-            message.textContent = msg;
+    /* ============================================================
+       Name generation
+    ============================================================ */
+    function escapeRegex(str) {
+        return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
 
-            if (type === 'success') {
-                icon.className = 'fa-solid fa-circle-check text-emerald-400 text-lg';
-            } else if (type === 'info') {
-                icon.className = 'fa-solid fa-circle-info text-brand-400 text-lg';
+    function applyFindReplace(name) {
+        const find = el.findInput.value;
+        if (!find) return name;
+        const repl = el.replaceInput.value;
+        try {
+            const pattern = el.useRegexReplace.checked
+                ? new RegExp(find, 'g')
+                : new RegExp(escapeRegex(find), 'g');
+            return name.replace(pattern, repl);
+        } catch { return name; }
+    }
+
+    function generateNewName(oldName, index, file) {
+        const template = el.templateInput.value;
+        const prefix = el.prefixInput.value;
+        const suffix = el.suffixInput.value;
+        const padLen = parseInt(el.paddingSelect.value, 10);
+        const startIdx = parseInt(el.startIndexInput.value, 10) || 0;
+
+        const extIdx = oldName.lastIndexOf('.');
+        let baseName = extIdx !== -1 ? oldName.slice(0, extIdx) : oldName;
+        const ext = extIdx !== -1 ? oldName.slice(extIdx + 1) : '';
+
+        // Find & replace
+        baseName = applyFindReplace(baseName);
+
+        // Spaces
+        const spaceMode = el.spaceSelect.value;
+        if (spaceMode === 'underscore') baseName = baseName.replace(/\s+/g, '_');
+        else if (spaceMode === 'hyphen') baseName = baseName.replace(/\s+/g, '-');
+        else if (spaceMode === 'remove') baseName = baseName.replace(/\s+/g, '');
+
+        // Case
+        const caseMode = el.caseSelect.value;
+        if (caseMode === 'lower') baseName = baseName.toLowerCase();
+        else if (caseMode === 'upper') baseName = baseName.toUpperCase();
+        else if (caseMode === 'title') {
+            baseName = baseName.replace(/\w\S*/g, t => t[0].toUpperCase() + t.slice(1).toLowerCase());
+        }
+
+        const numVal = index + startIdx;
+        const formattedNum = String(numVal).padStart(padLen, '0');
+
+        const now = new Date(file.lastModified || Date.now());
+        const dateStr = now.toISOString().slice(0, 10).replace(/-/g, '');
+        const timeStr = now.toTimeString().slice(0, 8).replace(/:/g, '');
+        const randStr = Math.random().toString(36).slice(2, 8);
+
+        let tpl = template || `{prefix}{name}{suffix}`;
+
+        // {num:N} — avant {num} pour éviter que {num} ne casse {num:3}
+        tpl = tpl.replace(/\{num:(\d+)\}/g, (_, n) => String(numVal).padStart(parseInt(n, 10), '0'));
+
+        const tags = {
+            '{num}': formattedNum,
+            '{index}': String(index),
+            '{name}': baseName,
+            '{ext}': ext,
+            '{parent}': state.dirHandle?.name || '',
+            '{date}': dateStr,
+            '{time}': timeStr,
+            '{random}': randStr,
+            '{upper}': baseName.toUpperCase(),
+            '{lower}': baseName.toLowerCase(),
+            '{size}': String(file.size),
+            '{prefix}': prefix,
+            '{suffix}': suffix,
+        };
+        for (const [k, v] of Object.entries(tags)) tpl = tpl.split(k).join(v);
+
+        if (!template.includes('{prefix}') && prefix && !tpl.startsWith(prefix)) tpl = prefix + tpl;
+        if (!template.includes('{suffix}') && suffix && !tpl.endsWith(suffix)) tpl = tpl + suffix;
+
+        // Si l'utilisateur a mis {ext}, il gère l'extension lui-même
+        const userAddedExt = template.includes('{ext}');
+        if (userAddedExt) return tpl;
+        return ext ? `${tpl}.${ext}` : tpl;
+    }
+
+    /* ============================================================
+       Validation
+    ============================================================ */
+    function nomInvalide(nom) {
+        if (!nom || !nom.trim()) return 'Nom vide';
+        if (/[\\/:*?"<>|\u0000-\u001f]/.test(nom)) return 'Caractère interdit';
+        if (/[. ]$/.test(nom)) return 'Finit par . ou espace';
+        if (nom.length > 255) return 'Nom trop long';
+        if (/[\u00A0\u2028\u2029]/.test(nom)) return 'Caractère invisible';
+        return '';
+    }
+
+    function detecterProblemes() {
+        const problemes = new Map();
+        const vus = new Map();
+        const dansLot = new Set(state.filteredEntries.map(e => e.oldName));
+        const horsLot = new Set(
+            state.rawFiles.filter(r => !dansLot.has(r.oldName))
+                .map(r => r.oldName.toLowerCase())
+        );
+
+        state.filteredEntries.forEach((item, idx) => {
+            const inv = nomInvalide(item.newName);
+            if (inv) { problemes.set(idx, inv); return; }
+
+            const cle = item.newName.toLowerCase();
+            if (vus.has(cle)) {
+                problemes.set(idx, 'Doublon');
+                if (!problemes.has(vus.get(cle))) problemes.set(vus.get(cle), 'Doublon');
             } else {
-                icon.className = 'fa-solid fa-triangle-exclamation text-rose-400 text-lg';
+                vus.set(cle, idx);
+            }
+            if (horsLot.has(cle)) problemes.set(idx, 'Existe déjà');
+        });
+        return problemes;
+    }
+
+    /* ============================================================
+       Preview rendering
+    ============================================================ */
+    function updateNamesAndPreview() {
+        if (state.filteredEntries.length === 0) {
+            el.emptyState.classList.remove('hidden');
+            el.previewTable.classList.add('hidden');
+            el.statsBadge.classList.add('hidden');
+            el.startRenameBtn.disabled = true;
+            el.truncateNotice.classList.add('hidden');
+            return;
+        }
+
+        el.emptyState.classList.add('hidden');
+        el.previewTable.classList.remove('hidden');
+        el.statsBadge.classList.remove('hidden');
+
+        // Compute new names
+        state.filteredEntries.forEach((item, idx) => {
+            item.newName = generateNewName(item.oldName, idx, item.file);
+        });
+
+        const problemes = detecterProblemes();
+
+        el.fileCountText.textContent = problemes.size > 0
+            ? `${state.filteredEntries.length} fichier(s) — ${problemes.size} conflit(s)`
+            : `${state.filteredEntries.length} fichier(s)`;
+
+        // Render (with truncation)
+        el.previewTbody.innerHTML = '';
+        const shown = Math.min(state.filteredEntries.length, MAX_PREVIEW);
+
+        for (let idx = 0; idx < shown; idx++) {
+            const item = state.filteredEntries[idx];
+            const tr = document.createElement('tr');
+            tr.className = 'hover:bg-slate-100 dark:hover:bg-slate-800/40 transition-colors';
+            tr.id = `file-row-${idx}`;
+
+            const pb = problemes.get(idx);
+            let statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] bg-slate-200 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-300 dark:border-slate-700">En attente</span>`;
+            if (pb) {
+                statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] bg-rose-500/20 text-rose-500 border border-rose-500/30 font-bold" title="${escapeHtml(pb)}"><i class="fa-solid fa-triangle-exclamation mr-1"></i>${escapeHtml(pb)}</span>`;
+            } else if (item.status === 'success') {
+                statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] bg-emerald-500/20 text-emerald-500 border border-emerald-500/30 font-bold"><i class="fa-solid fa-check mr-1"></i>Renommé</span>`;
+            } else if (item.status === 'error') {
+                statusBadge = `<span class="px-2 py-0.5 rounded-full text-[10px] bg-rose-500/20 text-rose-500 border border-rose-500/30"><i class="fa-solid fa-xmark mr-1"></i>Erreur</span>`;
             }
 
-            notif.classList.remove('translate-y-20', 'opacity-0');
-
-            setTimeout(() => {
-                notif.classList.add('translate-y-20', 'opacity-0');
-            }, 3500);
+            tr.innerHTML = `
+                <td class="p-3 text-center text-slate-400 font-sans">${idx + (parseInt(el.startIndexInput.value, 10) || 0)}</td>
+                <td class="p-3 text-slate-600 dark:text-slate-300 truncate max-w-[180px]" title="${escapeHtml(item.oldName)}">${escapeHtml(item.oldName)}</td>
+                <td class="p-3 text-center text-slate-400"><i class="fa-solid fa-arrow-right"></i></td>
+                <td class="p-3 ${pb ? 'text-rose-500' : 'text-brand-500'} font-semibold truncate max-w-[180px]" title="${escapeHtml(item.newName)}">${escapeHtml(item.newName)}</td>
+                <td class="p-3 text-center status-col">${statusBadge}</td>
+            `;
+            el.previewTbody.appendChild(tr);
         }
 
-        function escapeHtml(text) {
-            return text
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
+        if (state.filteredEntries.length > MAX_PREVIEW) {
+            el.truncateNotice.textContent = `Aperçu limité à ${MAX_PREVIEW} lignes (${state.filteredEntries.length} au total).`;
+            el.truncateNotice.classList.remove('hidden');
+        } else {
+            el.truncateNotice.classList.add('hidden');
         }
+
+        el.startRenameBtn.disabled = problemes.size > 0 || state.running;
+        el.startRenameBtn.title = problemes.size > 0
+            ? 'Corrigez les conflits (lignes rouges) avant de renommer'
+            : '';
+    }
+
+    /* ============================================================
+       Modal
+    ============================================================ */
+    function showConfirmDialog(message) {
+        return new Promise((resolve) => {
+            el.modalMessage.textContent = message;
+            el.customModal.classList.remove('hidden');
+            el.customModal.classList.add('flex');
+
+            const cleanup = () => {
+                el.customModal.classList.add('hidden');
+                el.customModal.classList.remove('flex');
+                el.modalConfirmBtn.removeEventListener('click', onOk);
+                el.modalCancelBtn.removeEventListener('click', onCancel);
+            };
+            const onOk = () => { cleanup(); resolve(true); };
+            const onCancel = () => { cleanup(); resolve(false); };
+
+            el.modalConfirmBtn.addEventListener('click', onOk);
+            el.modalCancelBtn.addEventListener('click', onCancel);
+        });
+    }
+
+    /* ============================================================
+       FS API rename helpers
+    ============================================================ */
+    async function existeDeja(nom) {
+        try {
+            await state.dirHandle.getFileHandle(nom);
+            return true;
+        } catch (e) {
+            return e.name !== 'NotFoundError';
+        }
+    }
+
+    async function renommerFichier(handle, ancienNom, nouveauNom) {
+        if (ancienNom === nouveauNom) return handle;
+        if (await existeDeja(nouveauNom)) {
+            throw new Error(`« ${nouveauNom} » existe déjà`);
+        }
+
+        if (typeof handle.move === 'function') {
+            try {
+                await handle.move(nouveauNom);
+                return handle;
+            } catch (_) { /* fallback */ }
+        }
+
+        const file = await handle.getFile();
+        const nouveau = await state.dirHandle.getFileHandle(nouveauNom, { create: true });
+        const writable = await nouveau.createWritable();
+        await writable.write(file);
+        await writable.close();
+        await state.dirHandle.removeEntry(ancienNom);
+        return nouveau;
+    }
+
+    /* ============================================================
+       Actions
+    ============================================================ */
+    el.startRenameBtn.addEventListener('click', async () => {
+        if (state.filteredEntries.length === 0) return;
+        if (detecterProblemes().size > 0) {
+            showNotification('Des conflits de noms empêchent le renommage', 'error');
+            updateNamesAndPreview();
+            return;
+        }
+
+        if (state.mode === 'zip') {
+            await downloadRenamedZip();
+        } else {
+            await renameInPlace();
+        }
+    });
+
+    async function downloadRenamedZip() {
+        const ok = await showConfirmDialog(
+            `Générer un ZIP contenant les ${state.filteredEntries.length} fichiers renommés ?`
+        );
+        if (!ok) return;
+
+        state.running = true;
+        el.startRenameBtn.disabled = true;
+        el.progressContainer.classList.remove('hidden');
+
+        const zip = new JSZip();
+        const total = state.filteredEntries.length;
+        let done = 0;
+        let errors = 0;
+
+        for (const item of state.filteredEntries) {
+            try {
+                // Préserver l'arborescence si import récursif
+                const dirPath = item.path && item.path.includes('/')
+                    ? item.path.slice(0, item.path.lastIndexOf('/') + 1)
+                    : '';
+                zip.file(dirPath + item.newName, item.file);
+            } catch (e) {
+                errors++;
+                console.error(e);
+            }
+            done++;
+            const percent = Math.round((done / total) * 100);
+            el.progressBar.style.width = `${percent}%`;
+            el.progressPercent.textContent = `${percent}%`;
+            el.progressText.textContent = `Ajout : ${done}/${total}`;
+        }
+
+        el.progressText.textContent = 'Compression…';
+        const blob = await zip.generateAsync({ type: 'blob' }, (meta) => {
+            const p = Math.round(meta.percent);
+            el.progressBar.style.width = `${p}%`;
+            el.progressPercent.textContent = `${p}%`;
+        });
+
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `renamed_${Date.now()}.zip`;
+        a.click();
+        URL.revokeObjectURL(a.href);
+
+        state.running = false;
+        el.startRenameBtn.disabled = false;
+        showNotification(
+            errors === 0 ? `ZIP généré (${total} fichiers)` : `${total - errors} OK, ${errors} erreur(s)`,
+            errors === 0 ? 'success' : 'error'
+        );
+    }
+
+    async function renameInPlace() {
+        const ok = await showConfirmDialog(
+            `Renommer directement les ${state.filteredEntries.length} fichiers dans « ${state.dirHandle.name} » ?`
+        );
+        if (!ok) return;
+
+        state.running = true;
+        el.startRenameBtn.disabled = true;
+        el.selectDirBtn.disabled = true;
+        el.progressContainer.classList.remove('hidden');
+
+        let successCount = 0;
+        let errorCount = 0;
+        const total = state.filteredEntries.length;
+        const anciensNoms = new Set(state.filteredEntries.map(e => e.oldName.toLowerCase()));
+        const enAttente = [];
+        const run = Date.now().toString(36);
+        let fait = 0;
+
+        function progression(texte) {
+            const percent = Math.min(100, Math.round((fait / Math.max(1, total * 2)) * 100));
+            el.progressBar.style.width = `${percent}%`;
+            el.progressPercent.textContent = `${percent}%`;
+            el.progressText.textContent = texte;
+        }
+
+        function marquerLigne(i, ok, message) {
+            const row = document.getElementById(`file-row-${i}`);
+            const statusCol = row && row.querySelector('.status-col');
+            if (!statusCol) return;
+            statusCol.innerHTML = ok
+                ? `<span class="px-2 py-0.5 rounded-full text-[10px] bg-emerald-500/20 text-emerald-500 border border-emerald-500/30 font-bold"><i class="fa-solid fa-check mr-1"></i>Renommé</span>`
+                : `<span class="px-2 py-0.5 rounded-full text-[10px] bg-rose-500/20 text-rose-500 border border-rose-500/30" title="${escapeHtml(message || '')}"><i class="fa-solid fa-xmark mr-1"></i>Erreur</span>`;
+        }
+
+        // Passe 1 : direct ou tmp
+        for (let i = 0; i < total; i++) {
+            const item = state.filteredEntries[i];
+            fait++;
+            progression(`Passe 1/2 : ${i + 1}/${total}`);
+
+            if (item.oldName === item.newName) {
+                item.status = 'success';
+                successCount++;
+                marquerLigne(i, true);
+                continue;
+            }
+
+            try {
+                const besoinTemp = anciensNoms.has(item.newName.toLowerCase());
+                if (besoinTemp) {
+                    const tmp = `__brs_tmp_${run}_${i}`;
+                    item.handle = await renommerFichier(item.handle, item.oldName, tmp);
+                    item.nomActuel = tmp;
+                    item.status = 'pending';
+                    enAttente.push(i);
+                } else {
+                    item.handle = await renommerFichier(item.handle, item.oldName, item.newName);
+                    item.nomActuel = item.newName;
+                    item.status = 'success';
+                    successCount++;
+                    marquerLigne(i, true);
+                }
+            } catch (err) {
+                console.error(`Erreur pour ${item.oldName}:`, err);
+                item.status = 'error';
+                errorCount++;
+                marquerLigne(i, false, err.message);
+            }
+        }
+
+        // Passe 2 : tmp → final
+        for (let k = 0; k < enAttente.length; k++) {
+            const i = enAttente[k];
+            const item = state.filteredEntries[i];
+            fait = total + k + 1;
+            progression(`Passe 2/2 : ${k + 1}/${enAttente.length}`);
+
+            try {
+                item.handle = await renommerFichier(item.handle, item.nomActuel, item.newName);
+                item.nomActuel = item.newName;
+                item.status = 'success';
+                successCount++;
+                marquerLigne(i, true);
+            } catch (err) {
+                console.error(`Erreur pour ${item.oldName}:`, err);
+                // Restauration
+                try {
+                    item.handle = await renommerFichier(item.handle, item.nomActuel, item.oldName);
+                    item.nomActuel = item.oldName;
+                } catch (e2) {
+                    console.error(`Restauration impossible pour ${item.oldName}`, e2);
+                }
+                item.status = 'error';
+                errorCount++;
+                marquerLigne(i, false, err.message);
+            }
+        }
+
+        el.progressBar.style.width = '100%';
+        el.progressPercent.textContent = '100%';
+        el.progressText.textContent = 'Terminé';
+
+        // Recharger pour resynchroniser
+        try {
+            await loadFilesFromDirectory();
+        } catch (e) {
+            console.error('Reload failed', e);
+        }
+
+        state.running = false;
+        el.startRenameBtn.disabled = false;
+        el.selectDirBtn.disabled = false;
+
+        showNotification(
+            errorCount === 0
+                ? `${successCount} fichier(s) renommé(s) avec succès`
+                : `${successCount} réussi(s), ${errorCount} erreur(s)`,
+            errorCount === 0 ? 'success' : 'error'
+        );
+
+        setTimeout(() => el.progressContainer.classList.add('hidden'), 2000);
+    }
+
+    /* ============================================================
+       Utils
+    ============================================================ */
+    function showNotification(msg, type = 'success') {
+        const notif = $('notification');
+        const icon = $('notifIcon');
+        const message = $('notifMessage');
+
+        message.textContent = msg;
+        icon.className = type === 'success'
+            ? 'fa-solid fa-circle-check text-emerald-500 text-lg'
+            : type === 'info'
+                ? 'fa-solid fa-circle-info text-brand-500 text-lg'
+                : 'fa-solid fa-triangle-exclamation text-rose-500 text-lg';
+
+        notif.classList.remove('translate-y-20', 'opacity-0');
+        clearTimeout(showNotification._t);
+        showNotification._t = setTimeout(() => {
+            notif.classList.add('translate-y-20', 'opacity-0');
+        }, 3500);
+    }
+
+    function escapeHtml(text) {
+        return String(text)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+
+    // Init
+    updateNamesAndPreview();
     </script>
 </body>
 </html>
