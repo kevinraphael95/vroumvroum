@@ -19,6 +19,37 @@
 
   if (!secIntro || !secQuiz || !secResult) return;
 
+  /* ---------- Fiches indisponibles (en réécriture) ---------- */
+  const FICHES_INDISPONIBLES = ['wip', 'placeholder'];
+
+  function ficheDisponible(fiche) {
+    return !!fiche && !FICHES_INDISPONIBLES.includes(fiche);
+  }
+
+  function afficherPopupFiche() {
+    let dlg = document.getElementById('dlg-fiche');
+
+    if (!dlg) {
+      dlg = document.createElement('dialog');
+      dlg.id = 'dlg-fiche';
+      dlg.className = 'vv-dialog';
+      dlg.innerHTML =
+        '<p>Cette fiche est en cours de réécriture et n\u2019est pas disponible pour le moment.</p>' +
+        '<button type="button" class="vv-dialog-btn">OK</button>';
+
+      dlg.querySelector('button').addEventListener('click', () => dlg.close());
+
+      // Clic sur le fond → ferme aussi
+      dlg.addEventListener('click', e => {
+        if (e.target === dlg) dlg.close();
+      });
+
+      document.body.appendChild(dlg);
+    }
+
+    dlg.showModal();
+  }
+
   /* ---------- Utilitaires ---------- */
 
   function shuffle(arr) {
@@ -695,7 +726,19 @@
 
       if (q.fiche && !r.ok) {
         const a = el('a', 'revoir-fiche', 'Revoir la fiche →');
-        a.href = 'fiches.html#' + encodeURIComponent(q.fiche);
+
+        if (ficheDisponible(q.fiche)) {
+          a.href = 'fiches.html#' + encodeURIComponent(q.fiche);
+        } else {
+          // Fiche en réécriture : on n'essaie pas d'y aller
+          a.href = '#';
+          a.classList.add('revoir-fiche-indispo');
+          a.setAttribute('aria-disabled', 'true');
+          a.addEventListener('click', e => {
+            e.preventDefault();
+            afficherPopupFiche();
+          });
+        }
 
         exp.appendChild(document.createTextNode(' '));
         exp.appendChild(a);
