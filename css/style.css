@@ -827,3 +827,92 @@ html.dark .ex-warn { color: var(--jaune); }
   .exam-result-body { grid-template-columns: 1fr; gap: 1.5rem; }
   .exam-detail { min-height: 0; }
 }
+
+
+
+/* =========================================================
+   POP-UP "FICHE INDISPONIBLE"
+   (fiches en réécriture : wip / placeholder)
+   ========================================================= */
+
+/* --- Boîte de dialogue native <dialog> --- */
+.vv-dialog {
+  width: calc(100% - 2rem);
+  max-width: 420px;
+  padding: 1.5rem 1.5rem 1.25rem;
+  margin: auto;
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: var(--shadow-lg);
+
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.vv-dialog::backdrop {
+  background: rgb(15 23 42 / 0.55);
+  backdrop-filter: blur(2px);
+}
+
+html.dark .vv-dialog::backdrop {
+  background: rgb(0 0 0 / 0.7);
+}
+
+/* --- Texte du pop-up --- */
+.vv-dialog p {
+  margin: 0 0 1.1rem;
+  color: var(--text-soft);
+  font-weight: 500;
+}
+
+/* --- Bouton OK --- */
+.vv-dialog-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.7rem 1.2rem;
+
+  border-radius: 10px;
+  background: var(--bleu-fill);
+  color: #fff;
+  box-shadow: 0 3px 0 var(--bleu-fill-dark);
+
+  font-weight: 700;
+  font-size: 0.9rem;
+  font-family: inherit;
+
+  transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+}
+
+.vv-dialog-btn:hover {
+  background: var(--bleu-fill-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 0 var(--bleu-fill-dark);
+}
+
+.vv-dialog-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 var(--bleu-fill-dark);
+}
+
+.vv-dialog-btn:focus-visible {
+  outline: 3px solid var(--bleu);
+  outline-offset: 2px;
+}
+
+/* --- Lien "Revoir la fiche" quand la fiche est en wip/placeholder --- */
+.revoir-fiche.revoir-fiche-indispo {
+  opacity: 0.55;
+  text-decoration: line-through;
+  cursor: pointer;
+}
+
+.revoir-fiche.revoir-fiche-indispo:hover {
+  opacity: 0.75;
+  text-decoration: line-through;
+}
