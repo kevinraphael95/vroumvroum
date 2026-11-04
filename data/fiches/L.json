@@ -159,39 +159,139 @@
     "titre": "Le marquage au sol",
     "blocs": [
       {
+        "texte": "Le marquage au sol (ou signalisation horizontale) désigne l'ensemble des informations visuelles peintes directement sur la chaussée. Il délimite les voies, indique les priorités et régule la cohabitation entre usagers."
+      },
+      {
+        "titre": "Les lignes longitudinales"
+      },
+      {
         "liste": [
           {
             "label": "Ligne continue",
-            "texte": "Interdiction de franchir ou chevaucher (sauf dépassement d'un cycliste)."
+            "texte": "Interdiction de franchir ou chevaucher. Exception : autorisé pour dépasser un cycliste depuis 2015 (si visibilité suffisante et voie opposée libre). Sanction : 135 € et 3 points (franchissement), 135 € et 1 point (chevauchement)."
           },
           {
             "label": "Ligne discontinue",
-            "texte": "Dépassement et changement de voie autorisés."
+            "texte": "Dépassement et changement de voie autorisés, si la voie opposée est libre et la visibilité suffisante."
           },
           {
-            "label": "Ligne d'avertissement",
-            "texte": "Annonce l'approche d'une ligne continue (3 flèches)."
+            "label": "Ligne d'annonce",
+            "texte": "Ligne discontinue de petite dimension avec des flèches de rabattement, annonçant l'approche d'une ligne continue."
           },
           {
             "label": "Ligne de dissuasion",
-            "texte": "Dépassement toléré uniquement pour véhicules très lents (< 60 km/h)."
+            "texte": "Semblable à la ligne d'annonce, elle vise à décourager les dépassements dangereux. Elle autorise le dépassement des véhicules très lents."
           },
           {
-            "label": "Bande d'arrêt d'urgence",
-            "texte": "Réservée aux arrêts d'urgence et véhicules de secours."
+            "label": "Lignes mixtes",
+            "texte": "Lorsque deux lignes sont côte à côte, le conducteur ne doit tenir compte que de la ligne située de son côté."
           },
           {
-            "label": "Passage piéton",
-            "texte": "Céder le passage à tout piéton engagé ou manifestant l'intention de traverser."
-          },
-          {
-            "label": "Lignes d'arrêt",
-            "texte": "Trait épais continu en travers de la voie : arrêt obligatoire."
+            "label": "Lignes de rive",
+            "texte": "Délimitent le bord droit de la chaussée. Continue (type T2) : interdit de circuler sur l'accotement. Discontinue : autorise l'arrêt/stationnement sur l'accotement et son emprunt à l'approche d'une intersection. Sur autoroute, délimite la BAU."
           }
         ]
       },
       {
-        "astuce": "Une ligne continue s'interrompt à une intersection : on peut y tourner, mais pas dépasser."
+        "titre": "Les flèches directionnelles"
+      },
+      {
+        "liste": [
+          {
+            "label": "Flèches directionnelles",
+            "texte": "Indiquent la direction obligatoire ou les directions autorisées. Ignorer une flèche directionnelle coûte 135 € et 4 points retirés."
+          }
+        ]
+      },
+      {
+        "titre": "Les marquages en agglomération"
+      },
+      {
+        "liste": [
+          {
+            "label": "Passage piéton",
+            "texte": "Bandes blanches parallèles. Ne pas céder le passage à un piéton engagé coûte 135 € et 6 points retirés."
+          },
+          {
+            "label": "Ligne de STOP",
+            "texte": "Ligne continue à côté d'un panneau STOP, imposant l'arrêt complet."
+          },
+          {
+            "label": "Ligne de cédez-le-passage",
+            "texte": "Ligne discontinue à côté du panneau, permettant de s'insérer sans arrêt obligatoire."
+          },
+          {
+            "label": "Lignes des feux",
+            "texte": "Rangée de pointillés blancs indiquant la limite d'arrêt au feu rouge."
+          },
+          {
+            "label": "Voies de bus",
+            "texte": "Réservées aux bus et taxis (parfois vélos). Reconnaissables au mot 'bus' peint au sol."
+          },
+          {
+            "label": "Damiers de bus",
+            "texte": "Damiers blancs indiquant qu'il ne faut pas s'y arrêter ni y stationner, pour laisser manœuvrer les bus."
+          },
+          {
+            "label": "Lignes en zigzag jaunes",
+            "texte": "Devant les arrêts de bus. Franchissables, mais interdiction de s'y arrêter ou d'y stationner."
+          },
+          {
+            "label": "Pistes et voies cyclables",
+            "texte": "Reconnaissables à leur couleur verte, à la ligne discontinue d'encadrement et au pictogramme cycliste."
+          }
+        ]
+      },
+      {
+        "titre": "Les marquages hors agglomération"
+      },
+      {
+        "liste": [
+          {
+            "label": "Zébras",
+            "texte": "Zones hachurées blanches aux bifurcations et sorties d'autoroute. Interdit d'y circuler, de s'y arrêter ou d'y stationner."
+          },
+          {
+            "label": "Barrettes sonores",
+            "texte": "Reliefs transversaux générant bruit et vibration, signalant un danger imminent."
+          }
+        ]
+      },
+      {
+        "titre": "Marquage blanc ou jaune ?"
+      },
+      {
+        "liste": [
+          {
+            "label": "Blanc",
+            "texte": "Marquage permanent : délimite les voies, passages piétons, STOP, flèches."
+          },
+          {
+            "label": "Jaune",
+            "texte": "Marquage temporaire (travaux, déviations) ou restrictions (stationnement interdit, arrêts de bus). Le jaune est toujours prioritaire sur le blanc."
+          },
+          {
+            "label": "Bleu",
+            "texte": "Zones de stationnement payant ou réglementé (réglementation municipale)."
+          }
+        ]
+      },
+      {
+        "titre": "Sanctions liées au marquage"
+      },
+      {
+        "tableau": {
+          "colonnes": ["Infraction", "Amende", "Points retirés"],
+          "lignes": [
+            ["Franchissement d'une ligne continue", "135 €", "3 pts"],
+            ["Chevauchement d'une ligne continue", "135 €", "1 pt"],
+            ["Non-respect d'un passage piéton", "135 €", "6 pts"],
+            ["Non-respect d'une flèche directionnelle", "135 €", "4 pts"],
+            ["Arrêt/stationnement sur zigzag ou damier de bus", "135 €", "—"],
+            ["Stationnement sur marquage jaune continu", "135 €", "—"],
+            ["Stationnement sur marquage jaune discontinu", "35 €", "—"]
+          ]
+        }
       }
     ]
   },
