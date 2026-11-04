@@ -16,9 +16,9 @@
       },
       {
         "liste": [
-          { "label": "signaler un danger" },
-          { "label": "donner un ordre, une interdiction, une obligation" },
-          { "label": "donner une indication, un renseignement ou une direction" }
+          { "label": "Signaler un danger" },
+          { "label": "Donner un ordre, une interdiction, une obligation" },
+          { "label": "Donner une indication, un renseignement ou une direction" }
         ]
       },
       {
