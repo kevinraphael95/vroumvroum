@@ -1,12 +1,5 @@
 /* =========================================================
    fiches.js — Liste + détail des fiches (fiches.html)
-   À charger APRÈS : core.js, fiches-data.js
-   Utilise : FICHES (fiches-data.js), window.VV (core.js)
-
-   Une fiche = { id, groupe, sousGroupe, badge, num, emoji, titre,
-                 resume (facultatif), blocs: [ ... ] }
-   Blocs : texte | titre | image | liste | tableau | astuce | bouton
-   (ancien format type/items/astuce toujours accepté)
    ========================================================= */
 
 window.fichesPretes.then(function renderFiches() {
@@ -18,37 +11,6 @@ window.fichesPretes.then(function renderFiches() {
   const VV = window.VV;
   const TITRE_PAGE = document.title;
 
-  /* --- Ancien format -> blocs --- */
-  function getBlocs(f) {
-    if (Array.isArray(f.blocs)) return f.blocs;
-    const blocs = [];
-    if (f.type === 'table' && f.lignes) {
-      blocs.push({
-        tableau: {
-          colonnes: f.colonnes,
-          lignes: f.lignes.map(l => [l.label, l.sec, l.pluie, l.probatoire])
-        }
-      });
-    } else if (f.items) {
-      blocs.push({ liste: f.items });
-    }
-    if (f.astuce) blocs.push({ astuce: f.astuce });
-    return blocs;
-  }
-
-  /* --- Extrait affiché sur la carte --- */
-  function excerpt(f) {
-    if (f.resume) return f.resume;
-    let labels = [];
-    getBlocs(f).forEach(b => {
-      if (b.liste) labels = labels.concat(b.liste.map(it => it.label));
-      else if (b.tableau) labels = labels.concat(b.tableau.lignes.map(l => l[0]));
-    });
-    if (!labels.length) return '';
-    const txt = labels.slice(0, 5).join(', ');
-    return txt + (labels.length > 5 ? '\u2026' : '.');
-  }
-
   /* --- Statut d'une fiche --- */
   function statusHTML(done) {
     return done
@@ -56,21 +18,20 @@ window.fichesPretes.then(function renderFiches() {
       : '<span class="fiche-status todo">\u25CB \u00c0 lire</span>';
   }
 
-  /* --- Carte d'une fiche --- */
+  /* --- Carte d'une fiche (sans texte gris) --- */
   function carteHTML(f) {
     return `
       <a class="fiche-card" href="#${f.id}">
         <div class="fiche-num">${f.num}</div>
         <div class="fiche-body">
           <div class="fiche-title">${f.emoji} ${f.titre}</div>
-          <div class="fiche-excerpt">${excerpt(f)}</div>
           ${statusHTML(VV.isLue(f.id))}
         </div>
       </a>`;
   }
 
   /* =======================================================
-     LISTE (groupe → sous-groupe → fiches)
+     LISTE
      ======================================================= */
 
   function renderListe() {
@@ -132,9 +93,8 @@ window.fichesPretes.then(function renderFiches() {
 
   function blocHTML(b) {
     if (b.titre) return `<h2 class="fiche-bloc-titre">${b.titre}</h2>`;
-
     if (b.texte && !b.liste) return `<p class="fiche-bloc-texte">${b.texte}</p>`;
-
+    
     if (b.image) {
       return `<div class="fiche-img-wrap">${imgHTML(b.image, b.alt)}</div>`;
     }
@@ -190,7 +150,7 @@ window.fichesPretes.then(function renderFiches() {
     const prev = FICHES[i - 1];
     const next = FICHES[i + 1];
 
-    const body = getBlocs(f).map(blocHTML).join('');
+    const body = (f.blocs || []).map(blocHTML).join('');
 
     detailBox.innerHTML = `
       <a href="#" class="fiche-back" id="fiche-back">\u2190 Toutes les fiches</a>
@@ -229,7 +189,7 @@ window.fichesPretes.then(function renderFiches() {
   }
 
   /* =======================================================
-     ROUTAGE PAR HASH
+     ROUTAGE
      ======================================================= */
 
   function route() {
