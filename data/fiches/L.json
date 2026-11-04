@@ -12,9 +12,15 @@
         "titre": "Les panneaux"
       },
       {
-        "texte": "Un panneau a trois fonctions : signaler un danger ; donner un ordre, une interdiction, une obligation ; donner une indication, un renseignement ou une direction."
+        "texte": "Un panneau a trois fonctions :"
       },
-      { "image": "assets/img/fiches/signification-panneaux-de-signalisation.jpg" },
+      {
+        "liste": [
+          { "label": "signaler un danger" },
+          { "label": "donner un ordre, une interdiction, une obligation" },
+          { "label": "donner une indication, un renseignement ou une direction" },
+      { 
+        "image": "assets/img/fiches/signification-panneaux-de-signalisation.jpg" },
       {
         "titre": "Les panonceaux"
       },
