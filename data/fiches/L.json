@@ -16,9 +16,9 @@
       },
       {
         "liste": [
-          { "label": "Signaler un danger" },
-          { "label": "Donner un ordre, une interdiction, une obligation" },
-          { "label": "Donner une indication, un renseignement ou une direction" }
+          { "label": "signaler un danger" },
+          { "label": "donner un ordre, une interdiction, une obligation" },
+          { "label": "donner une indication, un renseignement ou une direction" }
         ]
       },
       {
@@ -44,52 +44,43 @@
     ]
   },
   {
-    "id": "signalisation-risques",
+    "id": "signalisation-infos",
     "groupe": "La circulation routière",
     "sousGroupe": "La signalisation routière",
     "badge": "L",
     "num": "02",
-    "emoji": "⚠️",
-    "titre": "Quelques risques à connaître",
+    "emoji": "ℹ️",
+    "titre": "Infos supplémentaires sur les panneaux",
     "blocs": [
       {
+        "titre": "Règles de lecture"
+      },
+      {
         "liste": [
-          {
-            "label": "Panneaux de danger",
-            "texte": "Triangle à bordure rouge, placé avant le danger. Un panonceau peut préciser la distance ou l'étendue du danger."
-          },
-          {
-            "label": "Panonceaux",
-            "texte": "Petits panneaux rectangulaires placés sous un panneau principal. Précisent distance (M1), étendue (M2), position (M3), catégorie d'usagers (M4), ou exceptions (M9)."
-          },
-          {
-            "label": "Chaussée glissante",
-            "texte": "Pluie, verglas, feuilles, gravillons : ralentir, éviter freinages et mouvements de volant brusques."
-          },
-          {
-            "label": "Virages & descentes dangereuses",
-            "texte": "Ralentir avant le virage, pas dedans. En descente, rétrograder pour garder le frein moteur."
-          },
-          {
-            "label": "Piétons, enfants, cyclistes",
-            "texte": "Abords d'écoles, passages piétons, débouchés de cyclistes : lever le pied, redoubler de vigilance."
-          },
-          {
-            "label": "Animaux",
-            "texte": "Passage d'animaux domestiques ou sauvages, surtout à l'aube et au crépuscule : ralentir, être prêt à s'arrêter."
-          },
-          {
-            "label": "Chaussée rétrécie ou déformée",
-            "texte": "Rétrécissement, dos d'âne, cassis : réduire la vitesse et croiser avec prudence."
-          },
-          {
-            "label": "Autres dangers",
-            "texte": "Le point d'exclamation signale un danger non couvert par un autre panneau, précisé par le panonceau."
-          }
+          { "label": "Lecture séparée", "texte": "Les panneaux se lisent séparément." },
+          { "label": "Lecture combinée", "texte": "Un panneau et un panonceau se lisent ensemble." },
+          { "label": "Panonceau commun", "texte": "Un panonceau peut être commun à un panneau de danger et un d'interdiction. Il est alors placé en dessous, tout en bas." }
         ]
       },
       {
-        "astuce": "Un triangle rouge n'interdit rien : il prévient. C'est à moi d'adapter ma vitesse."
+        "titre": "Distances d'implantation"
+      },
+      {
+        "liste": [
+          { "label": "Panneaux de danger", "texte": "Placés 150 m avant le danger hors agglomération, 50 m avant en agglomération." },
+          { "label": "Exception", "texte": "Le panneau de circulation à double sens est une exception : le danger est immédiat." }
+        ]
+      },
+      {
+        "titre": "Couleurs des panneaux de direction"
+      },
+      {
+        "liste": [
+          { "label": "Bleu", "texte": "Autoroute." },
+          { "label": "Vert", "texte": "Route nationale ou grande ville (itinéraire principal)." },
+          { "label": "Blanc", "texte": "Route locale ou petite ville." },
+          { "label": "Jaune", "texte": "Signalisation temporaire (déviations, chantiers)." }
+        ]
       }
     ]
   },
