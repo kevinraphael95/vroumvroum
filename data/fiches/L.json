@@ -18,9 +18,12 @@
         "liste": [
           { "label": "signaler un danger" },
           { "label": "donner un ordre, une interdiction, une obligation" },
-          { "label": "donner une indication, un renseignement ou une direction" },
-      { 
-        "image": "assets/img/fiches/signification-panneaux-de-signalisation.jpg" },
+          { "label": "donner une indication, un renseignement ou une direction" }
+        ]
+      },
+      {
+        "image": "assets/img/fiches/signification-panneaux-de-signalisation.jpg"
+      },
       {
         "titre": "Les panonceaux"
       },
