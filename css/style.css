@@ -916,3 +916,16 @@ html.dark .vv-dialog::backdrop {
   opacity: 0.75;
   text-decoration: line-through;
 }
+
+/* --- Affichage des images dans les fiches --- */
+.fiche-img-wrap {
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+.fiche-img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  display: inline-block;
+}
