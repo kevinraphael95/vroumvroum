@@ -25,34 +25,6 @@
         "image": "assets/img/fiches/signification-panneaux-de-signalisation.jpg"
       },
       {
-        "titre": "Les panonceaux"
-      },
-      {
-        "texte": "Les panonceaux apportent des précisions complémentaires au panneau ou au signal sous lequel ils sont placés."
-      },
-      {
-        "liste": [
-          { "label": "Panonceaux de distance", "texte": "Indiquent la distance à laquelle commence le danger ou l'obligation." },
-          { "label": "Panonceaux d'étendue", "texte": "Indiquent la longueur de la section dangereuse ou de la zone concernée." },
-          { "label": "Panonceaux de catégorie", "texte": "Précisent la catégorie d'usagers concernés (cyclistes, piétons, etc.)." },
-          { "label": "Panonceaux directionnels", "texte": "Donnent la direction de la destination indiquée." },
-          { "label": "Panonceaux d'indications diverses", "texte": "Ajoutent une information (ex : emplacements de stationnement, arrêt de bus)." },
-          { "label": "Panonceaux associés à un feu tricolore", "texte": "Précisent le fonctionnement du feu (ex : cédez le passage, priorité aux bus)." }
-        ]
-      },
-      { "bouton": "Réviser les panneaux", "url": "https://kevinraphael95.github.io/yapaslepanneau/" }
-    ]
-  },
-  {
-    "id": "signalisation-infos",
-    "groupe": "La circulation routière",
-    "sousGroupe": "La signalisation routière",
-    "badge": "L",
-    "num": "02",
-    "emoji": "ℹ️",
-    "titre": "Infos supplémentaires sur les panneaux",
-    "blocs": [
-      {
         "titre": "Règles de lecture"
       },
       {
@@ -81,7 +53,24 @@
           { "label": "Blanc", "texte": "Route locale ou petite ville." },
           { "label": "Jaune", "texte": "Signalisation temporaire (déviations, chantiers)." }
         ]
-      }
+      },
+      {
+        "titre": "Les panonceaux"
+      },
+      {
+        "texte": "Les panonceaux apportent des précisions complémentaires au panneau ou au signal sous lequel ils sont placés."
+      },
+      {
+        "liste": [
+          { "label": "Panonceaux de distance", "texte": "Indiquent la distance à laquelle commence le danger ou l'obligation." },
+          { "label": "Panonceaux d'étendue", "texte": "Indiquent la longueur de la section dangereuse ou de la zone concernée." },
+          { "label": "Panonceaux de catégorie", "texte": "Précisent la catégorie d'usagers concernés (cyclistes, piétons, etc.)." },
+          { "label": "Panonceaux directionnels", "texte": "Donnent la direction de la destination indiquée." },
+          { "label": "Panonceaux d'indications diverses", "texte": "Ajoutent une information (ex : emplacements de stationnement, arrêt de bus)." },
+          { "label": "Panonceaux associés à un feu tricolore", "texte": "Précisent le fonctionnement du feu (ex : cédez le passage, priorité aux bus)." }
+        ]
+      },
+      { "bouton": "Réviser les panneaux", "url": "https://kevinraphael95.github.io/yapaslepanneau/" }
     ]
   },
   {
@@ -89,7 +78,7 @@
     "groupe": "La circulation routière",
     "sousGroupe": "La signalisation routière",
     "badge": "L",
-    "num": "03",
+    "num": "02",
     "emoji": "🚧",
     "titre": "La signalisation temporaire",
     "blocs": [
@@ -119,44 +108,44 @@
     ]
   },
   {
-    "id": "panneaux-direction",
+    "id": "signalisation-balises",
     "groupe": "La circulation routière",
     "sousGroupe": "La signalisation routière",
     "badge": "L",
-    "num": "04",
-    "emoji": "🧭",
-    "titre": "Les panneaux de direction",
+    "num": "03",
+    "emoji": "📍",
+    "titre": "Les balises",
     "blocs": [
       {
         "liste": [
           {
-            "label": "Couleur selon la route",
-            "texte": "Forme et couleur selon le type de route (autoroute = bleu, route nationale = vert, locale = blanc)."
+            "label": "Rôle des balises",
+            "texte": "Les balises sont des dispositifs de signalisation qui servent à guider l'usager, à délimiter la chaussée ou à signaler un virage."
           },
           {
-            "label": "Présignalisation",
-            "texte": "Annonce une sortie ou un carrefour à l'avance, pour se placer dans la bonne voie."
+            "label": "Balises de virage",
+            "texte": "Servent à signaler l'approche d'un virage. Elles sont blanches avec un liseré rouge."
           },
           {
-            "label": "Direction",
-            "texte": "Posés au carrefour : indiquent les destinations selon les directions."
+            "label": "Balises d'intersection",
+            "texte": "Balises blanches avec un liseré bleu, indiquant la présence d'une intersection."
           },
           {
-            "label": "Confirmation",
-            "texte": "Après le carrefour : confirment que l'on est sur la bonne route."
+            "label": "Délinéateurs",
+            "texte": "Servent à délimiter la chaussée (bords de route, voies d'accès)."
           },
           {
-            "label": "Position",
-            "texte": "Indiquent le nom d'un lieu (ville, rivière…) ou d'une agglomération."
+            "label": "Balises d'alignement",
+            "texte": "Utilisées pour matérialiser une ligne droite, souvent en cas de travaux."
           },
           {
-            "label": "Bornes kilométriques",
-            "texte": "Indiquent la distance restante sur la route (blanches pour les routes, bleues pour les autoroutes)."
+            "label": "Balises de passage à niveau",
+            "texte": "Signalent l'approche d'un passage à niveau (alternat de feux ou croix de Saint-André)."
           }
         ]
       },
       {
-        "astuce": "Lire les panneaux de direction à l'avance : on se place tôt, on évite les changements de voie de dernière minute."
+        "astuce": "Les balises complètent les panneaux en apportant des indications visuelles supplémentaires, notamment dans les virages ou la nuit."
       }
     ]
   },
@@ -165,7 +154,7 @@
     "groupe": "La circulation routière",
     "sousGroupe": "La signalisation routière",
     "badge": "L",
-    "num": "05",
+    "num": "04",
     "emoji": "🛣️",
     "titre": "Le marquage au sol",
     "blocs": [
@@ -203,6 +192,48 @@
       },
       {
         "astuce": "Une ligne continue s'interrompt à une intersection : on peut y tourner, mais pas dépasser."
+      }
+    ]
+  },
+  {
+    "id": "panneaux-direction",
+    "groupe": "La circulation routière",
+    "sousGroupe": "La signalisation routière",
+    "badge": "L",
+    "num": "05",
+    "emoji": "🧭",
+    "titre": "Les panneaux de direction",
+    "blocs": [
+      {
+        "liste": [
+          {
+            "label": "Couleur selon la route",
+            "texte": "Forme et couleur selon le type de route (autoroute = bleu, route nationale = vert, locale = blanc)."
+          },
+          {
+            "label": "Présignalisation",
+            "texte": "Annonce une sortie ou un carrefour à l'avance, pour se placer dans la bonne voie."
+          },
+          {
+            "label": "Direction",
+            "texte": "Posés au carrefour : indiquent les destinations selon les directions."
+          },
+          {
+            "label": "Confirmation",
+            "texte": "Après le carrefour : confirment que l'on est sur la bonne route."
+          },
+          {
+            "label": "Position",
+            "texte": "Indiquent le nom d'un lieu (ville, rivière…) ou d'une agglomération."
+          },
+          {
+            "label": "Bornes kilométriques",
+            "texte": "Indiquent la distance restante sur la route (blanches pour les routes, bleues pour les autoroutes)."
+          }
+        ]
+      },
+      {
+        "astuce": "Lire les panneaux de direction à l'avance : on se place tôt, on évite les changements de voie de dernière minute."
       }
     ]
   },
