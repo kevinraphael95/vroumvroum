@@ -7,7 +7,6 @@
     "num": "01",
     "emoji": "🚸",
     "titre": "Les panneaux",
-    "resume": "Danger, interdiction, obligation, indication…",
     "blocs": [
       { "image": "assets/img/fiches/signification-panneaux-de-signalisation.jpg" },
       { "bouton": "Réviser les panneaux", "url": "https://kevinraphael95.github.io/yapaslepanneau/" }
