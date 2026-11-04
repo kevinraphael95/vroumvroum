@@ -165,30 +165,33 @@
         "titre": "Les lignes longitudinales"
       },
       {
+        "texte": "Ce sont les lignes qui vont dans le sens de la circulation. Elles délimitent les voies et réglementent le dépassement."
+      },
+      {
         "liste": [
           {
             "label": "Ligne continue",
-            "texte": "Interdiction de franchir ou chevaucher. Exception : autorisé pour dépasser un cycliste depuis 2015 (si visibilité suffisante et voie opposée libre). Sanction : 135 € et 3 points (franchissement), 135 € et 1 point (chevauchement)."
+            "texte": "Interdiction de la franchir ou de la chevaucher. Exception : autorisé pour dépasser un cycliste (si visibilité suffisante). Sanction : 135 € et 3 points (franchissement), 135 € et 1 point (chevauchement)."
           },
           {
             "label": "Ligne discontinue",
-            "texte": "Dépassement et changement de voie autorisés, si la voie opposée est libre et la visibilité suffisante."
+            "texte": "Autorise le franchissement pour un dépassement, à condition que la voie opposée soit libre et la visibilité suffisante."
           },
           {
             "label": "Ligne d'annonce",
-            "texte": "Ligne discontinue de petite dimension avec des flèches de rabattement, annonçant l'approche d'une ligne continue."
+            "texte": "Ligne discontinue avec des flèches de rabattement. Elle annonce l'approche d'une ligne continue."
           },
           {
             "label": "Ligne de dissuasion",
-            "texte": "Semblable à la ligne d'annonce, elle vise à décourager les dépassements dangereux. Elle autorise le dépassement des véhicules très lents."
+            "texte": "Ligne discontinue dans une zone dangereuse, pour décourager les dépassements. Elle autorise uniquement le dépassement des véhicules très lents."
           },
           {
             "label": "Lignes mixtes",
-            "texte": "Lorsque deux lignes sont côte à côte, le conducteur ne doit tenir compte que de la ligne située de son côté."
+            "texte": "Quand une ligne continue et une discontinue sont côte à côte, on ne tient compte que de la ligne située de son côté."
           },
           {
             "label": "Lignes de rive",
-            "texte": "Délimitent le bord droit de la chaussée. Continue (type T2) : interdit de circuler sur l'accotement. Discontinue : autorise l'arrêt/stationnement sur l'accotement et son emprunt à l'approche d'une intersection. Sur autoroute, délimite la BAU."
+            "texte": "Lignes qui délimitent le bord droit de la chaussée. Continue (type T2) : interdit de circuler sur l'accotement. Discontinue : autorise l'arrêt/stationnement sur l'accotement. Sur autoroute, délimite la bande d'arrêt d'urgence (BAU)."
           }
         ]
       },
@@ -199,7 +202,7 @@
         "liste": [
           {
             "label": "Flèches directionnelles",
-            "texte": "Indiquent la direction obligatoire ou les directions autorisées. Ignorer une flèche directionnelle coûte 135 € et 4 points retirés."
+            "texte": "Indiquent la direction obligatoire ou les directions autorisées. Ignorer une flèche coûte 135 € et 4 points retirés."
           }
         ]
       },
@@ -214,7 +217,7 @@
           },
           {
             "label": "Ligne de STOP",
-            "texte": "Ligne continue à côté d'un panneau STOP, imposant l'arrêt complet."
+            "texte": "Ligne continue à côté du panneau STOP, imposant un arrêt complet."
           },
           {
             "label": "Ligne de cédez-le-passage",
@@ -222,7 +225,7 @@
           },
           {
             "label": "Lignes des feux",
-            "texte": "Rangée de pointillés blancs indiquant la limite d'arrêt au feu rouge."
+            "texte": "Pointillés blancs indiquant la limite d'arrêt au feu rouge."
           },
           {
             "label": "Voies de bus",
@@ -230,7 +233,7 @@
           },
           {
             "label": "Damiers de bus",
-            "texte": "Damiers blancs indiquant qu'il ne faut pas s'y arrêter ni y stationner, pour laisser manœuvrer les bus."
+            "texte": "Damiers blancs où il est interdit de s'arrêter ou de stationner, pour laisser manœuvrer les bus."
           },
           {
             "label": "Lignes en zigzag jaunes",
