@@ -2,6 +2,11 @@
    fiches.js — Liste + détail des fiches (fiches.html)
    À charger APRÈS : core.js, fiches-data.js
    Utilise : FICHES (fiches-data.js), window.VV (core.js)
+
+   Une fiche = { id, groupe, sousGroupe, badge, num, emoji, titre,
+                 resume (facultatif), blocs: [ ... ] }
+   Blocs : texte | titre | image | liste | tableau | astuce | bouton
+   (ancien format type/items/astuce toujours accepté)
    ========================================================= */
 
 window.fichesPretes.then(function renderFiches() {
@@ -13,11 +18,33 @@ window.fichesPretes.then(function renderFiches() {
   const VV = window.VV;
   const TITRE_PAGE = document.title;
 
+  /* --- Ancien format -> blocs --- */
+  function getBlocs(f) {
+    if (Array.isArray(f.blocs)) return f.blocs;
+    const blocs = [];
+    if (f.type === 'table' && f.lignes) {
+      blocs.push({
+        tableau: {
+          colonnes: f.colonnes,
+          lignes: f.lignes.map(l => [l.label, l.sec, l.pluie, l.probatoire])
+        }
+      });
+    } else if (f.items) {
+      blocs.push({ liste: f.items });
+    }
+    if (f.astuce) blocs.push({ astuce: f.astuce });
+    return blocs;
+  }
+
   /* --- Extrait affiché sur la carte --- */
   function excerpt(f) {
-    const labels = f.type === 'table'
-      ? f.lignes.map(l => l.label)
-      : f.items.map(it => it.label);
+    if (f.resume) return f.resume;
+    let labels = [];
+    getBlocs(f).forEach(b => {
+      if (b.liste) labels = labels.concat(b.liste.map(it => it.label));
+      else if (b.tableau) labels = labels.concat(b.tableau.lignes.map(l => l[0]));
+    });
+    if (!labels.length) return '';
     const txt = labels.slice(0, 5).join(', ');
     return txt + (labels.length > 5 ? '\u2026' : '.');
   }
@@ -29,15 +56,34 @@ window.fichesPretes.then(function renderFiches() {
       : '<span class="fiche-status todo">\u25CB \u00c0 lire</span>';
   }
 
+  /* --- Carte d'une fiche --- */
+  function carteHTML(f) {
+    return `
+      <a class="fiche-card" href="#${f.id}">
+        <div class="fiche-num">${f.num}</div>
+        <div class="fiche-body">
+          <div class="fiche-title">${f.emoji} ${f.titre}</div>
+          <div class="fiche-excerpt">${excerpt(f)}</div>
+          ${statusHTML(VV.isLue(f.id))}
+        </div>
+      </a>`;
+  }
+
   /* =======================================================
-     LISTE
+     LISTE (groupe → sous-groupe → fiches)
      ======================================================= */
 
   function renderListe() {
     const familles = new Map();
     FICHES.forEach(f => {
-      if (!familles.has(f.badge)) familles.set(f.badge, { nom: f.groupe, fiches: [] });
-      familles.get(f.badge).fiches.push(f);
+      if (!familles.has(f.badge)) {
+        familles.set(f.badge, { nom: f.groupe, fiches: [], sous: new Map() });
+      }
+      const fam = familles.get(f.badge);
+      fam.fiches.push(f);
+      const cle = f.sousGroupe || '';
+      if (!fam.sous.has(cle)) fam.sous.set(cle, []);
+      fam.sous.get(cle).push(f);
     });
 
     groupesBox.innerHTML = '';
@@ -46,23 +92,25 @@ window.fichesPretes.then(function renderFiches() {
       const groupe = document.createElement('div');
       groupe.className = `groupe fam-${badge}`;
       groupe.id = `groupe-${badge}`;
+
+      let contenu = '';
+      fam.sous.forEach((fiches, nomSous) => {
+        contenu += `
+          <div class="sous-groupe">
+            ${nomSous ? `<h3 class="sous-groupe-title">${nomSous}</h3>` : ''}
+            <div class="fiches-grid">
+              ${fiches.map(carteHTML).join('')}
+            </div>
+          </div>`;
+      });
+
       groupe.innerHTML = `
         <div class="groupe-head">
           <div class="groupe-badge">${badge}</div>
           <div class="groupe-title">${fam.nom}</div>
           <div class="groupe-count">${n} FICHE${n > 1 ? 'S' : ''}</div>
         </div>
-        <div class="fiches-grid">
-          ${fam.fiches.map(f => `
-            <a class="fiche-card" href="#${f.id}">
-              <div class="fiche-num">${f.num}</div>
-              <div class="fiche-body">
-                <div class="fiche-title">${f.emoji} ${f.titre}</div>
-                <div class="fiche-excerpt">${excerpt(f)}</div>
-                ${statusHTML(VV.isLue(f.id))}
-              </div>
-            </a>`).join('')}
-        </div>
+        ${contenu}
       `;
       groupesBox.appendChild(groupe);
     });
@@ -75,6 +123,65 @@ window.fichesPretes.then(function renderFiches() {
   }
 
   /* =======================================================
+     BLOCS
+     ======================================================= */
+
+  function imgHTML(src, alt) {
+    return `<img src="${src}" alt="${alt || ''}" class="fiche-img">`;
+  }
+
+  function blocHTML(b) {
+    if (b.titre) return `<h2 class="fiche-bloc-titre">${b.titre}</h2>`;
+
+    if (b.texte && !b.liste) return `<p class="fiche-bloc-texte">${b.texte}</p>`;
+
+    if (b.image) {
+      return `<div class="fiche-img-wrap">${imgHTML(b.image, b.alt)}</div>`;
+    }
+
+    if (b.liste) {
+      return `
+        <ul class="fiche-list">
+          ${b.liste.map(it => `
+            <li>
+              <strong>${it.label}</strong>${it.texte ? ' : ' + it.texte : ''}
+              ${it.image ? `<br>${imgHTML(it.image, it.label)}` : ''}
+            </li>`).join('')}
+        </ul>`;
+    }
+
+    if (b.tableau) {
+      const t = b.tableau;
+      return `
+        <div class="fiche-table-wrap">
+          <table class="fiche-table">
+            <thead><tr>${t.colonnes.map(c => `<th>${c}</th>`).join('')}</tr></thead>
+            <tbody>
+              ${t.lignes.map(l => `
+                <tr>
+                  <td>${l[0]}</td>
+                  ${l.slice(1).map(v => `<td><span class="val">${v}</span></td>`).join('')}
+                </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>`;
+    }
+
+    if (b.astuce) {
+      return `<div class="fiche-astuce"><strong>\u00c0 retenir</strong>${b.astuce}</div>`;
+    }
+
+    if (b.bouton) {
+      return `
+        <div class="fiche-cta">
+          <a class="btn btn-primary" href="${b.url}" target="_blank" rel="noopener">${b.bouton} \u2192</a>
+        </div>`;
+    }
+
+    return '';
+  }
+
+  /* =======================================================
      DÉTAIL
      ======================================================= */
 
@@ -83,38 +190,7 @@ window.fichesPretes.then(function renderFiches() {
     const prev = FICHES[i - 1];
     const next = FICHES[i + 1];
 
-    let body;
-    if (f.type === 'table') {
-      body = `
-        <div class="fiche-table-wrap">
-          <table class="fiche-table">
-            <thead><tr>${f.colonnes.map(c => `<th>${c}</th>`).join('')}</tr></thead>
-            <tbody>
-              ${f.lignes.map(l => `
-                <tr>
-                  <td>${l.label}</td>
-                  <td><span class="val">${l.sec}</span></td>
-                  <td><span class="val">${l.pluie}</span></td>
-                  <td><span class="val">${l.probatoire}</span></td>
-                </tr>`).join('')}
-            </tbody>
-          </table>
-        </div>`;
-    } else {
-      body = `
-        <ul class="fiche-list">
-          ${f.items.map(it => `
-            <li>
-              <strong>${it.label}</strong> : ${it.texte}
-              ${it.image ? `<br><img src="${it.image}" alt="${it.label}" class="fiche-inline-img" style="max-width:100%; height:auto; margin-top:10px; border-radius:6px;">` : ''}
-            </li>
-          `).join('')}
-        </ul>`;
-    }
-
-    const astuce = f.astuce
-      ? `<div class="fiche-astuce"><strong>\u00c0 retenir</strong>${f.astuce}</div>`
-      : '';
+    const body = getBlocs(f).map(blocHTML).join('');
 
     detailBox.innerHTML = `
       <a href="#" class="fiche-back" id="fiche-back">\u2190 Toutes les fiches</a>
@@ -128,7 +204,6 @@ window.fichesPretes.then(function renderFiches() {
         </div>
         <div class="fiche-detail-body">
           ${body}
-          ${astuce}
           <div class="fiche-actions">
             <button type="button" class="btn" id="fiche-toggle"></button>
             <div class="fiche-nav">
