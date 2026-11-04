@@ -8,7 +8,26 @@
     "emoji": "🚸",
     "titre": "Les panneaux",
     "blocs": [
+      {
+        "texte": "Un panneau a trois fonctions : signaler un danger ; donner un ordre, une interdiction, une obligation ; donner une indication, un renseignement ou une direction."
+      },
       { "image": "assets/img/fiches/signification-panneaux-de-signalisation.jpg" },
+      {
+        "titre": "Les panonceaux"
+      },
+      {
+        "texte": "Les panonceaux apportent des précisions complémentaires au panneau ou au signal sous lequel ils sont placés."
+      },
+      {
+        "liste": [
+          { "label": "Panonceaux de distance", "texte": "Indiquent la distance à laquelle commence le danger ou l'obligation." },
+          { "label": "Panonceaux d'étendue", "texte": "Indiquent la longueur de la section dangereuse ou de la zone concernée." },
+          { "label": "Panonceaux de catégorie", "texte": "Précisent la catégorie d'usagers concernés (cyclistes, piétons, etc.)." },
+          { "label": "Panonceaux directionnels", "texte": "Donnent la direction de la destination indiquée." },
+          { "label": "Panonceaux d'indications diverses", "texte": "Ajoutent une information (ex : emplacements de stationnement, arrêt de bus)." },
+          { "label": "Panonceaux associés à un feu tricolore", "texte": "Précisent le fonctionnement du feu (ex : cédez le passage, priorité aux bus)." }
+        ]
+      },
       { "bouton": "Réviser les panneaux", "url": "https://kevinraphael95.github.io/yapaslepanneau/" }
     ]
   },
