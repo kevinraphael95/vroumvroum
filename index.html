@@ -3,85 +3,75 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script>try{if(localStorage.getItem("vroum-theme")==="dark"){var d=document.documentElement;d.classList.add("dark");d.style.colorScheme="dark";d.style.backgroundColor="#0d1220"}}catch(e){}</script>
 <meta name="theme-color" content="#2563eb">
-<title>VroumVroum</title>
-<meta name="description" content="VroumVroum - Fiches de révision et quiz d'entraînement pour réussir ton Code de la route. Préparation ETG 2026.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
+<title>VroumVroum – Examen blanc du Code de la route</title>
+<meta name="description" content="Examen blanc du Code de la route avec images, comme l'examen réel.">
+<script>try{if(localStorage.getItem("vroum-theme")==="dark")document.documentElement.classList.add("dark")}catch(e){}</script>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<nav>
-  <div class="nav-inner">
-    <a href="index.html" class="logo"><div class="logo-mark">V</div>VroumVroum</a>
-    <div class="nav-right">
-      <ul class="nav-links" id="nav-links">
-        <li><a href="index.html" class="active">Accueil</a></li>
-        <li><a href="fiches.html">Fiches</a></li>
-        <li><a href="examen.html">Examen</a></li>
-      </ul>
-      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Changer de thème"></button>
-      <button class="nav-burger" id="nav-burger" onclick="toggleMenu()"
-              aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-links">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </div>
-</nav>
+<header class="top">
+  <span class="logo"><b>V</b>VroumVroum</span>
+  <button type="button" id="theme" aria-label="Changer de thème"></button>
+</header>
 
-<div class="container">
+<!-- ACCUEIL -->
+<main id="intro" class="page">
+  <h1>Examen blanc</h1>
+  <p class="soft">Un test avec images, présenté comme l'examen réel.</p>
+  <ul id="rules" class="rules"></ul>
+  <p id="best" class="best"></p>
+  <p id="warn" class="warn" hidden></p>
+  <button type="button" id="start" class="btn" disabled>Chargement…</button>
+  <p class="soft small">Clavier : <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> <kbd>4</kbd> pour répondre, <kbd>Entrée</kbd> pour valider.</p>
+</main>
 
-  <div class="dashboard-header">
-    <div class="greeting">
-      <h1>Bonjour, prêt à réviser ton <em>code</em> ?</h1>
-      <p id="dash-msg">Chargement…</p>
+<!-- QUESTION -->
+<section id="quiz" class="quiz" hidden>
+  <div id="figure" class="figure"></div>
+  <div class="panel">
+    <div class="panel-main">
+      <p id="question" class="q"></p>
+      <div id="answers"></div>
     </div>
-    <div class="progress-ring">
-      <svg width="130" height="130" aria-hidden="true">
-        <circle class="bg" cx="65" cy="65" r="54"></circle>
-        <circle class="fg" id="ring-fg" cx="65" cy="65" r="54" style="stroke-dashoffset:339"></circle>
-      </svg>
-      <span class="label" id="dash-pct">0%</span>
-      <span class="sub">Progression</span>
-    </div>
-  </div>
-
-  <div class="stats-grid">
-    <a href="fiches.html" class="stat-card">
-      <div class="stat-icon book">📚</div>
-      <div>
-        <div class="stat-value" id="stat-fiches">0 / 0</div>
-        <div class="stat-label">Fiches terminées</div>
+    <div class="side">
+      <span id="mode" class="mode"></span>
+      <div id="ring" class="ring">
+        <svg viewBox="0 0 80 80" aria-hidden="true">
+          <circle cx="40" cy="44" r="30" class="ring-bg"></circle>
+          <circle id="ring-fg" cx="40" cy="44" r="30" class="ring-fg" transform="rotate(-90 40 44)"></circle>
+        </svg>
+        <span id="secs" class="sr">30</span>
       </div>
-    </a>
-    <a href="examen.html" class="stat-card">
-      <div class="stat-icon examen">🖼️</div>
-      <div>
-        <div class="stat-value" id="stat-examen-img">—</div>
-        <div class="stat-label">Meilleur examen avec images</div>
-      </div>
-    </a>
+    </div>
+    <div class="bar">
+      <span>Question <strong id="num">01</strong><span id="total"></span></span>
+      <span class="bar-btns">
+        <button type="button" id="quit" class="btn-s">Quitter</button>
+        <button type="button" id="next" class="btn-s main">Valider</button>
+      </span>
+    </div>
   </div>
+</section>
 
-  <div class="section-head">
+<!-- RÉSULTAT -->
+<main id="result" class="page wide" hidden>
+  <div class="res-head">
     <div>
-      <h2>Mes parcours</h2>
-      <p>Continue là où tu t'es arrêté</p>
+      <h2>Examen terminé</h2>
+      <p id="verdict" class="soft"></p>
     </div>
-    <a href="fiches.html" class="section-link">Tout voir →</a>
+    <div id="score" class="score"></div>
   </div>
+  <div class="res-body">
+    <div><h3>Réponses</h3><div id="grid" class="grid"></div></div>
+    <div><h3>Détail</h3><div id="detail" class="detail"></div></div>
+    <div><h3>Par thème</h3><div id="themes"></div></div>
+  </div>
+  <button type="button" id="replay" class="btn">Rejouer →</button>
+</main>
 
-  <div class="modules-grid" id="modules-grid"></div>
-
-</div>
-
-<footer>© 2026 VroumVroum — Fiches de révision du Code de la route</footer>
-
-<script src="js/core.js"></script>
-<script src="js/fiches-data.js"></script>
-<script src="js/accueil.js"></script>
+<script src="exam.js"></script>
 </body>
 </html>
