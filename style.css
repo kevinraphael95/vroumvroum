@@ -56,11 +56,11 @@ kbd { background: var(--surface-2); border: 1px solid var(--border); border-radi
 .btn-s.main { background: var(--bleu); border-color: var(--bleu); color: #fff; font-weight: 700; }
 
 /* Question */
-.quiz { position: fixed; inset: 56px 0 0 0; display: grid; grid-template-rows: 42% 58%; background: var(--bg); }
+.quiz { position: fixed; inset: 56px 0 0 0; display: grid; grid-template-rows: 40% 60%; background: var(--bg); }
 .figure { min-height: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .figure img { max-width: 100%; max-height: 100%; object-fit: contain; }
 .figure .missing { color: var(--muted); font-size: .9rem; }
-.panel { position: relative; min-height: 0; overflow-y: auto; border-top: 1px solid var(--border); padding: .8em 7rem 4.5rem 1.5rem; font-size: clamp(11px, 2.3vh, 16px); }
+.panel { position: relative; min-height: 0; overflow-y: auto; border-top: 1px solid var(--border); padding: .8em 7rem 4.5rem 1.5rem; font-size: clamp(12px, 2.9vh, 20px); }
 .panel-main { max-width: 720px; margin: 0 auto; }
 .q { font-weight: 700; font-size: 1.1em; margin: 0 0 .6em; }
 .stmt { font-weight: 600; margin: .6em 0 .2em; }
@@ -77,7 +77,7 @@ kbd { background: var(--surface-2); border: 1px solid var(--border); border-radi
 .ans.on .key { background: var(--text); color: var(--surface); }
 
 .side { position: absolute; right: 1rem; top: 1rem; width: 80px; display: flex; flex-direction: column; align-items: center; gap: .5rem; }
-.mode { font-size: .75rem; color: var(--muted); text-align: center; }
+.mode { white-space: nowrap; font-size: .75rem; color: var(--muted); text-align: center; }
 .ring { width: 64px; height: 64px; }
 .ring svg { width: 100%; height: 100%; display: block; }
 .ring-bg { fill: none; stroke: var(--border); stroke-width: 4; }
