@@ -56,18 +56,18 @@ kbd { background: var(--surface-2); border: 1px solid var(--border); border-radi
 .btn-s.main { background: var(--bleu); border-color: var(--bleu); color: #fff; font-weight: 700; }
 
 /* Question */
-.quiz { position: fixed; inset: 56px 0 0 0; display: grid; grid-template-rows: minmax(0, 1.2fr) minmax(0, 1fr); background: var(--bg); }
+.quiz { position: fixed; inset: 56px 0 0 0; display: grid; grid-template-rows: 42% 58%; background: var(--bg); }
 .figure { min-height: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .figure img { max-width: 100%; max-height: 100%; object-fit: contain; }
 .figure .missing { color: var(--muted); font-size: .9rem; }
-.panel { position: relative; min-height: 0; overflow-y: auto; border-top: 1px solid var(--border); padding: 1rem 7rem 4.5rem 1.5rem; }
+.panel { position: relative; min-height: 0; overflow-y: auto; border-top: 1px solid var(--border); padding: .8em 7rem 4.5rem 1.5rem; font-size: clamp(11px, 2.3vh, 16px); }
 .panel-main { max-width: 720px; margin: 0 auto; }
-.q { font-weight: 700; font-size: 1.1rem; margin: 0 0 .8rem; }
-.stmt { font-weight: 600; margin: .9rem 0 .3rem; }
+.q { font-weight: 700; font-size: 1.1em; margin: 0 0 .6em; }
+.stmt { font-weight: 600; margin: .6em 0 .2em; }
 .yn { display: flex; gap: .6rem; }
 .yn .ans { flex: 1; }
 .ans {
-  display: flex; align-items: center; gap: .75rem; width: 100%; margin: .3rem 0; padding: .6rem .8rem;
+  display: flex; align-items: center; gap: .75em; width: 100%; margin: .25em 0; padding: .45em .8em;
   font: inherit; text-align: left; color: var(--text); cursor: pointer;
   background: var(--surface); border: 2px solid var(--border); border-radius: 10px;
 }
@@ -122,9 +122,8 @@ kbd { background: var(--surface-2); border: 1px solid var(--border); border-radi
 
 /* Mobile */
 @media (max-width: 800px) {
-  .quiz { grid-template-rows: minmax(0, 36vh) minmax(0, 1fr); }
-  .panel { padding: .8rem 1rem 4.5rem; }
-  .panel { display: flex; flex-direction: column; }
+  .quiz { grid-template-rows: 34% 66%; }
+  .panel { display: flex; flex-direction: column; padding: .8em 1rem 4.5rem; }
   .side { position: static; width: auto; order: -1; flex-direction: row; justify-content: space-between; margin-bottom: .6rem; }
   .ring { width: 38px; height: 38px; }
   .bar { padding: .6rem 1rem; }
