@@ -56,16 +56,18 @@ kbd { background: var(--surface-2); border: 1px solid var(--border); border-radi
 .btn-s.main { background: var(--bleu); border-color: var(--bleu); color: #fff; font-weight: 700; }
 
 /* Question */
-.quiz { position: fixed; inset: 56px 0 0 0; display: grid; grid-template-rows: 56% 44%; background: var(--bg); }
+.quiz { position: fixed; inset: 56px 0 0 0; display: grid; grid-template-rows: 50% 50%; background: var(--bg); }
 .figure { min-height: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .figure img { max-width: 100%; max-height: 100%; object-fit: contain; }
 .figure .missing { color: var(--muted); font-size: .9rem; }
 .panel { position: relative; min-height: 0; overflow-y: auto; border-top: 1px solid var(--border); padding: .6em 7rem 4rem 1.5rem; font-size: clamp(11px, 2.4vh, 17px); }
 .panel-main { max-width: 720px; margin: 0 auto; }
 .q { font-weight: 700; font-size: 1.1em; margin: 0 0 .6em; }
-.stmt { font-weight: 600; margin: .6em 0 .2em; }
-.yn { display: flex; gap: .6rem; }
-.yn .ans { flex: 1; }
+.yn-row { display: flex; align-items: center; flex-wrap: wrap; gap: .2em 1em; margin: .3em 0; }
+.stmt { flex: 1 1 14em; font-weight: 600; margin: 0; }
+.yn { flex: 0 0 15em; display: flex; gap: .5em; }
+.yn .ans { flex: 1; margin: 0; }
+.yn-row > .yn:only-child { flex: 1; }
 .ans {
   display: flex; align-items: center; gap: .75em; width: 100%; margin: .2em 0; padding: .35em .8em;
   font: inherit; text-align: left; color: var(--text); cursor: pointer;
